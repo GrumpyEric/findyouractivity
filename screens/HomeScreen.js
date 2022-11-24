@@ -3,6 +3,7 @@ import { auth, db } from '../firebase/firebase-config'
 import { signOut } from 'firebase/auth'
 import { collection, setDoc, doc, query, onSnapshot, Timestamp } from "firebase/firestore";
 import * as Location from 'expo-location';
+import { getDistance, getPreciseDistance } from 'geolib';
 
 
 import React, {useState, useRef, useEffect, errorMsg } from "react";
@@ -133,10 +134,6 @@ const HomeScreen = () => {
     })();
   }, []);
 
-  // distance test
-  useEffect( () => {
-
-  })
 
   const createMarker = (inputRegion, title, desc) => {
     /*newRegion = {
@@ -203,12 +200,13 @@ const HomeScreen = () => {
             //console.log(index, val.name, val);
             //console.log(val.longitude,userPos.longitude);
             //TODO: hier distanz-kalkulation ausführen; als variable speichern;
+            let distanceToUserPos = getDistance(val,userPos.coords) / 1000
             return (
             <Marker key={index} coordinate={val} pinColor={val.color} tracksViewChanges={true} /*image={require("./assets/haw logo.png")}*/>
               <Callout>
                 <Text key={Math.random().toString()}> {val.name} </Text>
                 <Text key={Math.random().toString()}> {val.description} </Text>
-                <Text> {val.longitude}, {userPos.coords.longitude} </Text>
+                <Text> Distanz: {distanceToUserPos} km</Text>
               </Callout>
           </Marker>); 
           }
