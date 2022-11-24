@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "510578091695",
+    "project_id": "projektb-mosy",
+    "storage_bucket": "projektb-mosy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:510578091695:android:c7440f5860fc46444f565a",
+        "android_client_info": {
+          "package_name": "com.ProjektBMoSy.FindYourActivity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "510578091695-phojd3g3isd4uk41dtsf3q4nmvtshf1g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ProjektBMoSy.FindYourActivity",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "510578091695-6qki9te7a8r204dt8c786kt2ul8tdbs1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhNQztSUdEKdWMv_MeAgTN1ZYPVWeGkSg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "510578091695-6qki9te7a8r204dt8c786kt2ul8tdbs1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
