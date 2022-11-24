@@ -133,6 +133,11 @@ const HomeScreen = () => {
     })();
   }, []);
 
+  // distance test
+  useEffect( () => {
+
+  })
+
   const createMarker = (inputRegion, title, desc) => {
     /*newRegion = {
       name: title,
@@ -196,11 +201,14 @@ const HomeScreen = () => {
         markers.map((val, index) => 
           {
             //console.log(index, val.name, val);
+            //console.log(val.longitude,userPos.longitude);
+            //TODO: hier distanz-kalkulation ausführen; als variable speichern;
             return (
             <Marker key={index} coordinate={val} pinColor={val.color} tracksViewChanges={true} /*image={require("./assets/haw logo.png")}*/>
               <Callout>
                 <Text key={Math.random().toString()}> {val.name} </Text>
                 <Text key={Math.random().toString()}> {val.description} </Text>
+                <Text> {val.longitude}, {userPos.coords.longitude} </Text>
               </Callout>
           </Marker>); 
           }
