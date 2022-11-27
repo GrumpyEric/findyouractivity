@@ -1,8 +1,10 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View, TextInput } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { auth } from '../firebase/firebase-config'
 import { sendPasswordResetEmail } from 'firebase/auth'
+import stylesGlobal from '../constants/StylesGlobal'
+import TextInputField from '../components/TextInputField'
 
 const ForgotPasswordScreen = () => {
   const [email, setEmail] = useState('')
@@ -26,18 +28,14 @@ const ForgotPasswordScreen = () => {
 
   return (
     <View
-      style={styles.container}
+      style={stylesGlobal.screenContainer}
     >
-      <View style={styles.inputContainer}>
+      <TextInputField 
+        placeholder={"Email"}
+        value={email}
+        onChangeText={text => setEmail(text)}
+      />
 
-        <TextInput 
-          placeholder="Email"
-          value={email}
-          onChangeText={text => setEmail(text)}
-          style={styles.input}
-        />
-
-      </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             onPress={handleForgotPassword}
@@ -95,7 +93,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   inputContainer: {
-    width: '80%'
+    width: '80%',
   },
   buttonContainer: {
     width: '60%',
