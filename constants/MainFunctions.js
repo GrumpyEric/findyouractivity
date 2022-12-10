@@ -58,11 +58,11 @@ const handleSignOut = (auth, navigation) => {
 }
 
 // MARKER zur DB hinzufügen
-import { Timestamp, doc, setDoc } from 'firebase/firestore';
+import { Timestamp, doc, setDoc, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase/firebase-config';
 import { Alert } from 'react-native';
 
-const addMarkerToDB = async(auth) => {
+const addMarkerToDB = async(auth, markers, eventNameInput, eventDescInput, userMarkerLatitude, userMarkerLongitude, setRegion, userMarker) => {
   let userID = auth.currentUser.uid.toString()
   let timeStampObj = Timestamp.now()
   // TODO: timestamp in UNIX-Format setzen; DONE
