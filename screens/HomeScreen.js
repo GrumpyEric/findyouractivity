@@ -1,29 +1,23 @@
-  import { useNavigation } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/core'
 import { auth, db } from '../firebase/firebase-config'
-import { signOut } from 'firebase/auth'
+
 import { collection, setDoc, doc, query, onSnapshot, Timestamp } from "firebase/firestore";
 import * as Location from 'expo-location';
 import { getDistance, getPreciseDistance } from 'geolib';
-
 
 import React, {useState, useRef, useEffect, errorMsg } from "react";
 import { Text,Alert,  TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
 import MapView, {PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
 
+import { hawRegion } from '../constants/TestCoords';
+import { handleSignOut, addMarkerToDB } from '../constants/MainFunctions';
+
 let userMarkerLatitude = 0
 let userMarkerLongitude = 0
 let markers = [];
 
-const hawRegion = {  
-  name: 'Hochschule für angewandte Wissenschaft Hamburg',
-  description: 'Hier studieren wir! :)',
-  color: 'hotpink',
-  latitude: 53.56903,
-  longitude: 10.0328,
-  latitudeDelta: 0.01,
-  longitudeDelta: 0.01,
-}
 const user = auth.currentUser;
+
 const HomeScreen = () => {
   const mapRef = useRef(null);
   const navigation = useNavigation()
@@ -37,27 +31,16 @@ const HomeScreen = () => {
 
   });
 
-  // SignOut Stuff; NICHT löschen
-  const handleSignOut = () => {
-    // const auth = getAuth();
-    signOut(auth)
-    .then(() => {
-      navigation.replace("Login")
-    })
-    .catch(error => alert(error.message))
-
-  }
-
-  const addDataToCollection = async () => {
-    await setDoc(doc(db, "users", user.email.toString()), {
-      uid: user.uid,
-      user_email: user.email,
-      markers: {
-        latitude: 4,
-        longitude: 4
-      }
-    });
-  }
+  // const addDataToCollection = async () => {
+  //   await setDoc(doc(db, "users", user.email.toString()), {
+  //     uid: user.uid,
+  //     user_email: user.email,
+  //     markers: {
+  //       latitude: 4,
+  //       longitude: 4
+  //     }
+  //   });
+  // }
 
   // MARKER zur DB hinzufügen
   const addMarkerToDB = async() => {
@@ -121,11 +104,10 @@ const HomeScreen = () => {
 
   // get user position
   useEffect(() => {
-    (async () => {
-      
+    (async () => {      
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+        errorMsg('Permission to access location was denied');
         return;
       }
 
@@ -243,7 +225,7 @@ const HomeScreen = () => {
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={handleSignOut}
+        onPress={() => handleSignOut(auth, navigation)}
         style={styles.button}
       >
         <Text style={styles.buttonText}>Sign out</Text>

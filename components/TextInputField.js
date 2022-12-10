@@ -1,5 +1,6 @@
 import { View, StyleSheet, TextInput } from "react-native";
 
+// component props: placeholder, value, onChangeText, secureTextEntry
 const TextInputField = (props) => { 
   return(
     <View style={styles.containerStyle}>
@@ -7,6 +8,7 @@ const TextInputField = (props) => {
         placeholder={props.placeholder}
         value={props.value}
         onChangeText={props.onChangeText}
+        secureTextEntry={props.secureTextEntry}
         style={styles.textInputStyle}
       />
     </View>
@@ -17,7 +19,7 @@ export default TextInputField
 
 const styles = StyleSheet.create({
   containerStyle: {
-    width: '80%',
+    width: '100%',
   },
 
   textInputStyle: {

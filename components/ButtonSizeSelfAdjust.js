@@ -3,7 +3,7 @@ import Colors from "../constants/Colors"
 import stylesGlobal from "../constants/StylesGlobal"
 
 // component props: onPress, text
-const ButtonSmall = (props) => {
+const ButtonSizeSelfAdjust = (props) => {
   return (
     <TouchableOpacity
       onPress={props.onPress}
@@ -14,12 +14,12 @@ const ButtonSmall = (props) => {
   )
 }
 
-export default ButtonSmall
+export default ButtonSizeSelfAdjust
 
 const styles = StyleSheet.create({
   button: {
     backgroundColor: Colors.findmyactivityBlue,
-    width: 150,
+    // width: '100%',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',

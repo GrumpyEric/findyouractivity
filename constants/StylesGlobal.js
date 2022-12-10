@@ -1,15 +1,19 @@
 import { StyleSheet } from "react-native";
-// import Colors from 
 
 const stylesGlobal = StyleSheet.create({
   //----- Text -----//
-
+  standardText: {
+    fontWeight: '700',
+    fontSize: 16,
+    color: 'white'
+  },
 
   //----- Screenviews -----//
   screenContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingHorizontal: '10%'
   }
 })
 
