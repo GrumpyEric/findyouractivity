@@ -3,11 +3,8 @@ import { auth, db } from '../firebase/firebase-config'
 
 import { collection, query, onSnapshot } from "firebase/firestore";
 import * as Location from 'expo-location';
-import { getDistance } from 'geolib';
-
-import React, {useState, useRef, useEffect, errorMsg } from "react";
+import React, {useState, useEffect, errorMsg } from "react";
 import { Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
-import MapView, {PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
 
 import { hawRegion } from '../constants/TestCoords';
 import { handleSignOut, addMarkerToDB } from '../constants/MainFunctions';
