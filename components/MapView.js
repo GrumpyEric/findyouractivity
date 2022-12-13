@@ -1,12 +1,26 @@
-import React, {useRef} from "react";
-import { Text } from "react-native";
+import React, {useRef, useState} from "react";
+import { Alert, Text, TextInput, View, StyleSheet, TouchableOpacity } from "react-native";
 import MapView, {PROVIDER_GOOGLE, Marker, Callout} from "react-native-maps";
 import { getDistance } from 'geolib';
 
 
 
+
 // TODO: make it class component
 const MapViewGoogle = (props) => {
+
+  const [selectedMarker, onSelectMarker] = useState();
+
+  const HighlightMarker = inputMarker => {
+    onSelectMarker(inputMarker)
+    //Alert.alert(selectedMarker.name.toString(), selectedMarker.description.toString() );
+    //Alert.alert(selectedMarker.longitude.toString(), selectedMarker.latitude.toString() );
+  }
+
+  const calendarTest = () => {
+    Alert.alert(selectedMarker.name.toString(), selectedMarker.description.toString() );
+  }
+
   const mapRef = useRef(null);
   return (
     <MapView
@@ -25,10 +39,14 @@ const MapViewGoogle = (props) => {
     {
       props.markers.map((val, index) => 
         {
-          let distanceToUserPos = getDistance(val,props.userPos.coords) / 1000
+          let distanceToUserPos = "?"//getDistance(val,props.userPos.coords) / 1000
+          if (props.userPos.coords != undefined)
+          {
+            distanceToUserPos = getDistance(val,props.userPos.coords) / 1000
+          }
           return (
-          <Marker key={index} coordinate={val} pinColor={val.color} tracksViewChanges={true} /*image={require("./assets/haw logo.png")}*/>
-            <Callout>
+          <Marker key={index} coordinate={val} pinColor={val.color} tracksViewChanges={true} onPress={() => HighlightMarker(val)}>
+            <Callout onPress={() => calendarTest()}>
               <Text key={Math.random().toString()}> {val.name} </Text>
               <Text key={Math.random().toString()}> {val.description} </Text>
               <Text> Distanz: {distanceToUserPos} km</Text>

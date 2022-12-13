@@ -19,7 +19,14 @@ let markers = [];
 
 const HomeScreen = () => {
   const [userMarker, setUserMarker] = useState([hawRegion]);
-  const [userPos, setUserPos] = useState();
+  const [userPos, setUserPos] = useState({
+    latitude: 51.5079145,
+    longitude: -0.0899163,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+
+  });
+
 
   const [eventNameInput, onChangeEventInput] = useState("");
   const [eventDescInput, onChangeDescInput] = useState("");
@@ -70,7 +77,7 @@ const HomeScreen = () => {
   return (
     <View style={[stylesGlobal.screenContainer]}>
       <MapViewGoogle
-        style={styles.map}
+        style={styles.map_container}
         initialRegion={hawRegion}
         onPress = {(e) => updateUserMarker(e.nativeEvent.coordinate)}
         onRegionChangeComplete={(region) => setRegion(region)}
@@ -128,4 +135,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 5,
   },
+
+  map_container: {
+    ...StyleSheet.absoluteFillObject,
+    flex: 1, //the container will fill the whole screen.
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+
+  map: {
+    ...StyleSheet.absoluteFillObject,
+  }
+
 })
