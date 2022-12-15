@@ -1,13 +1,19 @@
-import React, {useRef, useState} from "react";
-import { Alert, Text, TextInput, View, StyleSheet, TouchableOpacity } from "react-native";
+import React, {useRef, useState, useEffect} from "react";
+import { Alert, Text, TextInput, View, StyleSheet, TouchableOpacity, PermissionsAndroid, NativeModules } from "react-native";
 import MapView, {PROVIDER_GOOGLE, Marker, Callout} from "react-native-maps";
 import { getDistance } from 'geolib';
+import * as AddCalendarEvent from 'react-native-add-calendar-event';
+import RNCalendarEvents from 'react-native-calendar-events';
+import { reverseGeocodeAsync } from "expo-location";
+import Geocoder from 'react-native-geocoder';
+
 
 
 
 
 // TODO: make it class component
 const MapViewGoogle = (props) => {
+
 
   const [selectedMarker, onSelectMarker] = useState();
 
@@ -17,11 +23,71 @@ const MapViewGoogle = (props) => {
     //Alert.alert(selectedMarker.longitude.toString(), selectedMarker.latitude.toString() );
   }
 
-  const calendarTest = () => {
-    Alert.alert(selectedMarker.name.toString(), selectedMarker.description.toString() );
+  // CalendarTest mit RNCalendarEvents
+  const calendarTest2 = () => {
+
+    let eventLat = selectedMarker.latitude
+    let eventLng = selectedMarker.longitude
+    //alert({eventLat,eventLng}.toString())
+    //Alert.alert(eventLat.toString(),eventLng.toString())
+    RNCalendarEvents.saveEvent("Find Your Activity Event", {
+      description: selectedMarker.description,
+      notes: selectedMarker.description,
+      startDate:  '2023-6-2T15:46:40Z',
+      endDate:  '2023-7-2T18:46:40Z',
+      location: geodude(eventLat,eventLng),
+    }).then((value)=> {
+
+    }).catch((error)=> {
+      console.log(error)
+    })
+  }
+
+
+  // CalendarTest mit AddCalendarEvent
+  const calendarTest = async() =>{
+    let eventLat = selectedMarker.latitude
+    let eventLng = selectedMarker.longitude
+    const eventConfig = {
+      title: selectedMarker.name.toString(),
+      notes: selectedMarker.description.toString(),
+      location: geodude(eventLat,eventLng),
+      startDate:  '2023-6-2T15:46:40Z',
+      endDate:  '2023-7-2T18:46:40Z'};
+
+      AddCalendarEvent.presentNewCalendarEventDialog(eventConfig)
+      .then(eventId => {
+        //handle success (receives event id) or dismissing the modal (receives false)
+        if (eventId) {
+          console.warn(eventId);
+        } else {
+          console.warn('dismissed');
+        }
+      })
+      .catch((error) => {
+        // handle error such as when user rejected permissions
+        console.warn(error);
+      });
+
+  }
+
+  const geodude = async(eventLat,eventLng) => {
+    let address = "";
+    reverseGeocodeAsync({latitude:eventLat,longitude:eventLng})
+    .then((value) =>{      
+      address = `${value[0].name}, ${value[0].street}, ${value[0].postalCode}, ${value[0].city}`
+      //alert(address)
+      return address
+    })
+    .catch((error) => {
+      alert(error)
+    })
   }
 
   const mapRef = useRef(null);
+
+
+
   return (
     <MapView
       provider = {PROVIDER_GOOGLE}

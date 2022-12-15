@@ -48,6 +48,7 @@ const handleLogin = (auth, email, password, navigation) => {
 
 // SignOut Stuff
 import { signOut } from 'firebase/auth'
+//import { collection, query} from "firebase/firestore";
 
 const handleSignOut = (auth, navigation) => {
   signOut(auth)
