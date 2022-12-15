@@ -19,8 +19,6 @@ const MapViewGoogle = (props) => {
 
   const HighlightMarker = inputMarker => {
     onSelectMarker(inputMarker)
-    //Alert.alert(selectedMarker.name.toString(), selectedMarker.description.toString() );
-    //Alert.alert(selectedMarker.longitude.toString(), selectedMarker.latitude.toString() );
   }
 
   // CalendarTest mit RNCalendarEvents
@@ -28,8 +26,6 @@ const MapViewGoogle = (props) => {
 
     let eventLat = selectedMarker.latitude
     let eventLng = selectedMarker.longitude
-    //alert({eventLat,eventLng}.toString())
-    //Alert.alert(eventLat.toString(),eventLng.toString())
     RNCalendarEvents.saveEvent("Find Your Activity Event", {
       description: selectedMarker.description,
       notes: selectedMarker.description,
