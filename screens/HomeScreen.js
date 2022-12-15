@@ -27,6 +27,11 @@ const HomeScreen = () => {
 
   });
 
+  const onSignOutButton = () => {
+    disconnectFromDB();
+    handleSignOut(auth, navigation)
+  }
+
 
   const [eventNameInput, onChangeEventInput] = useState("");
   const [eventDescInput, onChangeDescInput] = useState("");
@@ -53,6 +58,9 @@ const HomeScreen = () => {
     } );    
     markers = db_markers;
   })
+
+  const disconnectFromDB = onSnapshot(collection(db, "markers"), () => {
+  });
 
   const updateUserMarker = newInputRegion => {
     setUserMarker([newInputRegion])
@@ -100,7 +108,7 @@ const HomeScreen = () => {
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => handleSignOut(auth, navigation)}
+        onPress={() => onSignOutButton()}
         style={styles.button}
       >
         <Text style={styles.buttonText}>Sign out</Text>
