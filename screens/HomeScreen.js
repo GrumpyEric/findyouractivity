@@ -8,8 +8,9 @@ import { Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-nativ
 
 import { hawRegion } from '../constants/TestCoords';
 import { handleSignOut, addMarkerToDB } from '../constants/MainFunctions';
-import stylesGlobal from '../constants/StylesGlobal'
+import { stylesGlobal } from '../constants/StylesGlobal'
 import MapViewGoogle from '../components/MapView';
+import FloatingBurgerMenu from '../components/FloatingBurgerMenu';
 
 let userMarkerLatitude = 0
 let userMarkerLongitude = 0
@@ -17,7 +18,7 @@ let markers = [];
 
 // const user = auth.currentUser;
 
-const HomeScreen = () => {
+const HomeScreen = ( {navigation} ) => {
   const [userMarker, setUserMarker] = useState([hawRegion]);
   const [userPos, setUserPos] = useState({
     latitude: 51.5079145,
@@ -33,14 +34,12 @@ const HomeScreen = () => {
   // const [eventLongInput, onChangeLongInput] = useState("");
   // const [eventLatInput, onChangeLatInput] = useState("");
 
-  const navigation = useNavigation()
-
   // get current Region
   const [region, setRegion] = useState({
     latitude: 51.5079145,
     longitude: -0.0899163,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
+    latitudeDelta: 0.1,
+    longitudeDelta: 0.1,
 
   });
 
@@ -74,11 +73,33 @@ const HomeScreen = () => {
     })();
   }, []);
 
+  // const getCurrentPosition = () => {
+  //   navigator.geolocation.getCurrentPosition(
+  //     (position) => {
+  //       const region = {
+  //         latitude: position.coords.latitude,
+  //         longitude: position.coords.longitude,
+  //         latitudeDelta: LATITUDE_DELTA,
+  //         longitudeDelta: LONGITUDE_DELTA,
+  //       };
+  //       setUserPos(region)
+  //     }
+  //   )
+  //   console.log(userPos);
+  //   return userPos
+  // }
+      
+
   return (
     <View style={[stylesGlobal.screenContainer]}>
+      <FloatingBurgerMenu
+        onPress={() => navigation.openDrawer()}
+      />
+
       <MapViewGoogle
         style={styles.map_container}
         initialRegion={hawRegion}
+        region={region}
         onPress = {(e) => updateUserMarker(e.nativeEvent.coordinate)}
         onRegionChangeComplete={(region) => setRegion(region)}
         markers={markers}
@@ -90,7 +111,7 @@ const HomeScreen = () => {
       
       {/* MARKER ERSTELLEN */}
       {/* // TODO: make marker creation better - maybe just button with "create marker", then modal opens with marker creation formular */}
-      {/* <TextInput style={styles.input} placeholder='EVENT NAME' value={eventNameInput} onChangeText={onChangeEventInput}></TextInput>
+      <TextInput style={styles.input} placeholder='EVENT NAME' value={eventNameInput} onChangeText={onChangeEventInput}></TextInput>
       <TextInput style={styles.input} placeholder='DESCRIPTION' value={eventDescInput} onChangeText={onChangeDescInput}></TextInput>
       <TouchableOpacity
         onPress={() => addMarkerToDB(auth, markers, eventNameInput, eventDescInput, userMarkerLatitude, userMarkerLongitude, setRegion, userMarker)}
@@ -98,16 +119,6 @@ const HomeScreen = () => {
       >
         <Text style={styles.buttonText}>CREATE MARKER</Text>
       </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={() => handleSignOut(auth, navigation)}
-        style={styles.button}
-      >
-        <Text style={styles.buttonText}>Sign out</Text>
-      </TouchableOpacity> */}
-
-      
-      
     </View>
   )
 }

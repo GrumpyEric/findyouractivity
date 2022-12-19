@@ -1,6 +1,6 @@
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import Colors from "../constants/Colors";
-import stylesGlobal from "../constants/StylesGlobal";
+import { stylesGlobal } from "../constants/StylesGlobal";
 
 // component props: onPress, text
 const TextButton = (props) => {

@@ -5,7 +5,7 @@ import { StyleSheet, View } from 'react-native'
 import { auth } from '../firebase/firebase-config'
 
 import TextInputField from '../components/TextInputField'
-import stylesGlobal from '../constants/StylesGlobal'
+import { stylesGlobal } from '../constants/StylesGlobal'
 import ButtonRegular from '../components/ButtonRegular'
 import ButtonRegularWithBorder from '../components/ButtonRegularWithBorder'
 import TextButton from '../components/TextButton'
