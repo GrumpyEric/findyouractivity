@@ -8,11 +8,57 @@ import { reverseGeocodeAsync } from "expo-location";
 import Geocoder from 'react-native-geocoder';
 import Icon from "react-native-vector-icons/FontAwesome";
 import { hawRegion } from "../constants/TestCoords";
+import * as Location from 'expo-location';
+import { collection, query, onSnapshot } from "firebase/firestore";
+import { db } from "../firebase/firebase-config";
 
-// TODO: make it class component
 const MapViewGoogle = (props) => {
+  const [userPos, setUserPos] = useState([]);
 
+  // get current Region
+  const [region, setRegion] = useState(props.initialRegion);
 
+  const [userMarker, setUserMarker] = useState([hawRegion]);
+
+  const markersRef = useRef([])
+  let userMarkerLatitude = 0
+  let userMarkerLongitude = 0
+
+  const q = query(collection(db, "markers"));
+  const readMarkerFromDB = onSnapshot(q, (QuerySnapshot) => {
+    const db_markers = [];
+    QuerySnapshot.forEach( (doc) => {
+      db_markers.push(doc.data().markers);
+    } );
+    markersRef.current = db_markers
+  })
+
+  // IMPORTANT!: MARKER von DB ablesen
+  // useEffect(() => {
+  //   readMarkerFromDB()
+  //   // console.log("after: " + markers);
+  // }, [region])
+
+  const updateUserMarker = newInputRegion => {
+    setUserMarker([newInputRegion])
+    userMarkerLatitude = newInputRegion.latitude
+    userMarkerLongitude = newInputRegion.longitude
+  }
+
+  // get user position
+  useEffect(() => {
+    (async () => {      
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        errorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let currentUserPos = await Location.getCurrentPositionAsync({});
+      setUserPos(currentUserPos);
+    })();
+  }, []);
+  
   const [selectedMarker, onSelectMarker] = useState();
 
   const HighlightMarker = inputMarker => {
@@ -149,17 +195,19 @@ const MapViewGoogle = (props) => {
         style={{
           backgroundColor: 'white',
           position: 'absolute',
-          bottom: 10,
+          bottom: 20,
           right: 10,
-          padding: 20,
-          // elevation: 3,
+          borderWidth: StyleSheet.hairlineWidth,
+          borderColor: 'black',
+          // padding: 20,
+          elevation: 3,
           alignItems: 'center',
           alignSelf: 'flex-end',
           justifyContent: 'center',
-          borderRadius: 5,
+          borderRadius: 30,
           zIndex: 5,
-          // width: 50,
-          // height: 50
+          width: 60,
+          height: 60
         }}
         onPress={() => getCurrentPosition()}
       >
@@ -172,29 +220,28 @@ const MapViewGoogle = (props) => {
 
       <MapView
         provider = {PROVIDER_GOOGLE}
-        region = {props.region}
+        region={region}
+        onRegionChangeComplete={(region) => setRegion(region)}
         ref = {mapRef}
         style={props.style}
         initialRegion={props.initialRegion}
         showsUserLocation={true}
         followsUserLocation={true}
-        onPress = {props.onPress}
-        //onRegionChangeComplete runs when the user stops dragging MapView
-        onRegionChangeComplete={props.onRegionChangeComplete}
-        
+        onPress = {(e) => updateUserMarker(e.nativeEvent.coordinate)}
+        //onRegionChangeComplete runs when the user stops dragging MapView        
       >
       {/* DB Markers */}
       {
-        props.markers.map((val, index) => 
+        markersRef.current.map((val, index) => 
           {
             let distanceToUserPos = "?"//getDistance(val,props.userPos.coords) / 1000
-            if (props.userPos.coords != undefined)
+            if (userPos.coords != undefined)
             {
-              distanceToUserPos = getDistance(val,props.userPos.coords) / 1000
+              distanceToUserPos = getDistance(val, userPos.coords) / 1000
             }
             return (
             <Marker key={index} coordinate={val} pinColor={val.color} tracksViewChanges={true} onPress={() => HighlightMarker(val)}>
-              <Callout onPress={() => calendarTest()}>
+              <Callout>
                 <Text key={Math.random().toString()}> {val.name} </Text>
                 <Text key={Math.random().toString()}> {val.description} </Text>
                 <Text> Distanz: {distanceToUserPos} km</Text>
@@ -207,7 +254,7 @@ const MapViewGoogle = (props) => {
         
       {/* User Marker */}
       {
-        props.userMarker.map((val, index) => 
+        userMarker.map((val, index) => 
           {
             return (
             <Marker key={index} coordinate={val} pinColor='blue' draggable={false} tracksViewChanges={true}>

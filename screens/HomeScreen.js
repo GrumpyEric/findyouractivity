@@ -1,94 +1,19 @@
 import { useNavigation } from '@react-navigation/core'
-import { auth, db } from '../firebase/firebase-config'
-
-import { collection, query, onSnapshot } from "firebase/firestore";
-import * as Location from 'expo-location';
 import React, {useState, useEffect, errorMsg } from "react";
 import { Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
 
 import { hawRegion } from '../constants/TestCoords';
-import { handleSignOut, addMarkerToDB } from '../constants/MainFunctions';
+
 import { stylesGlobal } from '../constants/StylesGlobal'
 import MapViewGoogle from '../components/MapView';
 import FloatingBurgerMenu from '../components/FloatingBurgerMenu';
-
-let userMarkerLatitude = 0
-let userMarkerLongitude = 0
-let markers = [];
-
-// const user = auth.currentUser;
+import { addMarkerToDB } from '../constants/MainFunctions';
 
 const HomeScreen = ( {navigation} ) => {
-  const [userMarker, setUserMarker] = useState([hawRegion]);
-  const [userPos, setUserPos] = useState({
-    latitude: 51.5079145,
-    longitude: -0.0899163,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
-
-  });
-
-
   const [eventNameInput, onChangeEventInput] = useState("");
   const [eventDescInput, onChangeDescInput] = useState("");
-  // const [eventLongInput, onChangeLongInput] = useState("");
-  // const [eventLatInput, onChangeLatInput] = useState("");
 
-  // get current Region
-  const [region, setRegion] = useState({
-    latitude: 51.5079145,
-    longitude: -0.0899163,
-    latitudeDelta: 0.1,
-    longitudeDelta: 0.1,
 
-  });
-
-  // IMPORTANT!: MARKER von DB ablesen
-  const q = query(collection(db,"markers"));
-  const readMarkerFromDB = onSnapshot(q, (QuerySnapshot) => {
-    const db_markers = [];  
-    QuerySnapshot.forEach( (doc) => {
-      db_markers.push(doc.data().markers);
-    } );    
-    markers = db_markers;
-  })
-
-  const updateUserMarker = newInputRegion => {
-    setUserMarker([newInputRegion])
-    userMarkerLatitude = newInputRegion.latitude
-    userMarkerLongitude = newInputRegion.longitude
-  }
-
-  // get user position
-  useEffect(() => {
-    (async () => {      
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        errorMsg('Permission to access location was denied');
-        return;
-      }
-
-      let bnuuy = await Location.getCurrentPositionAsync({});
-      setUserPos(bnuuy);
-    })();
-  }, []);
-
-  // const getCurrentPosition = () => {
-  //   navigator.geolocation.getCurrentPosition(
-  //     (position) => {
-  //       const region = {
-  //         latitude: position.coords.latitude,
-  //         longitude: position.coords.longitude,
-  //         latitudeDelta: LATITUDE_DELTA,
-  //         longitudeDelta: LONGITUDE_DELTA,
-  //       };
-  //       setUserPos(region)
-  //     }
-  //   )
-  //   console.log(userPos);
-  //   return userPos
-  // }
-      
 
   return (
     <View style={[stylesGlobal.screenContainer]}>
@@ -99,26 +24,20 @@ const HomeScreen = ( {navigation} ) => {
       <MapViewGoogle
         style={styles.map_container}
         initialRegion={hawRegion}
-        region={region}
-        onPress = {(e) => updateUserMarker(e.nativeEvent.coordinate)}
-        onRegionChangeComplete={(region) => setRegion(region)}
-        markers={markers}
-        userPos={userPos}
-        userMarker={userMarker}
         eventNameInput={eventNameInput}
         eventDescInput={eventDescInput}
       />
       
       {/* MARKER ERSTELLEN */}
       {/* // TODO: make marker creation better - maybe just button with "create marker", then modal opens with marker creation formular */}
-      <TextInput style={styles.input} placeholder='EVENT NAME' value={eventNameInput} onChangeText={onChangeEventInput}></TextInput>
+      {/* <TextInput style={styles.input} placeholder='EVENT NAME' value={eventNameInput} onChangeText={onChangeEventInput}></TextInput>
       <TextInput style={styles.input} placeholder='DESCRIPTION' value={eventDescInput} onChangeText={onChangeDescInput}></TextInput>
       <TouchableOpacity
         onPress={() => addMarkerToDB(auth, markers, eventNameInput, eventDescInput, userMarkerLatitude, userMarkerLongitude, setRegion, userMarker)}
         style={styles.button}
       >
         <Text style={styles.buttonText}>CREATE MARKER</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   )
 }

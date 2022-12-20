@@ -24,7 +24,6 @@ function BurgerMenuScreen() {
       screenOptions={({ navigation }) => ({
         drawerType: 'front',
         headerShown: false, 
-        swipeEdgeWidth: 100,
       })}
       // Define drawer content; custom content in BurgerMenuContent.js
       drawerContent={(props) => <BurgerMenuContent {...props}/>}
