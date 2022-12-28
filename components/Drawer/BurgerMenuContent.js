@@ -12,10 +12,12 @@ function BurgerMenuContent ( props )  {
   return ( 
     <DrawerContentScrollView {...props}>
       <DrawerItem
-        label="lol"
+        label="Home"
+        onPress={() => navigation.navigate("HomeScreen")}
       />
       <DrawerItem
         label="Meine Marker"
+        onPress={() => navigation.navigate("MyMarkersScreen")}
       />
       <DrawerItem
         label="Logout"

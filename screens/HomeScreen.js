@@ -4,16 +4,16 @@ import { Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-nativ
 
 import { hawRegion } from '../constants/TestCoords';
 
-import { stylesGlobal } from '../constants/StylesGlobal'
+import { height, stylesGlobal } from '../constants/StylesGlobal'
 import MapViewGoogle from '../components/MapView';
 import FloatingBurgerMenu from '../components/FloatingBurgerMenu';
 import { addMarkerToDB } from '../constants/MainFunctions';
+import ButtonRegular from '../components/ButtonRegular';
+import { auth } from '../firebase/firebase-config';
 
 const HomeScreen = ( {navigation} ) => {
   const [eventNameInput, onChangeEventInput] = useState("");
   const [eventDescInput, onChangeDescInput] = useState("");
-
-
 
   return (
     <View style={[stylesGlobal.screenContainer]}>
@@ -31,13 +31,14 @@ const HomeScreen = ( {navigation} ) => {
       {/* MARKER ERSTELLEN */}
       {/* // TODO: make marker creation better - maybe just button with "create marker", then modal opens with marker creation formular */}
       {/* <TextInput style={styles.input} placeholder='EVENT NAME' value={eventNameInput} onChangeText={onChangeEventInput}></TextInput>
-      <TextInput style={styles.input} placeholder='DESCRIPTION' value={eventDescInput} onChangeText={onChangeDescInput}></TextInput>
-      <TouchableOpacity
-        onPress={() => addMarkerToDB(auth, markers, eventNameInput, eventDescInput, userMarkerLatitude, userMarkerLongitude, setRegion, userMarker)}
-        style={styles.button}
-      >
-        <Text style={styles.buttonText}>CREATE MARKER</Text>
-      </TouchableOpacity> */}
+      <TextInput style={styles.input} placeholder='DESCRIPTION' value={eventDescInput} onChangeText={onChangeDescInput}></TextInput> */}
+      <View style={styles.button}>
+        <ButtonRegular
+          text={'CREATE MARKER'}
+          onPress={() => navigation.navigate('CreateMarkersScreen')}
+          // onPress={() => addMarkerToDB(auth, markers, eventNameInput, eventDescInput, userMarkerLatitude, userMarkerLongitude, setRegion, userMarker)}
+        />
+      </View>
     </View>
   )
 }
@@ -46,12 +47,10 @@ export default HomeScreen
 
 const styles = StyleSheet.create({
    button: {
-    backgroundColor: '#0782F9',
-    width: '60%',
-    padding: 15,
-    borderRadius: 10,
     alignItems: 'center',
-    marginTop: 40,
+    position: 'absolute',
+    bottom: 0,
+    marginBottom: height * 0.05
   },
   buttonText: {
     color: 'white',

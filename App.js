@@ -1,16 +1,19 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { StatusBar } from 'react-native';
 
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen'
+import MyMarkersScreen from './screens/MyMarkersScreen';
+import CreateMarkersScreen from './screens/modals/CreateMarkersScreen';
 import BurgerMenuContent from './components/Drawer/BurgerMenuContent'
+import { isIOS, isTablet } from './constants/StylesGlobal';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 const DrawerBurgerMenu = createDrawerNavigator();
 
 function BurgerMenuScreen() {
@@ -29,6 +32,7 @@ function BurgerMenuScreen() {
       drawerContent={(props) => <BurgerMenuContent {...props}/>}
     >
       <DrawerBurgerMenu.Screen name="HomeScreen" component={HomeScreen}/>
+      <DrawerBurgerMenu.Screen name="MyMarkersScreen" component={MyMarkersScreen}/>
       
     </DrawerBurgerMenu.Navigator>
   )
@@ -51,6 +55,32 @@ export default function App() {
           <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
           <Stack.Screen name="Home" component={BurgerMenuScreen} />
           <Stack.Screen name="ForgotPW" component={ForgotPasswordScreen} />
+        </Stack.Group>
+
+        <Stack.Group screenOptions={ () => ({
+          presentation: 'transparentModal',
+          gestureEnabled: false, 
+          ...TransitionPresets.ScaleFromCenterAndroid,
+          cardStyle: {
+            top: isTablet ? '20%' : '15%',
+            left: isTablet ? '20%' : null,
+            maxHeight: isTablet ? '60%' : '70%',
+            width: isTablet ? '60%' : '100%',
+            elevation: 10,
+            overflow: isIOS ? 'visible' : 'hidden',
+            backgroundColor: 'white',
+            borderRadius: 15,
+            shadowColor: "black",
+            shadowOffset: {
+              width: 0,
+              height: 5,
+            },
+            shadowOpacity: 0.34,
+            shadowRadius: 6.27,
+          },
+
+          })}>
+          <Stack.Screen name='CreateMarkersScreen' component={CreateMarkersScreen}/>
         </Stack.Group>
         
       </Stack.Navigator>

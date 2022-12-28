@@ -43,6 +43,12 @@ const MapViewGoogle = (props) => {
     setUserMarker([newInputRegion])
     userMarkerLatitude = newInputRegion.latitude
     userMarkerLongitude = newInputRegion.longitude
+    mapRef.current.animateToRegion({
+      latitude: userMarkerLatitude,
+      longitude: userMarkerLongitude,
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.01
+    })
   }
 
   // get user position
@@ -56,8 +62,10 @@ const MapViewGoogle = (props) => {
 
       let currentUserPos = await Location.getCurrentPositionAsync({});
       setUserPos(currentUserPos);
+      // console.log(userPos);
+
     })();
-  }, []);
+  }, [region]);
   
   const [selectedMarker, onSelectMarker] = useState();
 
@@ -135,29 +143,18 @@ const MapViewGoogle = (props) => {
   const [error, setError] = useState()
   const [isListingSelected, setIsListingSelected] = useState()
 
-  const getCurrentPosition = () => {
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        setLatitude(position.coords.latitude)
-        setLongitude(position.coords.longitude)
-        // setLatitudeDelta(position.coords.)
-        setError(null) 
+  // useEffect(() => {
+  //   getCurrentPosition()
+  // }, [])
+  
 
-        MapView.animateToCoordinate(
-          {
-            latitude: latitude,
-            longitude: longitude,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01
-          },
-          1000
-        )
-      },
-      error => {
-        console.log(error)
-        // setError()
-      }
-    )
+  const getCurrentPosition = () => {
+    mapRef.current.animateToRegion({
+      latitude: userPos.coords.latitude,
+      longitude: userPos.coords.longitude,
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.01
+    })
   }
 
   // const LocationButton = () => {
