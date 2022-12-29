@@ -32,7 +32,6 @@ function BurgerMenuScreen() {
       drawerContent={(props) => <BurgerMenuContent {...props}/>}
     >
       <DrawerBurgerMenu.Screen name="HomeScreen" component={HomeScreen}/>
-      <DrawerBurgerMenu.Screen name="MyMarkersScreen" component={MyMarkersScreen}/>
       
     </DrawerBurgerMenu.Navigator>
   )
@@ -81,6 +80,7 @@ export default function App() {
 
           })}>
           <Stack.Screen name='CreateMarkersScreen' component={CreateMarkersScreen}/>
+          <Stack.Screen name="MyMarkersScreen" component={MyMarkersScreen}/>
         </Stack.Group>
         
       </Stack.Navigator>

@@ -4,7 +4,7 @@ import { DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navi
 import { stylesGlobal } from '../../constants/StylesGlobal'
 import { handleSignOut } from '../../constants/MainFunctions'
 import { auth } from '../../firebase/firebase-config'
-import { useNavigation } from '@react-navigation/native'
+import { DrawerActions, useNavigation } from '@react-navigation/native'
 
 // All the content and styling of left drawer
 function BurgerMenuContent ( props )  {
@@ -17,7 +17,7 @@ function BurgerMenuContent ( props )  {
       />
       <DrawerItem
         label="Meine Marker"
-        onPress={() => navigation.navigate("MyMarkersScreen")}
+        onPress={() => { navigation.navigate("MyMarkersScreen"); navigation.dispatch(DrawerActions.closeDrawer()) }}
       />
       <DrawerItem
         label="Logout"

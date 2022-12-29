@@ -11,6 +11,7 @@ import { hawRegion } from "../constants/TestCoords";
 import * as Location from 'expo-location';
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase/firebase-config";
+import { markersRef } from "../constants/MainFunctions";
 
 const MapViewGoogle = (props) => {
   const [userPos, setUserPos] = useState([]);
@@ -20,24 +21,8 @@ const MapViewGoogle = (props) => {
 
   const [userMarker, setUserMarker] = useState([hawRegion]);
 
-  const markersRef = useRef([])
   let userMarkerLatitude = 0
   let userMarkerLongitude = 0
-
-  const q = query(collection(db, "markers"));
-  const readMarkerFromDB = onSnapshot(q, (QuerySnapshot) => {
-    const db_markers = [];
-    QuerySnapshot.forEach( (doc) => {
-      db_markers.push(doc.data().markers);
-    } );
-    markersRef.current = db_markers
-  })
-
-  // IMPORTANT!: MARKER von DB ablesen
-  // useEffect(() => {
-  //   readMarkerFromDB()
-  //   // console.log("after: " + markers);
-  // }, [region])
 
   const updateUserMarker = newInputRegion => {
     setUserMarker([newInputRegion])
@@ -142,12 +127,7 @@ const MapViewGoogle = (props) => {
   const [longitude, setLongitude] = useState(hawRegion.longitude)
   const [error, setError] = useState()
   const [isListingSelected, setIsListingSelected] = useState()
-
-  // useEffect(() => {
-  //   getCurrentPosition()
-  // }, [])
   
-
   const getCurrentPosition = () => {
     mapRef.current.animateToRegion({
       latitude: userPos.coords.latitude,
@@ -156,35 +136,6 @@ const MapViewGoogle = (props) => {
       longitudeDelta: 0.01
     })
   }
-
-  // const LocationButton = () => {
-  //   if (!isListingSelected) {
-  //     return (
-  //       <TouchableOpacity
-  //         style={{
-  //           backgroundColor: 'white',
-  //           position: 'absolute',
-  //           bottom: 10,
-  //           right: 10,
-  //           padding: 15,
-  //           elevation: 3,
-  //           alignItems: 'center',
-  //           alignSelf: 'flex-end',
-  //           justifyContent: 'center',
-  //           borderRadius: 50
-  //         }}
-  //         onPress={() => getCurrentPosition()}
-  //       >
-  //         <Icon 
-  //           name='navicon'
-  //           size={35}
-  //           color='white'
-  //         />
-  //       </TouchableOpacity>
-  //     )
-  //   }
-  //   return
-  // }
 
   return (
     <View style={{...StyleSheet.absoluteFillObject}}>
@@ -229,7 +180,8 @@ const MapViewGoogle = (props) => {
       >
       {/* DB Markers */}
       {
-        markersRef.current.map((val, index) => 
+        // markersRef.current.map((val, index) => 
+        markersRef.map((val, index) => 
           {
             let distanceToUserPos = "?"//getDistance(val,props.userPos.coords) / 1000
             if (userPos.coords != undefined)

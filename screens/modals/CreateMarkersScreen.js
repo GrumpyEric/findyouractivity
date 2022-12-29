@@ -1,11 +1,14 @@
 import React from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { stylesGlobal } from '../../constants/StylesGlobal'
 
-const CreateMarkersScreen = () => {
+const CreateMarkersScreen = ( {navigation} ) => {
   return (
     <View style={stylesGlobal.screenContainer}>
       <Text>Create Marker</Text>
+      <TouchableOpacity onPress={() => navigation.pop()}>
+        <Text>Close</Text>
+      </TouchableOpacity>
     </View>
   )
 }

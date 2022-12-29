@@ -35,8 +35,8 @@ const HomeScreen = ( {navigation} ) => {
       <View style={styles.button}>
         <ButtonRegular
           text={'CREATE MARKER'}
-          onPress={() => navigation.navigate('CreateMarkersScreen')}
-          // onPress={() => addMarkerToDB(auth, markers, eventNameInput, eventDescInput, userMarkerLatitude, userMarkerLongitude, setRegion, userMarker)}
+          // onPress={() => navigation.navigate('CreateMarkersScreen')}
+          onPress={() => addMarkerToDB(auth, 'EVENTNAME', 'EVENTDESC', 53.6, 10.045)}
         />
       </View>
     </View>
