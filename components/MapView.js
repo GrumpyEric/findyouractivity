@@ -11,7 +11,9 @@ import { hawRegion } from "../constants/TestCoords";
 import * as Location from 'expo-location';
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase/firebase-config";
-import { markersRef } from "../constants/MainFunctions";
+import { markersRef, userMarkerContext } from "../constants/MainFunctions";
+import FloatingActionButton from "./FloatingActionButton";
+import { latitudeContext, longitudeContext } from "./AppContext";
 
 const MapViewGoogle = (props) => {
   const [userPos, setUserPos] = useState([]);
@@ -28,6 +30,9 @@ const MapViewGoogle = (props) => {
     setUserMarker([newInputRegion])
     userMarkerLatitude = newInputRegion.latitude
     userMarkerLongitude = newInputRegion.longitude
+    latitudeContext._currentValue = userMarkerLatitude
+    longitudeContext._currentValue = userMarkerLongitude
+
     mapRef.current.animateToRegion({
       latitude: userMarkerLatitude,
       longitude: userMarkerLongitude,
@@ -47,8 +52,6 @@ const MapViewGoogle = (props) => {
 
       let currentUserPos = await Location.getCurrentPositionAsync({});
       setUserPos(currentUserPos);
-      // console.log(userPos);
-
     })();
   }, [region]);
   
@@ -122,11 +125,6 @@ const MapViewGoogle = (props) => {
   }
 
   const mapRef = useRef(null);
-
-  const [latitude, setLatitude] = useState(hawRegion.latitude)
-  const [longitude, setLongitude] = useState(hawRegion.longitude)
-  const [error, setError] = useState()
-  const [isListingSelected, setIsListingSelected] = useState()
   
   const getCurrentPosition = () => {
     mapRef.current.animateToRegion({
@@ -139,32 +137,11 @@ const MapViewGoogle = (props) => {
 
   return (
     <View style={{...StyleSheet.absoluteFillObject}}>
-      <TouchableOpacity
-        style={{
-          backgroundColor: 'white',
-          position: 'absolute',
-          bottom: 20,
-          right: 10,
-          borderWidth: StyleSheet.hairlineWidth,
-          borderColor: 'black',
-          // padding: 20,
-          elevation: 3,
-          alignItems: 'center',
-          alignSelf: 'flex-end',
-          justifyContent: 'center',
-          borderRadius: 30,
-          zIndex: 5,
-          width: 60,
-          height: 60
-        }}
+      <FloatingActionButton
         onPress={() => getCurrentPosition()}
-      >
-        <Icon 
-          name='location-arrow'
-          size={35}
-          color='black'
-        />
-      </TouchableOpacity>
+        bottomPos={100}
+        rightPos={10}
+      />
 
       <MapView
         provider = {PROVIDER_GOOGLE}

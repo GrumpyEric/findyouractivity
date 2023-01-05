@@ -77,12 +77,9 @@ const readMarkerFromDB = onSnapshot(q, (QuerySnapshot) => {
 // MARKER zur DB hinzufügen
 import { Timestamp, doc, setDoc } from 'firebase/firestore';
 import { Alert } from 'react-native';
+import { createContext } from 'react';
 
-const addMarkerToDB = async(auth, 
-  // markers, 
-  eventNameInput, eventDescInput, userMarkerLatitude, userMarkerLongitude, 
-  // setRegion, userMarker
-  ) => {
+const addMarkerToDB = async(auth, eventNameInput, eventDescInput, startDate, endDate, numberParticipants, tags, userMarkerLatitude, userMarkerLongitude, ) => {
   let userID = auth.currentUser.uid.toString()
   let timeStampObj = Timestamp.now()
   // TODO: timestamp in UNIX-Format setzen; DONE
@@ -93,6 +90,10 @@ const addMarkerToDB = async(auth,
       latitude: userMarkerLatitude,
       longitude: userMarkerLongitude,
       creation_date: timeStampObj.toDate(),
+      // startTime: date
+      // endTime:
+      // numberParticipants:
+      // tags:
       user: userID
     }
   });

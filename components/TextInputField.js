@@ -1,6 +1,6 @@
 import { View, StyleSheet, TextInput } from "react-native";
 
-// component props: placeholder, value, onChangeText, secureTextEntry
+// component props: placeholder, value, onChangeText, secureTextEntry, backgroundColor
 const TextInputField = (props) => { 
   return(
     <View style={styles.containerStyle}>
@@ -9,7 +9,7 @@ const TextInputField = (props) => {
         value={props.value}
         onChangeText={props.onChangeText}
         secureTextEntry={props.secureTextEntry}
-        style={styles.textInputStyle}
+        style={[styles.textInputStyle, {backgroundColor: props.backgroundColor}]}
       />
     </View>
   )

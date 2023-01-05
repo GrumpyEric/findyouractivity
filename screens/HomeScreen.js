@@ -10,6 +10,7 @@ import FloatingBurgerMenu from '../components/FloatingBurgerMenu';
 import { addMarkerToDB } from '../constants/MainFunctions';
 import ButtonRegular from '../components/ButtonRegular';
 import { auth } from '../firebase/firebase-config';
+import Colors from '../constants/Colors';
 
 const HomeScreen = ( {navigation} ) => {
   const [eventNameInput, onChangeEventInput] = useState("");
@@ -35,9 +36,10 @@ const HomeScreen = ( {navigation} ) => {
       <View style={styles.button}>
         <ButtonRegular
           text={'CREATE MARKER'}
-          // onPress={() => navigation.navigate('CreateMarkersScreen')}
-          onPress={() => addMarkerToDB(auth, 'EVENTNAME', 'EVENTDESC', 53.6, 10.045)}
-        />
+          onPress={() => navigation.navigate('CreateMarkersScreen')}
+          backgroundColor={Colors.findmyactivityBlue}
+          // onPress={() => addMarkerToDB(auth, 'EVENTNAME', 'EVENTDESC', 53.6, 10.045)}
+        /> 
       </View>
     </View>
   )

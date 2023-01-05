@@ -10,6 +10,7 @@ import ButtonRegular from '../components/ButtonRegular'
 import ButtonRegularWithBorder from '../components/ButtonRegularWithBorder'
 import TextButton from '../components/TextButton'
 import { handleSignUp, handleLogin } from '../constants/MainFunctions'
+import Colors from '../constants/Colors'
 
 auth.languageCode = auth.useDeviceLanguage();
 
@@ -33,12 +34,14 @@ const LoginScreen = () => {
           placeholder={"E-Mail"}
           value={email}
           onChangeText={text => setEmail(text)}
+          backgroundColor={'white'}
         />
         <TextInputField
           placeholder={"Password"}
           value={password}
           onChangeText={text => setPassword(text)}
           secureTextEntry={true}
+          backgroundColor={'white'}
         />
       </View>
 
@@ -46,14 +49,19 @@ const LoginScreen = () => {
         <ButtonRegular
           onPress={() => handleLogin(auth, email, password, navigation)}
           text={"Login"}
+          backgroundColor={Colors.findmyactivityBlue}
         />
         <ButtonRegularWithBorder
           onPress={() => handleSignUp(auth, email, password)}
           text={"Register"}
+          backgroundColor={'white'}
+          borderColor={Colors.findmyactivityBlue}
+          textColor={Colors.findmyactivityBlue}
         />
         <TextButton
           onPress={handleForgotPassword}
           text={"Forgot password?"}
+          textColor={Colors.findmyactivityBlue}
         />
       </View>
     </View>
