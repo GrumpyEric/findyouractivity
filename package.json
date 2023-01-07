@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@react-native-community/geolocation": "^3.0.3",
+    "@react-navigation/drawer": "^6.5.5",
     "@react-navigation/native": "^6.0.14",
     "@react-navigation/native-stack": "^6.9.2",
     "expo": "~47.0.8",
@@ -30,7 +31,7 @@
     "react-native-screens": "^3.18.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.19.3"
   },
   "private": true
 }

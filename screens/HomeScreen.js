@@ -98,7 +98,7 @@ const HomeScreen = () => {
       
       {/* MARKER ERSTELLEN */}
       {/* // TODO: make marker creation better - maybe just button with "create marker", then modal opens with marker creation formular */}
-      <TextInput style={styles.input} placeholder='EVENT NAME' value={eventNameInput} onChangeText={onChangeEventInput}></TextInput>
+      {/* <TextInput style={styles.input} placeholder='EVENT NAME' value={eventNameInput} onChangeText={onChangeEventInput}></TextInput>
       <TextInput style={styles.input} placeholder='DESCRIPTION' value={eventDescInput} onChangeText={onChangeDescInput}></TextInput>
       <TouchableOpacity
         onPress={() => addMarkerToDB(auth, markers, eventNameInput, eventDescInput, userMarkerLatitude, userMarkerLongitude, setRegion, userMarker)}
@@ -112,7 +112,7 @@ const HomeScreen = () => {
         style={styles.button}
       >
         <Text style={styles.buttonText}>Sign out</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       
       
@@ -150,9 +150,5 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
   },
-
-  map: {
-    ...StyleSheet.absoluteFillObject,
-  }
 
 })
