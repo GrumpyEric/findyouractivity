@@ -1,8 +1,6 @@
-import { StyleSheet } from "react-native";
 import Colors from "./Colors";
 import { StyleSheet, Platform, PixelRatio, Dimensions } from "react-native";
 import * as Device from 'expo-device';
-import Colors from "./Colors";
 
 const width = Dimensions.get("screen").width
 const height = Dimensions.get("screen").height
