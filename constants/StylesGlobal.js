@@ -1,4 +1,14 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform, PixelRatio, Dimensions } from "react-native";
+import * as Device from 'expo-device';
+import Colors from "./Colors";
+
+const width = Dimensions.get("screen").width
+const height = Dimensions.get("screen").height
+
+const isTablet = (width > 450) ? true : false
+const isIOS = Platform.OS === 'ios'
+const isAndroid = Platform.OS === 'android'
+const deviceName = Device.modelName
 
 const stylesGlobal = StyleSheet.create({
   //----- Text -----//
@@ -28,4 +38,4 @@ const stylesGlobal = StyleSheet.create({
 
 })
 
-export default stylesGlobal
+export { stylesGlobal, width, height, isAndroid, isIOS, isTablet }

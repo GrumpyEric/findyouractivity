@@ -1,5 +1,6 @@
 const Colors = {
   findmyactivityBlue: '#0782F9',
+  lightGrey: '#EEEEEE'
 
 }
 

@@ -6,15 +6,55 @@ import * as AddCalendarEvent from 'react-native-add-calendar-event';
 import RNCalendarEvents from 'react-native-calendar-events';
 import { reverseGeocodeAsync } from "expo-location";
 import Geocoder from 'react-native-geocoder';
+import Icon from "react-native-vector-icons/FontAwesome";
+import { hawRegion } from "../constants/TestCoords";
+import * as Location from 'expo-location';
+import { collection, query, onSnapshot } from "firebase/firestore";
+import { db } from "../firebase/firebase-config";
+import { markersRef, userMarkerContext } from "../constants/MainFunctions";
+import FloatingActionButton from "./FloatingActionButton";
+import { latitudeContext, longitudeContext } from "./AppContext";
 
-
-
-
-
-// TODO: make it class component
 const MapViewGoogle = (props) => {
+  const [userPos, setUserPos] = useState([null]);
 
+  // get current Region
+  const [region, setRegion] = useState(props.initialRegion);
 
+  const [userMarker, setUserMarker] = useState([hawRegion]);
+
+  let userMarkerLatitude = 0
+  let userMarkerLongitude = 0
+
+  const updateUserMarker = newInputRegion => {
+    setUserMarker([newInputRegion])
+    userMarkerLatitude = newInputRegion.latitude
+    userMarkerLongitude = newInputRegion.longitude
+    latitudeContext._currentValue = userMarkerLatitude
+    longitudeContext._currentValue = userMarkerLongitude
+
+    mapRef.current.animateToRegion({
+      latitude: userMarkerLatitude,
+      longitude: userMarkerLongitude,
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.01
+    })
+  }
+
+  // get user position
+  useEffect(() => {
+    (async () => {      
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        errorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let currentUserPos = await Location.getCurrentPositionAsync({});
+      setUserPos(currentUserPos);
+    })();
+  }, []);
+  
   const [selectedMarker, onSelectMarker] = useState();
 
   const HighlightMarker = inputMarker => {
@@ -85,59 +125,76 @@ const MapViewGoogle = (props) => {
   }
 
   const mapRef = useRef(null);
-
-
+  
+  const getCurrentPosition = () => {
+    if (userPos !== [null]) {
+    mapRef.current.animateToRegion({
+      latitude: userPos.coords.latitude,
+      longitude: userPos.coords.longitude,
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.01
+    })
+  }}
 
   return (
-    <MapView
-      provider = {PROVIDER_GOOGLE}
-      ref= {mapRef}
-      style={props.style}
-      initialRegion={props.initialRegion}
-      showsUserLocation={true}
-      followsUserLocation={true}
-      onPress = {props.onPress}
-      //onRegionChangeComplete runs when the user stops dragging MapView
-      onRegionChangeComplete={props.onRegionChangeComplete}
+    <View style={{...StyleSheet.absoluteFillObject}}>
+      <FloatingActionButton
+        onPress={() => getCurrentPosition()}
+        bottomPos={100}
+        rightPos={10}
+      />
 
-    >
-    {/* DB Markers */}
-    {
-      props.markers.map((val, index) => 
-        {
-          let distanceToUserPos = "?"//getDistance(val,props.userPos.coords) / 1000
-          if (props.userPos.coords != undefined)
+      <MapView
+        provider = {PROVIDER_GOOGLE}
+        region={region}
+        onRegionChangeComplete={(region) => setRegion(region)}
+        ref = {mapRef}
+        style={props.style}
+        initialRegion={props.initialRegion}
+        showsUserLocation={true}
+        followsUserLocation={true}
+        onPress = {(e) => updateUserMarker(e.nativeEvent.coordinate)}
+        //onRegionChangeComplete runs when the user stops dragging MapView        
+      >
+      {/* DB Markers */}
+      {
+        // markersRef.current.map((val, index) => 
+        markersRef.map((val, index) => 
           {
-            distanceToUserPos = getDistance(val,props.userPos.coords) / 1000
+            let distanceToUserPos = "?"//getDistance(val,props.userPos.coords) / 1000
+            if (userPos.coords != undefined)
+            {
+              distanceToUserPos = getDistance(val, userPos.coords) / 1000
+            }
+            return (
+            <Marker key={index} coordinate={val} pinColor={val.color} tracksViewChanges={true} onPress={() => HighlightMarker(val)}>
+              <Callout>
+                <Text key={Math.random().toString()}> {val.name} </Text>
+                <Text key={Math.random().toString()}> {val.description} </Text>
+                <Text> Distanz: {distanceToUserPos} km</Text>
+              </Callout>
+          </Marker>); 
           }
-          return (
-          <Marker key={index} coordinate={val} pinColor={val.color} tracksViewChanges={true} onPress={() => HighlightMarker(val)}>
-            <Callout onPress={() => calendarTest()}>
-              <Text key={Math.random().toString()}> {val.name} </Text>
-              <Text key={Math.random().toString()}> {val.description} </Text>
-              <Text> Distanz: {distanceToUserPos} km</Text>
-            </Callout>
-        </Marker>); 
-        }
-      )
-    }
+        )
+      }
 
-      
-    {/* User Marker */}
-    {
-      props.userMarker.map((val, index) => 
-        {
-          return (
-          <Marker key={index} coordinate={val} pinColor='blue' draggable={false} tracksViewChanges={true}>
-            <Callout >
+        
+      {/* User Marker */}
+      {
+        userMarker.map((val, index) => 
+          {
+            return (
+            <Marker key={index} coordinate={val} pinColor='blue' draggable={false} tracksViewChanges={true}>
+              <Callout >
                 <Text key={Math.random().toString()}> {props.eventNameInput} </Text>
                 <Text key={Math.random().toString()}> {props.eventDescInput} </Text>
-            </Callout>
-        </Marker>); 
-        }
-      )
-    }
-  </MapView>
+              </Callout>
+          </Marker>); 
+          }
+        )
+      }
+    </MapView>
+  </View>
   )
 }
 
