@@ -90,10 +90,10 @@ const addMarkerToDB = async(auth, eventNameInput, eventDescInput, startDate, end
       latitude: userMarkerLatitude,
       longitude: userMarkerLongitude,
       creation_date: timeStampObj.toDate(),
-      // startTime: date
-      // endTime:
-      // numberParticipants:
-      // tags:
+      startTime: startDate,
+      endTime: endDate,
+      numberParticipants: numberParticipants,
+      tags: tags,
       user: userID
     }
   });

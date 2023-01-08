@@ -16,7 +16,7 @@ import FloatingActionButton from "./FloatingActionButton";
 import { latitudeContext, longitudeContext } from "./AppContext";
 
 const MapViewGoogle = (props) => {
-  const [userPos, setUserPos] = useState([]);
+  const [userPos, setUserPos] = useState([null]);
 
   // get current Region
   const [region, setRegion] = useState(props.initialRegion);
@@ -53,7 +53,7 @@ const MapViewGoogle = (props) => {
       let currentUserPos = await Location.getCurrentPositionAsync({});
       setUserPos(currentUserPos);
     })();
-  }, [region]);
+  }, []);
   
   const [selectedMarker, onSelectMarker] = useState();
 
@@ -127,13 +127,14 @@ const MapViewGoogle = (props) => {
   const mapRef = useRef(null);
   
   const getCurrentPosition = () => {
+    if (userPos !== [null]) {
     mapRef.current.animateToRegion({
       latitude: userPos.coords.latitude,
       longitude: userPos.coords.longitude,
       latitudeDelta: 0.01,
       longitudeDelta: 0.01
     })
-  }
+  }}
 
   return (
     <View style={{...StyleSheet.absoluteFillObject}}>

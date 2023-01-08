@@ -27,6 +27,7 @@ const ForgotPasswordScreen = () => {
         placeholder={"Email"}
         value={email}
         onChangeText={text => setEmail(text)}
+        keyboardType={'default'}
         backgroundColor={'white'}
       />
 

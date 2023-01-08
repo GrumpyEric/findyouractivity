@@ -7,65 +7,185 @@ import { addMarkerToDB } from '../../constants/MainFunctions'
 import { latitudeContext, longitudeContext } from '../../components/AppContext'
 import Colors from '../../constants/Colors'
 import ButtonSmall from '../../components/ButtonSmall'
+import CloseScreenButton from '../../components/CloseScreenButton'
+import TextButton from '../../components/TextButton'
+import DateTimePickerModal from 'react-native-modal-datetime-picker'
 
-const CreateMarkersScreen = ( {navigation, latitude, longitude} ) => {
+import 'intl'
+import 'intl/locale-data/jsonp/de'
+import { intlFormat } from 'date-fns'
+
+const CreateMarkersScreen = ( {navigation} ) => {  
   const [eventName, setEventName] = useState()
   const [eventDescription, setEventDescription] = useState()
+  const [placeDesciption, setPlaceDescription] = useState()
+  const [numberParticipants, setNumberParticipants] = useState()
+
+  const pickedStartTime = useRef()
+  const pickedEndTime = useRef()
+  const kindOfTimePicker = useRef()
+  const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+
+  const showTimePicker = () => {
+    setTimePickerVisibility(true);
+  };
+
+  const hideTimePicker = () => {
+    setTimePickerVisibility(false);
+  };
+
+  // TODO: 
+  // if start time before time right now: error
+  // if end time before start time: error
+  const handleConfirmTime = (time) => {
+    if (kindOfTimePicker.current === 'start') {
+      pickedStartTime.current = time
+      console.log(pickedStartTime.current);
+    } else if (kindOfTimePicker.current === 'end') {
+      pickedEndTime.current = time
+      console.log(pickedEndTime.current);
+    }
+
+    hideTimePicker();
+  };
 
   useEffect(() => {
-    console.log(latitudeContext._currentValue);
-    console.log(longitudeContext._currentValue);
-  }, [])
+    console.log(pickedStartTime);
+  }, [pickedStartTime])
 
   useEffect(() => {
-    console.log(eventName);
-  }, [eventName])
+    console.log(pickedEndTime);
+  }, [pickedEndTime])
 
   useEffect(() => {
-    console.log(eventDescription);
-  }, [eventDescription])
+    console.log(kindOfTimePicker.current);
+  }, [kindOfTimePicker.current])
   
   return (
     <View style={stylesGlobal.screenContainer}>
-      <Text>Create Marker Screen</Text>
 
       <TextInputField
-        placeholder={'Text 1'}
+        placeholder={'Event name'}
         value={eventName}
         onChangeText={text => setEventName(text)}
+        keyboardType={'default'}
         backgroundColor={Colors.lightGrey}
+        hasLeftIcon={true}
+        iconName={'edit'}
       />
       <TextInputField
-        placeholder={'Text 2'}
+        placeholder={'Event description'}
         value={eventDescription}
         onChangeText={text => setEventDescription(text)}
+        keyboardType={'default'}
         backgroundColor={Colors.lightGrey}
+        hasLeftIcon={true}
+        iconName={'edit'}
+      />
+      <TextInputField
+        placeholder={'Place description'}
+        value={placeDesciption}
+        onChangeText={text => setPlaceDescription(text)}
+        keyboardType={'default'}
+        backgroundColor={Colors.lightGrey}
+        hasLeftIcon={true}
+        iconName={'map-pin'}
+      />
+      <TextInputField
+        placeholder={'Number of participants'}
+        value={numberParticipants}
+        onChangeText={text => setNumberParticipants(text)}
+        keyboardType={'number-pad'}
+        backgroundColor={Colors.lightGrey}
+        hasLeftIcon={true}
+        iconName={'male'}
       />
 
-      <ButtonSmall
-        text={'Abort'}
-        onPress={() => navigation.pop()}
-        backgroundColor={'red'}
+      <View style={{flexDirection: 'row'}}>
+      {pickedStartTime.current !== undefined
+      ?
+        <Text style={{alignSelf: 'center'}}>
+          Start: {intlFormat(pickedStartTime.current, {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+          }, 
+            {locale: 'de-DE',}
+          )}
+        </Text>
+        :
+        null
+        }
+        <TextButton
+          text={'Set start time'}
+          textColor={Colors.findmyactivityBlue}
+          onPress={() => {kindOfTimePicker.current = 'start'; showTimePicker()}}
+        />
+      </View>
+
+      <View style={{flexDirection: 'row'}}>
+      {pickedEndTime.current !== undefined
+      ?
+      // <Text>{format(pickedStartTime.current, 'dd.MM.YYY')}</Text>
+        <Text style={{alignSelf: 'center'}}>
+          End: {intlFormat(pickedEndTime.current, {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+          }, 
+            {locale: 'de-DE',}
+          )}
+        </Text>
+        :
+        null
+        }
+        <TextButton
+          text={'Set end time'}
+          textColor={Colors.findmyactivityBlue}
+          onPress={() => {kindOfTimePicker.current = 'end'; showTimePicker()}}
+        />
+      </View>
+
+      <DateTimePickerModal
+        isVisible={isTimePickerVisible}
+        mode="datetime"
+        onConfirm={handleConfirmTime}
+        onCancel={hideTimePicker}
       />
 
-      <ButtonSmall
-        text={'Create'}
-        onPress={() => navigation.pop()}
-        backgroundColor={Colors.findmyactivityBlue}
-      />
+      <View style={{flexDirection: 'row'}}>
+        <ButtonSmall
+          text={'Abort'}
+          onPress={() => navigation.pop()}
+          backgroundColor={'red'}
+        />
 
-      <TouchableOpacity onPress={() => addMarkerToDB(auth, eventName, eventDescription, latitudeContext._currentValue, longitudeContext._currentValue)}>
-        <Text>Add Marker to DB</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.pop()}>
-        <Text>Close</Text>
-      </TouchableOpacity>
+        <ButtonSmall
+          text={'Create'}
+          onPress={() => { addMarkerToDB(auth, eventName, eventDescription, pickedStartTime.current, pickedEndTime.current, numberParticipants, [], latitudeContext._currentValue, longitudeContext._currentValue); navigation.pop() }}
+          backgroundColor={Colors.findmyactivityBlue}
+        />
+      </View>
     </View>
   )
 }
 
 export default CreateMarkersScreen
 
-const styles = StyleSheet.create({
+// const styles = StyleSheet.create({
+//   topContainerStyle: {
+//     width: '100%',
+//     justifyContent: 'center',
+//   },
 
-})
+//   closeButtonStyle: {
+//     alignSelf: 'flex-end',
+//   },
+
+// })
