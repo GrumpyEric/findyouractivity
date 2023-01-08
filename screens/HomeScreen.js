@@ -1,89 +1,30 @@
 import { useNavigation } from '@react-navigation/core'
-import { auth, db } from '../firebase/firebase-config'
-
-import { collection, query, onSnapshot } from "firebase/firestore";
-import * as Location from 'expo-location';
 import React, {useState, useEffect, errorMsg } from "react";
 import { Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
 
 import { hawRegion } from '../constants/TestCoords';
-import { handleSignOut, addMarkerToDB } from '../constants/MainFunctions';
-import stylesGlobal from '../constants/StylesGlobal'
+
+import { height, stylesGlobal } from '../constants/StylesGlobal'
 import MapViewGoogle from '../components/MapView';
+import FloatingBurgerMenu from '../components/FloatingBurgerMenu';
+import { addMarkerToDB } from '../constants/MainFunctions';
+import ButtonRegular from '../components/ButtonRegular';
+import { auth } from '../firebase/firebase-config';
+import Colors from '../constants/Colors';
 
-let userMarkerLatitude = 0
-let userMarkerLongitude = 0
-let markers = [];
-
-// const user = auth.currentUser;
-
-const HomeScreen = () => {
-  const [userMarker, setUserMarker] = useState([hawRegion]);
-  const [userPos, setUserPos] = useState({
-    latitude: 51.5079145,
-    longitude: -0.0899163,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
-
-  });
-
-
+const HomeScreen = ( {navigation} ) => {
   const [eventNameInput, onChangeEventInput] = useState("");
   const [eventDescInput, onChangeDescInput] = useState("");
-  // const [eventLongInput, onChangeLongInput] = useState("");
-  // const [eventLatInput, onChangeLatInput] = useState("");
-
-  const navigation = useNavigation()
-
-  // get current Region
-  const [region, setRegion] = useState({
-    latitude: 51.5079145,
-    longitude: -0.0899163,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
-
-  });
-
-  // IMPORTANT!: MARKER von DB ablesen
-  const q = query(collection(db,"markers"));
-  const readMarkerFromDB = onSnapshot(q, (QuerySnapshot) => {
-    const db_markers = [];  
-    QuerySnapshot.forEach( (doc) => {
-      db_markers.push(doc.data().markers);
-    } );    
-    markers = db_markers;
-  })
-
-  const updateUserMarker = newInputRegion => {
-    setUserMarker([newInputRegion])
-    userMarkerLatitude = newInputRegion.latitude
-    userMarkerLongitude = newInputRegion.longitude
-  }
-
-  // get user position
-  useEffect(() => {
-    (async () => {      
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        errorMsg('Permission to access location was denied');
-        return;
-      }
-
-      let bnuuy = await Location.getCurrentPositionAsync({});
-      setUserPos(bnuuy);
-    })();
-  }, []);
 
   return (
     <View style={[stylesGlobal.screenContainer]}>
+      <FloatingBurgerMenu
+        onPress={() => navigation.openDrawer()}
+      />
+
       <MapViewGoogle
         style={styles.map_container}
         initialRegion={hawRegion}
-        onPress = {(e) => updateUserMarker(e.nativeEvent.coordinate)}
-        onRegionChangeComplete={(region) => setRegion(region)}
-        markers={markers}
-        userPos={userPos}
-        userMarker={userMarker}
         eventNameInput={eventNameInput}
         eventDescInput={eventDescInput}
       />
@@ -91,23 +32,15 @@ const HomeScreen = () => {
       {/* MARKER ERSTELLEN */}
       {/* // TODO: make marker creation better - maybe just button with "create marker", then modal opens with marker creation formular */}
       {/* <TextInput style={styles.input} placeholder='EVENT NAME' value={eventNameInput} onChangeText={onChangeEventInput}></TextInput>
-      <TextInput style={styles.input} placeholder='DESCRIPTION' value={eventDescInput} onChangeText={onChangeDescInput}></TextInput>
-      <TouchableOpacity
-        onPress={() => addMarkerToDB(auth, markers, eventNameInput, eventDescInput, userMarkerLatitude, userMarkerLongitude, setRegion, userMarker)}
-        style={styles.button}
-      >
-        <Text style={styles.buttonText}>CREATE MARKER</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={() => handleSignOut(auth, navigation)}
-        style={styles.button}
-      >
-        <Text style={styles.buttonText}>Sign out</Text>
-      </TouchableOpacity> */}
-
-      
-      
+      <TextInput style={styles.input} placeholder='DESCRIPTION' value={eventDescInput} onChangeText={onChangeDescInput}></TextInput> */}
+      <View style={styles.button}>
+        <ButtonRegular
+          text={'CREATE MARKER'}
+          onPress={() => navigation.navigate('CreateMarkersScreen')}
+          backgroundColor={Colors.findmyactivityBlue}
+          // onPress={() => addMarkerToDB(auth, 'EVENTNAME', 'EVENTDESC', 53.6, 10.045)}
+        /> 
+      </View>
     </View>
   )
 }
@@ -116,12 +49,10 @@ export default HomeScreen
 
 const styles = StyleSheet.create({
    button: {
-    backgroundColor: '#0782F9',
-    width: '60%',
-    padding: 15,
-    borderRadius: 10,
     alignItems: 'center',
-    marginTop: 40,
+    position: 'absolute',
+    bottom: 0,
+    marginBottom: height * 0.05
   },
   buttonText: {
     color: 'white',

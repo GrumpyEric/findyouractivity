@@ -53,17 +53,33 @@ import { signOut } from 'firebase/auth'
 const handleSignOut = (auth, navigation) => {
   signOut(auth)
   .then(() => {
-    navigation.replace("Login")
+    navigation.navigate("Login")
   })
   .catch(error => alert(error.message))
 }
 
-// MARKER zur DB hinzufügen
-import { Timestamp, doc, setDoc, onSnapshot } from 'firebase/firestore';
+// Query snapshot Marker
+import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from '../firebase/firebase-config';
-import { Alert } from 'react-native';
+// import { useRef } from 'react';
 
-const addMarkerToDB = async(auth, markers, eventNameInput, eventDescInput, userMarkerLatitude, userMarkerLongitude, setRegion, userMarker) => {
+let markersRef
+
+const q = query(collection(db, "markers"));
+const readMarkerFromDB = onSnapshot(q, (QuerySnapshot) => {
+  const db_markers = [];
+  QuerySnapshot.forEach( (doc) => {
+    db_markers.push(doc.data().markers);
+  } );
+  markersRef = db_markers
+})
+
+// MARKER zur DB hinzufügen
+import { Timestamp, doc, setDoc } from 'firebase/firestore';
+import { Alert } from 'react-native';
+import { createContext } from 'react';
+
+const addMarkerToDB = async(auth, eventNameInput, eventDescInput, startDate, endDate, numberParticipants, tags, userMarkerLatitude, userMarkerLongitude, ) => {
   let userID = auth.currentUser.uid.toString()
   let timeStampObj = Timestamp.now()
   // TODO: timestamp in UNIX-Format setzen; DONE
@@ -74,12 +90,17 @@ const addMarkerToDB = async(auth, markers, eventNameInput, eventDescInput, userM
       latitude: userMarkerLatitude,
       longitude: userMarkerLongitude,
       creation_date: timeStampObj.toDate(),
+      startTime: startDate,
+      endTime: endDate,
+      numberParticipants: numberParticipants,
+      tags: tags,
+      user: userID
     }
   });
   const alerta_title = "Marker has been Set"
   const alerta_msg = "Latitude: " + userMarkerLatitude.toString() + "\nLongitude" + userMarkerLongitude.toString()
   Alert.alert(alerta_title,alerta_msg);
-  setRegion(userMarker);
+  // setRegion(userMarker);
 }
 
-export { handleForgotPassword, handleSignUp, handleLogin, handleSignOut, addMarkerToDB }
+export { handleForgotPassword, handleSignUp, handleLogin, handleSignOut, addMarkerToDB, markersRef }
