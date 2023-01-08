@@ -18,7 +18,7 @@ export default ButtonSmall
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: Colors.findmyactivityBlue,
+    backgroundColor: Colors.findmyactivityYellow,
     width: 150,
     padding: 15,
     borderRadius: 10,

@@ -40,6 +40,8 @@ export default TextInputField
 const styles = StyleSheet.create({
 
   textInputStyle: {
+    backgroundColor: '#FCFCFC',
+    paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
     flex: 1,

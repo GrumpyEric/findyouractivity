@@ -1,3 +1,5 @@
+import { StyleSheet } from "react-native";
+import Colors from "./Colors";
 import { StyleSheet, Platform, PixelRatio, Dimensions } from "react-native";
 import * as Device from 'expo-device';
 import Colors from "./Colors";
@@ -23,7 +25,8 @@ const stylesGlobal = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: '10%'
+    paddingHorizontal: '10%',
+    backgroundColor: Colors.findmyactivityBackground
   },
 
   button: {
