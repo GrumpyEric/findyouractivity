@@ -19,7 +19,7 @@ export default ButtonRegular
 const styles = StyleSheet.create({
   button: {
     backgroundColor: Colors.findmyactivityYellow,
-    color: Colors.findmyactivityText,
+    color: 'white',
     borderWidth: 1,
     borderColor: Colors.findmyactivityYellow,
     width: 200,
