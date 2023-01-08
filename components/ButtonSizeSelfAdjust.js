@@ -18,7 +18,7 @@ export default ButtonSizeSelfAdjust
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: Colors.findmyactivityBlue,
+    backgroundColor: Colors.findmyactivityYellow,
     // width: '100%',
     padding: 15,
     borderRadius: 10,

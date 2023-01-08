@@ -9,7 +9,7 @@ const TextButton = (props) => {
       onPress={props.onPress}
       style={styles.button}
     >
-      <Text style={[stylesGlobal.standardText, {color: Colors.findmyactivityBlue}]}>{props.text}</Text>
+      <Text style={[stylesGlobal.standardText, {color: Colors.findmyactivityText}]}>{props.text}</Text>
     </TouchableOpacity>
   )
 }

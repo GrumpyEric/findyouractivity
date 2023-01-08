@@ -9,7 +9,7 @@ const ButtonRegularWithBorder = (props) => {
       onPress={props.onPress}
       style={styles.button}
     >
-      <Text style={[stylesGlobal.standardText, {color: Colors.findmyactivityBlue}]}>{props.text}</Text>
+      <Text style={[stylesGlobal.standardText, {color: Colors.findmyactivityYellow}]}>{props.text}</Text>
     </TouchableOpacity>
   )
 }
@@ -18,9 +18,9 @@ export default ButtonRegularWithBorder
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: 'white',
+    backgroundColor: Colors.findmyactivityWhite,
     borderWidth: 2,
-    borderColor: Colors.findmyactivityBlue,
+    borderColor: Colors.findmyactivityYellow,
     width: 200,
     padding: 15,
     borderRadius: 10,
