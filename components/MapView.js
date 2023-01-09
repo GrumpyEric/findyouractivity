@@ -13,7 +13,7 @@ import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase/firebase-config";
 import { markersRef, userMarkerContext } from "../constants/MainFunctions";
 import FloatingActionButton from "./FloatingActionButton";
-import { latitudeContext, longitudeContext } from "./AppContext";
+import { latitudeContext, longitudeContext, mapRef } from "./AppContext";
 
 const MapViewGoogle = (props) => {
   const [userPos, setUserPos] = useState([null]);
@@ -124,7 +124,7 @@ const MapViewGoogle = (props) => {
     })
   }
 
-  const mapRef = useRef(null);
+  //const mapRef = useRef(null);
   
   const getCurrentPosition = () => {
     if (userPos !== [null]) {

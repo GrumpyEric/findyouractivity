@@ -9,8 +9,9 @@ import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen'
 import MyMarkersScreen from './screens/MyMarkersScreen';
+import FilterScreen from './screens/FilterScreen';
 import CreateMarkersScreen from './screens/modals/CreateMarkersScreen';
-import BurgerMenuContent from './components/Drawer/BurgerMenuContent'
+import BurgerMenuContent from './components/Drawer/BurgerMenuContent';
 import { isIOS, isTablet } from './constants/StylesGlobal';
 
 const Stack = createStackNavigator();
@@ -81,6 +82,7 @@ export default function App() {
           })}>
           <Stack.Screen name='CreateMarkersScreen' component={CreateMarkersScreen}/>
           <Stack.Screen name="MyMarkersScreen" component={MyMarkersScreen}/>
+          <Stack.Screen name="FilterScreen" component={FilterScreen}/>
         </Stack.Group>
         
       </Stack.Navigator>

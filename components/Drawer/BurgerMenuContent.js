@@ -20,6 +20,11 @@ function BurgerMenuContent ( props )  {
         onPress={() => { navigation.navigate("MyMarkersScreen"); navigation.dispatch(DrawerActions.closeDrawer()) }}
       />
       <DrawerItem
+        label="[Preference Test; NOT WORKING YET]"
+        onPress={() => { navigation.navigate("FilterScreen"); navigation.dispatch(DrawerActions.closeDrawer()) }}
+      />
+
+      <DrawerItem
         label="Logout"
         onPress={() => handleSignOut(auth, navigation)} 
       />

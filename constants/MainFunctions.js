@@ -74,6 +74,7 @@ const readMarkerFromDB = onSnapshot(q, (QuerySnapshot) => {
   markersRef = db_markers
 })
 
+
 // MARKER zur DB hinzufügen
 import { Timestamp, doc, setDoc } from 'firebase/firestore';
 import { Alert } from 'react-native';
