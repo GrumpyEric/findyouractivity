@@ -1,38 +1,63 @@
-import Multiselect from 'multiselect-react-dropdown';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import { stylesGlobal } from '../constants/StylesGlobal'
+
+import React, { useState } from 'react'
+import { View, Text, TouchableOpacity, ScrollView,StyleSheet } from 'react-native';
+import { SelectList,MultipleSelectList } from 'react-native-dropdown-select-list'
+
+import ButtonRegularWithBorder from '../components/ButtonRegular';
+
+import Colors from '../constants/Colors'
+
 
 const FilterScreen = ( {navigation} ) => {
 
-  const Filters = {
-    options: [
-        {name: 'Fußball', id: 1},
-        {name: 'Basketball', id: 2},        
-        {name: 'Tischtennis', id: 3},
-        {name: 'Schach', id: 4},
-        {name: 'Kartenspiel', id: 5}
-    ]
+  const [selected, setSelected] = useState([]);
+  const [filtersRef, setFilters] = useState([]);
 
-    };
+  const data = [
+    {key:'1', value:'Fußball'},
+    {key:'2', value:'Basketball'},
+    {key:'3', value:'Schach'},
+    {key:'4', value:'Kartenspiel'},
+    {key:'5', value:'Tischtennis'},
+    {key:'6', value:'Picknick'},
+    {key:'7', value:'Shopping'}
+  ]
 
-    const onSelect = (selectedList, selectedItem) => {
-        console.log(selectedItem, " has been selected");
-    };
-    
-    const onRemove = (selectedList, removedItem) => {
-        console.log(selectedItem, " has been removed");
-    };
+  const saveFilters = () => {
+    alert("TODO: Filter-Auswahl speichern")
+    navigation.pop()
+  }
 
-  return (
-    <Multiselect
-        options={Filters.options} // Options to display in the dropdown
-        selectedValues={Filters.selectedValue} // Preselected value to persist in dropdown
-        onSelect={onSelect} // Function will trigger on select event
-        onRemove={onRemove} // Function will trigger on remove event
-        displayValue="name" // Property name to display in the dropdown options
-    />
-  )
+ 
+return(
+  <View>
+  <MultipleSelectList  
+      defaultOption={filtersRef}
+      setSelected={(val) => setSelected(val)} 
+      data={data} 
+      save="value"
+      //onSelect={() => alert(selected)} 
+      label="Aktivitätstyp"
+  />
+    <View style={hampter.button}>
+    <ButtonRegularWithBorder
+      text={'SAVE FILTERS'}
+      onPress={() => saveFilters()}
+      backgroundColor={Colors.findmyactivityYellow}
+      // onPress={() => addMarkerToDB(auth, 'EVENTNAME', 'EVENTDESC', 53.6, 10.045)}
+    /> 
+    </View>
+  </View>
+)
+
 }
 
 export default FilterScreen
 
+const hampter = StyleSheet.create({
+  button: {
+
+    alignItems: 'center',
+    marginTop: 40,
+  },
+})

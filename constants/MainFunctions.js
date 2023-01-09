@@ -104,4 +104,6 @@ const addMarkerToDB = async(auth, eventNameInput, eventDescInput, startDate, end
   // setRegion(userMarker);
 }
 
+
+
 export { handleForgotPassword, handleSignUp, handleLogin, handleSignOut, addMarkerToDB, markersRef }
