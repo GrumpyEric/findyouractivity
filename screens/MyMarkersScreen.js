@@ -37,7 +37,8 @@ const moveToMarker = (inputMarker) => {
               <View  key={index} style={{backgroundColor: '#DDDDDD', marginBottom: 10}}>
                 <TouchableOpacity onPress={() => moveToMarker(val)}>
                   <Text key={Math.random().toString()}> {"MARKERNAME: " + val.name} </Text>
-                  <Text key={Math.random().toString()}> {"BESCHREIBUNG: " + val.description} </Text>
+                  <Text key={Math.random().toString()}> {"BESCHREIBUNG: " + val.description} </Text>                  
+                  <Text> Tags: {val.tags} </Text>
                   {/*<Text> Distanz: {distanceToUserPos} km</Text>*/}
                 </TouchableOpacity>
                 {/* <Text> Distanz: {distanceToUserPos} km</Text> */}

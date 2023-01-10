@@ -4,12 +4,13 @@ import { stylesGlobal } from '../../constants/StylesGlobal'
 import TextInputField from '../../components/TextInputField'
 import { auth } from '../../firebase/firebase-config'
 import { addMarkerToDB } from '../../constants/MainFunctions'
-import { latitudeContext, longitudeContext } from '../../components/AppContext'
+import { latitudeContext, longitudeContext, tagData } from '../../components/AppContext'
 import Colors from '../../constants/Colors'
 import ButtonSmall from '../../components/ButtonSmall'
 import CloseScreenButton from '../../components/CloseScreenButton'
 import TextButton from '../../components/TextButton'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
+import { SelectList,MultipleSelectList } from 'react-native-dropdown-select-list'
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
@@ -20,6 +21,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
   const [eventDescription, setEventDescription] = useState()
   const [placeDesciption, setPlaceDescription] = useState()
   const [numberParticipants, setNumberParticipants] = useState()
+  const [tags, setEventTags] = useState([]);
 
   const pickedStartTime = useRef()
   const pickedEndTime = useRef()
@@ -100,6 +102,15 @@ const CreateMarkersScreen = ( {navigation} ) => {
         hasLeftIcon={true}
         iconName={'male'}
       />
+      {/* Tags */}
+      <MultipleSelectList  
+      setSelected={(val) => setEventTags(val)} 
+      data={tagData} 
+      value={tags}
+      save="value"
+      //onSelect={() => alert(selected)} 
+      label="Aktivitätstyp"
+  />
 
       <View style={{flexDirection: 'row'}}>
       {pickedStartTime.current !== undefined
@@ -168,7 +179,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
 
         <ButtonSmall
           text={'Create'}
-          onPress={() => { addMarkerToDB(auth, eventName, eventDescription, pickedStartTime.current, pickedEndTime.current, numberParticipants, [], latitudeContext._currentValue, longitudeContext._currentValue); navigation.pop() }}
+          onPress={() => { addMarkerToDB(auth, eventName, eventDescription, pickedStartTime.current, pickedEndTime.current, numberParticipants, tags, latitudeContext._currentValue, longitudeContext._currentValue); navigation.pop() }}
           backgroundColor={Colors.findmyactivityBlue}
         />
       </View>

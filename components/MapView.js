@@ -11,9 +11,13 @@ import { hawRegion } from "../constants/TestCoords";
 import * as Location from 'expo-location';
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase/firebase-config";
-import { markersRef, userMarkerContext } from "../constants/MainFunctions";
+import { markersRef, userMarkerContext, applyFilters } from "../constants/MainFunctions";
 import FloatingActionButton from "./FloatingActionButton";
-import { latitudeContext, longitudeContext, mapRef } from "./AppContext";
+import { latitudeContext, longitudeContext, mapRef, filterContext } from "./AppContext";
+
+import 'intl'
+import 'intl/locale-data/jsonp/de'
+import { intlFormat } from 'date-fns'
 
 const MapViewGoogle = (props) => {
   const [userPos, setUserPos] = useState([null]);
@@ -59,6 +63,7 @@ const MapViewGoogle = (props) => {
 
   const HighlightMarker = inputMarker => {
     onSelectMarker(inputMarker)
+    //alert(inputMarker.startTime)
     //Alert.alert(selectedMarker.name.toString(), selectedMarker.description.toString() );
     //Alert.alert(selectedMarker.longitude.toString(), selectedMarker.latitude.toString() );
   }
@@ -124,6 +129,8 @@ const MapViewGoogle = (props) => {
     })
   }
 
+
+
   //const mapRef = useRef(null);
   
   const getCurrentPosition = () => {
@@ -144,16 +151,22 @@ const MapViewGoogle = (props) => {
         rightPos={10}
       />
 
+<FloatingActionButton
+        onPress={() => alert(filterContext._current_value)}
+        bottomPos={250}
+        rightPos={10}
+      />
+
       <MapView
         provider = {PROVIDER_GOOGLE}
         region={region}
-        onRegionChangeComplete={(region) => setRegion(region)}
+        onRegionChangeComplete={(region) => {setRegion(region)} }
         ref = {mapRef}
         style={props.style}
         initialRegion={props.initialRegion}
         showsUserLocation={true}
         followsUserLocation={true}
-        onPress = {(e) => updateUserMarker(e.nativeEvent.coordinate)}
+        onLongPress = {(e) => updateUserMarker(e.nativeEvent.coordinate)}
         //onRegionChangeComplete runs when the user stops dragging MapView        
       >
       {/* DB Markers */}
@@ -166,12 +179,42 @@ const MapViewGoogle = (props) => {
             {
               distanceToUserPos = getDistance(val, userPos.coords) / 1000
             }
+
+            const displayTags = () => {
+              if( (val.tags != undefined)) 
+              {
+                return <Text> Tags: {val.tags.toString()}</Text>
+              }
+            }
+
+            const displayTime = (val) => {
+              if( (val.startTime != undefined) ) 
+              {
+                return <Text> Start-Zeit: {intlFormat(val.startTime, {
+                  weekday: 'long',
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                  }, 
+                    {locale: 'de-DE',}
+                  )} </Text>
+              }
+              else
+              {
+                return <Text> Start-Zeit: {val.startTime} </Text>
+              }
+            }
+
             return (
             <Marker key={index} coordinate={val} pinColor={val.color} tracksViewChanges={true} onPress={() => HighlightMarker(val)}>
               <Callout>
                 <Text key={Math.random().toString()}> {val.name} </Text>
                 <Text key={Math.random().toString()}> {val.description} </Text>
+                { displayTime(val) }
                 <Text> Distanz: {distanceToUserPos} km</Text>
+                { displayTags() }
               </Callout>
           </Marker>); 
           }

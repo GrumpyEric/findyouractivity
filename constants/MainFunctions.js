@@ -61,24 +61,62 @@ const handleSignOut = (auth, navigation) => {
 // Query snapshot Marker
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from '../firebase/firebase-config';
+import { filterContext } from '../components/AppContext';
 // import { useRef } from 'react';
 
 let markersRef
+let db_markers = [];
 
 const q = query(collection(db, "markers"));
 const readMarkerFromDB = onSnapshot(q, (QuerySnapshot) => {
-  const db_markers = [];
+  db_markers = [];
   QuerySnapshot.forEach( (doc) => {
     db_markers.push(doc.data().markers);
   } );
-  markersRef = db_markers
+  applyFilters()  
+  //markersRef = db_markers
 })
 
+// TODO: filtert noch nicht nach den Preferences, sondern nur danach ob es überhaupt ne tag-variable besitzt oder nicht
+const applyFilters = () => {
+  const initMarkers = db_markers // backup der db-marker
+  const validMarkers = [];
+  const preferTags = filterContext._current_value
+  if ( preferTags != undefined )
+  {
+    preferTags.map((preferTagVal, preferTagIndex) => {
+      db_markers.map((dbVal, dbIndex) => {
+        if (dbVal.tags != undefined)
+        {
+          //validMarkers.push(dbVal)
+          //console.log("DB Marker: ", dbVal.name, " Tags: ", dbVal.tags, " valid Marker: ", dbVal.tags.includes("Kartenspiel"), " ", preferTagVal )
+          if (dbVal.tags.includes(preferTagVal.toString()))
+          {
+            if (!validMarkers.includes(dbVal))
+            {
+              validMarkers.push(dbVal)
+            }
+            
+            console.log("valid Markers: ", validMarkers)
+          }
+        }
+      })
+    })    
+    markersRef = validMarkers
+  }
+  else
+  {
+    markersRef = db_markers
+  }
+  //alert(validMarkers)
+  //markersRef = validMarkers
+}
 
 // MARKER zur DB hinzufügen
 import { Timestamp, doc, setDoc } from 'firebase/firestore';
 import { Alert } from 'react-native';
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
+import { useHandler } from 'react-native-reanimated';
 
 const addMarkerToDB = async(auth, eventNameInput, eventDescInput, startDate, endDate, numberParticipants, tags, userMarkerLatitude, userMarkerLongitude, ) => {
   let userID = auth.currentUser.uid.toString()
@@ -104,6 +142,4 @@ const addMarkerToDB = async(auth, eventNameInput, eventDescInput, startDate, end
   // setRegion(userMarker);
 }
 
-
-
-export { handleForgotPassword, handleSignUp, handleLogin, handleSignOut, addMarkerToDB, markersRef }
+export { handleForgotPassword, handleSignUp, handleLogin, handleSignOut, addMarkerToDB, markersRef, applyFilters}

@@ -1,50 +1,78 @@
 
-import React, { useState } from 'react'
-import { View, Text, TouchableOpacity, ScrollView,StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react'
+import { Alert,View, Text, TouchableOpacity, ScrollView,StyleSheet } from 'react-native';
 import { SelectList,MultipleSelectList } from 'react-native-dropdown-select-list'
+import { filterContext,tagData } from '../components/AppContext';
+
+import { applyFilters } from '../constants/MainFunctions';
 
 import ButtonRegularWithBorder from '../components/ButtonRegular';
+import ButtonSmall from '../components/ButtonSmall';
 
 import Colors from '../constants/Colors'
 
 
+
 const FilterScreen = ( {navigation} ) => {
 
-  const [selected, setSelected] = useState([]);
-  const [filtersRef, setFilters] = useState([]);
+  const [selected, setSelected] = useState(filterContext._current_value);
+  useEffect(() => {
+    //setSelected(filterContext._currentValue)
+    console.log("SELECTED: ", selected)
+    console.log("FILTERCONTEXT 1: ", filterContext._current_value)
+  }, [selected]);
 
-  const data = [
-    {key:'1', value:'Fußball'},
-    {key:'2', value:'Basketball'},
-    {key:'3', value:'Schach'},
-    {key:'4', value:'Kartenspiel'},
-    {key:'5', value:'Tischtennis'},
-    {key:'6', value:'Picknick'},
-    {key:'7', value:'Shopping'}
-  ]
+
 
   const saveFilters = () => {
-    alert("TODO: Filter-Auswahl speichern")
-    navigation.pop()
+    //alert("TODO: Filter-Auswahl speichern")
+    //filtersRef = selected
+    filterContext._current_value = selected
+    //alert(filterContext._currentValue)
+    //setSelected([]);
+    applyFilters()
+    const alerta_title = "Filters have been applied"
+    const alerta_msg = filterContext._current_value.toString()
+    Alert.alert(alerta_title,alerta_msg);
+    //navigation.pop()
   }
 
+  const clearFilters = () => {
+    setSelected([])
+    filterContext._current_value = undefined   
+    applyFilters()
+    const alerta_title = "Filters have been reset"
+    Alert.alert(alerta_title);
+    //navigation.pop()
+  }
  
 return(
   <View>
+
   <MultipleSelectList  
-      defaultOption={filtersRef}
-      setSelected={(val) => setSelected(val)} 
-      data={data} 
+      setSelected={selected}//{(val) => setSelected(val)} 
+      data={tagData} 
       save="value"
       //onSelect={() => alert(selected)} 
       label="Aktivitätstyp"
+      //defaultOption={}
+
   />
     <View style={hampter.button}>
     <ButtonRegularWithBorder
-      text={'SAVE FILTERS'}
+      text={'APPLY FILTERS'}
       onPress={() => saveFilters()}
       backgroundColor={Colors.findmyactivityYellow}
-      // onPress={() => addMarkerToDB(auth, 'EVENTNAME', 'EVENTDESC', 53.6, 10.045)}
+    />
+    <ButtonRegularWithBorder
+      text={'CLEAR FILTERS'}
+      onPress={() => clearFilters()}
+      backgroundColor={'red'}
+    />
+    <ButtonRegularWithBorder
+      text={'CLOSE'}
+      onPress={() => navigation.pop()}
+      backgroundColor={'hotpink'}
     /> 
     </View>
   </View>
