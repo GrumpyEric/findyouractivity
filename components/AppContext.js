@@ -6,12 +6,12 @@ export const mapRef = createRef(null);
 export const filterContext = createContext(0)
 console.log("filterContext value: ", filterContext._current_value)
 export const tagData = [
-    {key:'1', value:'Fußball'},
-    {key:'2', value:'Basketball'},
-    {key:'3', value:'Schach'},
-    {key:'4', value:'Kartenspiel'},
-    {key:'5', value:'Tischtennis'},
-    {key:'6', value:'Picknick'},
-    {key:'7', value:'Shopping'},
-    {key:'8', value:'Treffen'}
+    {label:'Fußball', value:'Fußball'},
+    {label:'Basketball', value:'Basketball'},
+    {label:'Schach', value:'Schach'},
+    {label:'Kartenspiel', value:'Kartenspiel'},
+    {label:'Tischtennis', value:'Tischtennis'},
+    {label:'Picknick', value:'Picknick'},
+    {label:'Shopping', value:'Shopping'},
+    {label:'Treffen', value:'Treffen'}
   ]

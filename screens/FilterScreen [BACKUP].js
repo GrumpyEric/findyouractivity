@@ -11,60 +11,37 @@ import ButtonSmall from '../components/ButtonSmall';
 
 import Colors from '../constants/Colors'
 
-import DropDownPicker from 'react-native-dropdown-picker';
 
 
 const FilterScreen = ( {navigation} ) => {
 
   const [selected, setSelected] = useState(filterContext._current_value);
-  const [open, setOpen] = useState(false);
-  const [items, setItems] = useState(tagData);  
-  const [value, setValue] = useState(filterContext._current_value);
-  
-  // ausgewählte Filter als Badges anzeigen
-  DropDownPicker.setMode("BADGE");
-
-  // deutsche Übersetzung für die Dropdown_Liste
-  DropDownPicker.addTranslation("DE", {
-    PLACEHOLDER: "Wähle die gewünschten Tags aus",
-    SEARCH_PLACEHOLDER: "Suche...",
-    SELECTED_ITEMS_COUNT_TEXT: {
-      1: '1 Tags wurde ausgewählt',
-      // Feel free to add more
-      n: '{count} Tags wurden ausgewählt'
-    },
-    NOTHING_TO_SHOW: "NOTHING TO SHOW"
-  });
-  
-  // deutsche Sprache einsetzen
-  DropDownPicker.setLanguage("DE");
-
   useEffect(() => {
     //setSelected(filterContext._currentValue)
-    //console.log("VALUE: ", value)
-    //console.log("FILTERCONTEXT 1: ", filterContext._current_value)
-  }, []);
+    console.log("SELECTED: ", selected)
+    console.log("FILTERCONTEXT 1: ", filterContext._current_value)
+  }, [selected]);
 
 
 
   const saveFilters = () => {
     //alert("TODO: Filter-Auswahl speichern")
     //filtersRef = selected
-    filterContext._current_value = value
+    filterContext._current_value = selected
     //alert(filterContext._currentValue)
     //setSelected([]);
     applyFilters()
-    const alerta_title = "Filter wurden angewendet"
+    const alerta_title = "Filters have been applied"
     const alerta_msg = filterContext._current_value.toString()
     Alert.alert(alerta_title,alerta_msg);
     //navigation.pop()
   }
 
   const clearFilters = () => {
-    setValue([])
+    setSelected([])
     filterContext._current_value = undefined   
     applyFilters()
-    const alerta_title = "Filter wurden zurückgesetzt"
+    const alerta_title = "Filters have been reset"
     Alert.alert(alerta_title);
     //navigation.pop()
   }
@@ -72,18 +49,15 @@ const FilterScreen = ( {navigation} ) => {
 return(
   <View>
 
-    <DropDownPicker
-      searchable={true}
-      multiple={true}
-      min={0}
-      open={open}
-      value={value}
-      items={items}
-      setOpen={setOpen}
-      setValue={setValue}
-      setItems={setItems}
-    />
+  <MultipleSelectList  
+      setSelected={selected}//{(val) => setSelected(val)} 
+      data={tagData} 
+      save="value"
+      //onSelect={() => alert(selected)} 
+      label="Aktivitätstyp"
+      //defaultOption={}
 
+  />
     <View style={hampter.button}>
     <ButtonRegularWithBorder
       text={'APPLY FILTERS'}

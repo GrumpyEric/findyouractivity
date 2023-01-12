@@ -11,6 +11,8 @@ import CloseScreenButton from '../../components/CloseScreenButton'
 import TextButton from '../../components/TextButton'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { SelectList,MultipleSelectList } from 'react-native-dropdown-select-list'
+import DropDownPicker from 'react-native-dropdown-picker';
+
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
@@ -22,6 +24,8 @@ const CreateMarkersScreen = ( {navigation} ) => {
   const [placeDesciption, setPlaceDescription] = useState()
   const [numberParticipants, setNumberParticipants] = useState()
   const [tags, setEventTags] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [items, setItems] = useState(tagData);  
 
   const pickedStartTime = useRef()
   const pickedEndTime = useRef()
@@ -62,6 +66,8 @@ const CreateMarkersScreen = ( {navigation} ) => {
   useEffect(() => {
     console.log(kindOfTimePicker.current);
   }, [kindOfTimePicker.current])
+
+  DropDownPicker.setLanguage("DE");
   
   return (
     <View style={stylesGlobal.screenContainer}>
@@ -103,14 +109,18 @@ const CreateMarkersScreen = ( {navigation} ) => {
         iconName={'male'}
       />
       {/* Tags */}
-      <MultipleSelectList  
-      setSelected={(val) => setEventTags(val)} 
-      data={tagData} 
+
+      <DropDownPicker
+      searchable={true}
+      multiple={true}
+      min={0}
+      open={open}
       value={tags}
-      save="value"
-      //onSelect={() => alert(selected)} 
-      label="Aktivitätstyp"
-  />
+      items={items}
+      setOpen={setOpen}
+      setValue={(val) =>setEventTags(val)}
+      setItems={setItems}
+    />
 
       <View style={{flexDirection: 'row'}}>
       {pickedStartTime.current !== undefined
