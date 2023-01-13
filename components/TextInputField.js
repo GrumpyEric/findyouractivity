@@ -1,6 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef} from "react";
 import { View, StyleSheet, TextInput, Text } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { Colors } from "react-native/Libraries/NewAppScreen";
 import { stylesGlobal } from "../constants/StylesGlobal";
 
 // component props: placeholder, value, onChangeText, secureTextEntry, keyboardType, backgroundColor, borderColor
@@ -40,11 +41,10 @@ export default TextInputField
 const styles = StyleSheet.create({
 
   textInputStyle: {
-    backgroundColor: '#FCFCFC',
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
-    flex: 1,
+    flex: 1
     // borderWidth: 1
   },
 
@@ -55,5 +55,5 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: '5%',
     borderWidth: 2,
-  },
+  }
 })

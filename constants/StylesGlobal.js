@@ -15,7 +15,7 @@ const stylesGlobal = StyleSheet.create({
   standardText: {
     fontWeight: '700',
     fontSize: 16,
-    color: 'white'
+    color: Colors.findmyactivityText
   },
 
   //----- Screenviews -----//
