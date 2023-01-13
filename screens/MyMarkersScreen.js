@@ -51,7 +51,8 @@ const moveToMarker = (inputMarker) => {
           myMarkersRef.map((val, index) => 
             {
               let distanceToUserPos = "?"//getDistance(val,props.userPosContext.coords) / 1000
-              if (userPosContext._currentValue.coords != undefined)
+              console.log(userPosContext._currentValue.coords);
+              if (userPosContext._current_value.coords != undefined)
               {
                 distanceToUserPos = getDistance(val, userPosContext._currentValue.coords) / 1000
               }
