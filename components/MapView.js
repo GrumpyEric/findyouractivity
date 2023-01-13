@@ -11,6 +11,7 @@ import { hawRegion } from "../constants/TestCoords";
 import * as Location from 'expo-location';
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase/firebase-config";
+
 import { markersRef, userMarkerContext, applyFilters } from "../constants/MainFunctions";
 import FloatingActionButton from "./FloatingActionButton";
 import { latitudeContext, longitudeContext, mapRef, filterContext } from "./AppContext";
@@ -20,7 +21,8 @@ import 'intl/locale-data/jsonp/de'
 import { intlFormat } from 'date-fns'
 
 const MapViewGoogle = (props) => {
-  const [userPos, setUserPos] = useState([null]);
+  const [isUserPosLoaded, setIsUserPosLoaded] = useState(false)
+  const [userPos, setUserPos] = useState([]);
 
   // get current Region
   const [region, setRegion] = useState(props.initialRegion);
@@ -56,6 +58,8 @@ const MapViewGoogle = (props) => {
 
       let currentUserPos = await Location.getCurrentPositionAsync({});
       setUserPos(currentUserPos);
+      userPosContext._currentValue = currentUserPos
+      setIsUserPosLoaded(true)
     })();
   }, []);
   
@@ -134,7 +138,9 @@ const MapViewGoogle = (props) => {
   //const mapRef = useRef(null);
   
   const getCurrentPosition = () => {
-    if (userPos !== [null]) {
+    // if (isUserPosLoaded === true) {
+    // console.log(userPos);
+    if (userPos.coords != undefined) {
     mapRef.current.animateToRegion({
       latitude: userPos.coords.latitude,
       longitude: userPos.coords.longitude,

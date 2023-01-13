@@ -12,6 +12,7 @@ import MyMarkersScreen from './screens/MyMarkersScreen';
 import FilterScreen from './screens/FilterScreen';
 import CreateMarkersScreen from './screens/modals/CreateMarkersScreen';
 import BurgerMenuContent from './components/Drawer/BurgerMenuContent';
+import ProfileScreen from './screens/ProfileScreen';
 import { isIOS, isTablet } from './constants/StylesGlobal';
 
 const Stack = createStackNavigator();
@@ -55,6 +56,7 @@ export default function App() {
           <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
           <Stack.Screen name="Home" component={BurgerMenuScreen} />
           <Stack.Screen name="ForgotPW" component={ForgotPasswordScreen} />
+          <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
         </Stack.Group>
 
         <Stack.Group screenOptions={ () => ({

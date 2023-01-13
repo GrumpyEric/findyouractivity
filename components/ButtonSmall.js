@@ -18,9 +18,10 @@ export default ButtonSmall
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: Colors.findmyactivityYellow,
     width: 150,
     padding: 15,
+    marginLeft: 5,
+    marginRight: 5,
     borderRadius: 10,
     alignItems: 'center',
     marginTop: 40,

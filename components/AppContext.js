@@ -15,3 +15,6 @@ export const tagData = [
     {label:'Shopping', value:'Shopping'},
     {label:'Treffen', value:'Treffen'}
   ]
+export const userPosContext = createContext(0)
+
+// export {latitudeContext}

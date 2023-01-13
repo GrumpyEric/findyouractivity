@@ -1,6 +1,7 @@
+
+import Colors from "./Colors";
 import { StyleSheet, Platform, PixelRatio, Dimensions } from "react-native";
 import * as Device from 'expo-device';
-import Colors from "./Colors";
 
 const width = Dimensions.get("screen").width
 const height = Dimensions.get("screen").height
@@ -15,7 +16,7 @@ const stylesGlobal = StyleSheet.create({
   standardText: {
     fontWeight: '700',
     fontSize: 16,
-    color: 'white'
+    color: Colors.findmyactivityText
   },
 
   //----- Screenviews -----//

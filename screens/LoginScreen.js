@@ -35,7 +35,8 @@ const LoginScreen = () => {
           value={email}
           onChangeText={text => setEmail(text)}
           keyboardType={'email-address'}
-          backgroundColor={'white'}
+          backgroundColor={Colors.findmyactivityWhite}
+          borderColor={Colors.findmyactivityBackground}
         />
         <TextInputField
           placeholder={"Password"}
@@ -43,7 +44,8 @@ const LoginScreen = () => {
           onChangeText={text => setPassword(text)}
           secureTextEntry={true}
           keyboardType={'default'}
-          backgroundColor={'white'}
+          backgroundColor={Colors.findmyactivityWhite}
+          borderColor={Colors.findmyactivityBackground}
         />
       </View>
 
@@ -51,14 +53,15 @@ const LoginScreen = () => {
         <ButtonRegular
           onPress={() => handleLogin(auth, email, password, navigation)}
           text={"Login"}
-          backgroundColor={Colors.findmyactivityBlue}
+          backgroundColor={Colors.findmyactivityYellow}
+          marginBottom={10}
         />
         <ButtonRegularWithBorder
           onPress={() => handleSignUp(auth, email, password)}
           text={"Register"}
           backgroundColor={'white'}
-          borderColor={Colors.findmyactivityBlue}
-          textColor={Colors.findmyactivityBlue}
+          borderColor={Colors.findmyactivityYellow}
+          textColor={Colors.findmyactivityText}
         />
         <TextButton
           onPress={handleForgotPassword}
