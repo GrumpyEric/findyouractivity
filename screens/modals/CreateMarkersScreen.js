@@ -194,7 +194,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
           text={'Create'}
           
           onPress={() => { addMarkerToDB(auth, eventName, eventDescription, pickedStartTime.current, pickedEndTime.current, numberParticipants, tags, latitudeContext._currentValue, longitudeContext._currentValue); navigation.pop() }}
-          backgroundColor={Colors.findmyactivityBlue}
+          backgroundColor={Colors.findmyactivityYellow}
 
         />
       </View>
