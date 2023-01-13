@@ -52,7 +52,7 @@ const moveToMarker = (inputMarker) => {
             {
               let distanceToUserPos = "?"//getDistance(val,props.userPosContext.coords) / 1000
               console.log(userPosContext._currentValue.coords);
-              if (userPosContext._current_value.coords != undefined)
+              if (userPosContext._currentValue.coords != undefined)
               {
                 distanceToUserPos = getDistance(val, userPosContext._currentValue.coords) / 1000
               }
