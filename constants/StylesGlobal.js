@@ -1,3 +1,4 @@
+
 import Colors from "./Colors";
 import { StyleSheet, Platform, PixelRatio, Dimensions } from "react-native";
 import * as Device from 'expo-device';

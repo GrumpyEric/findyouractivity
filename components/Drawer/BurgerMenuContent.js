@@ -11,14 +11,22 @@ function BurgerMenuContent ( props )  {
   const navigation = useNavigation()
   return ( 
     <DrawerContentScrollView {...props}>
+      
       <DrawerItem
         label="Home"
         onPress={() => navigation.navigate("HomeScreen")}
       />
+
       <DrawerItem
         label="Meine Marker"
         onPress={() => { navigation.navigate("MyMarkersScreen"); navigation.dispatch(DrawerActions.closeDrawer()) }}
       />
+
+      <DrawerItem
+        label="Filter"
+        onPress={() => { navigation.navigate("FilterScreen"); navigation.dispatch(DrawerActions.closeDrawer()) }}
+      />
+
       <DrawerItem
         label="Profile"
         onPress={() => { navigation.navigate("ProfileScreen"); navigation.dispatch(DrawerActions.closeDrawer()) }}

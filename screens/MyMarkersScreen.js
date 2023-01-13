@@ -4,12 +4,23 @@ import { View, Text, TouchableOpacity, ScrollView, Switch } from 'react-native';
 import { stylesGlobal } from '../constants/StylesGlobal'
 import { auth, db } from "../firebase/firebase-config";
 import { markersRef } from '../constants/MainFunctions';
+import { mapRef } from '../components/AppContext';
 import { getDistance } from 'geolib';
 import { userPosContext } from '../components/AppContext';
 import Colors from '../constants/Colors';
 import TextButton from '../components/TextButton';
 
 const MyMarkersScreen = ( {navigation} ) => {
+
+const moveToMarker = (inputMarker) => {
+  mapRef.current.animateToRegion({
+    latitude: inputMarker.latitude,
+    longitude: inputMarker.longitude,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01
+  })
+  navigation.pop()
+}
   const [showMyMarkers, setShowMyMarkers] = useState(true)
   const myUserID = auth.currentUser.uid
   // console.log(myUserID);
@@ -23,6 +34,7 @@ const MyMarkersScreen = ( {navigation} ) => {
   return (
     <ScrollView >
       <View style={stylesGlobal.screenContainer}>
+
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text style={{color: showMyMarkers ? Colors.findmyactivityText : Colors.findmyactivityBlue}}>Alle Marker anzeigen</Text>
           <Switch
@@ -45,7 +57,7 @@ const MyMarkersScreen = ( {navigation} ) => {
               }
               return (
                 <View style={{backgroundColor: '#DDDDDD', marginBottom: 10}}>
-                  <TouchableOpacity onPress={() => console.log(val)}>
+                  <TouchableOpacity onPress={() => moveToMarker(val)}>
                     <Text key={Math.random().toString()}> {"MARKERNAME: " + val.name} </Text>
                     <Text key={Math.random().toString()}> {"BESCHREIBUNG: " + val.description} </Text>
                     <Text> Distanz: {distanceToUserPos} km</Text>
