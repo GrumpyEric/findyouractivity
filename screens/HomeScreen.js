@@ -37,7 +37,7 @@ const HomeScreen = ( {navigation} ) => {
         <ButtonRegular
           text={'CREATE MARKER'}
           onPress={() => navigation.navigate('CreateMarkersScreen')}
-          backgroundColor={Colors.findmyactivityBlue}
+          backgroundColor={Colors.findmyactivityYellow}
           // onPress={() => addMarkerToDB(auth, 'EVENTNAME', 'EVENTDESC', 53.6, 10.045)}
         /> 
       </View>

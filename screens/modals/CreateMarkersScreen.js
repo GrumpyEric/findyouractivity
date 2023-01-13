@@ -69,7 +69,8 @@ const CreateMarkersScreen = ( {navigation} ) => {
         value={eventName}
         onChangeText={text => setEventName(text)}
         keyboardType={'default'}
-        backgroundColor={Colors.lightGrey}
+        backgroundColor={Colors.findmyactivityWhite}
+        borderColor={Colors.findmyactivityBackground}
         hasLeftIcon={true}
         iconName={'edit'}
       />
@@ -78,7 +79,8 @@ const CreateMarkersScreen = ( {navigation} ) => {
         value={eventDescription}
         onChangeText={text => setEventDescription(text)}
         keyboardType={'default'}
-        backgroundColor={Colors.lightGrey}
+        backgroundColor={Colors.findmyactivityWhite}
+        borderColor={Colors.findmyactivityBackground}
         hasLeftIcon={true}
         iconName={'edit'}
       />
@@ -87,7 +89,8 @@ const CreateMarkersScreen = ( {navigation} ) => {
         value={placeDesciption}
         onChangeText={text => setPlaceDescription(text)}
         keyboardType={'default'}
-        backgroundColor={Colors.lightGrey}
+        backgroundColor={Colors.findmyactivityWhite}
+        borderColor={Colors.findmyactivityBackground}
         hasLeftIcon={true}
         iconName={'map-pin'}
       />
@@ -96,7 +99,8 @@ const CreateMarkersScreen = ( {navigation} ) => {
         value={numberParticipants}
         onChangeText={text => setNumberParticipants(text)}
         keyboardType={'number-pad'}
-        backgroundColor={Colors.lightGrey}
+        backgroundColor={Colors.findmyactivityWhite}
+        borderColor={Colors.findmyactivityBackground}
         hasLeftIcon={true}
         iconName={'male'}
       />
@@ -121,7 +125,6 @@ const CreateMarkersScreen = ( {navigation} ) => {
         }
         <TextButton
           text={'Set start time'}
-          textColor={Colors.findmyactivityBlue}
           onPress={() => {kindOfTimePicker.current = 'start'; showTimePicker()}}
         />
       </View>
@@ -169,7 +172,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
         <ButtonSmall
           text={'Create'}
           onPress={() => { addMarkerToDB(auth, eventName, eventDescription, pickedStartTime.current, pickedEndTime.current, numberParticipants, [], latitudeContext._currentValue, longitudeContext._currentValue); navigation.pop() }}
-          backgroundColor={Colors.findmyactivityBlue}
+          backgroundColor={Colors.findmyactivityYellow}
         />
       </View>
     </View>
