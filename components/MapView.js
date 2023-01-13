@@ -11,6 +11,7 @@ import { hawRegion } from "../constants/TestCoords";
 import * as Location from 'expo-location';
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase/firebase-config";
+import { userPosContext } from "./AppContext";
 
 import { markersRef, userMarkerContext, applyFilters } from "../constants/MainFunctions";
 import FloatingActionButton from "./FloatingActionButton";
@@ -59,6 +60,7 @@ const MapViewGoogle = (props) => {
       let currentUserPos = await Location.getCurrentPositionAsync({});
       setUserPos(currentUserPos);
       userPosContext._currentValue = currentUserPos
+      console.log(userPosContext._currentValue);
       setIsUserPosLoaded(true)
     })();
   }, []);
