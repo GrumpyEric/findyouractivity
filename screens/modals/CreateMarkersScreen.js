@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native'
 import { stylesGlobal } from '../../constants/StylesGlobal'
 import TextInputField from '../../components/TextInputField'
 import { auth } from '../../firebase/firebase-config'
@@ -40,14 +40,34 @@ const CreateMarkersScreen = ( {navigation} ) => {
     setTimePickerVisibility(false);
   };
 
-  // TODO: 
+  // handles time picker
   // if start time before time right now: error
   // if end time before start time: error
+  // else: set start or end time
   const handleConfirmTime = (time) => {
     if (kindOfTimePicker.current === 'start') {
+      if (pickedEndTime.current != undefined) {
+        if (time > pickedEndTime.current) {
+          hideTimePicker()
+          Alert.alert('Warnung', 'Startdatum kann nicht nach dem Enddatum liegen! Bitte wählen Sie ein anderes Datum.')
+          return
+        }
+        console.log(time, pickedEndTime.current, time < pickedEndTime.current);
+      }
+      console.log(time);
       pickedStartTime.current = time
       console.log(pickedStartTime.current);
-    } else if (kindOfTimePicker.current === 'end') {
+    } 
+
+    else if (kindOfTimePicker.current === 'end') {
+      if (pickedStartTime.current != undefined) {
+        if (time < pickedStartTime.current) {
+          hideTimePicker()
+          Alert.alert('Warnung', 'Enddatum kann nicht vor dem Startdatum liegen! Bitte wählen Sie ein anderes Datum.')
+          return
+        }
+        console.log(pickedStartTime.current, time, pickedStartTime.current < time);
+      }
       pickedEndTime.current = time
       console.log(pickedEndTime.current);
     }
@@ -203,15 +223,3 @@ const CreateMarkersScreen = ( {navigation} ) => {
 }
 
 export default CreateMarkersScreen
-
-// const styles = StyleSheet.create({
-//   topContainerStyle: {
-//     width: '100%',
-//     justifyContent: 'center',
-//   },
-
-//   closeButtonStyle: {
-//     alignSelf: 'flex-end',
-//   },
-
-// })
