@@ -93,7 +93,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
     <View style={stylesGlobal.screenContainer}>
 
       <TextInputField
-        placeholder={'Event name'}
+        placeholder={'Eventname'}
         value={eventName}
         onChangeText={text => setEventName(text)}
         keyboardType={'default'}
@@ -101,9 +101,12 @@ const CreateMarkersScreen = ( {navigation} ) => {
         borderColor={Colors.findmyactivityBackground}
         hasLeftIcon={true}
         iconName={'edit'}
+        hasMaxLength={true}
+        maxTextChars={30}
+        showCharCounter={true}
       />
       <TextInputField
-        placeholder={'Event description'}
+        placeholder={'Eventbeschreibung'}
         value={eventDescription}
         onChangeText={text => setEventDescription(text)}
         keyboardType={'default'}
@@ -111,9 +114,12 @@ const CreateMarkersScreen = ( {navigation} ) => {
         borderColor={Colors.findmyactivityBackground}
         hasLeftIcon={true}
         iconName={'edit'}
+        hasMaxLength={true}
+        maxTextChars={10000}
+        showCharCounter={true}
       />
       <TextInputField
-        placeholder={'Place description'}
+        placeholder={'Ortbeschreibung'}
         value={placeDesciption}
         onChangeText={text => setPlaceDescription(text)}
         keyboardType={'default'}
@@ -121,9 +127,12 @@ const CreateMarkersScreen = ( {navigation} ) => {
         borderColor={Colors.findmyactivityBackground}
         hasLeftIcon={true}
         iconName={'map-pin'}
+        hasMaxLength={true}
+        maxTextChars={50}
+        showCharCounter={true}
       />
       <TextInputField
-        placeholder={'Number of participants'}
+        placeholder={'Anzahl Teilnehmer (max. 999)'}
         value={numberParticipants}
         onChangeText={text => setNumberParticipants(text)}
         keyboardType={'number-pad'}
@@ -131,6 +140,8 @@ const CreateMarkersScreen = ( {navigation} ) => {
         borderColor={Colors.findmyactivityBackground}
         hasLeftIcon={true}
         iconName={'male'}
+        hasMaxLength={true}
+        maxTextChars={3}
       />
       {/* Tags */}
 

@@ -6,10 +6,12 @@ import { stylesGlobal } from "../constants/StylesGlobal";
 
 // component props: placeholder, value, onChangeText, secureTextEntry, keyboardType, backgroundColor, borderColor
 const TextInputField = (props) => { 
-  const maxTextChars = 150
+  const maxTextChars = props.maxTextChars
   const hasMaxLength = props.hasMaxLength
   const hasLeftIcon = props.hasLeftIcon
+  const showCharCounter = props.showCharCounter
 
+  // TODO: ICONS AND TEXT ARE OFFSET
   return(
     <View style={[styles.buttonStyle, {backgroundColor: props.backgroundColor, borderColor: props.borderColor}]}>
       {hasLeftIcon ?
@@ -27,9 +29,10 @@ const TextInputField = (props) => {
         onChangeText={props.onChangeText}
         secureTextEntry={props.secureTextEntry}
         keyboardType={props.keyboardType}
+        maxLength={props.maxTextChars}
         style={[styles.textInputStyle, {backgroundColor: props.backgroundColor}]}
       />
-      {hasMaxLength ?
+      {hasMaxLength && showCharCounter ?
       <Text style={[{alignSelf: 'center', paddingLeft: '5%'}]}>{props.value === undefined ? 0 : props.value.length}/{maxTextChars}</Text>
       : null}
     </View>
