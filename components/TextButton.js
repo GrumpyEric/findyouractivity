@@ -2,7 +2,9 @@ import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import Colors from "../constants/Colors";
 import { stylesGlobal } from "../constants/StylesGlobal";
 
-// component props: onPress, text, textColor
+import PropTypes from 'prop-types'
+
+// component props: onPress, text
 const TextButton = (props) => {
   return (
     <TouchableOpacity
@@ -13,6 +15,8 @@ const TextButton = (props) => {
     </TouchableOpacity>
   )
 }
+
+TextButton.propTypes = { onPress: PropTypes.func.isRequired, text: PropTypes.string.isRequired}
 
 export default TextButton
 

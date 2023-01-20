@@ -20,6 +20,7 @@ const HomeScreen = ( {navigation} ) => {
     <View style={[stylesGlobal.screenContainer]}>
       <FloatingBurgerMenu
         onPress={() => navigation.openDrawer()}
+        icon={'navicon'}
       />
 
       <MapViewGoogle

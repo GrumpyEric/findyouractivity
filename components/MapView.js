@@ -162,12 +162,14 @@ const MapViewGoogle = (props) => {
         onPress={() => getCurrentPosition()}
         bottomPos={100}
         rightPos={10}
+        icon={'location-arrow'}
       />
 
       <FloatingActionButton
         onPress={() => alert(filterContext._current_value)}
         bottomPos={250}
         rightPos={10}
+        icon={'location-arrow'}
       />
 
       <MapView

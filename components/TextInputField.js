@@ -4,6 +4,8 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { stylesGlobal } from "../constants/StylesGlobal";
 
+import PropTypes from 'prop-types'
+
 // component props: placeholder, value, onChangeText, secureTextEntry, keyboardType, backgroundColor, borderColor
 const TextInputField = (props) => { 
   const maxTextChars = props.maxTextChars
@@ -37,6 +39,10 @@ const TextInputField = (props) => {
       : null}
     </View>
   )
+}
+
+TextInputField.propTypes = { placeholder: PropTypes.string, value: PropTypes.string.isRequired, onChangeText: PropTypes.string.isRequired, secureTextEntry: PropTypes.bool, 
+  keyboardType: PropTypes.string, maxLength: PropTypes.number, backgroundColor: PropTypes.string, borderColor: PropTypes.string
 }
 
 export default TextInputField
