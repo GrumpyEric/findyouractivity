@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native'
 import { stylesGlobal } from '../../constants/StylesGlobal'
 import TextInputField from '../../components/TextInputField'
 import { auth } from '../../firebase/firebase-config'
@@ -90,147 +90,164 @@ const CreateMarkersScreen = ( {navigation} ) => {
   DropDownPicker.setLanguage("DE");
   
   return (
-    <View style={stylesGlobal.screenContainer}>
-
-      <TextInputField
-        placeholder={'Eventname'}
-        value={eventName}
-        onChangeText={text => setEventName(text)}
-        keyboardType={'default'}
-        backgroundColor={Colors.findmyactivityWhite}
-        borderColor={Colors.findmyactivityBackground}
-        hasLeftIcon={true}
-        iconName={'edit'}
-        hasMaxLength={true}
-        maxTextChars={30}
-        showCharCounter={true}
-      />
-      <TextInputField
-        placeholder={'Eventbeschreibung'}
-        value={eventDescription}
-        onChangeText={text => setEventDescription(text)}
-        keyboardType={'default'}
-        backgroundColor={Colors.findmyactivityWhite}
-        borderColor={Colors.findmyactivityBackground}
-        hasLeftIcon={true}
-        iconName={'edit'}
-        hasMaxLength={true}
-        maxTextChars={10000}
-        showCharCounter={true}
-      />
-      <TextInputField
-        placeholder={'Ortbeschreibung'}
-        value={placeDesciption}
-        onChangeText={text => setPlaceDescription(text)}
-        keyboardType={'default'}
-        backgroundColor={Colors.findmyactivityWhite}
-        borderColor={Colors.findmyactivityBackground}
-        hasLeftIcon={true}
-        iconName={'map-pin'}
-        hasMaxLength={true}
-        maxTextChars={50}
-        showCharCounter={true}
-      />
-      <TextInputField
-        placeholder={'Anzahl Teilnehmer (max. 999)'}
-        value={numberParticipants}
-        onChangeText={text => setNumberParticipants(text)}
-        keyboardType={'number-pad'}
-        backgroundColor={Colors.findmyactivityWhite}
-        borderColor={Colors.findmyactivityBackground}
-        hasLeftIcon={true}
-        iconName={'male'}
-        hasMaxLength={true}
-        maxTextChars={3}
-      />
-      {/* Tags */}
-
-      <DropDownPicker
-      searchable={true}
-      multiple={true}
-      min={0}
-      open={open}
-      value={tags}
-      items={items}
-      setOpen={setOpen}
-      setValue={(val) =>setEventTags(val)}
-      setItems={setItems}
-    />
-
-      <View style={{flexDirection: 'row'}}>
-      {pickedStartTime.current !== undefined
-      ?
-        <Text style={{alignSelf: 'center'}}>
-          Start: {intlFormat(pickedStartTime.current, {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit'
-          }, 
-            {locale: 'de-DE',}
-          )}
-        </Text>
-        :
-        null
-        }
-        <TextButton
-          text={'Set start time'}
-          onPress={() => {kindOfTimePicker.current = 'start'; showTimePicker()}}
+    <View style={styles.screenContainer}>
+      <ScrollView contentContainerStyle={styles.scrollViewContainer} showsVerticalScrollIndicator={false}>
+        <TextInputField
+          placeholder={'Eventname'}
+          value={eventName}
+          onChangeText={text => setEventName(text)}
+          keyboardType={'default'}
+          backgroundColor={Colors.findmyactivityWhite}
+          borderColor={Colors.findmyactivityBackground}
+          hasLeftIcon={true}
+          iconName={'edit'}
+          hasMaxLength={true}
+          maxTextChars={30}
+          showCharCounter={true}
         />
-      </View>
-
-      <View style={{flexDirection: 'row'}}>
-      {pickedEndTime.current !== undefined
-      ?
-      // <Text>{format(pickedStartTime.current, 'dd.MM.YYY')}</Text>
-        <Text style={{alignSelf: 'center'}}>
-          End: {intlFormat(pickedEndTime.current, {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit'
-          }, 
-            {locale: 'de-DE',}
-          )}
-        </Text>
-        :
-        null
-        }
-        <TextButton
-          text={'Set end time'}
-          textColor={Colors.findmyactivityBlue}
-          onPress={() => {kindOfTimePicker.current = 'end'; showTimePicker()}}
+        <TextInputField
+          placeholder={'Eventbeschreibung'}
+          value={eventDescription}
+          onChangeText={text => setEventDescription(text)}
+          keyboardType={'default'}
+          backgroundColor={Colors.findmyactivityWhite}
+          borderColor={Colors.findmyactivityBackground}
+          hasLeftIcon={true}
+          iconName={'edit'}
+          hasMaxLength={true}
+          maxTextChars={10000}
+          showCharCounter={true}
+          multiline={true}
         />
-      </View>
+        <TextInputField
+          placeholder={'Ortbeschreibung'}
+          value={placeDesciption}
+          onChangeText={text => setPlaceDescription(text)}
+          keyboardType={'default'}
+          backgroundColor={Colors.findmyactivityWhite}
+          borderColor={Colors.findmyactivityBackground}
+          hasLeftIcon={true}
+          iconName={'map-pin'}
+          hasMaxLength={true}
+          maxTextChars={50}
+          showCharCounter={true}
+        />
+        <TextInputField
+          placeholder={'Anzahl Teilnehmer (max. 999)'}
+          value={numberParticipants}
+          onChangeText={text => setNumberParticipants(text)}
+          keyboardType={'number-pad'}
+          backgroundColor={Colors.findmyactivityWhite}
+          borderColor={Colors.findmyactivityBackground}
+          hasLeftIcon={true}
+          iconName={'male'}
+          hasMaxLength={true}
+          maxTextChars={3}
+        />
+        {/* Tags */}
 
-      <DateTimePickerModal
-        isVisible={isTimePickerVisible}
-        mode="datetime"
-        onConfirm={handleConfirmTime}
-        onCancel={hideTimePicker}
+        <DropDownPicker
+        searchable={true}
+        multiple={true}
+        min={0}
+        open={open}
+        value={tags}
+        items={items}
+        setOpen={setOpen}
+        setValue={(val) =>setEventTags(val)}
+        setItems={setItems}
       />
 
-      <View style={{flexDirection: 'row'}}>
-        <ButtonSmall
-          text={'Abort'}
-          onPress={() => navigation.pop()}
-          backgroundColor={'red'}
+        <View style={{flexDirection: 'row'}}>
+        {pickedStartTime.current !== undefined
+        ?
+          <Text style={{alignSelf: 'center'}}>
+            Start: {intlFormat(pickedStartTime.current, {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+            }, 
+              {locale: 'de-DE',}
+            )}
+          </Text>
+          :
+          null
+          }
+          <TextButton
+            text={'Set start time'}
+            onPress={() => {kindOfTimePicker.current = 'start'; showTimePicker()}}
+          />
+        </View>
+
+        <View style={{flexDirection: 'row'}}>
+        {pickedEndTime.current !== undefined
+        ?
+        // <Text>{format(pickedStartTime.current, 'dd.MM.YYY')}</Text>
+          <Text style={{alignSelf: 'center'}}>
+            End: {intlFormat(pickedEndTime.current, {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+            }, 
+              {locale: 'de-DE',}
+            )}
+          </Text>
+          :
+          null
+          }
+          <TextButton
+            text={'Set end time'}
+            textColor={Colors.findmyactivityBlue}
+            onPress={() => {kindOfTimePicker.current = 'end'; showTimePicker()}}
+          />
+        </View>
+
+        <DateTimePickerModal
+          isVisible={isTimePickerVisible}
+          mode="datetime"
+          onConfirm={handleConfirmTime}
+          onCancel={hideTimePicker}
         />
 
-        <ButtonSmall
-          text={'Create'}
-          
-          onPress={() => { addMarkerToDB(auth, eventName, eventDescription, pickedStartTime.current, pickedEndTime.current, numberParticipants, tags, latitudeContext._currentValue, longitudeContext._currentValue); navigation.pop() }}
-          backgroundColor={Colors.findmyactivityBlue}
+        <View style={{flexDirection: 'row'}}>
+          <ButtonSmall
+            text={'Abort'}
+            onPress={() => navigation.pop()}
+            backgroundColor={'red'}
+          />
 
-        />
-      </View>
+          <ButtonSmall
+            text={'Create'}
+            
+            onPress={() => { addMarkerToDB(auth, eventName, eventDescription, pickedStartTime.current, pickedEndTime.current, numberParticipants, tags, latitudeContext._currentValue, longitudeContext._currentValue); navigation.pop() }}
+            backgroundColor={Colors.findmyactivityBlue}
+
+          />
+        </View>
+      </ScrollView>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  screenContainer: {
+    flex: stylesGlobal.screenContainer.flex,
+    paddingHorizontal: stylesGlobal.screenContainer.paddingHorizontal,
+    backgroundColor: stylesGlobal.screenContainer.backgroundColor,
+  },
+
+  scrollViewContainer: {
+    alignContent: 'stretch',
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    minHeight: '100%'
+  }
+})
 
 export default CreateMarkersScreen

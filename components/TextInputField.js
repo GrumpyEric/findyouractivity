@@ -6,7 +6,7 @@ import { stylesGlobal } from "../constants/StylesGlobal";
 
 import PropTypes from 'prop-types'
 
-// component props: placeholder, value, onChangeText, secureTextEntry, keyboardType, backgroundColor, borderColor
+// component props: placeholder, value, onChangeText, secureTextEntry, keyboardType, backgroundColor, borderColor, multiline
 const TextInputField = (props) => { 
   const maxTextChars = props.maxTextChars
   const hasMaxLength = props.hasMaxLength
@@ -33,6 +33,7 @@ const TextInputField = (props) => {
         keyboardType={props.keyboardType}
         maxLength={props.maxTextChars}
         style={[styles.textInputStyle, {backgroundColor: props.backgroundColor}]}
+        multiline={props.multiline}
       />
       {hasMaxLength && showCharCounter ?
       <Text style={[{alignSelf: 'center', paddingLeft: '5%'}]}>{props.value === undefined ? 0 : props.value.length}/{maxTextChars}</Text>
@@ -41,8 +42,8 @@ const TextInputField = (props) => {
   )
 }
 
-TextInputField.propTypes = { placeholder: PropTypes.string, value: PropTypes.string.isRequired, onChangeText: PropTypes.string.isRequired, secureTextEntry: PropTypes.bool, 
-  keyboardType: PropTypes.string, maxLength: PropTypes.number, backgroundColor: PropTypes.string, borderColor: PropTypes.string
+TextInputField.propTypes = { placeholder: PropTypes.string, value: PropTypes.string.isRequired, onChangeText: PropTypes.func.isRequired, secureTextEntry: PropTypes.bool, 
+  keyboardType: PropTypes.string, maxLength: PropTypes.number, backgroundColor: PropTypes.string, borderColor: PropTypes.string, multiline: PropTypes.bool
 }
 
 export default TextInputField
