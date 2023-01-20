@@ -17,7 +17,7 @@ const TextInputField = (props) => {
   return(
     <View style={[styles.buttonStyle, {backgroundColor: props.backgroundColor, borderColor: props.borderColor}]}>
       {hasLeftIcon ?
-      <View style={{justifyContent: 'center', paddingRight: 10}}>
+      <View style={{justifyContent: 'center', paddingRight: 10, width: 30}}>
         <Icon
           name={props.iconName}
           size={15}
