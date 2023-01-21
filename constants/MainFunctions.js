@@ -118,7 +118,7 @@ import { Alert } from 'react-native';
 import { createContext, useContext } from 'react';
 import { useHandler } from 'react-native-reanimated';
 
-const addMarkerToDB = async(auth, eventNameInput, eventDescInput, startDate, endDate, numberParticipants, tags, userMarkerLatitude, userMarkerLongitude, ) => {
+const addMarkerToDB = async(auth, eventNameInput, eventDescInput, eventLocationDesc, startDate, endDate, numberParticipants, tags, userMarkerLatitude, userMarkerLongitude, ) => {
   let userID = auth.currentUser.uid.toString()
   let timeStampObj = Timestamp.now()
   // TODO: timestamp in UNIX-Format setzen; DONE
@@ -126,6 +126,7 @@ const addMarkerToDB = async(auth, eventNameInput, eventDescInput, startDate, end
     markers: {
       name: eventNameInput,
       description: eventDescInput,
+      locationDescription: eventLocationDesc,
       latitude: userMarkerLatitude,
       longitude: userMarkerLongitude,
       creation_date: timeStampObj.toDate(),

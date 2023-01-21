@@ -4,7 +4,7 @@ import { stylesGlobal } from '../../constants/StylesGlobal'
 import TextInputField from '../../components/TextInputField'
 import { auth } from '../../firebase/firebase-config'
 import { addMarkerToDB } from '../../constants/MainFunctions'
-import { latitudeContext, longitudeContext, tagData } from '../../components/AppContext'
+import { editMarkerMode, editMarkerValues, latitudeContext, longitudeContext, tagData } from '../../components/AppContext'
 import Colors from '../../constants/Colors'
 import ButtonSmall from '../../components/ButtonSmall'
 import CloseScreenButton from '../../components/CloseScreenButton'
@@ -13,22 +13,21 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { SelectList,MultipleSelectList } from 'react-native-dropdown-select-list'
 import DropDownPicker from 'react-native-dropdown-picker';
 
-
 import 'intl'
 import 'intl/locale-data/jsonp/de'
 import { intlFormat } from 'date-fns'
 
 const CreateMarkersScreen = ( {navigation} ) => {  
-  const [eventName, setEventName] = useState()
-  const [eventDescription, setEventDescription] = useState()
-  const [placeDesciption, setPlaceDescription] = useState()
-  const [numberParticipants, setNumberParticipants] = useState()
-  const [tags, setEventTags] = useState([]);
+  const [eventName, setEventName] = useState(editMarkerMode._currentValue ? editMarkerValues._currentValue.name : undefined)
+  const [eventDescription, setEventDescription] = useState(editMarkerMode._currentValue ? editMarkerValues._currentValue.description : undefined)
+  const [placeDesciption, setPlaceDescription] = useState(editMarkerMode._currentValue ? editMarkerValues._currentValue.locationDescription : undefined)
+  const [numberParticipants, setNumberParticipants] = useState(editMarkerMode._currentValue ? editMarkerValues._currentValue.numberParticipants : undefined)
+  const [tags, setEventTags] = useState(editMarkerMode._currentValue ? editMarkerValues._currentValue.tags : []);
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState(tagData);  
 
-  const pickedStartTime = useRef()
-  const pickedEndTime = useRef()
+  const pickedStartTime = useRef(editMarkerMode._currentValue ? editMarkerValues._currentValue.startDate : undefined)
+  const pickedEndTime = useRef(editMarkerMode._currentValue ? editMarkerValues._currentValue.endDate : undefined)
   const kindOfTimePicker = useRef()
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 
@@ -39,6 +38,10 @@ const CreateMarkersScreen = ( {navigation} ) => {
   const hideTimePicker = () => {
     setTimePickerVisibility(false);
   };
+
+  useEffect(() => {
+    console.log(editMarkerValues._currentValue);
+  }, [])
 
   // handles time picker
   // if start time before time right now: error
@@ -92,6 +95,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
   return (
     <View style={styles.screenContainer}>
       <ScrollView contentContainerStyle={styles.scrollViewContainer} showsVerticalScrollIndicator={false}>
+        <Text>{editMarkerMode._currentValue ? 'Marker bearbeiten' : 'Marker erstellen'}</Text>
         <TextInputField
           placeholder={'Eventname'}
           value={eventName}
@@ -215,21 +219,36 @@ const CreateMarkersScreen = ( {navigation} ) => {
           onCancel={hideTimePicker}
         />
 
+        {editMarkerMode._currentValue 
+        ?
         <View style={{flexDirection: 'row'}}>
           <ButtonSmall
-            text={'Abort'}
+            text={'Abbrechen'}
             onPress={() => navigation.pop()}
             backgroundColor={'red'}
           />
 
           <ButtonSmall
-            text={'Create'}
-            
-            onPress={() => { addMarkerToDB(auth, eventName, eventDescription, pickedStartTime.current, pickedEndTime.current, numberParticipants, tags, latitudeContext._currentValue, longitudeContext._currentValue); navigation.pop() }}
+            text={'Aktualisieren'}         
+            onPress={() => { addMarkerToDB(auth, eventName, eventDescription, placeDesciption, pickedStartTime.current, pickedEndTime.current, numberParticipants, tags, latitudeContext._currentValue, longitudeContext._currentValue); navigation.pop() }}
             backgroundColor={Colors.findmyactivityBlue}
-
           />
         </View>
+        : 
+        <View style={{flexDirection: 'row'}}>
+          <ButtonSmall
+            text={'Abbrechen'}
+            onPress={() => navigation.pop()}
+            backgroundColor={'red'}
+          />
+
+          <ButtonSmall
+            text={'Erstellen'}         
+            onPress={() => { addMarkerToDB(auth, eventName, eventDescription, placeDesciption, pickedStartTime.current, pickedEndTime.current, numberParticipants, tags, latitudeContext._currentValue, longitudeContext._currentValue); navigation.pop() }}
+            backgroundColor={Colors.findmyactivityBlue}
+          />
+        </View>
+        }
       </ScrollView>
     </View>
   )

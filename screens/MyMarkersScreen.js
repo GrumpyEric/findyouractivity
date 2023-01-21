@@ -4,12 +4,13 @@ import { View, Text, TouchableOpacity, ScrollView, Switch } from 'react-native';
 import { stylesGlobal } from '../constants/StylesGlobal'
 import { auth, db } from "../firebase/firebase-config";
 import { markersRef } from '../constants/MainFunctions';
-import { mapRef } from '../components/AppContext';
+import { editMarkerMode, editMarkerObject, editMarkerValues, mapRef } from '../components/AppContext';
 import { getDistance } from 'geolib';
 import { userPosContext } from '../components/AppContext';
 import Colors from '../constants/Colors';
 import TextButton from '../components/TextButton';
 import Slider from '@react-native-community/slider';
+import { format, formatISO, formatRFC3339 } from 'date-fns';
 
 const MyMarkersScreen = ( {navigation} ) => {
 
@@ -22,6 +23,24 @@ const moveToMarker = (inputMarker) => {
   })
   navigation.pop()
 }
+
+const editMarker = (markerValues) => {
+  editMarkerMode._currentValue = true
+
+  editMarkerValues._currentValue.name = markerValues.name
+  editMarkerValues._currentValue.description = markerValues.description
+  editMarkerValues._currentValue.locationDescription = markerValues.locationDescription
+  editMarkerValues._currentValue.startDate = markerValues.startTime.seconds*1000
+  editMarkerValues._currentValue.endDate = markerValues.endTime.seconds*1000
+  editMarkerValues._currentValue.numberParticipants = markerValues.numberParticipants
+  editMarkerValues._currentValue.tags = markerValues.tags
+  editMarkerValues._currentValue.latitude = markerValues.latitude
+  editMarkerValues._currentValue.longitude = markerValues.longitude
+
+  editMarkerObject._currentValue = markerValues
+  console.log('MY VALUES', markerValues);
+}
+
   const [showMyMarkers, setShowMyMarkers] = useState(true)
   const myUserID = auth.currentUser.uid
   const [radiusMarkers, setRadiusMarkers] = useState(5)
@@ -57,7 +76,7 @@ const moveToMarker = (inputMarker) => {
 
           <View style={{width: '100%'}}>
             <Text>Radius der anzuzeigenden Marker</Text>
-            <Text>{radiusMarkersVisual} km</Text>
+            <Text>{radiusMarkersVisual === 'alle' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>
             <Slider
               minimumValue={0}
               maximumValue={21}
@@ -88,7 +107,7 @@ const moveToMarker = (inputMarker) => {
                       <Text> Distanz: {distanceToUserPos} km</Text>
                     </TouchableOpacity>
                     <TextButton
-                      onPress={() => null}
+                      onPress={() => { navigation.navigate('CreateMarkersScreen'); editMarker(val) }}
                       text={'bearbeiten'}
                       textColor={Colors.findmyactivityBlue}
                     />
@@ -117,7 +136,7 @@ const moveToMarker = (inputMarker) => {
                     {val.user === myUserID 
                     ?
                     <TextButton
-                      onPress={() => null}
+                      onPress={() => { navigation.navigate('CreateMarkersScreen'); editMarker(val) }}
                       text={'bearbeiten'}
                       textColor={Colors.findmyactivityBlue}
                     />

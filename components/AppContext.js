@@ -17,4 +17,18 @@ export const tagData = [
   ]
 export const userPosContext = createContext(0)
 
+export const editMarkerMode = createContext(false)
+export const editMarkerValues = createContext([{
+  name: null,
+  description: null,
+  locationDescription: null,
+  startDate: null,
+  endDate: null,
+  numberParticipants: null,
+  tags: null,
+  latitude: null,
+  longitude: null
+}])
+export const editMarkerObject = createContext()
+
 // export {latitudeContext}
