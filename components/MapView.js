@@ -2,8 +2,6 @@ import React, {useRef, useState, useEffect} from "react";
 import { Alert, Text, TextInput, View, StyleSheet, TouchableOpacity, PermissionsAndroid, NativeModules } from "react-native";
 import MapView, {PROVIDER_GOOGLE, Marker, Callout} from "react-native-maps";
 import { getDistance } from 'geolib';
-import * as AddCalendarEvent from 'react-native-add-calendar-event';
-import RNCalendarEvents from 'react-native-calendar-events';
 import { reverseGeocodeAsync } from "expo-location";
 import Geocoder from 'react-native-geocoder';
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -14,7 +12,7 @@ import { db } from "../firebase/firebase-config";
 
 import { markersRef, userMarkerContext, applyFilters } from "../constants/MainFunctions";
 import FloatingActionButton from "./FloatingActionButton";
-import { latitudeContext, longitudeContext, mapRef, filterContext } from "./AppContext";
+import { latitudeContext, longitudeContext, mapRef, filterContext, userPosContext } from "./AppContext";
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'

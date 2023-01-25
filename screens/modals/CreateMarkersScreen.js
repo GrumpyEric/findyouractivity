@@ -10,7 +10,6 @@ import ButtonSmall from '../../components/ButtonSmall'
 import CloseScreenButton from '../../components/CloseScreenButton'
 import TextButton from '../../components/TextButton'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
-import { SelectList,MultipleSelectList } from 'react-native-dropdown-select-list'
 import DropDownPicker from 'react-native-dropdown-picker';
 
 

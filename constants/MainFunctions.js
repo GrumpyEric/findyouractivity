@@ -37,6 +37,10 @@ const handleLogin = (auth, email, password, navigation) => {
   .then(userCredential => {
     const user = userCredential.user;
     if (user.emailVerified) {
+      
+      loggedInUser._current_value = user
+      // user zur DB hinzufügen falls noch nicht vorhanden ist
+      readUserFromDB(user.uid);
       navigation.replace("Home")
     }
     else {
@@ -46,11 +50,19 @@ const handleLogin = (auth, email, password, navigation) => {
   .catch(error => alert(error.message))
 }
 
+// remove snapshot listener
+const unsubscribe = onSnapshot(collection(db, "markers"), () => {
+  // Respond to data
+  // ...
+});
+
+
 // SignOut Stuff
 import { signOut } from 'firebase/auth'
 //import { collection, query} from "firebase/firestore";
 
 const handleSignOut = (auth, navigation) => {
+  unsubscribe();
   signOut(auth)
   .then(() => {
     navigation.navigate("Login")
@@ -61,7 +73,7 @@ const handleSignOut = (auth, navigation) => {
 // Query snapshot Marker
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from '../firebase/firebase-config';
-import { filterContext } from '../components/AppContext';
+import { filterContext, selectedUserContext, loggedInUser } from '../components/AppContext';
 // import { useRef } from 'react';
 
 let markersRef
@@ -77,7 +89,8 @@ const readMarkerFromDB = onSnapshot(q, (QuerySnapshot) => {
   //markersRef = db_markers
 })
 
-// TODO: filtert noch nicht nach den Preferences, sondern nur danach ob es überhaupt ne tag-variable besitzt oder nicht
+
+// wendet die vom nutzer eingestellten filter ein
 const applyFilters = () => {
   const initMarkers = db_markers // backup der db-marker
   const validMarkers = [];
@@ -112,11 +125,56 @@ const applyFilters = () => {
   //markersRef = validMarkers
 }
 
+
+// USER zur user-DB hinzufügen
+const addUserToDB = async(username, description, uid, events) =>
+{
+  // let userID = auth.currentUser.uid.toString()
+  await setDoc(doc(db, "users", uid ), {
+    markers: {
+      uid: uid,
+      description: description,
+      username: username,
+      events: events
+    }
+  }).catch(error => alert(error.message));
+}
+
+// User von user-DB ablesen
+const readUserFromDB = async(uid) =>
+{
+  const docRef = doc( db, "users", uid.toString() )
+  const docSnap = await getDoc(docRef);
+  
+  if ( docSnap.exists() )
+  {
+    selectedUserContext._current_value = docSnap.data()
+    //console.log(docSnap.data())
+  }
+  else
+  {
+    addUserToDB( "Unknown User "+ uid , "Write Something about yourself" , uid, [] )
+  }
+}
+
+// User-Info auf DB ändern (z.B. Benutzernamen ändern)
+const updateUserFromDB = async(uid, usernameInput, descriptionInput) =>
+{
+  const userDocRef = doc(db,"users", uid.toString())
+  await updateDoc(userDocRef, {
+    "markers.username": usernameInput,
+    "markers.description": descriptionInput
+  }) 
+}
+
+
+
 // MARKER zur DB hinzufügen
-import { Timestamp, doc, setDoc } from 'firebase/firestore';
+import { Timestamp, doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
 import { Alert } from 'react-native';
 import { createContext, useContext } from 'react';
 import { useHandler } from 'react-native-reanimated';
+import { async } from '@firebase/util';
 
 const addMarkerToDB = async(auth, eventNameInput, eventDescInput, startDate, endDate, numberParticipants, tags, userMarkerLatitude, userMarkerLongitude, ) => {
   let userID = auth.currentUser.uid.toString()
@@ -142,4 +200,4 @@ const addMarkerToDB = async(auth, eventNameInput, eventDescInput, startDate, end
   // setRegion(userMarker);
 }
 
-export { handleForgotPassword, handleSignUp, handleLogin, handleSignOut, addMarkerToDB, markersRef, applyFilters}
+export { handleForgotPassword, handleSignUp, handleLogin, handleSignOut, addMarkerToDB, markersRef, applyFilters, updateUserFromDB, readUserFromDB}
