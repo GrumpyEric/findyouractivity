@@ -30,9 +30,6 @@ const HomeScreen = ( {navigation} ) => {
       />
       
       {/* MARKER ERSTELLEN */}
-      {/* // TODO: make marker creation better - maybe just button with "create marker", then modal opens with marker creation formular */}
-      {/* <TextInput style={styles.input} placeholder='EVENT NAME' value={eventNameInput} onChangeText={onChangeEventInput}></TextInput>
-      <TextInput style={styles.input} placeholder='DESCRIPTION' value={eventDescInput} onChangeText={onChangeDescInput}></TextInput> */}
       <View style={styles.button}>
         <ButtonRegular
           text={'CREATE MARKER'}

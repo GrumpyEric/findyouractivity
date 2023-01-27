@@ -70,54 +70,7 @@ const MapViewGoogle = (props) => {
     //Alert.alert(selectedMarker.longitude.toString(), selectedMarker.latitude.toString() );
   }
 
-  // CalendarTest mit RNCalendarEvents
-  const calendarTest2 = () => {
-
-    let eventLat = selectedMarker.latitude
-    let eventLng = selectedMarker.longitude
-    //alert({eventLat,eventLng}.toString())
-    //Alert.alert(eventLat.toString(),eventLng.toString())
-    RNCalendarEvents.saveEvent("Find Your Activity Event", {
-      description: selectedMarker.description,
-      notes: selectedMarker.description,
-      startDate:  '2023-6-2T15:46:40Z',
-      endDate:  '2023-7-2T18:46:40Z',
-      location: geodude(eventLat,eventLng),
-    }).then((value)=> {
-
-    }).catch((error)=> {
-      console.log(error)
-    })
-  }
-
-
-  // CalendarTest mit AddCalendarEvent
-  const calendarTest = async() =>{
-    let eventLat = selectedMarker.latitude
-    let eventLng = selectedMarker.longitude
-    const eventConfig = {
-      title: selectedMarker.name.toString(),
-      notes: selectedMarker.description.toString(),
-      location: geodude(eventLat,eventLng),
-      startDate:  '2023-6-2T15:46:40Z',
-      endDate:  '2023-7-2T18:46:40Z'};
-
-      AddCalendarEvent.presentNewCalendarEventDialog(eventConfig)
-      .then(eventId => {
-        //handle success (receives event id) or dismissing the modal (receives false)
-        if (eventId) {
-          console.warn(eventId);
-        } else {
-          console.warn('dismissed');
-        }
-      })
-      .catch((error) => {
-        // handle error such as when user rejected permissions
-        console.warn(error);
-      });
-
-  }
-
+  
   const geodude = async(eventLat,eventLng) => {
     let address = "";
     reverseGeocodeAsync({latitude:eventLat,longitude:eventLng})
@@ -154,12 +107,14 @@ const MapViewGoogle = (props) => {
         bottomPos={100}
         rightPos={10}
       />
-
-<FloatingActionButton
+    {/*
+    <FloatingActionButton
         onPress={() => alert(filterContext._current_value)}
         bottomPos={250}
         rightPos={10}
-      />
+      /> 
+    */}
+
 
       <MapView
         provider = {PROVIDER_GOOGLE}
@@ -184,30 +139,52 @@ const MapViewGoogle = (props) => {
               distanceToUserPos = getDistance(val, userPos.coords) / 1000
             }
 
-            const displayTags = () => {
+            const displayTags = (val) => {
               if( (val.tags != undefined)) 
               {
                 return <Text> Tags: {val.tags.toString()}</Text>
               }
             }
 
-            const displayTime = (val) => {
+            const displayStartTime = (val) => {
+
+              let startTimeRes = ""//val.startTime
+
               if( (val.startTime != undefined) ) 
               {
-                return <Text> Start-Zeit: {intlFormat(val.startTime, {
-                  weekday: 'long',
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit'
-                  }, 
-                    {locale: 'de-DE',}
-                  )} </Text>
+                //return <Text> Start-Zeit: {val.startTime.toDate().toString()} </Text>
+                startTimeRes = val.startTime
               }
-              else
+              else if ( !(val.startTime != undefined) ) 
               {
-                return <Text> Start-Zeit: {val.startTime} </Text>
+                //return <Text> Start-Zeit: unbekannt </Text>
+                startTimeRes = "unbekannt"
+              }
+              return  <Text> Start-Zeit: {startTimeRes.toString()} </Text>
+            }
+
+            const displayEndTime = (val) => {
+
+              let endTimeRes = ""//val.endTime
+
+              if( (val.endTime != undefined) ) 
+              {
+                //return <Text> Start-Zeit: {val.startTime.toDate().toString()} </Text>
+                endTimeRes = val.endTime
+              }
+              else if ( !(val.endTime != undefined) ) 
+              {
+                //return <Text> Start-Zeit: unbekannt </Text>
+                endTimeRes = "unbekannt"
+              }
+
+              return  <Text> End-Zeit: {endTimeRes.toString()} </Text>
+            }
+
+            const displayAuthor = (val) => {
+              if ( (val.user != undefined) )
+              {
+                return <Text> erstellt von: {val.user} </Text>
               }
             }
 
@@ -216,9 +193,11 @@ const MapViewGoogle = (props) => {
               <Callout>
                 <Text key={Math.random().toString()}> {val.name} </Text>
                 <Text key={Math.random().toString()}> {val.description} </Text>
-                { displayTime(val) }
+                { displayAuthor(val) }
+                { displayStartTime(val) }
+                { displayEndTime(val) }
                 <Text> Distanz: {distanceToUserPos} km</Text>
-                { displayTags() }
+                { displayTags(val) }
               </Callout>
           </Marker>); 
           }

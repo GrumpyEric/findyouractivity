@@ -51,11 +51,21 @@ const handleLogin = (auth, email, password, navigation) => {
 }
 
 // remove snapshot listener
-const unsubscribe = onSnapshot(collection(db, "markers"), () => {
+const unsubscribeMarkerDB = onSnapshot(collection(db, "markers"), () => {
   // Respond to data
   // ...
 });
 
+const unsubscribeUserDB = onSnapshot(collection(db, "users"), () => {
+  // Respond to data
+  // ...
+});
+
+const unsubscribe = () => 
+{
+  unsubscribeMarkerDB()
+  unsubscribeUserDB()
+}
 
 // SignOut Stuff
 import { signOut } from 'firebase/auth'
@@ -170,7 +180,7 @@ const updateUserFromDB = async(uid, usernameInput, descriptionInput) =>
 
 
 // MARKER zur DB hinzufügen
-import { Timestamp, doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
+import { Timestamp, doc, setDoc, getDoc, getDocs, updateDoc, where } from 'firebase/firestore';
 import { Alert } from 'react-native';
 import { createContext, useContext } from 'react';
 import { useHandler } from 'react-native-reanimated';
@@ -200,4 +210,18 @@ const addMarkerToDB = async(auth, eventNameInput, eventDescInput, startDate, end
   // setRegion(userMarker);
 }
 
-export { handleForgotPassword, handleSignUp, handleLogin, handleSignOut, addMarkerToDB, markersRef, applyFilters, updateUserFromDB, readUserFromDB}
+const getEventsFromUser = async(uid) =>
+{
+  let resArray = []
+  const eventQuery = query(collection(db,"markers"), where("user".toString(), "== ", uid.toString()))
+  const querySnapshot = await getDocs(eventQuery);
+  querySnapshot.forEach((doc) =>
+   {
+    // doc.data() is never undefined for query doc snapshots
+    resArray.push(doc.data().markers);
+    //console.log(doc.id, " => ", doc.data());
+  });
+  return resArray
+}
+
+export { handleForgotPassword, handleSignUp, handleLogin, handleSignOut, addMarkerToDB, markersRef, applyFilters, updateUserFromDB, readUserFromDB, getEventsFromUser}
