@@ -1,9 +1,9 @@
 import { collection, onSnapshot, query, Timestamp } from 'firebase/firestore';
 import { useEffect, useRef, useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Switch } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Switch, Alert } from 'react-native';
 import { stylesGlobal } from '../constants/StylesGlobal'
 import { auth, db } from "../firebase/firebase-config";
-import { markersRef } from '../constants/MainFunctions';
+import { deleteMarkerToDB, markersRef } from '../constants/MainFunctions';
 import { editMarkerMode, editMarkerObject, editMarkerValues, mapRef } from '../components/AppContext';
 import { getDistance } from 'geolib';
 import { userPosContext } from '../components/AppContext';
@@ -13,46 +13,64 @@ import Slider from '@react-native-community/slider';
 import { formatISO, formatRFC3339 } from 'date-fns';
 
 const MyMarkersScreen = ( {navigation} ) => {
+  const [value, setValue] = useState()
 
-const moveToMarker = (inputMarker) => {
-  mapRef.current.animateToRegion({
-    latitude: inputMarker.latitude,
-    longitude: inputMarker.longitude,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01
-  })
-  navigation.pop()
-}
+  useEffect(() => {
+    console.log(value);
+  }, [value])
 
-function editMarkerHandler(val) {
-  navigation.navigate('CreateMarkersScreen'); editMarker(val)
-}
+  const moveToMarker = (inputMarker) => {
+    mapRef.current.animateToRegion({
+      latitude: inputMarker.latitude,
+      longitude: inputMarker.longitude,
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.01
+    })
+    navigation.pop()
+  }
 
-const editMarker = (markerValues) => {
-  editMarkerMode._currentValue = true
+  function editMarkerHandler(val) {
+    navigation.navigate('CreateMarkersScreen'); editMarker(val)
+  }
 
-  // editMarkerValues._currentValue.creationDate = ((markerValues.creation_date.nanoseconds / 1000000000 + markerValues.creation_date.seconds) * 1000)
-  // editMarkerValues._currentValue.creationDate = Timestamp.fromMillis( (markerValues.creation_date.nanoseconds / 10000000 + markerValues.creation_date.seconds) * 1000 )
-  editMarkerValues._currentValue.creationDate = markerValues.creation_date
-  editMarkerValues._currentValue.name = markerValues.name
-  editMarkerValues._currentValue.description = markerValues.description
-  editMarkerValues._currentValue.locationDescription = markerValues.locationDescription
-  editMarkerValues._currentValue.startDate = new Date(markerValues.startTime.seconds*1000)
-  editMarkerValues._currentValue.endDate = new Date(markerValues.endTime.seconds*1000)
-  editMarkerValues._currentValue.numberParticipants = markerValues.numberParticipants
-  editMarkerValues._currentValue.tags = markerValues.tags
-  editMarkerValues._currentValue.latitude = markerValues.latitude
-  editMarkerValues._currentValue.longitude = markerValues.longitude
+  function deleteMarkerHandler(val) {
+    Alert.alert(
+      'Löschen des Markers',
+      'Wollen Sie den Marker wirklich löschen?',
+      [
+        {
+          text: 'Löschen',
+          onPress: () => { deleteMarkerToDB(auth, val.creation_date) }
+        }
+      ]
+    )
+  }
 
-  editMarkerObject._currentValue = markerValues
-  console.log('MY VALUES', markerValues);
+  const editMarker = (markerValues) => {
+    editMarkerMode._currentValue = true
 
-  // Timestamp creation date:
-  // console.log('creation date:', (markerValues.creation_date.nanoseconds / 1000000000 + markerValues.creation_date.seconds) * 1000 );
-  // important for update marker: db, "markers", userID_timestampcreationdate (in seconds)
+    // editMarkerValues._currentValue.creationDate = ((markerValues.creation_date.nanoseconds / 1000000000 + markerValues.creation_date.seconds) * 1000)
+    // editMarkerValues._currentValue.creationDate = Timestamp.fromMillis( (markerValues.creation_date.nanoseconds / 10000000 + markerValues.creation_date.seconds) * 1000 )
+    editMarkerValues._currentValue.creationDate = markerValues.creation_date
+    editMarkerValues._currentValue.name = markerValues.name
+    editMarkerValues._currentValue.description = markerValues.description
+    editMarkerValues._currentValue.locationDescription = markerValues.locationDescription
+    editMarkerValues._currentValue.startDate = new Date(markerValues.startTime.seconds*1000)
+    editMarkerValues._currentValue.endDate = new Date(markerValues.endTime.seconds*1000)
+    editMarkerValues._currentValue.numberParticipants = markerValues.numberParticipants
+    editMarkerValues._currentValue.tags = markerValues.tags
+    editMarkerValues._currentValue.latitude = markerValues.latitude
+    editMarkerValues._currentValue.longitude = markerValues.longitude
 
-  console.log('crewate date:', editMarkerValues._currentValue.creationDate );
-}
+    editMarkerObject._currentValue = markerValues
+    console.log('MY VALUES', markerValues);
+
+    // Timestamp creation date:
+    // console.log('creation date:', (markerValues.creation_date.nanoseconds / 1000000000 + markerValues.creation_date.seconds) * 1000 );
+    // important for update marker: db, "markers", userID_timestampcreationdate (in seconds)
+
+    console.log('create date:', editMarkerValues._currentValue.creationDate );
+  }
 
   const [showMyMarkers, setShowMyMarkers] = useState(true)
   const myUserID = auth.currentUser.uid
@@ -124,6 +142,11 @@ const editMarker = (markerValues) => {
                       text={'bearbeiten'}
                       textColor={Colors.findmyactivityBlue}
                     />
+                    <TextButton
+                      onPress={() => deleteMarkerHandler(val)}
+                      text={'löschen'}
+                      textColor={Colors.findmyactivityBlue}
+                    />
                     {/* <Text> Distanz: {distanceToUserPos} km</Text> */}
                   </View>
                 )
@@ -148,11 +171,18 @@ const editMarker = (markerValues) => {
                     </TouchableOpacity>
                     {val.user === myUserID 
                     ?
+                    <View>
                     <TextButton
                       onPress={() => editMarkerHandler(val)}
                       text={'bearbeiten'}
                       textColor={Colors.findmyactivityBlue}
                     />
+                    <TextButton
+                      onPress={() => deleteMarkerHandler(val)}
+                      text={'löschen'}
+                      textColor={Colors.findmyactivityBlue}
+                    />
+                    </View>
                     :
                     null
                     }

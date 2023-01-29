@@ -59,7 +59,7 @@ const handleSignOut = (auth, navigation) => {
 }
 
 // Query snapshot Marker
-import { collection, query, onSnapshot, updateDoc } from "firebase/firestore";
+import { collection, query, onSnapshot, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from '../firebase/firebase-config';
 import { filterContext } from '../components/AppContext';
 // import { useRef } from 'react';
@@ -143,7 +143,7 @@ const addMarkerToDB = async(auth, eventNameInput, eventDescInput, eventLocationD
   // setRegion(userMarker);
 }
 
-// TODO: creation, start and end date not formatted right
+// TODO: creation, start and end date not formatted right; DONE
 const updateMarkerToDB = async(auth, eventNameInput, eventDescInput, eventLocationDesc, startDate, endDate, numberParticipants, tags, userMarkerLatitude, userMarkerLongitude, markerCreationDate) => {
   let userID = auth.currentUser.uid.toString()
   // let creationDate = formatISO(markerCreationDate)
@@ -169,4 +169,13 @@ const updateMarkerToDB = async(auth, eventNameInput, eventDescInput, eventLocati
   // setRegion(userMarker);
 }
 
-export { handleForgotPassword, handleSignUp, handleLogin, handleSignOut, addMarkerToDB, updateMarkerToDB, markersRef, applyFilters}
+const deleteMarkerToDB = async(auth, markerCreationDate) => {
+  let userID = auth.currentUser.uid.toString()
+
+  await deleteDoc(doc(db, "markers", userID+"_"+( markerCreationDate ) ))
+  const alerta_title = "Marker has been deleted"
+  const alerta_msg = ':('
+  Alert.alert(alerta_title,alerta_msg);
+}
+
+export { handleForgotPassword, handleSignUp, handleLogin, handleSignOut, addMarkerToDB, updateMarkerToDB, deleteMarkerToDB, markersRef, applyFilters}
