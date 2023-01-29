@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView } from 'rea
 import { stylesGlobal } from '../../constants/StylesGlobal'
 import TextInputField from '../../components/TextInputField'
 import { auth } from '../../firebase/firebase-config'
-import { addMarkerToDB } from '../../constants/MainFunctions'
+import { addMarkerToDB, updateMarkerToDB } from '../../constants/MainFunctions'
 import { editMarkerMode, editMarkerValues, latitudeContext, longitudeContext, tagData } from '../../components/AppContext'
 import Colors from '../../constants/Colors'
 import ButtonSmall from '../../components/ButtonSmall'
@@ -230,7 +230,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
 
           <ButtonSmall
             text={'Aktualisieren'}         
-            onPress={() => { addMarkerToDB(auth, eventName, eventDescription, placeDesciption, pickedStartTime.current, pickedEndTime.current, numberParticipants, tags, latitudeContext._currentValue, longitudeContext._currentValue); navigation.pop() }}
+            onPress={() => { updateMarkerToDB(auth, eventName, eventDescription, placeDesciption, pickedStartTime.current, pickedEndTime.current, numberParticipants, tags, editMarkerValues._currentValue.latitude, editMarkerValues._currentValue.longitude, editMarkerValues._currentValue.creationDate); navigation.pop() }}
             backgroundColor={Colors.findmyactivityBlue}
           />
         </View>

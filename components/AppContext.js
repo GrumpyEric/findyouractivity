@@ -19,6 +19,7 @@ export const userPosContext = createContext(0)
 
 export const editMarkerMode = createContext(false)
 export const editMarkerValues = createContext([{
+  creationDate: null,
   name: null,
   description: null,
   locationDescription: null,

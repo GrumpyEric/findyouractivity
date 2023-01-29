@@ -1,4 +1,4 @@
-import { collection, onSnapshot, query } from 'firebase/firestore';
+import { collection, onSnapshot, query, Timestamp } from 'firebase/firestore';
 import { useEffect, useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Switch } from 'react-native';
 import { stylesGlobal } from '../constants/StylesGlobal'
@@ -10,7 +10,7 @@ import { userPosContext } from '../components/AppContext';
 import Colors from '../constants/Colors';
 import TextButton from '../components/TextButton';
 import Slider from '@react-native-community/slider';
-import { format, formatISO, formatRFC3339 } from 'date-fns';
+import { formatISO, formatRFC3339 } from 'date-fns';
 
 const MyMarkersScreen = ( {navigation} ) => {
 
@@ -24,14 +24,21 @@ const moveToMarker = (inputMarker) => {
   navigation.pop()
 }
 
+function editMarkerHandler(val) {
+  navigation.navigate('CreateMarkersScreen'); editMarker(val)
+}
+
 const editMarker = (markerValues) => {
   editMarkerMode._currentValue = true
 
+  // editMarkerValues._currentValue.creationDate = ((markerValues.creation_date.nanoseconds / 1000000000 + markerValues.creation_date.seconds) * 1000)
+  // editMarkerValues._currentValue.creationDate = Timestamp.fromMillis( (markerValues.creation_date.nanoseconds / 10000000 + markerValues.creation_date.seconds) * 1000 )
+  editMarkerValues._currentValue.creationDate = markerValues.creation_date
   editMarkerValues._currentValue.name = markerValues.name
   editMarkerValues._currentValue.description = markerValues.description
   editMarkerValues._currentValue.locationDescription = markerValues.locationDescription
-  editMarkerValues._currentValue.startDate = markerValues.startTime.seconds*1000
-  editMarkerValues._currentValue.endDate = markerValues.endTime.seconds*1000
+  editMarkerValues._currentValue.startDate = new Date(markerValues.startTime.seconds*1000)
+  editMarkerValues._currentValue.endDate = new Date(markerValues.endTime.seconds*1000)
   editMarkerValues._currentValue.numberParticipants = markerValues.numberParticipants
   editMarkerValues._currentValue.tags = markerValues.tags
   editMarkerValues._currentValue.latitude = markerValues.latitude
@@ -39,6 +46,12 @@ const editMarker = (markerValues) => {
 
   editMarkerObject._currentValue = markerValues
   console.log('MY VALUES', markerValues);
+
+  // Timestamp creation date:
+  // console.log('creation date:', (markerValues.creation_date.nanoseconds / 1000000000 + markerValues.creation_date.seconds) * 1000 );
+  // important for update marker: db, "markers", userID_timestampcreationdate (in seconds)
+
+  console.log('crewate date:', editMarkerValues._currentValue.creationDate );
 }
 
   const [showMyMarkers, setShowMyMarkers] = useState(true)
@@ -107,7 +120,7 @@ const editMarker = (markerValues) => {
                       <Text> Distanz: {distanceToUserPos} km</Text>
                     </TouchableOpacity>
                     <TextButton
-                      onPress={() => { navigation.navigate('CreateMarkersScreen'); editMarker(val) }}
+                      onPress={() => editMarkerHandler(val)}
                       text={'bearbeiten'}
                       textColor={Colors.findmyactivityBlue}
                     />
@@ -136,7 +149,7 @@ const editMarker = (markerValues) => {
                     {val.user === myUserID 
                     ?
                     <TextButton
-                      onPress={() => { navigation.navigate('CreateMarkersScreen'); editMarker(val) }}
+                      onPress={() => editMarkerHandler(val)}
                       text={'bearbeiten'}
                       textColor={Colors.findmyactivityBlue}
                     />
