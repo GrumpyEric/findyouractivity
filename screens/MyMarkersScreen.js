@@ -41,6 +41,10 @@ const MyMarkersScreen = ( {navigation} ) => {
         {
           text: 'Löschen',
           onPress: () => { deleteMarkerToDB(auth, val.creation_date) }
+        },
+        {
+          text: 'Abbrechen',
+          onPress: () => {  }
         }
       ]
     )
