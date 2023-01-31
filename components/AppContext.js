@@ -3,6 +3,7 @@ import { createContext, createRef, useState } from "react";
 export const latitudeContext = createContext(0)
 export const longitudeContext = createContext(0)
 export const mapRef = createRef(null);
+export const mapRefEdit = createRef(null);
 export const filterContext = createContext(0)
 console.log("filterContext value: ", filterContext._current_value)
 export const tagData = [

@@ -16,6 +16,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import 'intl'
 import 'intl/locale-data/jsonp/de'
 import { intlFormat } from 'date-fns'
+import TextAndIconButton from '../../components/TextAndIconButton'
 
 const CreateMarkersScreen = ( {navigation} ) => {  
   const [eventName, setEventName] = useState(editMarkerMode._currentValue ? editMarkerValues._currentValue.name : undefined)
@@ -161,6 +162,14 @@ const CreateMarkersScreen = ( {navigation} ) => {
         setValue={(val) =>setEventTags(val)}
         setItems={setItems}
       />
+
+      {editMarkerMode._currentValue ?
+      <TextAndIconButton
+        text='Hier drücken, um die Lage des Events zu ändern'
+        // TODO: new Modal for set new marker location in edit mode
+        onPress={() => navigation.navigate('EditMarkerLocationScreen')}
+      />
+      : null}
 
         <View style={{flexDirection: 'row'}}>
         {pickedStartTime.current !== undefined
