@@ -2,7 +2,9 @@ import { TouchableOpacity, Text, StyleSheet } from "react-native"
 import Colors from "../constants/Colors"
 import { stylesGlobal } from "../constants/StylesGlobal"
 
-// component props: onPress, text, backgroundColor, borderColor, textColor
+import PropTypes from 'prop-types'
+
+// component props: onPress, text, backgroundColor, borderColor
 const ButtonRegularWithBorder = (props) => {
   return (
     <TouchableOpacity
@@ -13,6 +15,8 @@ const ButtonRegularWithBorder = (props) => {
     </TouchableOpacity>
   )
 }
+
+ButtonRegularWithBorder.propTypes = { onPress: PropTypes.func.isRequired, text: PropTypes.string.isRequired, backgroundColor: PropTypes.string.isRequired, borderColor: PropTypes.string.isRequired, textColor: PropTypes.string }
 
 export default ButtonRegularWithBorder
 

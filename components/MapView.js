@@ -57,6 +57,7 @@ const MapViewGoogle = (props) => {
       let currentUserPos = await Location.getCurrentPositionAsync({});
       setUserPos(currentUserPos);
       userPosContext._currentValue = currentUserPos
+      console.log(userPosContext._currentValue);
       setIsUserPosLoaded(true)
     })();
   }, []);
@@ -92,6 +93,7 @@ const MapViewGoogle = (props) => {
     // if (isUserPosLoaded === true) {
     // console.log(userPos);
     if (userPos.coords != undefined) {
+      console.log(),
     mapRef.current.animateToRegion({
       latitude: userPos.coords.latitude,
       longitude: userPos.coords.longitude,
@@ -100,22 +102,27 @@ const MapViewGoogle = (props) => {
     })
   }}
 
+  useEffect(() => {
+    console.log(markersRef);
+  }, [markersRef])
+  
+
   return (
     <View style={{...StyleSheet.absoluteFillObject}}>
       <FloatingActionButton
         onPress={() => getCurrentPosition()}
         bottomPos={100}
         rightPos={10}
+        icon={'location-arrow'}
       />
-    {/*
-    <FloatingActionButton
+
+      <FloatingActionButton
         onPress={() => alert(filterContext._current_value)}
         bottomPos={250}
         rightPos={10}
-      /> 
-    */}
-
-
+        icon={'location-arrow'}
+      />
+      
       <MapView
         provider = {PROVIDER_GOOGLE}
         region={region}

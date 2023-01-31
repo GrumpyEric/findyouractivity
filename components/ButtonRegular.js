@@ -2,6 +2,8 @@ import { TouchableOpacity, Text, StyleSheet } from "react-native"
 import Colors from "../constants/Colors"
 import { stylesGlobal } from "../constants/StylesGlobal"
 
+import PropTypes from 'prop-types'
+
 // component props: onPress, text, backgroundColor, MarginBottom
 const ButtonRegular = (props) => {
   return (
@@ -13,6 +15,8 @@ const ButtonRegular = (props) => {
     </TouchableOpacity>
   )
 }
+
+ButtonRegular.propTypes = { onPress: PropTypes.func.isRequired, text: PropTypes.string.isRequired, backgroundColor: PropTypes.string.isRequired, marginBottom: PropTypes.any }
 
 export default ButtonRegular
 
