@@ -180,7 +180,7 @@ const updateUserFromDB = async(uid, usernameInput, descriptionInput) =>
 
 
 // MARKER zur DB hinzufügen
-import { Timestamp, doc, setDoc, getDoc, getDocs, updateDoc, where } from 'firebase/firestore';
+import { Timestamp, doc, setDoc, getDoc, getDocs, where } from 'firebase/firestore';
 import { Alert } from 'react-native';
 import { format, formatISO } from 'date-fns';
 
