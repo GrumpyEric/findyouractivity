@@ -32,8 +32,7 @@ const HomeScreen = ( {navigation} ) => {
       />
       
       {/* MARKER ERSTELLEN */}
-      {/* <TextInput style={styles.input} placeholder='EVENT NAME' value={eventNameInput} onChangeText={onChangeEventInput}></TextInput>
-      <TextInput style={styles.input} placeholder='DESCRIPTION' value={eventDescInput} onChangeText={onChangeDescInput}></TextInput> */}
+
       <View style={styles.button}>
         <ButtonRegular
           text={'CREATE MARKER'}

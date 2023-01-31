@@ -1,13 +1,12 @@
 
 import React, { useEffect, useState } from 'react'
 import { Alert,View, Text, TouchableOpacity, ScrollView,StyleSheet } from 'react-native';
-import { SelectList,MultipleSelectList } from 'react-native-dropdown-select-list'
-import { filterContext,tagData } from '../components/AppContext';
+import { filterContext,tagData, rangeContext } from '../components/AppContext';
+import {Slider} from "@miblanchard/react-native-slider";
 
 import { applyFilters } from '../constants/MainFunctions';
 
 import ButtonRegularWithBorder from '../components/ButtonRegular';
-import ButtonSmall from '../components/ButtonSmall';
 
 import Colors from '../constants/Colors'
 
@@ -20,6 +19,7 @@ const FilterScreen = ( {navigation} ) => {
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState(tagData);  
   const [value, setValue] = useState(filterContext._current_value);
+  const [range, setRange] = useState(rangeContext._current_value);
   
   // ausgewählte Filter als Badges anzeigen
   DropDownPicker.setMode("BADGE");
@@ -45,7 +45,11 @@ const FilterScreen = ( {navigation} ) => {
     //console.log("FILTERCONTEXT 1: ", filterContext._current_value)
   }, []);
 
-
+  const changeRange = (inputVal) =>
+  {
+    setRange(inputVal)
+    rangeContext._current_value = inputVal
+  }
 
   const saveFilters = () => {
     //alert("TODO: Filter-Auswahl speichern")
@@ -71,7 +75,22 @@ const FilterScreen = ( {navigation} ) => {
  
 return(
   <View>
-
+    {
+    // Slider für Such-Radius
+    <View 
+        style = {hampter.slider}>
+      <Text style={hampter.centerText}>
+        Such-Radius: { range } km
+      </Text>
+      <Slider  
+        minimumValue={1}
+        maximumValue={1000}
+        value={range}
+        onValueChange = {(val) => changeRange(val)}
+        step = {1}
+      />  
+    </View>
+    }
     <DropDownPicker
       searchable={true}
       multiple={true}
@@ -114,4 +133,12 @@ const hampter = StyleSheet.create({
     alignItems: 'center',
     marginTop: 40,
   },
+
+  slider: {
+    marginHorizontal:20,
+  },
+
+  centerText: {
+    alignSelf:'center',
+  }
 })

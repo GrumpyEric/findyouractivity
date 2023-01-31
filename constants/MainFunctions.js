@@ -37,6 +37,10 @@ const handleLogin = (auth, email, password, navigation) => {
   .then(userCredential => {
     const user = userCredential.user;
     if (user.emailVerified) {
+      
+      loggedInUser._current_value = user
+      // user zur DB hinzufügen falls noch nicht vorhanden ist
+      readUserFromDB(user.uid);
       navigation.replace("Home")
     }
     else {
@@ -46,11 +50,29 @@ const handleLogin = (auth, email, password, navigation) => {
   .catch(error => alert(error.message))
 }
 
+// remove snapshot listener
+const unsubscribeMarkerDB = onSnapshot(collection(db, "markers"), () => {
+  // Respond to data
+  // ...
+});
+
+const unsubscribeUserDB = onSnapshot(collection(db, "users"), () => {
+  // Respond to data
+  // ...
+});
+
+const unsubscribe = () => 
+{
+  unsubscribeMarkerDB()
+  unsubscribeUserDB()
+}
+
 // SignOut Stuff
 import { signOut } from 'firebase/auth'
 //import { collection, query} from "firebase/firestore";
 
 const handleSignOut = (auth, navigation) => {
+  unsubscribe();
   signOut(auth)
   .then(() => {
     navigation.navigate("Login")
@@ -61,7 +83,7 @@ const handleSignOut = (auth, navigation) => {
 // Query snapshot Marker
 import { collection, query, onSnapshot, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from '../firebase/firebase-config';
-import { filterContext } from '../components/AppContext';
+import { filterContext, selectedUserContext, loggedInUser } from '../components/AppContext';
 // import { useRef } from 'react';
 
 let markersRef
@@ -77,7 +99,8 @@ const readMarkerFromDB = onSnapshot(q, (QuerySnapshot) => {
   //markersRef = db_markers
 })
 
-// TODO: filtert noch nicht nach den Preferences, sondern nur danach ob es überhaupt ne tag-variable besitzt oder nicht
+
+// wendet die vom nutzer eingestellten filter ein
 const applyFilters = () => {
   const initMarkers = db_markers // backup der db-marker
   const validMarkers = [];
@@ -112,8 +135,52 @@ const applyFilters = () => {
   //markersRef = validMarkers
 }
 
+
+// USER zur user-DB hinzufügen
+const addUserToDB = async(username, description, uid, events) =>
+{
+  // let userID = auth.currentUser.uid.toString()
+  await setDoc(doc(db, "users", uid ), {
+    markers: {
+      uid: uid,
+      description: description,
+      username: username,
+      events: events
+    }
+  }).catch(error => alert(error.message));
+}
+
+// User von user-DB ablesen
+const readUserFromDB = async(uid) =>
+{
+  const docRef = doc( db, "users", uid.toString() )
+  const docSnap = await getDoc(docRef);
+  
+  if ( docSnap.exists() )
+  {
+    selectedUserContext._current_value = docSnap.data()
+    //console.log(docSnap.data())
+  }
+  else
+  {
+    addUserToDB( "Unknown User "+ uid , "Write Something about yourself" , uid, [] )
+  }
+}
+
+// User-Info auf DB ändern (z.B. Benutzernamen ändern)
+const updateUserFromDB = async(uid, usernameInput, descriptionInput) =>
+{
+  const userDocRef = doc(db,"users", uid.toString())
+  await updateDoc(userDocRef, {
+    "markers.username": usernameInput,
+    "markers.description": descriptionInput
+  }) 
+}
+
+
+
 // MARKER zur DB hinzufügen
-import { Timestamp, doc, setDoc } from 'firebase/firestore';
+import { Timestamp, doc, setDoc, getDoc, getDocs, updateDoc, where } from 'firebase/firestore';
 import { Alert } from 'react-native';
 import { format, formatISO } from 'date-fns';
 
@@ -141,6 +208,20 @@ const addMarkerToDB = async(auth, eventNameInput, eventDescInput, eventLocationD
   const alerta_msg = "Latitude: " + userMarkerLatitude.toString() + "\nLongitude" + userMarkerLongitude.toString()
   Alert.alert(alerta_title,alerta_msg);
   // setRegion(userMarker);
+}
+
+const getEventsFromUser = async(uid) =>
+{
+  let resArray = []
+  const eventQuery = query(collection(db,"markers"), where("user".toString(), "== ", uid.toString()))
+  const querySnapshot = await getDocs(eventQuery);
+  querySnapshot.forEach((doc) =>
+   {
+    // doc.data() is never undefined for query doc snapshots
+    resArray.push(doc.data().markers);
+    //console.log(doc.id, " => ", doc.data());
+  });
+  return resArray
 }
 
 // TODO: creation, start and end date not formatted right; DONE
@@ -178,4 +259,4 @@ const deleteMarkerToDB = async(auth, markerCreationDate) => {
   Alert.alert(alerta_title,alerta_msg);
 }
 
-export { handleForgotPassword, handleSignUp, handleLogin, handleSignOut, addMarkerToDB, updateMarkerToDB, deleteMarkerToDB, markersRef, applyFilters}
+export { handleForgotPassword, handleSignUp, handleLogin, handleSignOut, addMarkerToDB, updateMarkerToDB, deleteMarkerToDB, markersRef, applyFilters, updateUserFromDB, readUserFromDB, getEventsFromUser}
