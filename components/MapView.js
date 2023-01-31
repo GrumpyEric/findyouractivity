@@ -153,7 +153,7 @@ const MapViewGoogle = (props) => {
               if( (val.startTime != undefined) ) 
               {
                 //return <Text> Start-Zeit: {val.startTime.toDate().toString()} </Text>
-                startTimeRes = val.startTime
+                startTimeRes = val.startTime.toDate()
               }
               else if ( !(val.startTime != undefined) ) 
               {
@@ -170,7 +170,7 @@ const MapViewGoogle = (props) => {
               if( (val.endTime != undefined) ) 
               {
                 //return <Text> Start-Zeit: {val.startTime.toDate().toString()} </Text>
-                endTimeRes = val.endTime
+                endTimeRes = val.endTime.toDate()
               }
               else if ( !(val.endTime != undefined) ) 
               {
