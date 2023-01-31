@@ -11,11 +11,10 @@ import { hawRegion } from "../constants/TestCoords";
 import * as Location from 'expo-location';
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase/firebase-config";
-import { userPosContext } from "./AppContext";
 
 import { markersRef, userMarkerContext, applyFilters } from "../constants/MainFunctions";
 import FloatingActionButton from "./FloatingActionButton";
-import { latitudeContext, longitudeContext, mapRef, filterContext } from "./AppContext";
+import { latitudeContext, longitudeContext, mapRef, filterContext, userPosContext } from "./AppContext";
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
@@ -143,6 +142,7 @@ const MapViewGoogle = (props) => {
     // if (isUserPosLoaded === true) {
     // console.log(userPos);
     if (userPos.coords != undefined) {
+      console.log(),
     mapRef.current.animateToRegion({
       latitude: userPos.coords.latitude,
       longitude: userPos.coords.longitude,
@@ -151,18 +151,25 @@ const MapViewGoogle = (props) => {
     })
   }}
 
+  useEffect(() => {
+    console.log(markersRef);
+  }, [markersRef])
+  
+
   return (
     <View style={{...StyleSheet.absoluteFillObject}}>
       <FloatingActionButton
         onPress={() => getCurrentPosition()}
         bottomPos={100}
         rightPos={10}
+        icon={'location-arrow'}
       />
 
-<FloatingActionButton
+      <FloatingActionButton
         onPress={() => alert(filterContext._current_value)}
         bottomPos={250}
         rightPos={10}
+        icon={'location-arrow'}
       />
 
       <MapView

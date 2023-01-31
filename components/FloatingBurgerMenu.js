@@ -3,7 +3,9 @@ import { TouchableOpacity, StyleSheet, View, Text } from 'react-native'
 import { stylesglobal, width, height } from '../constants/StylesGlobal'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-// component props: onPress, icon, text, 
+import PropTypes from 'prop-types'
+
+// component props: onPress, icon
 class FloatingBurgerMenu extends React.Component {
   render() {
     return (
@@ -13,7 +15,7 @@ class FloatingBurgerMenu extends React.Component {
           style={{justifyContent: 'center', alignSelf: 'center'}}
         >
           <Icon 
-            name='navicon'
+            name={this.props.icon}
             size={35}
             color='white'
           />
@@ -22,6 +24,8 @@ class FloatingBurgerMenu extends React.Component {
     )
   }
 }
+
+FloatingBurgerMenu.propTypes = { onPress: PropTypes.func.isRequired, icon: PropTypes.string.isRequired,  }
 
 export default FloatingBurgerMenu
 

@@ -1,52 +1,43 @@
-import { useNavigation } from '@react-navigation/core'
-import React, {useState, useEffect, errorMsg } from "react";
-import { Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState } from "react";
+import { View, StyleSheet } from 'react-native';
 
 import { hawRegion } from '../constants/TestCoords';
 
 import { height, stylesGlobal } from '../constants/StylesGlobal'
 import MapViewGoogle from '../components/MapView';
-import FloatingBurgerMenu from '../components/FloatingBurgerMenu';
-import { addMarkerToDB } from '../constants/MainFunctions';
 import ButtonRegular from '../components/ButtonRegular';
-import { auth } from '../firebase/firebase-config';
 import Colors from '../constants/Colors';
-import { editMarkerMode } from '../components/AppContext';
 
-const HomeScreen = ( {navigation} ) => {
+const EditMarkerLocationScreen = ( {navigation} ) => {
   const [eventNameInput, onChangeEventInput] = useState("");
   const [eventDescInput, onChangeDescInput] = useState("");
 
+  function saveNewMarker() {
+
+  }
+
   return (
     <View style={[stylesGlobal.screenContainer]}>
-      <FloatingBurgerMenu
-        onPress={() => navigation.openDrawer()}
-        icon={'navicon'}
-      />
-
       <MapViewGoogle
         style={styles.map_container}
         initialRegion={hawRegion}
-        eventNameInput={eventNameInput}
-        eventDescInput={eventDescInput}
+        // eventNameInput={eventNameInput}
+        // eventDescInput={eventDescInput}
       />
-      
-      {/* MARKER ERSTELLEN */}
-      {/* <TextInput style={styles.input} placeholder='EVENT NAME' value={eventNameInput} onChangeText={onChangeEventInput}></TextInput>
-      <TextInput style={styles.input} placeholder='DESCRIPTION' value={eventDescInput} onChangeText={onChangeDescInput}></TextInput> */}
+
       <View style={styles.button}>
+        {/* if new marker has been set, then show button */}
         <ButtonRegular
-          text={'CREATE MARKER'}
-          onPress={() => { editMarkerMode._currentValue = false; navigation.navigate('CreateMarkersScreen') }}
+          text={'ORT AKTUALISIEREN'}
+          onPress={() => { navigation.goBack(); saveNewMarker() }}
           backgroundColor={Colors.findmyactivityYellow}
-          // onPress={() => addMarkerToDB(auth, 'EVENTNAME', 'EVENTDESC', 53.6, 10.045)}
         /> 
       </View>
     </View>
   )
 }
 
-export default HomeScreen
+export default EditMarkerLocationScreen
 
 const styles = StyleSheet.create({
    button: {

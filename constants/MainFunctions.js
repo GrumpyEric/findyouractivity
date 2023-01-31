@@ -59,7 +59,7 @@ const handleSignOut = (auth, navigation) => {
 }
 
 // Query snapshot Marker
-import { collection, query, onSnapshot } from "firebase/firestore";
+import { collection, query, onSnapshot, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from '../firebase/firebase-config';
 import { filterContext } from '../components/AppContext';
 // import { useRef } from 'react';
@@ -115,20 +115,21 @@ const applyFilters = () => {
 // MARKER zur DB hinzufügen
 import { Timestamp, doc, setDoc } from 'firebase/firestore';
 import { Alert } from 'react-native';
-import { createContext, useContext } from 'react';
-import { useHandler } from 'react-native-reanimated';
+import { format, formatISO } from 'date-fns';
 
-const addMarkerToDB = async(auth, eventNameInput, eventDescInput, startDate, endDate, numberParticipants, tags, userMarkerLatitude, userMarkerLongitude, ) => {
+const addMarkerToDB = async(auth, eventNameInput, eventDescInput, eventLocationDesc, startDate, endDate, numberParticipants, tags, userMarkerLatitude, userMarkerLongitude, ) => {
   let userID = auth.currentUser.uid.toString()
   let timeStampObj = Timestamp.now()
+  // let date = new Date()
   // TODO: timestamp in UNIX-Format setzen; DONE
   await setDoc(doc(db, "markers", userID+"_"+( timeStampObj.toDate().getTime() ) ), {
     markers: {
       name: eventNameInput,
       description: eventDescInput,
+      locationDescription: eventLocationDesc,
       latitude: userMarkerLatitude,
       longitude: userMarkerLongitude,
-      creation_date: timeStampObj.toDate(),
+      creation_date: timeStampObj.toDate().getTime(),
       startTime: startDate,
       endTime: endDate,
       numberParticipants: numberParticipants,
@@ -142,4 +143,39 @@ const addMarkerToDB = async(auth, eventNameInput, eventDescInput, startDate, end
   // setRegion(userMarker);
 }
 
-export { handleForgotPassword, handleSignUp, handleLogin, handleSignOut, addMarkerToDB, markersRef, applyFilters}
+// TODO: creation, start and end date not formatted right; DONE
+const updateMarkerToDB = async(auth, eventNameInput, eventDescInput, eventLocationDesc, startDate, endDate, numberParticipants, tags, userMarkerLatitude, userMarkerLongitude, markerCreationDate) => {
+  let userID = auth.currentUser.uid.toString()
+  // let creationDate = formatISO(markerCreationDate)
+  // console.log(creationDate);
+  await updateDoc(doc(db, "markers", userID+"_"+( markerCreationDate ) ), {
+    markers: {
+      name: eventNameInput,
+      description: eventDescInput,
+      locationDescription: eventLocationDesc,
+      latitude: userMarkerLatitude,
+      longitude: userMarkerLongitude,
+      creation_date: markerCreationDate,
+      startTime: startDate,
+      endTime: endDate,
+      numberParticipants: numberParticipants,
+      tags: tags,
+      user: userID
+    }
+  });
+  const alerta_title = "Marker has been updated"
+  const alerta_msg = "Latitude: " + userMarkerLatitude.toString() + "\nLongitude" + userMarkerLongitude.toString()
+  Alert.alert(alerta_title,alerta_msg);
+  // setRegion(userMarker);
+}
+
+const deleteMarkerToDB = async(auth, markerCreationDate) => {
+  let userID = auth.currentUser.uid.toString()
+
+  await deleteDoc(doc(db, "markers", userID+"_"+( markerCreationDate ) ))
+  const alerta_title = "Marker has been deleted"
+  const alerta_msg = ':('
+  Alert.alert(alerta_title,alerta_msg);
+}
+
+export { handleForgotPassword, handleSignUp, handleLogin, handleSignOut, addMarkerToDB, updateMarkerToDB, deleteMarkerToDB, markersRef, applyFilters}
