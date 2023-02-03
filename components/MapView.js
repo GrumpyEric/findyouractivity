@@ -1,24 +1,22 @@
-import React, {useRef, useState, useEffect} from "react";
-import { Alert, Text, TextInput, View, StyleSheet, TouchableOpacity, PermissionsAndroid, NativeModules } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Text, View, StyleSheet } from "react-native";
 import MapView, {PROVIDER_GOOGLE, Marker, Callout} from "react-native-maps";
 import { getDistance } from 'geolib';
 import { reverseGeocodeAsync } from "expo-location";
-import Geocoder from 'react-native-geocoder';
-import Icon from "react-native-vector-icons/FontAwesome";
 import { hawRegion } from "../constants/TestCoords";
 import * as Location from 'expo-location';
-import { collection, query, onSnapshot } from "firebase/firestore";
-import { db } from "../firebase/firebase-config";
 
 import { markersRef, userMarkerContext, applyFilters } from "../constants/MainFunctions";
 import FloatingActionButton from "./FloatingActionButton";
-import { latitudeContext, longitudeContext, mapRef, filterContext, userPosContext } from "./AppContext";
+import { latitudeContext, longitudeContext, mapRef, filterContext, userPosContext, rangeContext } from "./AppContext";
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
-import { intlFormat } from 'date-fns'
+import { format } from 'date-fns'
+import { useNavigation } from "@react-navigation/native";
 
 const MapViewGoogle = (props) => {
+  const navigation = useNavigation()
   const [isUserPosLoaded, setIsUserPosLoaded] = useState(false)
   const [userPos, setUserPos] = useState([]);
 
@@ -71,7 +69,6 @@ const MapViewGoogle = (props) => {
     //Alert.alert(selectedMarker.longitude.toString(), selectedMarker.latitude.toString() );
   }
 
-  
   const geodude = async(eventLat,eventLng) => {
     let address = "";
     reverseGeocodeAsync({latitude:eventLat,longitude:eventLng})
@@ -85,10 +82,6 @@ const MapViewGoogle = (props) => {
     })
   }
 
-
-
-  //const mapRef = useRef(null);
-  
   const getCurrentPosition = () => {
     // if (isUserPosLoaded === true) {
     // console.log(userPos);
@@ -106,7 +99,6 @@ const MapViewGoogle = (props) => {
     console.log(markersRef);
   }, [markersRef])
   
-
   return (
     <View style={{...StyleSheet.absoluteFillObject}}>
       <FloatingActionButton
@@ -117,10 +109,10 @@ const MapViewGoogle = (props) => {
       />
 
       <FloatingActionButton
-        onPress={() => alert(filterContext._current_value)}
-        bottomPos={250}
+        onPress={() => navigation.navigate("FilterScreen")}
+        bottomPos={200}
         rightPos={10}
-        icon={'location-arrow'}
+        icon={'filter'}
       />
       
       <MapView
@@ -140,6 +132,7 @@ const MapViewGoogle = (props) => {
         // markersRef.current.map((val, index) => 
         markersRef.map((val, index) => 
           {
+            
             let distanceToUserPos = "?"//getDistance(val,props.userPos.coords) / 1000
             if (userPos.coords != undefined)
             {
@@ -160,7 +153,7 @@ const MapViewGoogle = (props) => {
               if( (val.startTime != undefined) ) 
               {
                 //return <Text> Start-Zeit: {val.startTime.toDate().toString()} </Text>
-                startTimeRes = val.startTime.toDate()
+                startTimeRes = format(val.startTime.toDate(), 'dd.MM.yyyy, HH:mm') + ' Uhr'
               }
               else if ( !(val.startTime != undefined) ) 
               {
@@ -177,7 +170,7 @@ const MapViewGoogle = (props) => {
               if( (val.endTime != undefined) ) 
               {
                 //return <Text> Start-Zeit: {val.startTime.toDate().toString()} </Text>
-                endTimeRes = val.endTime.toDate()
+                endTimeRes = format(val.endTime.toDate(), 'dd.MM.yyyy, HH:mm') + ' Uhr'
               }
               else if ( !(val.endTime != undefined) ) 
               {
@@ -196,17 +189,22 @@ const MapViewGoogle = (props) => {
             }
 
             return (
-            <Marker key={index} coordinate={val} pinColor={val.color} tracksViewChanges={true} onPress={() => HighlightMarker(val)}>
-              <Callout>
-                <Text key={Math.random().toString()}> {val.name} </Text>
-                <Text key={Math.random().toString()}> {val.description} </Text>
-                { displayAuthor(val) }
-                { displayStartTime(val) }
-                { displayEndTime(val) }
-                <Text> Distanz: {distanceToUserPos} km</Text>
-                { displayTags(val) }
-              </Callout>
-          </Marker>); 
+              <View>
+                {/* {rangeContext._currentValue != null && distanceToUserPos != '?' && rangeContext._currentValue <= distanceToUserPos ? */}
+                <Marker key={index} coordinate={val} pinColor={val.color} tracksViewChanges={true} onPress={() => HighlightMarker(val)}>
+                  <Callout>
+                    <Text key={Math.random().toString()}> {val.name} </Text>
+                    <Text key={Math.random().toString()}> {val.description} </Text>
+                    { displayAuthor(val) }
+                    { displayStartTime(val) }
+                    { displayEndTime(val) }
+                    <Text> Distanz: {distanceToUserPos} km</Text>
+                    { displayTags(val) }
+                  </Callout>
+                </Marker>
+                {/* : null} */}
+              </View> 
+            )
           }
         )
       }
@@ -217,12 +215,8 @@ const MapViewGoogle = (props) => {
         userMarker.map((val, index) => 
           {
             return (
-            <Marker key={index} coordinate={val} pinColor='blue' draggable={false} tracksViewChanges={true}>
-              <Callout >
-                <Text key={Math.random().toString()}> {props.eventNameInput} </Text>
-                <Text key={Math.random().toString()}> {props.eventDescInput} </Text>
-              </Callout>
-          </Marker>); 
+              <Marker key={index} coordinate={val} pinColor='blue' draggable={false} tracksViewChanges={true}></Marker>
+            ); 
           }
         )
       }

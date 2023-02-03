@@ -23,11 +23,6 @@ function BurgerMenuContent ( props )  {
       />
 
       <DrawerItem
-        label="Filter"
-        onPress={() => { navigation.navigate("FilterScreen"); navigation.dispatch(DrawerActions.closeDrawer()) }}
-      />
-
-      <DrawerItem
         label="Profile"
         onPress={() => { navigation.navigate("ProfileScreen"); navigation.dispatch(DrawerActions.closeDrawer()) }}
       />
