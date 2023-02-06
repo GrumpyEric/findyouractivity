@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
    button: {
     alignItems: 'center',
     position: 'absolute',
-    bottom: 0,
+    bottom: 50,
     marginBottom: height * 0.05
   },
   buttonText: {

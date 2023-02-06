@@ -14,6 +14,7 @@ import 'intl'
 import 'intl/locale-data/jsonp/de'
 import { format } from 'date-fns'
 import { useNavigation } from "@react-navigation/native";
+import ButtonRegular from "./ButtonRegular";
 
 const MapViewGoogle = (props) => {
   const navigation = useNavigation()
@@ -24,6 +25,7 @@ const MapViewGoogle = (props) => {
   const [region, setRegion] = useState(props.initialRegion);
 
   const [userMarker, setUserMarker] = useState([hawRegion]);
+  const [showCreateMarker, setShowCreateMarker] = useState(false)
 
   let userMarkerLatitude = 0
   let userMarkerLongitude = 0
@@ -34,6 +36,7 @@ const MapViewGoogle = (props) => {
     userMarkerLongitude = newInputRegion.longitude
     latitudeContext._currentValue = userMarkerLatitude
     longitudeContext._currentValue = userMarkerLongitude
+    setShowCreateMarker(true)
 
     mapRef.current.animateToRegion({
       latitude: userMarkerLatitude,
@@ -103,14 +106,14 @@ const MapViewGoogle = (props) => {
     <View style={{...StyleSheet.absoluteFillObject}}>
       <FloatingActionButton
         onPress={() => getCurrentPosition()}
-        bottomPos={100}
+        bottomPos={150}
         rightPos={10}
         icon={'location-arrow'}
       />
 
       <FloatingActionButton
         onPress={() => navigation.navigate("FilterScreen")}
-        bottomPos={200}
+        bottomPos={250}
         rightPos={10}
         icon={'filter'}
       />
@@ -123,7 +126,9 @@ const MapViewGoogle = (props) => {
         style={props.style}
         initialRegion={props.initialRegion}
         showsUserLocation={true}
-        followsUserLocation={true}
+        // showsMyLocationButton={false}
+        // toolbarEnabled={false}
+        zoomControlEnabled={true}
         onLongPress = {(e) => updateUserMarker(e.nativeEvent.coordinate)}
         //onRegionChangeComplete runs when the user stops dragging MapView        
       >
@@ -200,6 +205,7 @@ const MapViewGoogle = (props) => {
                     { displayEndTime(val) }
                     <Text> Distanz: {distanceToUserPos} km</Text>
                     { displayTags(val) }
+                    <Text>Klick mich für mehr Infos</Text>
                   </Callout>
                 </Marker>
                 {/* : null} */}
