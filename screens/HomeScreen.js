@@ -7,11 +7,14 @@ import { hawRegion } from '../constants/TestCoords';
 import { height, stylesGlobal } from '../constants/StylesGlobal'
 import MapViewGoogle from '../components/MapView';
 import FloatingBurgerMenu from '../components/FloatingBurgerMenu';
-import { addMarkerToDB } from '../constants/MainFunctions';
+import { addMarkerToDB, applyFilters, manualReadMarkerFromDB } from '../constants/MainFunctions';
 import ButtonRegular from '../components/ButtonRegular';
 import { auth } from '../firebase/firebase-config';
 import Colors from '../constants/Colors';
 import { editMarkerMode } from '../components/AppContext';
+
+import { collection, query, onSnapshot, updateDoc, deleteDoc } from "firebase/firestore";
+import { db } from '../firebase/firebase-config';
 
 const HomeScreen = ( {navigation} ) => {
   const [eventNameInput, onChangeEventInput] = useState("");

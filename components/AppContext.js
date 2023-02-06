@@ -5,7 +5,7 @@ export const longitudeContext = createContext(0)
 export const mapRef = createRef(null);
 export const mapRefEdit = createRef(null);
 export const filterContext = createContext(0)
-export const rangeContext = createContext(200)
+export const rangeContext = createContext(null)
 //console.log("filterContext value: ", filterContext._current_value)
 export const tagData = [
     {label:'Fußball', value:'Fußball'},

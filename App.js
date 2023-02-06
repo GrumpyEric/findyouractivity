@@ -15,6 +15,7 @@ import BurgerMenuContent from './components/Drawer/BurgerMenuContent';
 import ProfileScreen from './screens/ProfileScreen';
 import { isIOS, isTablet } from './constants/StylesGlobal';
 import EditMarkerLocationScreen from './screens/EditMarkerLocationScreen';
+import ViewMarkerScreen from './screens/modals/ViewMarkerScreen';
 
 const Stack = createStackNavigator();
 const DrawerBurgerMenu = createDrawerNavigator();
@@ -86,7 +87,8 @@ export default function App() {
           <Stack.Screen name='CreateMarkersScreen' component={CreateMarkersScreen}/>
           <Stack.Screen name='EditMarkerLocationScreen' component={EditMarkerLocationScreen}/>
           <Stack.Screen name="MyMarkersScreen" component={MyMarkersScreen}/>
-          <Stack.Screen name="FilterScreen" component={FilterScreen}/>
+          <Stack.Screen name="FilterScreen" component={FilterScreen}/>          
+          <Stack.Screen name="ViewMarkerScreen" component={ViewMarkerScreen}/>
         </Stack.Group>
         
       </Stack.Navigator>

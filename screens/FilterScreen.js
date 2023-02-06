@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { Alert,View, Text, TouchableOpacity, ScrollView,StyleSheet } from 'react-native';
 import { filterContext,tagData, rangeContext } from '../components/AppContext';
-import {Slider} from "@miblanchard/react-native-slider";
+import Slider from '@react-native-community/slider';
 
 import { applyFilters } from '../constants/MainFunctions';
 
@@ -19,7 +19,9 @@ const FilterScreen = ( {navigation} ) => {
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState(tagData);  
   const [value, setValue] = useState(filterContext._current_value);
-  const [range, setRange] = useState(rangeContext._current_value);
+
+  const [radiusMarkers, setRadiusMarkers] = useState(5)
+  const [radiusMarkersVisual, setRadiusMarkersVisual] = useState(5)
   
   // ausgewählte Filter als Badges anzeigen
   DropDownPicker.setMode("BADGE");
@@ -61,8 +63,10 @@ const FilterScreen = ( {navigation} ) => {
     const alerta_title = "Filter wurden angewendet"
     const alerta_msg = filterContext._current_value.toString()
     Alert.alert(alerta_title,alerta_msg);
+    rangeContext._currentValue = radiusMarkers
     //navigation.pop()
   }
+
 
   const clearFilters = () => {
     setValue([])
@@ -75,22 +79,21 @@ const FilterScreen = ( {navigation} ) => {
  
 return(
   <View>
-    {
+    {/*
     // Slider für Such-Radius
-    <View 
-        style = {hampter.slider}>
-      <Text style={hampter.centerText}>
-        Such-Radius: { range } km
-      </Text>
-      <Slider  
-        minimumValue={1}
-        maximumValue={1000}
-        value={range}
-        onValueChange = {(val) => changeRange(val)}
-        step = {1}
-      />  
+    <View style={{width: '100%'}}>
+      <Text>Radius der anzuzeigenden Marker</Text>
+      <Text>{radiusMarkersVisual === 'alle' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>
+      <Slider
+        minimumValue={0}
+        maximumValue={21}
+        onSlidingComplete={(e) => { e < 21 ? setRadiusMarkers(value) : setRadiusMarkers('alle') } }
+        step={1}
+        value={radiusMarkers}
+        onValueChange={(e) => e < 21 ? setRadiusMarkersVisual(value) : setRadiusMarkersVisual('alle')}
+      />
     </View>
-    }
+*/}
     <DropDownPicker
       searchable={true}
       multiple={true}
@@ -134,11 +137,4 @@ const hampter = StyleSheet.create({
     marginTop: 40,
   },
 
-  slider: {
-    marginHorizontal:20,
-  },
-
-  centerText: {
-    alignSelf:'center',
-  }
 })
