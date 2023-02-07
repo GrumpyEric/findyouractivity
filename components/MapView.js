@@ -6,9 +6,9 @@ import { reverseGeocodeAsync } from "expo-location";
 import { hawRegion } from "../constants/TestCoords";
 import * as Location from 'expo-location';
 
-import { markersRef, userMarkerContext, applyFilters, manualReadMarkerFromDB } from "../constants/MainFunctions";
+import { markersRef, userMarkerContext, applyFilters, manualReadMarkerFromDB, getUsernameFromDB } from "../constants/MainFunctions";
 import FloatingActionButton from "./FloatingActionButton";
-import { latitudeContext, longitudeContext, mapRef, filterContext, userPosContext, rangeContext } from "./AppContext";
+import { latitudeContext, longitudeContext, mapRef, filterContext, userPosContext, rangeContext, selectedAuthor } from "./AppContext";
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
@@ -195,21 +195,14 @@ const MapViewGoogle = (props) => {
               return  <Text> End-Zeit: {endTimeRes.toString()} </Text>
             }
 
-            const displayAuthor = (val) => {
-              if ( (val.user != undefined) )
-              {
-                return <Text> erstellt von: {val.user} </Text>
-              }
-            }
-
+              let userInfo
             return (
               <View key={index}>
-                {/* {rangeContext._currentValue != null && distanceToUserPos != '?' && rangeContext._currentValue <= distanceToUserPos ? */}
-                <Marker key={index} coordinate={val} pinColor={val.color} tracksViewChanges={true} onPress={() => console.log(val)}>
-                  <Callout onPress={ () => navigation.navigate('ViewMarkerScreen', { eventName: val.name, eventDescription: val.description, eventAuthor: val.user, eventStartTime: displayStartTime(val), eventEndTime:displayEndTime(val), eventTags: displayTags(val), eventMaxParticipants: val.numberParticipants, eventLocationDescription: val.locationDescription } ) }>
-                      <Text key={Math.random().toString()}> {val.name} </Text>
-                      <Text key={Math.random().toString()}> {val.description} </Text>
-                      { displayAuthor(val) }
+                <Marker key={index} coordinate={val} pinColor={val.color} tracksViewChanges={true} onPress={() => getUsernameFromDB(val.user)}>
+                  <Callout onPress={ () => navigation.navigate('ViewMarkerScreen', { eventName: val.name, eventDescription: val.description,  eventAuthorUsername: selectedAuthor._current_value.markers.username, eventAuthorDescription: selectedAuthor._current_value.markers.description, eventAuthorID: val.user, eventStartTime: displayStartTime(val), eventEndTime:displayEndTime(val), eventTags: displayTags(val), eventMaxParticipants: val.numberParticipants, eventLocationDescription: val.locationDescription } ) }>
+                      <Text key={Math.random().toString()}> Name:  {val.name} </Text>
+                      <Text key={Math.random().toString()}> Beschreibung:  {val.description} </Text>
+                      {/*<Text> erstellt von: {selectedAuthor._current_value.markers.username}  </Text>*/}
                       { /*displayStartTime(val)*/ }
                       { /*displayEndTime(val)*/ }
                       <Text> Distanz: {distanceToUserPos} km</Text>

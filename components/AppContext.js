@@ -36,4 +36,6 @@ export const editMarkerValues = createContext([{
 }])
 export const editMarkerObject = createContext()
 
+export const selectedAuthor = createContext(null)
+
 // export {latitudeContext}

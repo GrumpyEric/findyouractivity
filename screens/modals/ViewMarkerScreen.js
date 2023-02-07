@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView } from 'rea
 import { stylesGlobal } from '../../constants/StylesGlobal'
 import TextInputField from '../../components/TextInputField'
 import { auth } from '../../firebase/firebase-config'
-import { addMarkerToDB, updateMarkerToDB } from '../../constants/MainFunctions'
+import { addMarkerToDB, updateMarkerToDB, getUsernameFromDB } from '../../constants/MainFunctions'
 import { editMarkerMode, editMarkerValues, latitudeContext, longitudeContext, tagData } from '../../components/AppContext'
 import Colors from '../../constants/Colors'
 import ButtonSmall from '../../components/ButtonSmall'
@@ -20,7 +20,9 @@ import TextAndIconButton from '../../components/TextAndIconButton'
 const ViewMarkerScreen = ( {route, navigation} ) => {  
   const nameDisplay = route.params.eventName
   const descriptionDisplay = route.params.eventDescription
-  const authorDisplay = route.params.eventAuthor
+  const authorDisplay = route.params.eventAuthorID  
+  const authorUsernameDisplay = route.params.eventAuthorUsername  
+  const authorDescriptionDisplay = route.params.eventAuthorDescription
   const startTimeDisplay = route.params.eventStartTime  
   const endTimeDisplay = route.params.eventEndTime
   const tagDisplay = route.params.eventTags
@@ -34,12 +36,17 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
       <Text> Name: {nameDisplay} </Text>
       <Text> Beschreibung: {descriptionDisplay} </Text>      
       <Text> Ortbeschreibung: {locationDescriptionDisplay} </Text>
-      <Text> Author: {authorDisplay} </Text>
+      <Text> Author: {authorUsernameDisplay} </Text>
       <Text> Maximale Anzahl von Teilnehmer: {maxParticipantDisplay} </Text>
       {startTimeDisplay}
       {endTimeDisplay}
       {tagDisplay}
       </ScrollView>
+      <ButtonSmall
+            text={'Profile ansehen'}
+            onPress={ () => {getUsernameFromDB(authorDisplay), navigation.navigate('ViewAuthorScreen', { authorID: authorDisplay, authorUsername: authorUsernameDisplay, authorDescription: authorDescriptionDisplay}) } }
+            backgroundColor={'red'}
+          />
       <ButtonSmall
             text={'Schließen'}
             onPress={() => navigation.pop()}
