@@ -67,7 +67,7 @@ const handleSignOut = (auth, navigation) => {
 // Query snapshot Marker
 import { collection, query, onSnapshot, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from '../firebase/firebase-config';
-import { filterContext, selectedUserContext, loggedInUser, selectedAuthor } from '../components/AppContext';
+import { filterContext, selectedUserContext, loggedInUser, selectedAuthor, participantContext } from '../components/AppContext';
 // import { useRef } from 'react';
 
 let markersRef = [];
@@ -161,17 +161,31 @@ const readUserFromDB = async(uid) =>
   }
 }
 
-const getUsernameFromDB = async(uid) => {
+const getUserInfoFromDB = async(uid) => {
   const docRef = doc( db, "users", uid.toString() )
   const docSnap = await getDoc(docRef);
   
   if ( docSnap.exists() )
   {
-    console.log("getUsernameFromDB ", docSnap.data())
     selectedAuthor._current_value = docSnap.data()
+    return selectedAuthor._current_value
   }
-  return selectedAuthor._current_value
+  
 }
+
+const getParticipant = async(uid) => {
+  const docRef = doc( db, "users", uid.toString() )
+  const docSnap = await getDoc(docRef);
+  
+  if ( docSnap.exists() )
+  {
+    participantContext._current_value = docSnap.data()
+    
+    return participantContext._current_value
+  }
+  
+}
+
 
 // User-Info auf DB ändern (z.B. Benutzernamen ändern)
 const updateUserFromDB = async(uid, usernameInput, descriptionInput) =>
@@ -265,4 +279,4 @@ const deleteMarkerToDB = async(auth, markerCreationDate) => {
   Alert.alert(alerta_title,alerta_msg);
 }
 
-export { getUsernameFromDB, handleForgotPassword, handleSignUp, handleLogin, handleSignOut, addMarkerToDB, updateMarkerToDB, deleteMarkerToDB, markersRef, applyFilters, updateUserFromDB, readUserFromDB, getEventsFromUser, manualReadMarkerFromDB}
+export { getParticipant, getUserInfoFromDB, handleForgotPassword, handleSignUp, handleLogin, handleSignOut, addMarkerToDB, updateMarkerToDB, deleteMarkerToDB, markersRef, applyFilters, updateUserFromDB, readUserFromDB, getEventsFromUser, manualReadMarkerFromDB}

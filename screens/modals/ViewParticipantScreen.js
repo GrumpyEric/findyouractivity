@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView } from 'rea
 import { stylesGlobal } from '../../constants/StylesGlobal'
 import TextInputField from '../../components/TextInputField'
 import { auth } from '../../firebase/firebase-config'
-import {  getParticipant, updateMarkerToDB, getUserInfoFromDB, readUserFromDB } from '../../constants/MainFunctions'
+import { getParticipant, addMarkerToDB, updateMarkerToDB, getUserInfoFromDB } from '../../constants/MainFunctions'
 import { editMarkerMode, editMarkerValues, latitudeContext, longitudeContext, tagData, participantContext } from '../../components/AppContext'
 import Colors from '../../constants/Colors'
 import ButtonSmall from '../../components/ButtonSmall'
@@ -17,40 +17,29 @@ import 'intl/locale-data/jsonp/de'
 import { intlFormat } from 'date-fns'
 import TextAndIconButton from '../../components/TextAndIconButton'
 
-const ViewMarkerScreen = ( {route, navigation} ) => {  
-  const nameDisplay = route.params.eventName
-  const descriptionDisplay = route.params.eventDescription
-  const authorDisplay = route.params.eventAuthorID  
-  const authorUsernameDisplay = route.params.eventAuthorUsername  
-  const authorDescriptionDisplay = route.params.eventAuthorDescription
-  const startTimeDisplay = route.params.eventStartTime  
-  const endTimeDisplay = route.params.eventEndTime
-  const tagDisplay = route.params.eventTags
-  const maxParticipantDisplay = route.params.eventMaxParticipants
-  const locationDescriptionDisplay = route.params.eventLocationDescription  
-  const participantList = route.params.eventParticipantList
+const ViewParticipantScreen = ( {route, navigation} ) => {  
 
+  const members = route.params.memberList
+
+  const onParticipantButton = async(val) => {
+    await getParticipant(val)
+    navigation.navigate('ViewAuthorScreen', { authorID: val, authorUsername: participantContext._current_value.markers.username, authorDescription: participantContext._current_value.markers.description})
+  }
 
   return (
     <View style={styles.screenContainer}>
-      <Text> EVENT ÜBERSICHT </Text>
+      <Text> Event - Teilnehmer: </Text>
       <ScrollView contentContainerStyle={styles.scrollViewContainer} showsVerticalScrollIndicator={false}>
-      <Text> Name: {nameDisplay} </Text>
-      <Text> Beschreibung: {descriptionDisplay} </Text>      
-      <Text> Ortbeschreibung: {locationDescriptionDisplay} </Text>
-      <Text> Author: {authorUsernameDisplay} </Text>
-      <TextButton
-            text={'(Profile ansehen)'}
-            onPress={ () => {navigation.navigate('ViewAuthorScreen', { authorID: authorDisplay, authorUsername: authorUsernameDisplay, authorDescription: authorDescriptionDisplay}) } }
+      {
+        members.map( (val,index) => {
+          return (
+            <TextButton
+            text={val+' (Profile ansehen)'}
+            onPress={ () => { onParticipantButton(val) } }
       />
-      <Text> Anzahl der Teilnehmer: {participantList.length} / {maxParticipantDisplay} </Text>
-      <TextButton
-            text={'(Teilnehmer-Liste anzeigen)'}
-            onPress={ () => { navigation.navigate('ViewParticipantScreen', {memberList: participantList} ) } }
-      />
-      {startTimeDisplay}
-      {endTimeDisplay}
-      {tagDisplay}
+          )
+        } )
+      }
       </ScrollView>
 
       <ButtonSmall
@@ -80,4 +69,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default ViewMarkerScreen
+export default ViewParticipantScreen
