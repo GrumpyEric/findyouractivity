@@ -232,13 +232,16 @@ const CreateMarkersScreen = ( {navigation} ) => {
         <View style={{flexDirection: 'row'}}>
           <ButtonSmall
             text={'Abbrechen'}
-            onPress={() => navigation.pop()}
+            onPress={() => { navigation.pop(); editMarkerMode._currentValue = false }}
             backgroundColor={'red'}
           />
 
           <ButtonSmall
             text={'Aktualisieren'}         
-            onPress={() => { updateMarkerToDB(auth, eventName, eventDescription, placeDesciption, pickedStartTime.current, pickedEndTime.current, numberParticipants, tags, editMarkerValues._currentValue.latitude, editMarkerValues._currentValue.longitude, editMarkerValues._currentValue.creationDate); navigation.pop() }}
+            onPress={() => { updateMarkerToDB(auth, eventName, eventDescription, placeDesciption, pickedStartTime.current, pickedEndTime.current, numberParticipants, tags, editMarkerValues._currentValue.latitude, editMarkerValues._currentValue.longitude, editMarkerValues._currentValue.creationDate); 
+              navigation.pop();
+              editMarkerMode._currentValue = false
+            }}
             backgroundColor={Colors.findmyactivityBlue}
           />
         </View>

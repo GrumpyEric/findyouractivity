@@ -11,7 +11,7 @@ import { addMarkerToDB } from '../constants/MainFunctions';
 import ButtonRegular from '../components/ButtonRegular';
 import { auth } from '../firebase/firebase-config';
 import Colors from '../constants/Colors';
-import { editMarkerMode } from '../components/AppContext';
+import { editMarkerMode, mapRef } from '../components/AppContext';
 
 const HomeScreen = ( {navigation} ) => {
   const [eventNameInput, onChangeEventInput] = useState("");
@@ -27,8 +27,7 @@ const HomeScreen = ( {navigation} ) => {
       <MapViewGoogle
         style={styles.map_container}
         initialRegion={hawRegion}
-        eventNameInput={eventNameInput}
-        eventDescInput={eventDescInput}
+        mapRef={mapRef}
       />
       
       {/* MARKER ERSTELLEN */}

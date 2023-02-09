@@ -8,13 +8,15 @@ import * as Location from 'expo-location';
 
 import { markersRef, userMarkerContext, applyFilters } from "../constants/MainFunctions";
 import FloatingActionButton from "./FloatingActionButton";
-import { latitudeContext, longitudeContext, mapRef, filterContext, userPosContext, rangeContext } from "./AppContext";
+import { latitudeContext, longitudeContext, mapRef, filterContext, userPosContext, rangeContext, editMarkerMode, mapRefEdit } from "./AppContext";
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
 import { format } from 'date-fns'
 import { useNavigation } from "@react-navigation/native";
 import ButtonRegular from "./ButtonRegular";
+
+import PropTypes from 'prop-types'
 
 const MapViewGoogle = (props) => {
   const navigation = useNavigation()
@@ -38,12 +40,22 @@ const MapViewGoogle = (props) => {
     longitudeContext._currentValue = userMarkerLongitude
     setShowCreateMarker(true)
 
-    mapRef.current.animateToRegion({
-      latitude: userMarkerLatitude,
-      longitude: userMarkerLongitude,
-      latitudeDelta: 0.01,
-      longitudeDelta: 0.01
-    })
+    editMarkerMode._currentValue === true
+
+    ? mapRefEdit.current.animateToRegion({
+        latitude: userMarkerLatitude,
+        longitude: userMarkerLongitude,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01
+      })
+
+    : mapRef.current.animateToRegion({
+        latitude: userMarkerLatitude,
+        longitude: userMarkerLongitude,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01
+      })
+    
   }
 
   // get user position
@@ -90,12 +102,21 @@ const MapViewGoogle = (props) => {
     // console.log(userPos);
     if (userPos.coords != undefined) {
       console.log(),
-    mapRef.current.animateToRegion({
-      latitude: userPos.coords.latitude,
-      longitude: userPos.coords.longitude,
-      latitudeDelta: 0.01,
-      longitudeDelta: 0.01
-    })
+
+      editMarkerMode._currentValue === true
+      ? mapRefEdit.current.animateToRegion({
+          latitude: userPos.coords.latitude,
+          longitude: userPos.coords.longitude,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01
+        })
+
+      : mapRef.current.animateToRegion({
+          latitude: userPos.coords.latitude,
+          longitude: userPos.coords.longitude,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01
+        })
   }}
 
   useEffect(() => {
@@ -119,14 +140,16 @@ const MapViewGoogle = (props) => {
       />
       
       <MapView
-        provider = {PROVIDER_GOOGLE}
+        provider={PROVIDER_GOOGLE}
         region={region}
         onRegionChangeComplete={(region) => {setRegion(region)} }
-        ref = {mapRef}
+        ref={props.mapRef}
         style={props.style}
         initialRegion={props.initialRegion}
         showsUserLocation={true}
-        // showsMyLocationButton={false}
+        showsMyLocationButton={false}
+        // customMapStyle={}
+        onMapLoaded={props.onMapLoaded}
         // toolbarEnabled={false}
         zoomControlEnabled={true}
         onLongPress = {(e) => updateUserMarker(e.nativeEvent.coordinate)}
@@ -230,5 +253,7 @@ const MapViewGoogle = (props) => {
   </View>
   )
 }
+
+MapViewGoogle.propTypes = { initialRegion: PropTypes.object, style: PropTypes.any, onMapLoaded: PropTypes.func, mapRef: PropTypes.any.isRequired }
 
 export default MapViewGoogle
