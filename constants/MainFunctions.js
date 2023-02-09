@@ -2,16 +2,22 @@
 import { sendPasswordResetEmail } from 'firebase/auth'
 
 const handleForgotPassword = (auth, email) => {
-  sendPasswordResetEmail(auth, email)
-  .then(() => {
-    alert("Link to reset password has been sent!")
-  })
-  // TODO: create alert, when email is invalid
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ..
-  });
+  if (emailRegexTest(email)) {
+    sendPasswordResetEmail(auth, email)
+    .then(() => {
+      Alert.alert('Erfolg!', 'Falls sich Ihre eingegebene E-Mail-Adresse in unserem System befindet, dann bekommen Sie dort in Kürze einen Link zum Zurücksetzen des Passwortes.')
+    })
+    // TODO: create alert, when email is invalid
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+    });
+  
+  } else {
+    Alert.alert('Achtung', 'Keine gültige E-Mail-Adresse angegeben. Bitte erneut versuchen.')
+  } 
+  
 }
 
 // Handler for sign-up; sends data to Firebase and gets E-Mail back to verify
@@ -183,6 +189,7 @@ const updateUserFromDB = async(uid, usernameInput, descriptionInput) =>
 import { Timestamp, doc, setDoc, getDoc, getDocs, where } from 'firebase/firestore';
 import { Alert } from 'react-native';
 import { format, formatISO } from 'date-fns';
+import { emailRegexTest } from './HelperFunctionsAndVariables';
 
 const addMarkerToDB = async(auth, eventNameInput, eventDescInput, eventLocationDesc, startDate, endDate, numberParticipants, tags, userMarkerLatitude, userMarkerLongitude, ) => {
   let userID = auth.currentUser.uid.toString()
