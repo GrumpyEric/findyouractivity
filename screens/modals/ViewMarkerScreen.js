@@ -38,13 +38,13 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
 
     if (isParticipating)
     {
-      Alert.alert('Teilnahme Abbrechen', 'Sie sind schon ein Teilnehmer dieses Events. \nWollen Sie die Teilnahme am Event abbrechen?', [
+      Alert.alert('Teilnahme Absagen', 'Sie sind schon ein Teilnehmer dieses Events. \nWollen Sie die Teilnahme am Event absagen?', [
         {
           text: 'Abbrechen',
           onPress: () => {},
           style: 'cancel',
         },
-        { text: 'Bestätigen', onPress: () =>{ optOutOfEvent( authorDisplay, creationTimeStamp, auth.currentUser.uid.toString() ), navigation.pop() } },
+        { text: 'Absage Bestätigen', onPress: () =>{ optOutOfEvent( authorDisplay, creationTimeStamp, auth.currentUser.uid.toString() ), navigation.pop() } },
       ]);
     }
     else
@@ -55,7 +55,7 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
           onPress: () => {},
           style: 'cancel',
         },
-        { text: 'Bestätigen', onPress: () => {optInToEvent( authorDisplay, creationTimeStamp, auth.currentUser.uid.toString() ), navigation.pop() } },
+        { text: 'Teilnahme Bestätigen', onPress: () => {optInToEvent( authorDisplay, creationTimeStamp, auth.currentUser.uid.toString() ), navigation.pop() } },
       ]);
     }
   }
