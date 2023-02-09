@@ -89,7 +89,7 @@ const MyMarkersScreen = ( {navigation} ) => {
   // console.log(myMarkersRef);
 
   useEffect(() => {
-    console.log(radiusMarkers);
+    //console.log(radiusMarkers);
   }, [radiusMarkers])
 
   return (

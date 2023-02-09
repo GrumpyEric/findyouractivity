@@ -1,21 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native'
+import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import { stylesGlobal } from '../../constants/StylesGlobal'
-import TextInputField from '../../components/TextInputField'
-import { auth } from '../../firebase/firebase-config'
-import { getParticipant, addMarkerToDB, updateMarkerToDB, getUserInfoFromDB } from '../../constants/MainFunctions'
-import { editMarkerMode, editMarkerValues, latitudeContext, longitudeContext, tagData, participantContext } from '../../components/AppContext'
-import Colors from '../../constants/Colors'
+import { getParticipant } from '../../constants/MainFunctions'
+import {participantContext } from '../../components/AppContext'
 import ButtonSmall from '../../components/ButtonSmall'
-import CloseScreenButton from '../../components/CloseScreenButton'
 import TextButton from '../../components/TextButton'
-import DateTimePickerModal from 'react-native-modal-datetime-picker'
-import DropDownPicker from 'react-native-dropdown-picker';
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
-import { intlFormat } from 'date-fns'
-import TextAndIconButton from '../../components/TextAndIconButton'
 
 const ViewParticipantScreen = ( {route, navigation} ) => {  
 

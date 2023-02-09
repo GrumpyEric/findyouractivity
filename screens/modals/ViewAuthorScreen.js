@@ -1,12 +1,12 @@
 import { View, Text, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import { stylesGlobal } from '../../constants/StylesGlobal';
 import { Avatar, ListItem } from "react-native-elements";
-import { selectedUserContext, loggedInUser, userPosContext, selectedAuthor } from '../../components/AppContext';
+import { userPosContext } from '../../components/AppContext';
 import { getDistance } from 'geolib';
-import React, {useRef, useState, useEffect} from "react";
+import React, { useEffect} from "react";
 import ButtonRegularWithBorder from '../../components/ButtonRegular';
 import Colors from '../../constants/Colors'
-import { updateUserFromDB, readUserFromDB, getEventsFromUser, markersRef } from '../../constants/MainFunctions';
+import { markersRef } from '../../constants/MainFunctions';
 
 
 const ViewAuthorScreen = ( {route,navigation} ) => {
@@ -20,13 +20,6 @@ const ViewAuthorScreen = ( {route,navigation} ) => {
   })
   
 
-
-  useEffect(() => {
-    //readUserFromDB(selectedUserContext._current_value.markers.uid)
-    //console.log("HAMPER: ", eventArray[0])
-    //console.log("getUsernameFromDB: ", userInfo.toString())
-    //getUsernameFromDB(displayID)
-  }, []);
 
   const onCloseButton = () => {
     navigation.pop();

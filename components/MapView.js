@@ -56,7 +56,7 @@ const MapViewGoogle = (props) => {
       let currentUserPos = await Location.getCurrentPositionAsync({});
       setUserPos(currentUserPos);
       userPosContext._currentValue = currentUserPos
-      console.log(userPosContext._currentValue);
+      //console.log(userPosContext._currentValue);
       setIsUserPosLoaded(true)
     })();
   }, []);
@@ -92,7 +92,7 @@ const MapViewGoogle = (props) => {
     // if (isUserPosLoaded === true) {
     // console.log(userPos);
     if (userPos.coords != undefined) {
-      console.log(),
+      //console.log(),
     mapRef.current.animateToRegion({
       latitude: userPos.coords.latitude,
       longitude: userPos.coords.longitude,
@@ -102,7 +102,7 @@ const MapViewGoogle = (props) => {
   }}
 
   useEffect(() => {
-    console.log(markersRef);
+    //console.log(markersRef);
   }, [markersRef])
   
 
@@ -195,11 +195,10 @@ const MapViewGoogle = (props) => {
               return  <Text> End-Zeit: {endTimeRes.toString()} </Text>
             }
 
-              let userInfo
             return (
               <View key={index}>
                 <Marker key={index} coordinate={val} pinColor={val.color} tracksViewChanges={true} onPress={() => getUserInfoFromDB(val.user)}>
-                  <Callout onPress={ () => navigation.navigate('ViewMarkerScreen', { eventName: val.name, eventDescription: val.description,  eventAuthorUsername: selectedAuthor._current_value.markers.username, eventAuthorDescription: selectedAuthor._current_value.markers.description, eventAuthorID: val.user, eventStartTime: displayStartTime(val), eventEndTime:displayEndTime(val), eventTags: displayTags(val), eventMaxParticipants: val.numberParticipants, eventLocationDescription: val.locationDescription, eventParticipantList: val.participantList } ) }>
+                  <Callout onPress={ () => navigation.navigate('ViewMarkerScreen', { creationDate:val.creation_date, eventName: val.name, eventDescription: val.description,  eventAuthorUsername: selectedAuthor._current_value.markers.username, eventAuthorDescription: selectedAuthor._current_value.markers.description, eventAuthorID: val.user, eventStartTime: displayStartTime(val), eventEndTime:displayEndTime(val), eventTags: displayTags(val), eventMaxParticipants: val.numberParticipants, eventLocationDescription: val.locationDescription, eventParticipantList: val.participantList } ) }>
                       <Text key={Math.random().toString()}> Name:  {val.name} </Text>
                       <Text key={Math.random().toString()}> Beschreibung:  {val.description} </Text>
                       <Text> Distanz: {distanceToUserPos} km</Text>

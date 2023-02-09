@@ -41,11 +41,6 @@ const FilterScreen = ( {navigation} ) => {
   // deutsche Sprache einsetzen
   DropDownPicker.setLanguage("DE");
 
-  useEffect(() => {
-    //setSelected(filterContext._currentValue)
-    //console.log("VALUE: ", value)
-    //console.log("FILTERCONTEXT 1: ", filterContext._current_value)
-  }, []);
 
   const changeRange = (inputVal) =>
   {

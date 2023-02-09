@@ -1,34 +1,65 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native'
+import { StyleSheet, View, Text, Alert, ScrollView } from 'react-native'
 import { stylesGlobal } from '../../constants/StylesGlobal'
-import TextInputField from '../../components/TextInputField'
 import { auth } from '../../firebase/firebase-config'
-import {  getParticipant, updateMarkerToDB, getUserInfoFromDB, readUserFromDB } from '../../constants/MainFunctions'
-import { editMarkerMode, editMarkerValues, latitudeContext, longitudeContext, tagData, participantContext } from '../../components/AppContext'
-import Colors from '../../constants/Colors'
+import {  optOutOfEvent,optInToEvent } from '../../constants/MainFunctions'
 import ButtonSmall from '../../components/ButtonSmall'
-import CloseScreenButton from '../../components/CloseScreenButton'
 import TextButton from '../../components/TextButton'
-import DateTimePickerModal from 'react-native-modal-datetime-picker'
-import DropDownPicker from 'react-native-dropdown-picker';
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
-import { intlFormat } from 'date-fns'
-import TextAndIconButton from '../../components/TextAndIconButton'
 
 const ViewMarkerScreen = ( {route, navigation} ) => {  
   const nameDisplay = route.params.eventName
   const descriptionDisplay = route.params.eventDescription
   const authorDisplay = route.params.eventAuthorID  
   const authorUsernameDisplay = route.params.eventAuthorUsername  
-  const authorDescriptionDisplay = route.params.eventAuthorDescription
+  const authorDescriptionDisplay = route.params.eventAuthorDescription  
+  const creationTimeStamp = route.params.creationDate
   const startTimeDisplay = route.params.eventStartTime  
   const endTimeDisplay = route.params.eventEndTime
   const tagDisplay = route.params.eventTags
   const maxParticipantDisplay = route.params.eventMaxParticipants
   const locationDescriptionDisplay = route.params.eventLocationDescription  
   const participantList = route.params.eventParticipantList
+
+
+  const onParticipateButton = () =>
+  {
+    let isParticipating
+    if ( participantList.includes( auth.currentUser.uid.toString() ) )
+    { 
+      isParticipating = true
+    }
+    else
+    {
+      isParticipating = false
+    }
+
+    if (isParticipating)
+    {
+      Alert.alert('Teilnahme Abbrechen', 'Sie sind schon ein Teilnehmer dieses Events. \nWollen Sie die Teilnahme am Event abbrechen?', [
+        {
+          text: 'Abbrechen',
+          onPress: () => {},
+          style: 'cancel',
+        },
+        { text: 'Bestätigen', onPress: () =>{ optOutOfEvent( authorDisplay, creationTimeStamp, auth.currentUser.uid.toString() ), navigation.pop() } },
+      ]);
+    }
+    else
+    {
+      Alert.alert('Teilnahme Bestätigen', 'Sie sind noch kein Teilnehmer dieses Events. \nWollen Sie an diesem Event teilnehmen?', [
+        {
+          text: 'Abbrechen',
+          onPress: () => {},
+          style: 'cancel',
+        },
+        { text: 'Bestätigen', onPress: () => {optInToEvent( authorDisplay, creationTimeStamp, auth.currentUser.uid.toString() ), navigation.pop() } },
+      ]);
+    }
+  }
+
 
 
   return (
@@ -52,11 +83,15 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
       {endTimeDisplay}
       {tagDisplay}
       </ScrollView>
-
+      <ButtonSmall
+            text={'Teilnahme'}
+            onPress={() => onParticipateButton() }
+            backgroundColor={'hotpink'}
+          />
       <ButtonSmall
             text={'Schließen'}
             onPress={() => navigation.pop()}
-            backgroundColor={'red'}
+            backgroundColor={'orange'}
           />
     </View>
   )
