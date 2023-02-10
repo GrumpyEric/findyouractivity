@@ -18,18 +18,28 @@ import { intlFormat } from 'date-fns'
 import TextAndIconButton from '../../components/TextAndIconButton'
 
 const CreateMarkersScreen = ( {navigation} ) => {  
-  const [eventName, setEventName] = useState(editMarkerMode._currentValue ? editMarkerValues._currentValue.name : undefined)
-  const [eventDescription, setEventDescription] = useState(editMarkerMode._currentValue ? editMarkerValues._currentValue.description : undefined)
-  const [placeDesciption, setPlaceDescription] = useState(editMarkerMode._currentValue ? editMarkerValues._currentValue.locationDescription : undefined)
-  const [numberParticipants, setNumberParticipants] = useState(editMarkerMode._currentValue ? editMarkerValues._currentValue.numberParticipants : undefined)
+  const [eventName, setEventName] = useState(editMarkerMode._currentValue ? editMarkerValues._currentValue.name : '')
+  const [eventDescription, setEventDescription] = useState(editMarkerMode._currentValue ? editMarkerValues._currentValue.description : '')
+  const [placeDesciption, setPlaceDescription] = useState(editMarkerMode._currentValue ? editMarkerValues._currentValue.locationDescription : '')
+  const [numberParticipants, setNumberParticipants] = useState(editMarkerMode._currentValue ? editMarkerValues._currentValue.numberParticipants : '')
   const [tags, setEventTags] = useState(editMarkerMode._currentValue ? editMarkerValues._currentValue.tags : []);
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState(tagData);  
 
-  const pickedStartTime = useRef(editMarkerMode._currentValue ? editMarkerValues._currentValue.startDate : undefined)
-  const pickedEndTime = useRef(editMarkerMode._currentValue ? editMarkerValues._currentValue.endDate : undefined)
+  const pickedStartTime = useRef(editMarkerMode._currentValue === true ? editMarkerValues._currentValue.startDate : undefined)
+  const pickedEndTime = useRef(editMarkerMode._currentValue === true ? editMarkerValues._currentValue.endDate : undefined)
   const kindOfTimePicker = useRef()
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+
+  const [eventNameError, setEventNameError] = useState(editMarkerMode._currentValue === true ? false : undefined)
+  const [participantsError, setParticipantsError] = useState(editMarkerMode._currentValue === true ? false : undefined)
+
+  function printErrors() {
+    console.log("name error: ", eventNameError);
+    console.log("participants error: ", participantsError);
+    console.log('start error: ', pickedStartTime.current);
+    console.log('end error: ', pickedEndTime.current);
+  }
 
   const showTimePicker = () => {
     setTimePickerVisibility(true);
@@ -42,6 +52,88 @@ const CreateMarkersScreen = ( {navigation} ) => {
   useEffect(() => {
     console.log(editMarkerValues._currentValue);
   }, [])
+
+  function errorHandlerName() {
+    if (eventName.length < 1) {
+      setEventNameError(true)
+  
+    } else {
+      setEventNameError(false)
+    }
+
+  }
+
+  function errorHandlerParticipants() {
+    if (numberParticipants.length < 1) {
+      setParticipantsError(true)
+    
+    } else {
+      setParticipantsError(false)
+    }
+
+  }
+
+  function errorMessageHandler() {
+    console.log(<b>hi</b>);
+    let errors = {
+      eventName: {name: 'Eventname', status: eventNameError}, 
+      participants: {name: 'Teilnehmeranzahl', status: participantsError}, 
+      startTime: {name: 'Startzeit', status: pickedStartTime.current}, 
+      endTime: {name: 'Endzeit', status: pickedEndTime.current}
+    }
+
+    let errorPropertyNames = Object.getOwnPropertyNames(errors)
+    let insideErrorPropertyNames = Object.getOwnPropertyNames(errors[errorPropertyNames[0]])
+    let errorCount = 0
+    let loopCount = 0
+    let errorMsg = ''
+    let singleError = false
+    // console.log(errors[errorPropertyNames[index]][insideErrorPropertyNames[1]])
+
+    for (let index = 0; index < errorPropertyNames.length; index++) {
+      // console.log(errors[errorPropertyNames[index]].status);
+      if (errors[errorPropertyNames[index]].status === undefined || errors[errorPropertyNames[index]].status === true) {
+        // errorMsg.concat(errors[errorPropertyNames[index]].name)
+        errorCount = errorCount + 1
+      }
+    }
+
+    for (let index = 0; index < errorPropertyNames.length; index++) {
+      if (errors[errorPropertyNames[index]].status === undefined || errors[errorPropertyNames[index]].status === true) {
+        errorMsg = errorMsg.concat(errors[errorPropertyNames[index]].name)
+        errorCount = errorCount - 1
+        loopCount = loopCount + 1
+        if (errorCount >= 2) {
+          errorMsg = errorMsg.concat(', ')
+        }
+        if (errorCount === 1) {
+          errorMsg = errorMsg.concat(' und ')
+        }
+
+        if (errorCount < 1 && loopCount === 1) {
+          errorMsg = errorMsg.concat(' fehlt. Bitte fügen Sie das genannte Attribut in das gleichnamige Feld ein! ')
+          singleError = true
+        }
+        
+      }
+    }
+    if (!singleError) {
+      errorMsg = errorMsg.concat(' fehlen. Bitte fügen Sie die genannten Attribute in die gleichnamigen Felder ein!')
+    }
+    
+    return errorMsg
+  }
+
+  function createMarker() {
+    addMarkerToDB(auth, eventName, eventDescription, placeDesciption, pickedStartTime.current, pickedEndTime.current, numberParticipants, tags, latitudeContext._currentValue, longitudeContext._currentValue); 
+    navigation.pop()
+  }
+
+  function updateMarker() {
+    updateMarkerToDB(auth, eventName, eventDescription, placeDesciption, pickedStartTime.current, pickedEndTime.current, numberParticipants, tags, editMarkerValues._currentValue.latitude, editMarkerValues._currentValue.longitude, editMarkerValues._currentValue.creationDate); 
+    navigation.pop()
+    editMarkerMode._currentValue = false
+  }
 
   // handles time picker
   // if start time before time right now: error
@@ -79,11 +171,11 @@ const CreateMarkersScreen = ( {navigation} ) => {
   };
 
   useEffect(() => {
-    console.log(pickedStartTime);
+    console.log('start time', pickedStartTime);
   }, [pickedStartTime])
 
   useEffect(() => {
-    console.log(pickedEndTime);
+    console.log('end time', pickedEndTime);
   }, [pickedEndTime])
 
   useEffect(() => {
@@ -99,18 +191,24 @@ const CreateMarkersScreen = ( {navigation} ) => {
         <TextInputField
           placeholder={'Eventname'}
           value={eventName}
-          onChangeText={text => setEventName(text)}
+          onChangeText={(text) => { setEventName(text); text.length < 1 ? setEventNameError(true) : setEventNameError(false) }}
           keyboardType={'default'}
           backgroundColor={Colors.findmyactivityWhite}
-          borderColor={Colors.findmyactivityBackground}
+          borderColor={eventNameError ? 'red' : Colors.findmyactivityBackground}
           hasLeftIcon={true}
           iconName={'edit'}
           hasMaxLength={true}
           maxTextChars={30}
           showCharCounter={true}
+          onBlur={() => errorHandlerName() }
         />
+
+        {eventNameError ?
+        <Text>Textfeld 'Eventname' darf nicht leer sein! Bitte Eventnamen eingeben</Text>
+        : null}
+
         <TextInputField
-          placeholder={'Eventbeschreibung'}
+          placeholder={'Eventbeschreibung (optional)'}
           value={eventDescription}
           onChangeText={text => setEventDescription(text)}
           keyboardType={'default'}
@@ -124,7 +222,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
           multiline={true}
         />
         <TextInputField
-          placeholder={'Ortbeschreibung'}
+          placeholder={'Ortbeschreibung (optional)'}
           value={placeDesciption}
           onChangeText={text => setPlaceDescription(text)}
           keyboardType={'default'}
@@ -139,17 +237,22 @@ const CreateMarkersScreen = ( {navigation} ) => {
         <TextInputField
           placeholder={'Anzahl Teilnehmer (max. 999)'}
           value={numberParticipants}
-          onChangeText={text => setNumberParticipants(text)}
+          onChangeText={(text) => { setNumberParticipants(text); text.length < 1 ? setParticipantsError(true) : setParticipantsError(false) }}
           keyboardType={'number-pad'}
           backgroundColor={Colors.findmyactivityWhite}
-          borderColor={Colors.findmyactivityBackground}
+          borderColor={participantsError ? 'red' : Colors.findmyactivityBackground}
           hasLeftIcon={true}
           iconName={'male'}
           hasMaxLength={true}
           maxTextChars={3}
+          onBlur={() => errorHandlerParticipants()}
         />
-        {/* Tags */}
 
+        {participantsError ?
+        <Text>Textfeld 'Anzahl Teilnehmer' darf nicht leer sein! Bitte Teilnehmeranzahl angeben</Text>
+        : null}
+
+        {/* Tags */}
         <DropDownPicker
         searchable={true}
         multiple={true}
@@ -232,13 +335,19 @@ const CreateMarkersScreen = ( {navigation} ) => {
         <View style={{flexDirection: 'row'}}>
           <ButtonSmall
             text={'Abbrechen'}
-            onPress={() => navigation.pop()}
+            onPress={() => { navigation.pop(); editMarkerMode._currentValue = false }}
             backgroundColor={'red'}
           />
 
           <ButtonSmall
             text={'Aktualisieren'}         
-            onPress={() => { updateMarkerToDB(auth, eventName, eventDescription, placeDesciption, pickedStartTime.current, pickedEndTime.current, numberParticipants, tags, editMarkerValues._currentValue.latitude, editMarkerValues._currentValue.longitude, editMarkerValues._currentValue.creationDate); navigation.pop() }}
+            onPress={() => {
+              errorHandlerName()
+              errorHandlerParticipants()
+              eventNameError === true || participantsError === true || eventNameError === undefined || participantsError === undefined || pickedStartTime.current === undefined || pickedEndTime.current === undefined
+                ? Alert.alert('Achtung!', errorMessageHandler())
+                : updateMarker()
+            }}
             backgroundColor={Colors.findmyactivityBlue}
           />
         </View>
@@ -252,7 +361,13 @@ const CreateMarkersScreen = ( {navigation} ) => {
 
           <ButtonSmall
             text={'Erstellen'}         
-            onPress={() => { addMarkerToDB(auth, eventName, eventDescription, placeDesciption, pickedStartTime.current, pickedEndTime.current, numberParticipants, tags, latitudeContext._currentValue, longitudeContext._currentValue); navigation.pop() }}
+            onPress={() => {
+              errorHandlerName()
+              errorHandlerParticipants()
+              eventNameError === true || participantsError === true || eventNameError === undefined || participantsError === undefined || pickedStartTime.current === undefined || pickedEndTime.current === undefined
+                ? Alert.alert('Achtung!', errorMessageHandler())
+                : createMarker()
+            }}
             backgroundColor={Colors.findmyactivityBlue}
           />
         </View>

@@ -1,23 +1,29 @@
 // Handle the forgot password function
 import { sendPasswordResetEmail } from 'firebase/auth'
 
-const handleForgotPassword = (auth, email) => {
-  sendPasswordResetEmail(auth, email)
-  .then(() => {
-    alert("Link to reset password has been sent!")
-  })
-  // TODO: create alert, when email is invalid
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ..
-  });
+export const handleForgotPassword = (auth, email) => {
+  if (emailRegexTest(email)) {
+    sendPasswordResetEmail(auth, email)
+    .then(() => {
+      Alert.alert('Erfolg!', 'Falls sich Ihre eingegebene E-Mail-Adresse in unserem System befindet, dann bekommen Sie dort in Kürze einen Link zum Zurücksetzen des Passwortes.')
+    })
+    // TODO: create alert, when email is invalid
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+    });
+  
+  } else {
+    Alert.alert('Achtung', 'Keine gültige E-Mail-Adresse angegeben. Bitte erneut versuchen.')
+  } 
+  
 }
 
 // Handler for sign-up; sends data to Firebase and gets E-Mail back to verify
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 
-const handleSignUp = (auth, email, password) => {
+export const handleSignUp = (auth, email, password) => {
   createUserWithEmailAndPassword(auth, email, password)
   .then(userCredential => {
     const user = userCredential.user;
@@ -32,7 +38,7 @@ const handleSignUp = (auth, email, password) => {
 // Handler for sign-in; signs into app and checks if user is email-verified
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
-const handleLogin = (auth, email, password, navigation) => {
+export const handleLogin = (auth, email, password, navigation) => {
   signInWithEmailAndPassword(auth, email, password)
   .then(userCredential => {
     const user = userCredential.user;
@@ -51,12 +57,12 @@ const handleLogin = (auth, email, password, navigation) => {
 }
 
 // remove snapshot listener
-const unsubscribeMarkerDB = onSnapshot(collection(db, "markers"), () => {
+export const unsubscribeMarkerDB = onSnapshot(collection(db, "markers"), () => {
   // Respond to data
   // ...
 });
 
-const unsubscribeUserDB = onSnapshot(collection(db, "users"), () => {
+export const unsubscribeUserDB = onSnapshot(collection(db, "users"), () => {
   // Respond to data
   // ...
 });
@@ -71,7 +77,7 @@ const unsubscribe = () =>
 import { signOut } from 'firebase/auth'
 //import { collection, query} from "firebase/firestore";
 
-const handleSignOut = (auth, navigation) => {
+export const handleSignOut = (auth, navigation) => {
   unsubscribe();
   signOut(auth)
   .then(() => {
@@ -83,10 +89,10 @@ const handleSignOut = (auth, navigation) => {
 // Query snapshot Marker
 import { collection, query, onSnapshot, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from '../firebase/firebase-config';
-import { filterContext, selectedUserContext, loggedInUser } from '../components/AppContext';
+import { filterContext, selectedUserContext, loggedInUser, editMarkerValues, latitudeContext, longitudeContext, refreshContext } from '../components/AppContext';
 // import { useRef } from 'react';
 
-let markersRef
+export let markersRef
 let db_markers = [];
 
 const q = query(collection(db, "markers"));
@@ -101,7 +107,7 @@ const readMarkerFromDB = onSnapshot(q, (QuerySnapshot) => {
 
 
 // wendet die vom nutzer eingestellten filter ein
-const applyFilters = () => {
+export const applyFilters = () => {
   const initMarkers = db_markers // backup der db-marker
   const validMarkers = [];
   const preferTags = filterContext._current_value
@@ -151,7 +157,7 @@ const addUserToDB = async(username, description, uid, events) =>
 }
 
 // User von user-DB ablesen
-const readUserFromDB = async(uid) =>
+export const readUserFromDB = async(uid) =>
 {
   const docRef = doc( db, "users", uid.toString() )
   const docSnap = await getDoc(docRef);
@@ -168,7 +174,7 @@ const readUserFromDB = async(uid) =>
 }
 
 // User-Info auf DB ändern (z.B. Benutzernamen ändern)
-const updateUserFromDB = async(uid, usernameInput, descriptionInput) =>
+export const updateUserFromDB = async(uid, usernameInput, descriptionInput) =>
 {
   const userDocRef = doc(db,"users", uid.toString())
   await updateDoc(userDocRef, {
@@ -177,14 +183,18 @@ const updateUserFromDB = async(uid, usernameInput, descriptionInput) =>
   }) 
 }
 
-
+export function saveNewMarkerLocation() {
+  editMarkerValues._currentValue.latitude = latitudeContext._currentValue
+  editMarkerValues._currentValue.longitude = longitudeContext._currentValue
+}
 
 // MARKER zur DB hinzufügen
 import { Timestamp, doc, setDoc, getDoc, getDocs, where } from 'firebase/firestore';
 import { Alert } from 'react-native';
 import { format, formatISO } from 'date-fns';
+import { emailRegexTest } from './HelperFunctionsAndVariables';
 
-const addMarkerToDB = async(auth, eventNameInput, eventDescInput, eventLocationDesc, startDate, endDate, numberParticipants, tags, userMarkerLatitude, userMarkerLongitude, ) => {
+export const addMarkerToDB = async(auth, eventNameInput, eventDescInput, eventLocationDesc, startDate, endDate, numberParticipants, tags, userMarkerLatitude, userMarkerLongitude, ) => {
   let userID = auth.currentUser.uid.toString()
   let timeStampObj = Timestamp.now()
   // let date = new Date()
@@ -210,7 +220,7 @@ const addMarkerToDB = async(auth, eventNameInput, eventDescInput, eventLocationD
   // setRegion(userMarker);
 }
 
-const getEventsFromUser = async(uid) =>
+export const getEventsFromUser = async(uid) =>
 {
   let resArray = []
   const eventQuery = query(collection(db,"markers"), where("user".toString(), "== ", uid.toString()))
@@ -225,7 +235,7 @@ const getEventsFromUser = async(uid) =>
 }
 
 // TODO: creation, start and end date not formatted right; DONE
-const updateMarkerToDB = async(auth, eventNameInput, eventDescInput, eventLocationDesc, startDate, endDate, numberParticipants, tags, userMarkerLatitude, userMarkerLongitude, markerCreationDate) => {
+export const updateMarkerToDB = async(auth, eventNameInput, eventDescInput, eventLocationDesc, startDate, endDate, numberParticipants, tags, userMarkerLatitude, userMarkerLongitude, markerCreationDate) => {
   let userID = auth.currentUser.uid.toString()
   // let creationDate = formatISO(markerCreationDate)
   // console.log(creationDate);
@@ -250,7 +260,7 @@ const updateMarkerToDB = async(auth, eventNameInput, eventDescInput, eventLocati
   // setRegion(userMarker);
 }
 
-const deleteMarkerToDB = async(auth, markerCreationDate) => {
+export const deleteMarkerToDB = async(auth, markerCreationDate) => {
   let userID = auth.currentUser.uid.toString()
 
   await deleteDoc(doc(db, "markers", userID+"_"+( markerCreationDate ) ))
@@ -259,4 +269,7 @@ const deleteMarkerToDB = async(auth, markerCreationDate) => {
   Alert.alert(alerta_title,alerta_msg);
 }
 
-export { handleForgotPassword, handleSignUp, handleLogin, handleSignOut, addMarkerToDB, updateMarkerToDB, deleteMarkerToDB, markersRef, applyFilters, updateUserFromDB, readUserFromDB, getEventsFromUser}
+export function refreshMap() {
+  refreshContext._currentValue = Math.floor(Math.random() * 100)
+  console.log(refreshContext._currentValue);
+}
