@@ -11,6 +11,7 @@ import ButtonRegularWithBorder from '../components/ButtonRegular';
 import Colors from '../constants/Colors'
 
 import DropDownPicker from 'react-native-dropdown-picker';
+import { arrayIsEmpty } from '../constants/HelperFunctionsAndVariables';
 
 
 const FilterScreen = ( {navigation} ) => {
@@ -44,8 +45,14 @@ const FilterScreen = ( {navigation} ) => {
   useEffect(() => {
     //setSelected(filterContext._currentValue)
     //console.log("VALUE: ", value)
-    //console.log("FILTERCONTEXT 1: ", filterContext._current_value)
-  }, []);
+    console.log("value:", typeof value, value)
+  }, [value]);
+
+  useEffect(() => {
+    //setSelected(filterContext._currentValue)
+    //console.log("VALUE: ", value)
+    console.log("FILTERCONTEXT 1:", typeof filterContext._current_value, filterContext._current_value)
+  }, [filterContext._current_value]);
 
   const changeRange = (inputVal) =>
   {
@@ -57,22 +64,30 @@ const FilterScreen = ( {navigation} ) => {
     //alert("TODO: Filter-Auswahl speichern")
     //filtersRef = selected
     filterContext._current_value = value
-    //alert(filterContext._currentValue)
-    //setSelected([]);
-    applyFilters()
-    const alerta_title = "Filter wurden angewendet"
-    const alerta_msg = filterContext._current_value.toString()
-    Alert.alert(alerta_title,alerta_msg);
-    rangeContext._currentValue = radiusMarkers
-    //navigation.pop()
+    if (arrayIsEmpty(filterContext._current_value) || filterContext._current_value === undefined) {
+      Alert.alert('Achtung', 'Es wurden keine Tags ausgewählt. Bitte wählen Sie oben im ausklappbaren Menü einen oder mehrere Filter aus!')
+
+    } else {
+
+      //alert(filterContext._currentValue)
+      //setSelected([]);
+      applyFilters()
+      const alerta_title = "Filter wurden angewendet"
+      const alerta_msg = filterContext._current_value.toString()
+      Alert.alert(alerta_title, alerta_msg);
+      rangeContext._currentValue = radiusMarkers
+      //navigation.pop()
+      
+    }
   }
 
   const clearFilters = () => {
     setValue([])
     filterContext._current_value = undefined   
     applyFilters()
-    const alerta_title = "Filter wurden zurückgesetzt"
-    Alert.alert(alerta_title);
+    const alerta_title = "Erfolg"
+    const alerta_text = "Filter wurden zurückgesetzt"
+    Alert.alert(alerta_title,alerta_text) ;
     //navigation.pop()
   }
 
