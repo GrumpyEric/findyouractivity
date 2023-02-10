@@ -89,7 +89,7 @@ export const handleSignOut = (auth, navigation) => {
 // Query snapshot Marker
 import { collection, query, onSnapshot, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from '../firebase/firebase-config';
-import { filterContext, selectedUserContext, loggedInUser, editMarkerValues, latitudeContext, longitudeContext } from '../components/AppContext';
+import { filterContext, selectedUserContext, loggedInUser, editMarkerValues, latitudeContext, longitudeContext, refreshContext } from '../components/AppContext';
 // import { useRef } from 'react';
 
 export let markersRef
@@ -267,4 +267,9 @@ export const deleteMarkerToDB = async(auth, markerCreationDate) => {
   const alerta_title = "Marker has been deleted"
   const alerta_msg = ':('
   Alert.alert(alerta_title,alerta_msg);
+}
+
+export function refreshMap() {
+  refreshContext._currentValue = Math.floor(Math.random() * 100)
+  console.log(refreshContext._currentValue);
 }

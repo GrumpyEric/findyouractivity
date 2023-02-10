@@ -6,6 +6,7 @@ export const mapRef = createRef(null);
 export const mapRefEdit = createRef(null);
 export const filterContext = createContext(0)
 export const rangeContext = createContext(21)
+export const refreshContext = createContext(0)
 //console.log("filterContext value: ", filterContext._currentValue)
 export const tagData = [
     {label:'Fußball', value:'Fußball'},

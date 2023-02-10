@@ -6,9 +6,9 @@ import { reverseGeocodeAsync } from "expo-location";
 import { hawRegion } from "../constants/TestCoords";
 import * as Location from 'expo-location';
 
-import { markersRef, saveNewMarkerLocation } from "../constants/MainFunctions";
+import { markersRef, refreshMap, saveNewMarkerLocation } from "../constants/MainFunctions";
 import FloatingActionButton from "./FloatingActionButton";
-import { latitudeContext, longitudeContext, mapRef, filterContext, userPosContext, rangeContext, editMarkerMode, mapRefEdit } from "./AppContext";
+import { latitudeContext, longitudeContext, mapRef, filterContext, userPosContext, rangeContext, editMarkerMode, mapRefEdit, refreshContext } from "./AppContext";
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
@@ -70,13 +70,14 @@ const MapViewGoogle = (props) => {
       }
 
       let currentUserPos = await Location.getCurrentPositionAsync({});
+      refreshMap()
       setUserPos(currentUserPos);
       userPosContext._currentValue = currentUserPos
       console.log(userPosContext._currentValue);
       setIsUserPosLoaded(true)
     })();
   }, []);
-  
+    
   const [selectedMarker, onSelectMarker] = useState();
 
   const HighlightMarker = inputMarker => {
@@ -146,12 +147,12 @@ const MapViewGoogle = (props) => {
       />
 
       {/* Hilfescreen? */}
-      {/* <FloatingActionButton
-        onPress={() => null}
+      <FloatingActionButton
+        onPress={() => refreshMap()}
         bottomPos={height * 0.35}
         rightPos={10}
         icon={'question'}
-      /> */}
+      />
 
       {markerButtonVisible && editMarkerMode._currentValue === false ?
       <View style={{
@@ -203,8 +204,10 @@ const MapViewGoogle = (props) => {
       : null}
       
       <MapView
+        key={refreshContext._currentValue}
         provider={PROVIDER_GOOGLE}
         region={region}
+        // onRegionChange={(region) => { setRegion(region); } }
         onRegionChangeComplete={(region) => { setRegion(region); } }
         ref={props.mapRef}
         style={props.style}
@@ -217,6 +220,7 @@ const MapViewGoogle = (props) => {
         zoomControlEnabled={true}
         onLongPress = {(e) => updateUserMarker(e.nativeEvent.coordinate)}
         onPanDrag={() => setMarkerButtonVisible(false)}
+        // onTouchCancel={() => (region) => { setRegion(region); } }
         // onMarkerPress={() => setMarkerButtonVisible(true)}
         //onRegionChangeComplete runs when the user stops dragging MapView        
       >
@@ -280,10 +284,11 @@ const MapViewGoogle = (props) => {
                 return <Text> erstellt von: {val.user} </Text>
               }
             }
+            console.log(distanceToUserPos);
 
             return (
               <View>
-                {rangeContext._currentValue != null && distanceToUserPos != '?' && rangeContext._currentValue <= distanceToUserPos || rangeContext._currentValue === 21 ?
+                {rangeContext._currentValue != null && distanceToUserPos != '?' && rangeContext._currentValue >= distanceToUserPos || rangeContext._currentValue === 21 ?
                 <Marker key={index} coordinate={val} pinColor={val.color} tracksViewChanges={true} onPress={() => { HighlightMarker(val); }}>
                   <Callout>
                     <Text key={Math.random().toString()}> {val.name} </Text>

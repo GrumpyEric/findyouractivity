@@ -4,7 +4,7 @@ import { Alert,View, Text, TouchableOpacity, ScrollView,StyleSheet } from 'react
 import { filterContext,tagData, rangeContext } from '../components/AppContext';
 import Slider from '@react-native-community/slider';
 
-import { applyFilters } from '../constants/MainFunctions';
+import { applyFilters, refreshMap } from '../constants/MainFunctions';
 
 import ButtonRegularWithBorder from '../components/ButtonRegular';
 
@@ -21,8 +21,8 @@ const FilterScreen = ( {navigation} ) => {
   const [items, setItems] = useState(tagData);  
   const [value, setValue] = useState(filterContext._current_value);
 
-  const [radiusMarkers, setRadiusMarkers] = useState(5)
-  const [radiusMarkersVisual, setRadiusMarkersVisual] = useState(5)
+  const [radiusMarkers, setRadiusMarkers] = useState(rangeContext._currentValue)
+  const [radiusMarkersVisual, setRadiusMarkersVisual] = useState(rangeContext._currentValue)
   
   // ausgewählte Filter als Badges anzeigen
   DropDownPicker.setMode("BADGE");
@@ -42,30 +42,29 @@ const FilterScreen = ( {navigation} ) => {
   // deutsche Sprache einsetzen
   DropDownPicker.setLanguage("DE");
 
-  useEffect(() => {
-    //setSelected(filterContext._currentValue)
-    //console.log("VALUE: ", value)
-    console.log("value:", typeof value, value)
-  }, [value]);
+  function changeRange() {
+    rangeContext._currentValue = radiusMarkers
+    console.log('context:', rangeContext._currentValue);
+    console.log('radius markers:', radiusMarkers);
+  }
 
-  useEffect(() => {
-    //setSelected(filterContext._currentValue)
-    //console.log("VALUE: ", value)
-    console.log("FILTERCONTEXT 1:", typeof filterContext._current_value, filterContext._current_value)
-  }, [filterContext._current_value]);
-
-  const changeRange = (inputVal) =>
-  {
-    setRange(inputVal)
-    rangeContext._current_value = inputVal
+  function resetRange() {
+    rangeContext._currentValue = 21
+    setRadiusMarkers(21)
+    setRadiusMarkersVisual(21)
+    console.log('context:', rangeContext._currentValue);
+    console.log('radius markers:', radiusMarkers);
   }
 
   const saveFilters = () => {
     //alert("TODO: Filter-Auswahl speichern")
     //filtersRef = selected
     filterContext._current_value = value
+    changeRange();
     if (arrayIsEmpty(filterContext._current_value) || filterContext._current_value === undefined) {
-      Alert.alert('Achtung', 'Es wurden keine Tags ausgewählt. Bitte wählen Sie oben im ausklappbaren Menü einen oder mehrere Filter aus!')
+      const alerta_title = 'Filter wurden angewendet' 
+      const alerta_msg = radiusMarkers === 21 ? 'Radius der angezeigten Marker wurde zu ALLEN Markern geändert' : 'Radius der angezeigten Marker wurde zu ' + rangeContext._currentValue + ' km' + ' geändert!'
+      Alert.alert(alerta_title, alerta_msg)
 
     } else {
 
@@ -73,7 +72,7 @@ const FilterScreen = ( {navigation} ) => {
       //setSelected([]);
       applyFilters()
       const alerta_title = "Filter wurden angewendet"
-      const alerta_msg = filterContext._current_value.toString()
+      const alerta_msg = 'Filter wurde zu ' + filterContext._current_value.toString() + (radiusMarkers === 21 ? ' und Radius der angezeigten Marker wurde zu ALLEN Markern geändert!' : 'und Radius der angezeigten Marker wurde auf ' + rangeContext._currentValue + ' km' +  ' geändert!')
       Alert.alert(alerta_title, alerta_msg);
       rangeContext._currentValue = radiusMarkers
       //navigation.pop()
@@ -82,6 +81,7 @@ const FilterScreen = ( {navigation} ) => {
   }
 
   const clearFilters = () => {
+    resetRange()
     setValue([])
     filterContext._current_value = undefined   
     applyFilters()
@@ -138,7 +138,7 @@ return(
     />
     <ButtonRegularWithBorder
       text={'CLOSE'}
-      onPress={() => navigation.pop()}
+      onPress={() => { navigation.pop(); refreshMap(); }}
       backgroundColor={'hotpink'}
     /> 
     </View>
