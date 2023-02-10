@@ -124,6 +124,10 @@ const MapViewGoogle = (props) => {
   useEffect(() => {
     console.log(markersRef);
   }, [markersRef])
+
+  useEffect(() => {
+    console.log('MAPVIEW RANGE:', rangeContext._currentValue);
+  }, [region])
   
   return (
     <View style={{...StyleSheet.absoluteFillObject}}>
@@ -279,7 +283,7 @@ const MapViewGoogle = (props) => {
 
             return (
               <View>
-                {/* {rangeContext._currentValue != null && distanceToUserPos != '?' && rangeContext._currentValue <= distanceToUserPos ? */}
+                {rangeContext._currentValue != null && distanceToUserPos != '?' && rangeContext._currentValue <= distanceToUserPos || rangeContext._currentValue === 21 ?
                 <Marker key={index} coordinate={val} pinColor={val.color} tracksViewChanges={true} onPress={() => { HighlightMarker(val); }}>
                   <Callout>
                     <Text key={Math.random().toString()}> {val.name} </Text>
@@ -292,7 +296,7 @@ const MapViewGoogle = (props) => {
                     <Text>Klick mich für mehr Infos</Text>
                   </Callout>
                 </Marker>
-                {/* : null} */}
+                : null}
               </View> 
             )
           }
