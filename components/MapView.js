@@ -6,7 +6,7 @@ import { reverseGeocodeAsync } from "expo-location";
 import { hawRegion } from "../constants/TestCoords";
 import * as Location from 'expo-location';
 
-import { markersRef, userMarkerContext, refreshMap, saveNewMarkerLocation, manualReadMarkerFromDB, getUserInfoFromDB, applyFilters } from "../constants/MainFunctions";
+import { markersRef, userMarkerContext, saveNewMarkerLocation, manualReadMarkerFromDB, getUserInfoFromDB } from "../constants/MainFunctions";
 import FloatingActionButton from "./FloatingActionButton";
 import { latitudeContext, longitudeContext, mapRef, filterContext, userPosContext, rangeContext, selectedAuthor, editMarkerMode, mapRefEdit, refreshContext } from "./AppContext";
 
@@ -70,7 +70,7 @@ const MapViewGoogle = (props) => {
       }
 
       let currentUserPos = await Location.getCurrentPositionAsync({});
-      refreshMap()
+      // refreshMap()
       setUserPos(currentUserPos);
       userPosContext._currentValue = currentUserPos
       //console.log(userPosContext._currentValue);
@@ -139,20 +139,22 @@ const MapViewGoogle = (props) => {
         icon={'location-arrow'}
       />
 
+      {editMarkerMode._currentValue === false ?
       <FloatingActionButton
         onPress={() => navigation.navigate("FilterScreen")}
         bottomPos={height * 0.25}
         rightPos={width * 0.025}
         icon={'filter'}
       />
+      : null}
 
       {/* Hilfescreen? */}
-      <FloatingActionButton
-        onPress={() => refreshMap()}
+      {/* <FloatingActionButton
+        onPress={() => null}
         bottomPos={height * 0.35}
         rightPos={10}
         icon={'question'}
-      />
+      /> */}
 
       {markerButtonVisible && editMarkerMode._currentValue === false ?
       <View style={{
@@ -204,7 +206,7 @@ const MapViewGoogle = (props) => {
       : null}
       
       <MapView
-        key={refreshContext._currentValue}
+        // key={refreshContext._currentValue}
         provider={PROVIDER_GOOGLE}
         region={region}
         // onRegionChange={(region) => { setRegion(region); } }

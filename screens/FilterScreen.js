@@ -4,7 +4,7 @@ import { Alert,View, Text, TouchableOpacity, ScrollView,StyleSheet } from 'react
 import { filterContext,tagData, rangeContext } from '../components/AppContext';
 import Slider from '@react-native-community/slider';
 
-import { applyFilters, refreshMap } from '../constants/MainFunctions';
+import { applyFilters, db_markers } from '../constants/MainFunctions';
 
 import ButtonRegularWithBorder from '../components/ButtonRegular';
 
@@ -43,7 +43,12 @@ const FilterScreen = ( {navigation} ) => {
   DropDownPicker.setLanguage("DE");
 
   function changeRange() {
-    rangeContext._currentValue = radiusMarkers
+    if (radiusMarkers === 'alle') {
+      rangeContext._currentValue = 21
+    } else {
+      rangeContext._currentValue = radiusMarkers
+    }
+    
     console.log('context:', rangeContext._currentValue);
     console.log('radius markers:', radiusMarkers);
   }
@@ -67,12 +72,9 @@ const FilterScreen = ( {navigation} ) => {
       Alert.alert(alerta_title, alerta_msg)
 
     } else {
-
-      //alert(filterContext._currentValue)
-      //setSelected([]);
-      applyFilters()
+      applyFilters(db_markers)
       const alerta_title = "Filter wurden angewendet"
-      const alerta_msg = 'Filter wurde zu ' + filterContext._current_value.toString() + (radiusMarkers === 21 ? ' und Radius der angezeigten Marker wurde zu ALLEN Markern geändert!' : 'und Radius der angezeigten Marker wurde auf ' + rangeContext._currentValue + ' km' +  ' geändert!')
+      const alerta_msg = 'Filter wurde zu ' + filterContext._current_value.toString() + (radiusMarkers === 21 ? ' und Radius der angezeigten Marker wurde zu ALLEN Markern geändert!' : ' und Radius der angezeigten Marker wurde auf ' + rangeContext._currentValue + ' km' +  ' geändert!')
       Alert.alert(alerta_title, alerta_msg);
       rangeContext._currentValue = radiusMarkers
       //navigation.pop()
@@ -85,7 +87,7 @@ const FilterScreen = ( {navigation} ) => {
     resetRange()
     setValue([])
     filterContext._current_value = undefined   
-    applyFilters()
+    applyFilters(db_markers)
     const alerta_title = "Erfolg"
     const alerta_text = "Filter wurden zurückgesetzt"
     Alert.alert(alerta_title,alerta_text) ;
@@ -138,7 +140,7 @@ return(
     />
     <ButtonRegularWithBorder
       text={'CLOSE'}
-      onPress={() => { navigation.pop(); refreshMap(); }}
+      onPress={() => { navigation.pop(); }}
       backgroundColor={'hotpink'}
     /> 
     </View>

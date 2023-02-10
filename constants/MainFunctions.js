@@ -74,11 +74,11 @@ export const handleSignOut = (auth, navigation) => {
 import { collection, query, onSnapshot, updateDoc, deleteDoc, FieldValue } from "firebase/firestore";
 import { db } from '../firebase/firebase-config';
 
-import { filterContext, selectedUserContext, loggedInUser, selectedAuthor, participantContext } from '../components/AppContext';
+import { filterContext, selectedUserContext, loggedInUser, selectedAuthor, participantContext, editMarkerValues, latitudeContext, longitudeContext } from '../components/AppContext';
 // import { useRef } from 'react';
 
 export let markersRef
-let db_markers = [];
+export let db_markers = [];
 
 export const readMarkerFromDB = onSnapshot(query(collection(db, "markers")), (QuerySnapshot) => {
     db_markers = [];
@@ -237,7 +237,8 @@ export const addMarkerToDB = async(auth, eventNameInput, eventDescInput, eventLo
       endTime: endDate,
       numberParticipants: numberParticipants,
       tags: tags,
-      user: userID
+      user: userID,
+      participantList: []
     }
   });
   const alerta_title = "Marker has been Set"
@@ -369,8 +370,7 @@ export const deleteMarkerToDB = async(auth, markerCreationDate) => {
   Alert.alert(alerta_title,alerta_msg);
 }
 
-
-export function refreshMap() {
-  refreshContext._currentValue = Math.floor(Math.random() * 100)
-  console.log(refreshContext._currentValue);
-}
+// export function refreshMap() {
+//   refreshContext._currentValue = Math.floor(Math.random() * 100)
+//   console.log(refreshContext._currentValue);
+// }
