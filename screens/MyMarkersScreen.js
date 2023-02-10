@@ -169,7 +169,7 @@ const MyMarkersScreen = ( {navigation} ) => {
               if (distanceToUserPos < radiusMarkers || radiusMarkers === 'alle') {
                 return (
                   <View style={{backgroundColor: '#DDDDDD', marginBottom: 10}}>
-                    <TouchableOpacity onPress={() => console.log(val)}>
+                    <TouchableOpacity onPress={() => moveToMarker(val)}>
                       <Text key={Math.random().toString()}> {"MARKERNAME: " + val.name} </Text>
                       <Text key={Math.random().toString()}> {"BESCHREIBUNG: " + val.description} </Text>
                       <Text> Distanz: {distanceToUserPos} km</Text>
