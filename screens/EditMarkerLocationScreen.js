@@ -24,11 +24,6 @@ const EditMarkerLocationScreen = ( {navigation} ) => {
     longitudeDelta: 0.01
   }
 
-  function saveNewMarkerLocation() {
-    editMarkerValues._currentValue.latitude = latitudeContext._currentValue
-    editMarkerValues._currentValue.longitude = longitudeContext._currentValue
-  }
-
   return (
     <View style={[stylesGlobal.screenContainer]}>
       <MapViewGoogle
@@ -45,11 +40,6 @@ const EditMarkerLocationScreen = ( {navigation} ) => {
           onPress={() => navigation.goBack()}
           backgroundColor={Colors.findmyactivityBlue}
         /> 
-        <ButtonRegular
-          text={'ORT AKTUALISIEREN'}
-          onPress={() => { navigation.goBack(); saveNewMarkerLocation() }}
-          backgroundColor={Colors.findmyactivityYellow}
-        /> 
       </View>
     </View>
   )
@@ -62,7 +52,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     bottom: 0,
-    marginBottom: height * 0.05
+    marginBottom: height * 0.025
   },
   buttonText: {
     color: 'white',

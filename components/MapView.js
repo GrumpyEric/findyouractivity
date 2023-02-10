@@ -6,7 +6,7 @@ import { reverseGeocodeAsync } from "expo-location";
 import { hawRegion } from "../constants/TestCoords";
 import * as Location from 'expo-location';
 
-import { markersRef, userMarkerContext, applyFilters } from "../constants/MainFunctions";
+import { markersRef, saveNewMarkerLocation } from "../constants/MainFunctions";
 import FloatingActionButton from "./FloatingActionButton";
 import { latitudeContext, longitudeContext, mapRef, filterContext, userPosContext, rangeContext, editMarkerMode, mapRefEdit } from "./AppContext";
 
@@ -17,17 +17,19 @@ import { useNavigation } from "@react-navigation/native";
 import ButtonRegular from "./ButtonRegular";
 
 import PropTypes from 'prop-types'
+import Colors from "../constants/Colors";
+import { width, height } from "../constants/StylesGlobal";
 
 const MapViewGoogle = (props) => {
   const navigation = useNavigation()
   const [isUserPosLoaded, setIsUserPosLoaded] = useState(false)
   const [userPos, setUserPos] = useState([]);
+  const [markerButtonVisible, setMarkerButtonVisible] = useState(false);
 
   // get current Region
   const [region, setRegion] = useState(props.initialRegion);
 
   const [userMarker, setUserMarker] = useState([hawRegion]);
-  const [showCreateMarker, setShowCreateMarker] = useState(false)
 
   let userMarkerLatitude = 0
   let userMarkerLongitude = 0
@@ -38,7 +40,7 @@ const MapViewGoogle = (props) => {
     userMarkerLongitude = newInputRegion.longitude
     latitudeContext._currentValue = userMarkerLatitude
     longitudeContext._currentValue = userMarkerLongitude
-    setShowCreateMarker(true)
+    setMarkerButtonVisible(true)
 
     editMarkerMode._currentValue === true
 
@@ -127,22 +129,79 @@ const MapViewGoogle = (props) => {
     <View style={{...StyleSheet.absoluteFillObject}}>
       <FloatingActionButton
         onPress={() => getCurrentPosition()}
-        bottomPos={150}
-        rightPos={10}
+        bottomPos={height * 0.15}
+        rightPos={width * 0.025}
         icon={'location-arrow'}
       />
 
       <FloatingActionButton
         onPress={() => navigation.navigate("FilterScreen")}
-        bottomPos={250}
-        rightPos={10}
+        bottomPos={height * 0.25}
+        rightPos={width * 0.025}
         icon={'filter'}
       />
+
+      {/* Hilfescreen? */}
+      {/* <FloatingActionButton
+        onPress={() => null}
+        bottomPos={height * 0.35}
+        rightPos={10}
+        icon={'question'}
+      /> */}
+
+      {markerButtonVisible && editMarkerMode._currentValue === false ?
+      <View style={{
+        position: 'absolute',
+        bottom: height * 0.1,
+        right: width * 0.25,
+        // borderWidth: StyleSheet.hairlineWidth,
+        // borderColor: 'black',
+        elevation: 3,
+        alignItems: 'center',
+        alignSelf: 'flex-end',
+        justifyContent: 'center',
+        // borderRadius: 30,
+        zIndex: 5,
+        // width: 60,
+        }}> 
+        <ButtonRegular
+          text={'Marker erstellen'}
+          onPress={() => { editMarkerMode._currentValue = false; navigation.navigate('CreateMarkersScreen') }}
+          backgroundColor={Colors.findmyactivityYellow}
+          // onPress={() => addMarkerToDB(auth, 'EVENTNAME', 'EVENTDESC', 53.6, 10.045)}
+        /> 
+      </View>
+
+      : markerButtonVisible && editMarkerMode._currentValue === true ?
+
+      <View style={{
+        position: 'absolute',
+        bottom: height * 0.1,
+        right: width * 0.25,
+        // borderWidth: StyleSheet.hairlineWidth,
+        // borderColor: 'black',
+        elevation: 3,
+        alignItems: 'center',
+        alignSelf: 'flex-end',
+        justifyContent: 'center',
+        // borderRadius: 30,
+        zIndex: 5,
+        // width: 60,
+        }}> 
+        <ButtonRegular
+          text={'Markerposition aktualisieren'}
+          onPress={() => { navigation.goBack(); saveNewMarkerLocation() }}
+          backgroundColor={Colors.findmyactivityYellow}
+          // onPress={() => addMarkerToDB(auth, 'EVENTNAME', 'EVENTDESC', 53.6, 10.045)}
+        /> 
+      </View>
+    
+      : null}
       
       <MapView
         provider={PROVIDER_GOOGLE}
         region={region}
-        onRegionChangeComplete={(region) => {setRegion(region)} }
+        onRegionChangeComplete={(region) => { setRegion(region); } }
         ref={props.mapRef}
         style={props.style}
         initialRegion={props.initialRegion}
@@ -150,9 +209,11 @@ const MapViewGoogle = (props) => {
         showsMyLocationButton={false}
         // customMapStyle={}
         onMapLoaded={props.onMapLoaded}
-        // toolbarEnabled={false}
+        toolbarEnabled={editMarkerMode._currentValue === true ? false : true}
         zoomControlEnabled={true}
         onLongPress = {(e) => updateUserMarker(e.nativeEvent.coordinate)}
+        onPanDrag={() => setMarkerButtonVisible(false)}
+        // onMarkerPress={() => setMarkerButtonVisible(true)}
         //onRegionChangeComplete runs when the user stops dragging MapView        
       >
       {/* DB Markers */}
@@ -219,7 +280,7 @@ const MapViewGoogle = (props) => {
             return (
               <View>
                 {/* {rangeContext._currentValue != null && distanceToUserPos != '?' && rangeContext._currentValue <= distanceToUserPos ? */}
-                <Marker key={index} coordinate={val} pinColor={val.color} tracksViewChanges={true} onPress={() => HighlightMarker(val)}>
+                <Marker key={index} coordinate={val} pinColor={val.color} tracksViewChanges={true} onPress={() => { HighlightMarker(val); }}>
                   <Callout>
                     <Text key={Math.random().toString()}> {val.name} </Text>
                     <Text key={Math.random().toString()}> {val.description} </Text>
@@ -244,7 +305,7 @@ const MapViewGoogle = (props) => {
         userMarker.map((val, index) => 
           {
             return (
-              <Marker key={index} coordinate={val} pinColor='blue' draggable={false} tracksViewChanges={true}></Marker>
+              <Marker key={index} coordinate={val} pinColor='blue' draggable={false} tracksViewChanges={true} onPress={() => setMarkerButtonVisible(true)}></Marker>
             ); 
           }
         )

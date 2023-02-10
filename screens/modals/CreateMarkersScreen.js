@@ -26,13 +26,20 @@ const CreateMarkersScreen = ( {navigation} ) => {
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState(tagData);  
 
-  const pickedStartTime = useRef(editMarkerMode._currentValue ? editMarkerValues._currentValue.startDate : undefined)
-  const pickedEndTime = useRef(editMarkerMode._currentValue ? editMarkerValues._currentValue.endDate : undefined)
+  const pickedStartTime = useRef(editMarkerMode._currentValue === true ? editMarkerValues._currentValue.startDate : undefined)
+  const pickedEndTime = useRef(editMarkerMode._currentValue === true ? editMarkerValues._currentValue.endDate : undefined)
   const kindOfTimePicker = useRef()
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 
-  const [eventNameError, setEventNameError] = useState()
-  const [participantsError, setParticipantsError] = useState()
+  const [eventNameError, setEventNameError] = useState(editMarkerMode._currentValue === true ? false : undefined)
+  const [participantsError, setParticipantsError] = useState(editMarkerMode._currentValue === true ? false : undefined)
+
+  function printErrors() {
+    console.log("name error: ", eventNameError);
+    console.log("participants error: ", participantsError);
+    console.log('start error: ', pickedStartTime.current);
+    console.log('end error: ', pickedEndTime.current);
+  }
 
   const showTimePicker = () => {
     setTimePickerVisibility(true);
@@ -332,8 +339,10 @@ const CreateMarkersScreen = ( {navigation} ) => {
 
           <ButtonSmall
             text={'Aktualisieren'}         
-            onPress={() => { 
-              eventNameError || participantsError || eventNameError === undefined || participantsError === undefined || pickedStartTime.current === undefined || pickedEndTime.current === undefined
+            onPress={() => {
+              errorHandlerName()
+              errorHandlerParticipants()
+              eventNameError === true || participantsError === true || eventNameError === undefined || participantsError === undefined || pickedStartTime.current === undefined || pickedEndTime.current === undefined
                 ? Alert.alert('Achtung!', errorMessageHandler())
                 : updateMarker()
             }}
@@ -351,7 +360,9 @@ const CreateMarkersScreen = ( {navigation} ) => {
           <ButtonSmall
             text={'Erstellen'}         
             onPress={() => {
-              eventNameError || participantsError || eventNameError === undefined || participantsError === undefined || pickedStartTime.current === undefined || pickedEndTime.current === undefined
+              errorHandlerName()
+              errorHandlerParticipants()
+              eventNameError === true || participantsError === true || eventNameError === undefined || participantsError === undefined || pickedStartTime.current === undefined || pickedEndTime.current === undefined
                 ? Alert.alert('Achtung!', errorMessageHandler())
                 : createMarker()
             }}
