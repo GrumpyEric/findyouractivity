@@ -34,6 +34,8 @@ const TextInputField = (props) => {
         maxLength={props.maxTextChars}
         style={[styles.textInputStyle, {backgroundColor: props.backgroundColor}]}
         multiline={props.multiline}
+        onBlur={props.onBlur}
+        onChange={props.onChange}
       />
       {hasMaxLength && showCharCounter ?
       <Text style={[{alignSelf: 'center', paddingLeft: '5%'}]}>{props.value === undefined ? 0 : props.value.length}/{maxTextChars}</Text>
@@ -43,7 +45,8 @@ const TextInputField = (props) => {
 }
 
 TextInputField.propTypes = { placeholder: PropTypes.string, value: PropTypes.string.isRequired, onChangeText: PropTypes.func.isRequired, secureTextEntry: PropTypes.bool, 
-  keyboardType: PropTypes.string, maxLength: PropTypes.number, backgroundColor: PropTypes.string, borderColor: PropTypes.string, multiline: PropTypes.bool
+  keyboardType: PropTypes.string, maxLength: PropTypes.number, backgroundColor: PropTypes.string, borderColor: PropTypes.string, multiline: PropTypes.bool, 
+  onBlur: PropTypes.func, onChange: PropTypes.func
 }
 
 export default TextInputField

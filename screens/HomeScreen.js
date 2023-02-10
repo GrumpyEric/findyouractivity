@@ -1,17 +1,12 @@
-import { useNavigation } from '@react-navigation/core'
-import React, {useState, useEffect, errorMsg } from "react";
-import { Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState } from "react";
+import { View, StyleSheet } from 'react-native';
 
 import { hawRegion } from '../constants/TestCoords';
 
 import { height, stylesGlobal } from '../constants/StylesGlobal'
 import MapViewGoogle from '../components/MapView';
 import FloatingBurgerMenu from '../components/FloatingBurgerMenu';
-import { addMarkerToDB, applyFilters, manualReadMarkerFromDB } from '../constants/MainFunctions';
-import ButtonRegular from '../components/ButtonRegular';
-import { auth } from '../firebase/firebase-config';
-import Colors from '../constants/Colors';
-import { editMarkerMode } from '../components/AppContext';
+import { mapRef } from '../components/AppContext';
 
 import { collection, query, onSnapshot, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from '../firebase/firebase-config';
@@ -30,20 +25,8 @@ const HomeScreen = ( {navigation} ) => {
       <MapViewGoogle
         style={styles.map_container}
         initialRegion={hawRegion}
-        eventNameInput={eventNameInput}
-        eventDescInput={eventDescInput}
+        mapRef={mapRef}
       />
-      
-      {/* MARKER ERSTELLEN */}
-
-      <View style={styles.button}>
-        <ButtonRegular
-          text={'CREATE MARKER'}
-          onPress={() => { editMarkerMode._currentValue = false; navigation.navigate('CreateMarkersScreen') }}
-          backgroundColor={Colors.findmyactivityYellow}
-          // onPress={() => addMarkerToDB(auth, 'EVENTNAME', 'EVENTDESC', 53.6, 10.045)}
-        /> 
-      </View>
     </View>
   )
 }
@@ -54,7 +37,7 @@ const styles = StyleSheet.create({
    button: {
     alignItems: 'center',
     position: 'absolute',
-    bottom: 0,
+    bottom: 50,
     marginBottom: height * 0.05
   },
   buttonText: {
