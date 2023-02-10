@@ -80,6 +80,7 @@ const FilterScreen = ( {navigation} ) => {
     }
   }
 
+
   const clearFilters = () => {
     resetRange()
     setValue([])
@@ -99,7 +100,6 @@ const FilterScreen = ( {navigation} ) => {
  
 return(
   <View>
-
     <View style={{width: '100%'}}>
       <Text>Radius der anzuzeigenden Marker</Text>
       <Text>{radiusMarkersVisual === 'alle' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>
@@ -112,7 +112,7 @@ return(
         onValueChange={(value) => value < 21 ? setRadiusMarkersVisual(value) : setRadiusMarkersVisual('alle')}
       />
     </View>
-
+    
     <DropDownPicker
       searchable={true}
       multiple={true}

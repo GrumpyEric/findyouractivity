@@ -56,26 +56,10 @@ export const handleLogin = (auth, email, password, navigation) => {
   .catch(error => alert(error.message))
 }
 
-// remove snapshot listener
-export const unsubscribeMarkerDB = onSnapshot(collection(db, "markers"), () => {
-  // Respond to data
-  // ...
-});
-
-export const unsubscribeUserDB = onSnapshot(collection(db, "users"), () => {
-  // Respond to data
-  // ...
-});
-
-const unsubscribe = () => 
-{
-  unsubscribeMarkerDB()
-  unsubscribeUserDB()
-}
-
 // SignOut Stuff
 import { signOut } from 'firebase/auth'
 //import { collection, query} from "firebase/firestore";
+
 
 export const handleSignOut = (auth, navigation) => {
   unsubscribe();
@@ -87,27 +71,41 @@ export const handleSignOut = (auth, navigation) => {
 }
 
 // Query snapshot Marker
-import { collection, query, onSnapshot, updateDoc, deleteDoc } from "firebase/firestore";
+import { collection, query, onSnapshot, updateDoc, deleteDoc, FieldValue } from "firebase/firestore";
 import { db } from '../firebase/firebase-config';
-import { filterContext, selectedUserContext, loggedInUser, editMarkerValues, latitudeContext, longitudeContext, refreshContext } from '../components/AppContext';
+
+import { filterContext, selectedUserContext, loggedInUser, selectedAuthor, participantContext } from '../components/AppContext';
 // import { useRef } from 'react';
 
 export let markersRef
 let db_markers = [];
 
-const q = query(collection(db, "markers"));
-const readMarkerFromDB = onSnapshot(q, (QuerySnapshot) => {
-  db_markers = [];
-  QuerySnapshot.forEach( (doc) => {
-    db_markers.push(doc.data().markers);
-  } );
-  applyFilters()  
-  //markersRef = db_markers
+export const readMarkerFromDB = onSnapshot(query(collection(db, "markers")), (QuerySnapshot) => {
+    db_markers = [];
+    QuerySnapshot.forEach( (doc) => {
+      db_markers.push(doc.data().markers);
+    } );
+    applyFilters(db_markers)
+}, (error) => {
+  manualReadMarkerFromDB()
 })
 
 
+// manuelles einlesen der DB
+export const manualReadMarkerFromDB = async() => {
+  let db_markers = [];
+  const docSnap = await getDocs(collection(db, "markers"));
+  docSnap.forEach( (doc) => {
+    db_markers.push(doc.data().markers);
+    console.log("manualReadMarkerFrom DB DocSnap: ", doc.id)
+  } );
+  applyFilters(db_markers)
+}
+
+
 // wendet die vom nutzer eingestellten filter ein
-export const applyFilters = () => {
+export const applyFilters = (db_markers) => {
+
   const initMarkers = db_markers // backup der db-marker
   const validMarkers = [];
   const preferTags = filterContext._current_value
@@ -143,7 +141,7 @@ export const applyFilters = () => {
 
 
 // USER zur user-DB hinzufügen
-const addUserToDB = async(username, description, uid, events) =>
+export const addUserToDB = async(username, description, uid, events) =>
 {
   // let userID = auth.currentUser.uid.toString()
   await setDoc(doc(db, "users", uid ), {
@@ -173,6 +171,32 @@ export const readUserFromDB = async(uid) =>
   }
 }
 
+export const getUserInfoFromDB = async(uid) => {
+  const docRef = doc( db, "users", uid.toString() )
+  const docSnap = await getDoc(docRef);
+  
+  if ( docSnap.exists() )
+  {
+    selectedAuthor._current_value = docSnap.data()
+    return selectedAuthor._current_value
+  }
+  
+}
+
+export const getParticipant = async(uid) => {
+  const docRef = doc( db, "users", uid.toString() )
+  const docSnap = await getDoc(docRef);
+  
+  if ( docSnap.exists() )
+  {
+    participantContext._current_value = docSnap.data()
+    //Alert.alert(docSnap.name)
+    return participantContext._current_value
+  }
+  
+}
+
+
 // User-Info auf DB ändern (z.B. Benutzernamen ändern)
 export const updateUserFromDB = async(uid, usernameInput, descriptionInput) =>
 {
@@ -187,6 +211,8 @@ export function saveNewMarkerLocation() {
   editMarkerValues._currentValue.latitude = latitudeContext._currentValue
   editMarkerValues._currentValue.longitude = longitudeContext._currentValue
 }
+
+
 
 // MARKER zur DB hinzufügen
 import { Timestamp, doc, setDoc, getDoc, getDocs, where } from 'firebase/firestore';
@@ -260,6 +286,80 @@ export const updateMarkerToDB = async(auth, eventNameInput, eventDescInput, even
   // setRegion(userMarker);
 }
 
+export const optInToEvent = async(creatorID, markerCreationDate, participantID) => {
+  // let creationDate = formatISO(markerCreationDate)
+  // console.log(creationDate);
+  const docRef = doc(db, "markers", creatorID+"_"+( markerCreationDate ) )
+  const docSnap = await getDoc(docRef);
+  
+  if ( docSnap.exists() )
+  {
+    let eventParticipantList = docSnap.data().markers.participantList
+    if (eventParticipantList.length < docSnap.data().markers.numberParticipants)
+    {
+      eventParticipantList.push(participantID)
+      await updateDoc(docRef, {
+        markers: {
+          name: docSnap.data().markers.name,
+          description: docSnap.data().markers.description,
+          locationDescription: docSnap.data().markers.locationDescription,
+          latitude: docSnap.data().markers.latitude,
+          longitude: docSnap.data().markers.longitude,
+          creation_date: docSnap.data().markers.creation_date,
+          startTime: docSnap.data().markers.startTime,
+          endTime: docSnap.data().markers.endTime,
+          numberParticipants: docSnap.data().markers.numberParticipants,
+          tags: docSnap.data().markers.tags,
+          user: docSnap.data().markers.user,
+          participantList: eventParticipantList
+        }
+      });
+    }
+    else
+    {
+      Alert.alert("Teilnahme nicht erfolgreich", "Die maximale Anzahl an Teilnehmer wurde erreicht")
+    }
+  }
+  else
+    {
+      Alert.alert("Teilnahme nicht erfolgreich", "Event nicht mehr verfügbar")
+    }
+}
+
+export const optOutOfEvent = async(creatorID, markerCreationDate, participantID) => {
+  // let creationDate = formatISO(markerCreationDate)
+  // console.log(creationDate);
+  const docRef = doc(db, "markers", creatorID+"_"+( markerCreationDate ) )
+  const docSnap = await getDoc(docRef);
+  
+  if ( docSnap.exists() )
+  {
+    let eventParticipantList = docSnap.data().markers.participantList
+    eventParticipantList = eventParticipantList.filter(function (arr) {
+      return arr != participantID
+    })
+
+    await updateDoc(docRef, {
+      markers: {
+        name: docSnap.data().markers.name,
+        description: docSnap.data().markers.description,
+        locationDescription: docSnap.data().markers.locationDescription,
+        latitude: docSnap.data().markers.latitude,
+        longitude: docSnap.data().markers.longitude,
+        creation_date: docSnap.data().markers.creation_date,
+        startTime: docSnap.data().markers.startTime,
+        endTime: docSnap.data().markers.endTime,
+        numberParticipants: docSnap.data().markers.numberParticipants,
+        tags: docSnap.data().markers.tags,
+        user: docSnap.data().markers.user,
+        participantList: eventParticipantList
+      }
+    });
+
+  }
+}
+
+
 export const deleteMarkerToDB = async(auth, markerCreationDate) => {
   let userID = auth.currentUser.uid.toString()
 
@@ -268,6 +368,7 @@ export const deleteMarkerToDB = async(auth, markerCreationDate) => {
   const alerta_msg = ':('
   Alert.alert(alerta_title,alerta_msg);
 }
+
 
 export function refreshMap() {
   refreshContext._currentValue = Math.floor(Math.random() * 100)

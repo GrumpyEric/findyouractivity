@@ -6,9 +6,9 @@ import { reverseGeocodeAsync } from "expo-location";
 import { hawRegion } from "../constants/TestCoords";
 import * as Location from 'expo-location';
 
-import { markersRef, refreshMap, saveNewMarkerLocation } from "../constants/MainFunctions";
+import { markersRef, userMarkerContext, refreshMap, saveNewMarkerLocation, manualReadMarkerFromDB, getUserInfoFromDB, applyFilters } from "../constants/MainFunctions";
 import FloatingActionButton from "./FloatingActionButton";
-import { latitudeContext, longitudeContext, mapRef, filterContext, userPosContext, rangeContext, editMarkerMode, mapRefEdit, refreshContext } from "./AppContext";
+import { latitudeContext, longitudeContext, mapRef, filterContext, userPosContext, rangeContext, selectedAuthor, editMarkerMode, mapRefEdit, refreshContext } from "./AppContext";
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
@@ -73,7 +73,7 @@ const MapViewGoogle = (props) => {
       refreshMap()
       setUserPos(currentUserPos);
       userPosContext._currentValue = currentUserPos
-      console.log(userPosContext._currentValue);
+      //console.log(userPosContext._currentValue);
       setIsUserPosLoaded(true)
     })();
   }, []);
@@ -123,7 +123,7 @@ const MapViewGoogle = (props) => {
   }}
 
   useEffect(() => {
-    console.log(markersRef);
+    //console.log(markersRef);
   }, [markersRef])
 
   useEffect(() => {
@@ -278,32 +278,19 @@ const MapViewGoogle = (props) => {
               return  <Text> End-Zeit: {endTimeRes.toString()} </Text>
             }
 
-            const displayAuthor = (val) => {
-              if ( (val.user != undefined) )
-              {
-                return <Text> erstellt von: {val.user} </Text>
-              }
-            }
-            console.log(distanceToUserPos);
-
             return (
-              <View>
+              <View key={index}>
                 {rangeContext._currentValue != null && distanceToUserPos != '?' && rangeContext._currentValue >= distanceToUserPos || rangeContext._currentValue === 21 ?
-                <Marker key={index} coordinate={val} pinColor={val.color} tracksViewChanges={true} onPress={() => { HighlightMarker(val); }}>
-                  <Callout>
-                    <Text key={Math.random().toString()}> {val.name} </Text>
-                    <Text key={Math.random().toString()}> {val.description} </Text>
-                    { displayAuthor(val) }
-                    { displayStartTime(val) }
-                    { displayEndTime(val) }
-                    <Text> Distanz: {distanceToUserPos} km</Text>
-                    { displayTags(val) }
-                    <Text>Klick mich für mehr Infos</Text>
+                <Marker key={index} coordinate={val} pinColor={val.color} tracksViewChanges={true} onPress={() => { HighlightMarker(val); getUserInfoFromDB(val.user) }}>
+                  <Callout onPress={ () => navigation.navigate('ViewMarkerScreen', { creationDate:val.creation_date, eventName: val.name, eventDescription: val.description,  eventAuthorUsername: selectedAuthor._current_value.markers.username, eventAuthorDescription: selectedAuthor._current_value.markers.description, eventAuthorID: val.user, eventStartTime: displayStartTime(val), eventEndTime:displayEndTime(val), eventTags: displayTags(val), eventMaxParticipants: val.numberParticipants, eventLocationDescription: val.locationDescription, eventParticipantList: val.participantList } ) }>
+                      <Text key={Math.random().toString()}> Name:  {val.name} </Text>
+                      <Text key={Math.random().toString()}> Beschreibung:  {val.description} </Text>
+                      <Text> Distanz: {distanceToUserPos} km</Text>
+                      <Text> Hier klicken für mehr Infos! </Text>
                   </Callout>
                 </Marker>
                 : null}
-              </View> 
-            )
+              </View>); 
           }
         )
       }
@@ -316,6 +303,7 @@ const MapViewGoogle = (props) => {
             return (
               <Marker key={index} coordinate={val} pinColor='blue' draggable={false} tracksViewChanges={true} onPress={() => setMarkerButtonVisible(true)}></Marker>
             ); 
+
           }
         )
       }
