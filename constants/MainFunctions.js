@@ -238,7 +238,7 @@ export const addMarkerToDB = async(auth, eventNameInput, eventDescInput, eventLo
       numberParticipants: numberParticipants,
       tags: tags,
       user: userID,
-      participantList: []
+      participantList: [userID]
     }
   });
   const alerta_title = "Marker has been Set"
