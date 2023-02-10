@@ -85,6 +85,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
     let errorPropertyNames = Object.getOwnPropertyNames(errors)
     let insideErrorPropertyNames = Object.getOwnPropertyNames(errors[errorPropertyNames[0]])
     let errorCount = 0
+    let loopCount = 0
     let errorMsg = ''
     let singleError = false
     // console.log(errors[errorPropertyNames[index]][insideErrorPropertyNames[1]])
@@ -101,6 +102,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
       if (errors[errorPropertyNames[index]].status === undefined || errors[errorPropertyNames[index]].status === true) {
         errorMsg = errorMsg.concat(errors[errorPropertyNames[index]].name)
         errorCount = errorCount - 1
+        loopCount = loopCount + 1
         if (errorCount >= 2) {
           errorMsg = errorMsg.concat(', ')
         }
@@ -108,7 +110,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
           errorMsg = errorMsg.concat(' und ')
         }
 
-        if (errorCount === 0) {
+        if (errorCount < 1 && loopCount === 1) {
           errorMsg = errorMsg.concat(' fehlt. Bitte fügen Sie das genannte Attribut in das gleichnamige Feld ein! ')
           singleError = true
         }
