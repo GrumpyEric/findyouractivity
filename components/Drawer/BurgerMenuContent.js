@@ -13,7 +13,7 @@ function BurgerMenuContent ( props )  {
     <DrawerContentScrollView {...props}>
       
       <DrawerItem
-        label="Home"
+        label="Karte"
         onPress={() => navigation.navigate("HomeScreen")}
       />
 
@@ -23,11 +23,11 @@ function BurgerMenuContent ( props )  {
       />
 
       <DrawerItem
-        label="Profile"
+        label="Mein Profil"
         onPress={() => { navigation.navigate("ProfileScreen"); navigation.dispatch(DrawerActions.closeDrawer()) }}
       />
       <DrawerItem
-        label="Logout"
+        label="Ausloggen"
         onPress={() => handleSignOut(auth, navigation)} 
       />
     </DrawerContentScrollView>

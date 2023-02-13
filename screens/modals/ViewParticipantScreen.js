@@ -20,13 +20,13 @@ const ViewParticipantScreen = ( {route, navigation} ) => {
 
   return (
     <View style={styles.screenContainer}>
-      <Text> Event - Teilnehmer: </Text>
+      <Text style={styles.ueberschriftText}> Teilnehmer: </Text>
       <ScrollView contentContainerStyle={styles.scrollViewContainer} showsVerticalScrollIndicator={false}>
       {
         members.map( (val,index) => {
           return (
             <TextButton
-            text={val+' (Profile ansehen)'}
+            text={val +' (Profile ansehen)'}
             onPress={ () => { onParticipantButton(val) } }
       />
           )
@@ -47,8 +47,14 @@ const styles = StyleSheet.create({
   screenContainer: {
     flex: stylesGlobal.screenContainer.flex,
     paddingHorizontal: stylesGlobal.screenContainer.paddingHorizontal,
+    paddingVertical: stylesGlobal.screenContainer.paddingVertical,
     backgroundColor: stylesGlobal.screenContainer.backgroundColor,
     alignItems: 'center'
+  },
+
+  ueberschriftText: {
+    fontWeight: stylesGlobal.ueberschriftText.fontWeight,
+    fontSize: stylesGlobal.ueberschriftText.fontSize
   },
 
   scrollViewContainer: {

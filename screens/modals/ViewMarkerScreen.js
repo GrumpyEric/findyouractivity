@@ -8,6 +8,7 @@ import TextButton from '../../components/TextButton'
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
+import Colors from '../../constants/Colors'
 
 const ViewMarkerScreen = ( {route, navigation} ) => {  
   const nameDisplay = route.params.eventName
@@ -64,35 +65,40 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
 
   return (
     <View style={styles.screenContainer}>
-      <Text> EVENT ÜBERSICHT </Text>
+      <Text style={styles.ueberschriftText}> {nameDisplay} </Text>
       <ScrollView contentContainerStyle={styles.scrollViewContainer} showsVerticalScrollIndicator={false}>
-      <Text> Name: {nameDisplay} </Text>
-      <Text> Beschreibung: {descriptionDisplay} </Text>      
-      <Text> Ortbeschreibung: {locationDescriptionDisplay} </Text>
-      <Text> Author: {authorUsernameDisplay} </Text>
-      <TextButton
+        <Text style={styles.standardText}> Beschreibung: {descriptionDisplay} </Text>      
+        <Text style={styles.standardText}> Ortbeschreibung: {locationDescriptionDisplay} </Text>
+        <Text style={styles.standardText}> Autor: {authorUsernameDisplay} </Text>
+        <TextButton
             text={'(Profile ansehen)'}
             onPress={ () => {navigation.navigate('ViewAuthorScreen', { authorID: authorDisplay, authorUsername: authorUsernameDisplay, authorDescription: authorDescriptionDisplay}) } }
-      />
-      <Text> Anzahl der Teilnehmer: {participantList.length} / {maxParticipantDisplay} </Text>
-      <TextButton
+        />
+        <Text style={styles.standardText}> Anzahl der Teilnehmer: {participantList.length} / {maxParticipantDisplay} </Text>
+        <TextButton
             text={'(Teilnehmer-Liste anzeigen)'}
             onPress={ () => { navigation.navigate('ViewParticipantScreen', {memberList: participantList} ) } }
-      />
-      {startTimeDisplay}
-      {endTimeDisplay}
-      {tagDisplay}
-      </ScrollView>
-      <ButtonSmall
-            text={'Teilnahme'}
+        />
+        <Text style={styles.standardText}>{startTimeDisplay}</Text>
+        <Text style={styles.standardText}>{endTimeDisplay}</Text>
+        <Text style={styles.standardText}>{tagDisplay}</Text>
+        </ScrollView>
+      <View style={{flexDirection:'row'}}>
+        <View>
+        <ButtonSmall
+            text={'Teilnehmen'}
             onPress={() => onParticipateButton() }
-            backgroundColor={'hotpink'}
+            backgroundColor={Colors.findmyactivityBlue}
           />
-      <ButtonSmall
+        </View>
+        <View>
+        <ButtonSmall
             text={'Schließen'}
             onPress={() => navigation.pop()}
-            backgroundColor={'orange'}
+            backgroundColor={'red'}
           />
+        </View>
+      </View>
     </View>
   )
 }
@@ -101,15 +107,28 @@ const styles = StyleSheet.create({
   screenContainer: {
     flex: stylesGlobal.screenContainer.flex,
     paddingHorizontal: stylesGlobal.screenContainer.paddingHorizontal,
+    paddingVertical: stylesGlobal.screenContainer.paddingVertical,
     backgroundColor: stylesGlobal.screenContainer.backgroundColor,
     alignItems: 'center'
+  },
+
+  ueberschriftText: {
+    fontWeight: stylesGlobal.ueberschriftText.fontWeight,
+    fontSize: stylesGlobal.ueberschriftText.fontSize
+  },
+
+  standardText: {
+    fontWeight: stylesGlobal.standardText.fontWeight,
+    fontSize: stylesGlobal.standardText.fontSize,
+    textAlign: 'left'
   },
 
   scrollViewContainer: {
     alignContent: 'stretch',
     alignItems: 'center', 
-    justifyContent: 'center', 
-    minHeight: '100%'
+    justifyContent: 'center',
+    minHeight: '100%',
+    marginVertical: '5%'
   }
 
 

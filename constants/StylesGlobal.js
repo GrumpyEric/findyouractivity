@@ -14,9 +14,27 @@ const deviceName = Device.modelName
 const stylesGlobal = StyleSheet.create({
   //----- Text -----//
   standardText: {
+    fontWeight: '400',
+    fontSize: 16,
+    color: Colors.findmyactivityText
+  },
+  
+  ueberschriftText: {
+    fontWeight: 'bold',
+    fontSize: 28,
+    color: Colors.findmyactivityText
+  },
+
+  buttonTextBlack: {
     fontWeight: '700',
     fontSize: 16,
     color: Colors.findmyactivityText
+  },
+
+  buttonTextWhite: {
+    fontWeight: '700',
+    fontSize: 16,
+    color: Colors.findmyactivityWhite
   },
 
   //----- Screenviews -----//
@@ -25,6 +43,7 @@ const stylesGlobal = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: '10%',
+    paddingVertical: '5%',
     backgroundColor: Colors.findmyactivityBackground
   },
 

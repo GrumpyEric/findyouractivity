@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, TextInput,StyleSheet } from 'react-native';
 import { stylesGlobal } from '../constants/StylesGlobal';
 import { Avatar, ListItem } from "react-native-elements";
 import { selectedUserContext, loggedInUser, userPosContext } from '../components/AppContext';
@@ -7,6 +7,7 @@ import React, {useRef, useState, useEffect} from "react";
 import ButtonRegularWithBorder from '../components/ButtonRegular';
 import Colors from '../constants/Colors'
 import { updateUserFromDB, readUserFromDB, getEventsFromUser, markersRef } from '../constants/MainFunctions';
+import ButtonSmall from '../components/ButtonSmall';
 
 
 const ProfileScreen = ( {navigation} ) => {
@@ -75,6 +76,7 @@ const ProfileScreen = ( {navigation} ) => {
   }
 
   return (
+    <View style={styles.screenContainer}>
     <ScrollView >
       <View style={stylesGlobal.screenContainer}>
         <TouchableOpacity>
@@ -88,34 +90,30 @@ const ProfileScreen = ( {navigation} ) => {
                 />
             </View>
         </TouchableOpacity>  
-        <ButtonRegularWithBorder
-      text={"SAVE CHANGES"}
-      onPress={() => onSaveButton()}
-      backgroundColor={Colors.findmyactivityYellow}
-      /> 
+        
         
       </View>
       <View>
-        <Text>  BENUTZERNAME:</Text>
+        <Text style={{fontWeight: 'bold'}}>Benutzername:</Text>
         <TextInput editable={editingUsername} value={displayUsername} onChangeText={setDisplayUsername}/>
-        <ButtonRegularWithBorder
+        <ButtonSmall
           text={editUsernameLabel}
           onPress={() => ToggleUsernameEdit()}
           backgroundColor={Colors.findmyactivityYellow}
         />
-        <Text> __________________________________________ </Text>
-        <Text>  BESCHREIBUNG:</Text>
+        <Text>__________________________________________ </Text>
+        <Text style={{fontWeight: 'bold'}}>BESCHREIBUNG:</Text>
         <TextInput editable={editingDescription} value={displayDescription} onChangeText={setDisplayDescription}/>
-        <ButtonRegularWithBorder
+        <ButtonSmall
           text={editDescriptionLabel}
           onPress={() => ToggleDescriptionEdit()}
           backgroundColor={Colors.findmyactivityYellow}
         />       
-        <Text> __________________________________________ </Text>
-        <Text>  USER-ID:</Text>
+        <Text>__________________________________________ </Text>
+        <Text style={{fontWeight: 'bold'}}>Benutzer-ID:</Text>
         <Text>  {selectedUserContext._current_value.markers.uid} </Text>  
-        <Text> __________________________________________ </Text>
-        <Text>  E-MAIL:</Text>
+        <Text>__________________________________________ </Text>
+        <Text style={{fontWeight: 'bold'}}>E-Mail-Adresse:</Text>
         <Text>  {loggedInUser._current_value.email.toString()} </Text>
       </View>
       <View>
@@ -123,8 +121,8 @@ const ProfileScreen = ( {navigation} ) => {
       <Text> __________________________________________ </Text> 
     </View>
     <View>
-      <Text>EVENTS VOM NUTZER:</Text>
-      <Text> __________________________________________ </Text>
+      <Text style={{fontWeight: 'bold'}}>Meine Events:</Text>
+      <Text>__________________________________________ </Text>
       {eventArray.map((val, index) => 
             {
 
@@ -178,7 +176,7 @@ const ProfileScreen = ( {navigation} ) => {
 
 
               return (
-                <View style={{backgroundColor: '#DDDDDD', marginBottom: 10}}>
+                <View style={{backgroundColor: '#FFFFFF', marginBottom: 10}}>
                   <TouchableOpacity onPress={() => console.log(val)}>
                     <Text key={Math.random().toString()}> {val.name} </Text>
                     <Text key={Math.random().toString()}> {val.description} </Text>
@@ -193,11 +191,34 @@ const ProfileScreen = ( {navigation} ) => {
           )}
     </View>
     </ScrollView>
+    <View style={{flexDirection:'row'}}>
+      <View>
+        <ButtonSmall
+          text={"Speichern"}
+          onPress={() => onSaveButton()}
+          backgroundColor={Colors.findmyactivityBlue}
+        />
+      </View>
+      <View>
+        <ButtonSmall
+          text={'Schließen'}
+          onPress={() => navigation.pop()}
+          backgroundColor={'red'}
+        />
+      </View>
+    </View>
+    </View>
   )
 }
 
 export default ProfileScreen
 
-// const styles = StyleSheet.create({
-
-// })
+ const styles = StyleSheet.create({
+  screenContainer: {
+    flex: stylesGlobal.screenContainer.flex,
+    paddingHorizontal: stylesGlobal.screenContainer.paddingHorizontal,
+    paddingVertical: stylesGlobal.screenContainer.paddingVertical,
+    backgroundColor: stylesGlobal.screenContainer.backgroundColor,
+    alignItems: 'center'
+  },
+ })

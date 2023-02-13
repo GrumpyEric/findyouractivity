@@ -7,6 +7,7 @@ import React, { useEffect} from "react";
 import ButtonRegularWithBorder from '../../components/ButtonRegular';
 import Colors from '../../constants/Colors'
 import { markersRef } from '../../constants/MainFunctions';
+import ButtonSmall from '../../components/ButtonSmall';
 
 
 const ViewAuthorScreen = ( {route,navigation} ) => {
@@ -28,11 +29,6 @@ const ViewAuthorScreen = ( {route,navigation} ) => {
 
   return (
     <View style={stylesGlobal.screenContainer}>
-            <ButtonRegularWithBorder
-      text={"Schließen"}
-      onPress={() => onCloseButton()}
-      backgroundColor={Colors.findmyactivityYellow}
-      /> 
     <ScrollView >
       <View style={stylesGlobal.screenContainer}>
 
@@ -51,22 +47,21 @@ const ViewAuthorScreen = ( {route,navigation} ) => {
         
       </View>
       <View>
-        <Text>  BENUTZERNAME:</Text>        
-        <Text>  {displayUsername} </Text>
-        <Text> __________________________________________ </Text>
-        <Text>  BESCHREIBUNG:</Text>
+        <Text style={{fontWeight:'bold'}}>Benutzername:</Text>        
+        <Text>  {displayUsername}</Text>
+        <Text>__________________________________________ </Text>
+        <Text style={{fontWeight:'bold'}}>Beschreibung:</Text>
         <Text>  {displayDescription} </Text>
-        <Text> __________________________________________ </Text>
-        <Text>  USER-ID:</Text>
+        <Text>__________________________________________ </Text>
+        <Text style={{fontWeight:'bold'}}>Benutzer-ID:</Text>
         <Text>  {displayID} </Text>
       </View>
       <View>
         
-      <Text> __________________________________________ </Text> 
+      <Text>__________________________________________ </Text> 
     </View>
     <View>
-      <Text>EVENTS VOM NUTZER:</Text>
-      <Text> __________________________________________ </Text>
+      <Text style={{fontWeight:'bold'}}>Events von diesem Benutzer:</Text>
       {eventArray.map((val, index) => 
             {
 
@@ -120,7 +115,7 @@ const ViewAuthorScreen = ( {route,navigation} ) => {
 
 
               return (
-                <View key={index} style={{backgroundColor: '#DDDDDD', marginBottom: 10}}>
+                <View key={index} style={{backgroundColor: '#FFFFFF', borderRadius: 10}}>
                   <TouchableOpacity onPress={() => console.log(val)}>
                     <Text key={Math.random().toString()}> {val.name} </Text>
                     <Text key={Math.random().toString()}> {val.description} </Text>
@@ -133,8 +128,15 @@ const ViewAuthorScreen = ( {route,navigation} ) => {
               )
             }
           )}
-    </View>
-    </ScrollView>    
+      </View>
+    </ScrollView>   
+    <View style={{alignItems: 'center'}}>
+        <ButtonSmall
+          text={"Schließen"}
+          onPress={() => onCloseButton()}
+          backgroundColor={'red'}
+        /> 
+      </View> 
     </View>
   )
 }
