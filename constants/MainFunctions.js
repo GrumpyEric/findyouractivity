@@ -62,7 +62,6 @@ import { signOut } from 'firebase/auth'
 
 
 export const handleSignOut = (auth, navigation) => {
-  unsubscribe();
   signOut(auth)
   .then(() => {
     navigation.navigate("Login")
