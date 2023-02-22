@@ -30,6 +30,10 @@ function BurgerMenuContent ( props )  {
         label="Ausloggen"
         onPress={() => handleSignOut(auth, navigation)} 
       />
+      <DrawerItem
+        label="Event"
+        onPress={() => { navigation.navigate("EventScreen"); navigation.dispatch(DrawerActions.closeDrawer()) }}
+      />
     </DrawerContentScrollView>
 
        
