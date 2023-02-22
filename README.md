@@ -2,7 +2,7 @@
 
 ## Beschreibung
 
-Find Your Activity ist eine App zur Erstellung von Events und Aktivitäten, wo Interessen Menschen zusammenbringen; das Suchen, Finden und Erstellen von Aktiviäten ermöglicht das Zusammenkommen von Personen jeden Alters.
+Find Your Activity ist eine App zur Erstellung von Events und Aktivitäten, wo Interessen Menschen zusammenbringen; das Suchen, Finden und Erstellen von Aktivitäten ermöglicht das Zusammenkommen von Personen jeden Alters.
 
 ## Voraussetzungen
 
