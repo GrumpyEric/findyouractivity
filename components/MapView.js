@@ -311,7 +311,10 @@ const MapViewGoogle = (props) => {
         )
       }
     </MapView>
+    
+    {editMarkerMode._currentValue === false ?
     <Footer style={styles.footerBar}></Footer>
+    : null}
   </View>
   )
 }
