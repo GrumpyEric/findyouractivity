@@ -9,9 +9,11 @@ import { applyFilters, db_markers } from '../constants/MainFunctions';
 import ButtonRegularWithBorder from '../components/ButtonRegular';
 
 import Colors from '../constants/Colors'
+import { stylesGlobal } from '../constants/StylesGlobal';
 
 import DropDownPicker from 'react-native-dropdown-picker';
 import { arrayIsEmpty } from '../constants/HelperFunctionsAndVariables';
+import ButtonSmall from '../components/ButtonSmall';
 
 
 const FilterScreen = ( {navigation} ) => {
@@ -101,9 +103,9 @@ const FilterScreen = ( {navigation} ) => {
   
  
 return(
-  <View>
-    <View style={{width: '100%'}}>
-      <Text>Radius der anzuzeigenden Marker</Text>
+  <View style={hampter.screenContainer}>
+    <View style={{width: '100%', marginBottom: 40}}>
+      <Text style={hampter.standardText}>Radius</Text>
       <Text>{radiusMarkersVisual === 'alle' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>
       <Slider
         minimumValue={0}
@@ -112,6 +114,8 @@ return(
         step={1}
         value={radiusMarkers}
         onValueChange={(value) => value < 21 ? setRadiusMarkersVisual(value) : setRadiusMarkersVisual('alle')}
+        minimumTrackTintColor={Colors.findmyactivityYellow}
+        thumbTintColor={Colors.findmyactivityGreen}
       />
     </View>
     
@@ -128,21 +132,30 @@ return(
     />
 
     <View style={hampter.button}>
-    <ButtonRegularWithBorder
-      text={'APPLY FILTERS'}
-      onPress={() => saveFilters()}
-      backgroundColor={Colors.findmyactivityYellow}
-    />
-    <ButtonRegularWithBorder
-      text={'CLEAR FILTERS'}
-      onPress={() => clearFilters()}
-      backgroundColor={'red'}
-    />
-    <ButtonRegularWithBorder
-      text={'CLOSE'}
-      onPress={() => { navigation.pop(); }}
-      backgroundColor={'hotpink'}
-    /> 
+      <View style={{flexDirection:'row'}}>
+        <View>
+          <ButtonSmall
+            text={'Anwenden'}
+            onPress={() => saveFilters()}
+            backgroundColor={Colors.findmyactivityBlue}
+            color={Colors.findmyactivityWhite}
+          />
+        </View>
+        <View>
+          <ButtonSmall
+            text={'Zurücksetzen'}
+            onPress={() => clearFilters()}
+            backgroundColor={Colors.findmyactivityYellow}
+          />
+        </View>
+      </View>
+      <View style={{marginTop: 40}}>
+        <ButtonSmall
+          text={'Schließen'}
+          onPress={() => { navigation.pop(); }}
+          backgroundColor={Colors.findmyactivityBackground}
+        /> 
+      </View>
     </View>
   </View>
 )
@@ -152,6 +165,19 @@ return(
 export default FilterScreen
 
 const hampter = StyleSheet.create({
+  screenContainer: {
+    flex: stylesGlobal.screenContainer.flex,
+    paddingHorizontal: stylesGlobal.screenContainer.paddingHorizontal,
+    paddingVertical: stylesGlobal.screenContainer.paddingVertical,
+    backgroundColor: stylesGlobal.screenContainer.backgroundColor,
+    alignItems: 'center'
+  },
+
+  standardText: {
+    fontWeight: 'bold',
+    fontSize: stylesGlobal.standardText.fontSize
+  },
+
   button: {
     alignItems: 'center',
     marginTop: 40,

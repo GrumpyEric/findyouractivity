@@ -15,6 +15,7 @@ import 'intl/locale-data/jsonp/de'
 import { format } from 'date-fns'
 import { useNavigation } from "@react-navigation/native";
 import ButtonRegular from "./ButtonRegular";
+import Footer from '../components/Footer'
 
 import PropTypes from 'prop-types'
 import Colors from "../constants/Colors";
@@ -134,7 +135,7 @@ const MapViewGoogle = (props) => {
     <View style={{...StyleSheet.absoluteFillObject}}>
       <FloatingActionButton
         onPress={() => getCurrentPosition()}
-        bottomPos={height * 0.15}
+        bottomPos={height * 0.25}
         rightPos={width * 0.025}
         icon={'location-arrow'}
       />
@@ -142,7 +143,7 @@ const MapViewGoogle = (props) => {
       {editMarkerMode._currentValue === false ?
       <FloatingActionButton
         onPress={() => navigation.navigate("FilterScreen")}
-        bottomPos={height * 0.25}
+        bottomPos={height * 0.35}
         rightPos={width * 0.025}
         icon={'filter'}
       />
@@ -310,6 +311,10 @@ const MapViewGoogle = (props) => {
         )
       }
     </MapView>
+    
+    {editMarkerMode._currentValue === false ?
+    <Footer style={styles.footerBar}></Footer>
+    : null}
   </View>
   )
 }
@@ -317,3 +322,13 @@ const MapViewGoogle = (props) => {
 MapViewGoogle.propTypes = { initialRegion: PropTypes.object, style: PropTypes.any, onMapLoaded: PropTypes.func, mapRef: PropTypes.any.isRequired }
 
 export default MapViewGoogle
+
+const styles = StyleSheet.create({
+ 
+  footerBar: {
+    height: 56,
+    width: '100%',
+    position: 'absolute',
+    bottom: 0
+  }
+});

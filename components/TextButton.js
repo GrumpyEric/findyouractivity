@@ -11,7 +11,7 @@ const TextButton = (props) => {
       onPress={props.onPress}
       style={styles.button}
     >
-      <Text style={[stylesGlobal.standardText, {color: Colors.findmyactivityText}]}>{props.text}</Text>
+      <Text style={[stylesGlobal.buttonTextBlack, {color: Colors.findmyactivityText}]}>{props.text}</Text>
     </TouchableOpacity>
   )
 }
@@ -22,6 +22,7 @@ export default TextButton
 
 const styles = StyleSheet.create ({
   button: {
-    marginTop: 10,
+    marginTop: 5,
+    marginBottom: 20,
   },
 })

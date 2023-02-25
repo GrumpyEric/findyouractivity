@@ -18,6 +18,7 @@ import EditMarkerLocationScreen from './screens/EditMarkerLocationScreen';
 import ViewMarkerScreen from './screens/modals/ViewMarkerScreen';
 import ViewAuthorScreen from './screens/modals/ViewAuthorScreen';
 import ViewParticipantScreen from './screens/modals/ViewParticipantScreen';
+import EventScreen from './screens/EventScreen';
 
 const Stack = createStackNavigator();
 const DrawerBurgerMenu = createDrawerNavigator();
@@ -61,6 +62,7 @@ export default function App() {
           <Stack.Screen name="Home" component={BurgerMenuScreen} />
           <Stack.Screen name="ForgotPW" component={ForgotPasswordScreen} />
           <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+          <Stack.Screen name="EventScreen" component={EventScreen} />
         </Stack.Group>
 
         <Stack.Group screenOptions={ () => ({

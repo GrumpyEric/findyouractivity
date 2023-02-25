@@ -11,7 +11,7 @@ const ButtonSmall = (props) => {
       onPress={props.onPress}
       style={[styles.button, {backgroundColor: props.backgroundColor}]}
     >
-      <Text style={stylesGlobal.standardText}>{props.text}</Text>
+      <Text style={stylesGlobal.buttonTextBlack}>{props.text}</Text>
     </TouchableOpacity>
   )
 }
@@ -28,6 +28,6 @@ const styles = StyleSheet.create({
     marginRight: 5,
     borderRadius: 10,
     alignItems: 'center',
-    marginTop: 40,
+    //marginTop: 40,
   },
 })
