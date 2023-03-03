@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 import { auth } from '../firebase/firebase-config'
 
@@ -29,6 +29,16 @@ const LoginScreen = () => {
 
   return (
     <View style={stylesGlobal.screenContainer}>
+
+      <Text 
+        style={[stylesGlobal.ueberschriftText, {marginBottom: 20}]}
+        accessibilityLabel={'Anmeldung'}
+        accessibilityHint={"Das ist der Anmeldebildschirm. Hier bitte anmelden, um fortzufahren."}
+        accessibilityRole={'header'}
+      >
+        Anmeldung
+      </Text>
+
       <View style={styles.inputContainer}>
         <TextInputField
           placeholder={"E-Mail"}
@@ -37,6 +47,9 @@ const LoginScreen = () => {
           keyboardType={'email-address'}
           backgroundColor={Colors.findmyactivityWhite}
           borderColor={Colors.findmyactivityBackground}
+
+          accessibilityLabel={'Hier Text eingeben'}
+          accessibilityHint={"Es wird eine E-Mail-Adresse gefordert; die Tastatur hat sich geöffnet, bitte E-Mail-Adresse eingeben"}
         />
         <TextInputField
           placeholder={"Password"}
@@ -46,6 +59,9 @@ const LoginScreen = () => {
           keyboardType={'default'}
           backgroundColor={Colors.findmyactivityWhite}
           borderColor={Colors.findmyactivityBackground}
+
+          accessibilityLabel={'Hier Text eingeben'}
+          accessibilityHint={"Es wird ein Passwort gefordert; die Tastatur hat sich geöffnet, bitte E-Mail-Adresse eingeben"}
         />
       </View>
 

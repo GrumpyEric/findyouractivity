@@ -25,7 +25,7 @@ const TextInputField = (props) => {
         /> 
       </View>
       : null}
-      <TextInput 
+      <TextInput
         placeholder={props.placeholder}
         value={props.value}
         onChangeText={props.onChangeText}
@@ -36,6 +36,25 @@ const TextInputField = (props) => {
         multiline={props.multiline}
         onBlur={props.onBlur}
         onChange={props.onChange}
+        
+        accessible={true}
+        accessibilityLabel={props.accessibilityLabel}
+        accessibilityHint={props.accessibilityHint}
+        // accessibilityRole={}
+        accessibilityState={{
+          disabled: props.isAccessibilityStateDisabled,
+          selected: props.isAccessibilityStateSelected,
+          checked: props.isAccessibilityStateChecked,
+          busy: props.isAccessibilityStateBusy,
+          expanded: props.isAccessibilityStateExpanded
+        }}
+        accessibilityValue={{
+          min: props.isAccessibilityValueMin,
+          max: props.isAccessibilityValueMax,
+          now: props.isAccessibilityValueNow,
+          text: props.isAccessibilityValueText
+        }}
+        
       />
       {hasMaxLength && showCharCounter ?
       <Text style={[{alignSelf: 'center', paddingLeft: '5%'}]}>{props.value === undefined ? 0 : props.value.length}/{maxTextChars}</Text>
@@ -46,7 +65,19 @@ const TextInputField = (props) => {
 
 TextInputField.propTypes = { placeholder: PropTypes.string, value: PropTypes.string.isRequired, onChangeText: PropTypes.func.isRequired, secureTextEntry: PropTypes.bool, 
   keyboardType: PropTypes.string, maxLength: PropTypes.number, backgroundColor: PropTypes.string, borderColor: PropTypes.string, multiline: PropTypes.bool, 
-  onBlur: PropTypes.func, onChange: PropTypes.func
+  onBlur: PropTypes.func, onChange: PropTypes.func,
+
+  accessibilityLabel: PropTypes.string, accessibilityHint: PropTypes.string, accessibilityRole: PropTypes.any, 
+  isAccessibilityStateDisabled: PropTypes.bool,
+  isAccessibilityStateSelected: PropTypes.bool,
+  isAccessibilityStateChecked: PropTypes.bool,
+  isAccessibilityStateBusy: PropTypes.bool,
+  isAccessibilityStateExpanded: PropTypes.bool,
+
+  isAccessibilityValueMin: PropTypes.number,
+  isAccessibilityValueMax: PropTypes.number,
+  isAccessibilityValueNow: PropTypes.number,
+  isAccessibilityValueText: PropTypes.string
 }
 
 export default TextInputField
