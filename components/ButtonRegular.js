@@ -10,13 +10,45 @@ const ButtonRegular = (props) => {
     <TouchableOpacity
       onPress={props.onPress}
       style={[styles.button, {backgroundColor: props.backgroundColor}, {marginBottom: props.marginBottom}]}
+
+      accessible={true}
+      accessibilityLabel={props.accessibilityLabel}
+      accessibilityHint={props.accessibilityHint}
+      accessibilityRole={"button"}
+      accessibilityState={{
+        disabled: props.isAccessibilityStateDisabled,
+        selected: props.isAccessibilityStateSelected,
+        checked: props.isAccessibilityStateChecked,
+        busy: props.isAccessibilityStateBusy,
+        expanded: props.isAccessibilityStateExpanded
+      }}
+      accessibilityValue={{
+        min: props.isAccessibilityValueMin,
+        max: props.isAccessibilityValueMax,
+        now: props.isAccessibilityValueNow,
+        text: props.isAccessibilityValueText
+      }}
     >
       <Text style={stylesGlobal.standardText}>{props.text}</Text>
     </TouchableOpacity>
   )
 }
 
-ButtonRegular.propTypes = { onPress: PropTypes.func.isRequired, text: PropTypes.string.isRequired, backgroundColor: PropTypes.string.isRequired, marginBottom: PropTypes.any }
+ButtonRegular.propTypes = { onPress: PropTypes.func.isRequired, text: PropTypes.string.isRequired, backgroundColor: PropTypes.string.isRequired, 
+  marginBottom: PropTypes.any,
+
+  accessibilityLabel: PropTypes.string, accessibilityHint: PropTypes.string,
+  isAccessibilityStateDisabled: PropTypes.bool,
+  isAccessibilityStateSelected: PropTypes.bool,
+  isAccessibilityStateChecked: PropTypes.bool,
+  isAccessibilityStateBusy: PropTypes.bool,
+  isAccessibilityStateExpanded: PropTypes.bool,
+
+  isAccessibilityValueMin: PropTypes.number,
+  isAccessibilityValueMax: PropTypes.number,
+  isAccessibilityValueNow: PropTypes.number,
+  isAccessibilityValueText: PropTypes.string
+}
 
 export default ButtonRegular
 

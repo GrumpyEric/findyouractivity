@@ -52,7 +52,7 @@ const LoginScreen = () => {
           accessibilityHint={"Es wird eine E-Mail-Adresse gefordert; die Tastatur hat sich geöffnet, bitte E-Mail-Adresse eingeben"}
         />
         <TextInputField
-          placeholder={"Password"}
+          placeholder={"Passwort"}
           value={password}
           onChangeText={text => setPassword(text)}
           secureTextEntry={true}
@@ -68,21 +68,30 @@ const LoginScreen = () => {
       <View style={styles.buttonContainer}>
         <ButtonRegular
           onPress={() => handleLogin(auth, email, password, navigation)}
-          text={"Login"}
+          text={"Anmelden"}
           backgroundColor={Colors.findmyactivityYellow}
           marginBottom={10}
+
+          accessibilityLabel={"Hier drücken"}
+          accessibilityHint={"Zur Anmeldung mit allen ausgefüllten Textfeldern oben diesen Knopf drücken"}
         />
         <ButtonRegularWithBorder
           onPress={() => handleSignUp(auth, email, password)}
-          text={"Register"}
+          text={"Registrieren"}
           backgroundColor={'white'}
           borderColor={Colors.findmyactivityYellow}
           textColor={Colors.findmyactivityText}
+
+          accessibilityLabel={"Hier drücken"}
+          accessibilityHint={"Zur Registrierung mit allen ausgefüllten Textfeldern oben diesen Knopf drücken"}
         />
         <TextButton
           onPress={handleForgotPassword}
-          text={"Forgot password?"}
+          text={"Passwort vergessen"}
           textColor={Colors.findmyactivityBlue}
+
+          accessibilityLabel={"Hier drücken"}
+          accessibilityHint={"Wenn Sie Ihr Passwort vergessen haben, dann hier drücken, um zum Bildschirm für das Zurücksetzen des Passwortes zu kommen"}
         />
       </View>
     </View>

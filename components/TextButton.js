@@ -10,13 +10,44 @@ const TextButton = (props) => {
     <TouchableOpacity
       onPress={props.onPress}
       style={styles.button}
+
+      accessible={true}
+      accessibilityLabel={props.accessibilityLabel}
+      accessibilityHint={props.accessibilityHint}
+      accessibilityRole={"button"}
+      accessibilityState={{
+        disabled: props.isAccessibilityStateDisabled,
+        selected: props.isAccessibilityStateSelected,
+        checked: props.isAccessibilityStateChecked,
+        busy: props.isAccessibilityStateBusy,
+        expanded: props.isAccessibilityStateExpanded
+      }}
+      accessibilityValue={{
+        min: props.isAccessibilityValueMin,
+        max: props.isAccessibilityValueMax,
+        now: props.isAccessibilityValueNow,
+        text: props.isAccessibilityValueText
+      }}
     >
       <Text style={[stylesGlobal.buttonTextBlack, {color: Colors.findmyactivityText}]}>{props.text}</Text>
     </TouchableOpacity>
   )
 }
 
-TextButton.propTypes = { onPress: PropTypes.func.isRequired, text: PropTypes.string.isRequired}
+TextButton.propTypes = { onPress: PropTypes.func.isRequired, text: PropTypes.string.isRequired,
+  
+  accessibilityLabel: PropTypes.string, accessibilityHint: PropTypes.string, 
+  isAccessibilityStateDisabled: PropTypes.bool,
+  isAccessibilityStateSelected: PropTypes.bool,
+  isAccessibilityStateChecked: PropTypes.bool,
+  isAccessibilityStateBusy: PropTypes.bool,
+  isAccessibilityStateExpanded: PropTypes.bool,
+
+  isAccessibilityValueMin: PropTypes.number,
+  isAccessibilityValueMax: PropTypes.number,
+  isAccessibilityValueNow: PropTypes.number,
+  isAccessibilityValueText: PropTypes.string
+}
 
 export default TextButton
 
