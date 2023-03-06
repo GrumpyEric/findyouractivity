@@ -33,12 +33,12 @@ const LoginScreen = () => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     <View style={stylesGlobal.screenContainer}>
       <Text 
-        style={[stylesGlobal.ueberschriftText, {marginBottom: 20}]}
-        accessibilityLabel={'Anmeldung'}
+        style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenViews, textAlign: 'center'}]}
+        accessibilityLabel={'Anmeldung Find your Activity'}
         accessibilityHint={"Das ist der Anmeldebildschirm. Hier bitte anmelden, um fortzufahren."}
         accessibilityRole={'header'}
       >
-        Anmeldung
+        {'Anmeldung \n Find your Activity'}
       </Text>
 
       <View style={styles.inputContainer}>
@@ -49,7 +49,6 @@ const LoginScreen = () => {
           keyboardType={'email-address'}
           backgroundColor={Colors.findmyactivityWhite}
           borderColor={Colors.findmyactivityBackground}
-
           accessibilityLabel={'Hier Text eingeben'}
           accessibilityHint={"Es wird eine E-Mail-Adresse gefordert; die Tastatur hat sich geöffnet, bitte E-Mail-Adresse eingeben"}
         />
@@ -107,18 +106,18 @@ export default LoginScreen
 
 const styles = StyleSheet.create({
   inputContainer: {
-    width: '100%'
+    width: '100%',
+    marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenViews,
   },
 
   buttonContainer: {
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 40,
   },
 
   buttonsStyle: {
-    marginBottom: 10
+    marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems,
   }
 
 })

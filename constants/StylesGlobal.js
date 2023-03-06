@@ -37,6 +37,11 @@ const stylesGlobal = StyleSheet.create({
     color: Colors.findmyactivityWhite
   },
 
+  marginsAndPadding: {
+    paddingBetweenItems: 10,
+    paddingBetweenViews: 20
+  },
+
   //----- Screenviews -----//
   screenContainer: {
     flex: 1,
