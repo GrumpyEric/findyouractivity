@@ -29,7 +29,7 @@ const ButtonRegularWithBorder = (props) => {
         text: props.isAccessibilityValueText
       }}
     >
-      <Text style={[stylesGlobal.standardText, {color: Colors.findmyactivityText}]}>{props.text}</Text>
+      <Text style={[stylesGlobal.buttonTextBlack, {color: Colors.findmyactivityText}]}>{props.text}</Text>
     </TouchableOpacity>
   )
 }

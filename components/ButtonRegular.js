@@ -9,7 +9,7 @@ const ButtonRegular = (props) => {
   return (
     <TouchableOpacity
       onPress={props.onPress}
-      style={[styles.button, {backgroundColor: props.backgroundColor}, {marginBottom: props.marginBottom}]}
+      style={[styles.button, {backgroundColor: props.backgroundColor}]}
 
       accessible={true}
       accessibilityLabel={props.accessibilityLabel}
@@ -29,13 +29,12 @@ const ButtonRegular = (props) => {
         text: props.isAccessibilityValueText
       }}
     >
-      <Text style={stylesGlobal.standardText}>{props.text}</Text>
+      <Text style={stylesGlobal.buttonTextBlack}>{props.text}</Text>
     </TouchableOpacity>
   )
 }
 
 ButtonRegular.propTypes = { onPress: PropTypes.func.isRequired, text: PropTypes.string.isRequired, backgroundColor: PropTypes.string.isRequired, 
-  marginBottom: PropTypes.any,
 
   accessibilityLabel: PropTypes.string, accessibilityHint: PropTypes.string,
   isAccessibilityStateDisabled: PropTypes.bool,

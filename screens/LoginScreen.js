@@ -11,6 +11,8 @@ import ButtonRegularWithBorder from '../components/ButtonRegularWithBorder'
 import TextButton from '../components/TextButton'
 import { handleSignUp, handleLogin } from '../constants/MainFunctions'
 import Colors from '../constants/Colors'
+import { TouchableWithoutFeedback } from 'react-native'
+import { Keyboard } from 'react-native'
 
 auth.languageCode = auth.useDeviceLanguage();
 
@@ -28,8 +30,8 @@ const LoginScreen = () => {
   }
 
   return (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     <View style={stylesGlobal.screenContainer}>
-
       <Text 
         style={[stylesGlobal.ueberschriftText, {marginBottom: 20}]}
         accessibilityLabel={'Anmeldung'}
@@ -66,35 +68,38 @@ const LoginScreen = () => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <ButtonRegular
-          onPress={() => handleLogin(auth, email, password, navigation)}
-          text={"Anmelden"}
-          backgroundColor={Colors.findmyactivityYellow}
-          marginBottom={10}
 
-          accessibilityLabel={"Hier drücken"}
-          accessibilityHint={"Zur Anmeldung mit allen ausgefüllten Textfeldern oben diesen Knopf drücken"}
-        />
+        <View style={styles.buttonsStyle}>
+          <ButtonRegular
+            onPress={() => handleLogin(auth, email, password, navigation)}
+            text={"Anmelden"}
+            backgroundColor={Colors.findmyactivityYellow}
+            accessibilityLabel={"Hier drücken"}
+            accessibilityHint={"Zur Anmeldung mit allen ausgefüllten Textfeldern oben diesen Knopf drücken"}
+          />
+        </View>
+
         <ButtonRegularWithBorder
           onPress={() => handleSignUp(auth, email, password)}
           text={"Registrieren"}
           backgroundColor={'white'}
           borderColor={Colors.findmyactivityYellow}
           textColor={Colors.findmyactivityText}
-
           accessibilityLabel={"Hier drücken"}
           accessibilityHint={"Zur Registrierung mit allen ausgefüllten Textfeldern oben diesen Knopf drücken"}
         />
+
         <TextButton
           onPress={handleForgotPassword}
           text={"Passwort vergessen"}
           textColor={Colors.findmyactivityBlue}
-
           accessibilityLabel={"Hier drücken"}
           accessibilityHint={"Wenn Sie Ihr Passwort vergessen haben, dann hier drücken, um zum Bildschirm für das Zurücksetzen des Passwortes zu kommen"}
         />
       </View>
+      
     </View>
+    </TouchableWithoutFeedback>
   )
 }
 
@@ -111,5 +116,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 40,
   },
+
+  buttonsStyle: {
+    marginBottom: 10
+  }
 
 })
