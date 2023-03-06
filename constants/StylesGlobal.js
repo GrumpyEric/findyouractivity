@@ -61,6 +61,10 @@ const stylesGlobal = StyleSheet.create({
     marginTop: 40,
   },
 
+  backButtonAbsolutePos: {
+    
+  }
+
 
 })
 

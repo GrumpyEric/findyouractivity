@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native'
 
 import { auth } from '../firebase/firebase-config'
 
-import { stylesGlobal } from '../constants/StylesGlobal'
+import { height, stylesGlobal, width } from '../constants/StylesGlobal'
 import TextInputField from '../components/TextInputField'
 import ButtonSmall from '../components/ButtonSmall'
 
@@ -23,10 +23,15 @@ const ForgotPasswordScreen = () => {
 
   return (
     <View style={stylesGlobal.screenContainer}>
-      <ButtonBack
-        onPress={() => handleGoBack()}
-        text={'Zurück'}
-      />
+      
+      <View style={{position: 'absolute', bottom: height * 0.075, right: width * 0.075}}>
+        <ButtonBack
+          onPress={() => handleGoBack()}
+          text={'Zurück'}
+        />
+      </View>
+
+      
       <Text 
         style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenViews, textAlign: 'center'}]}
         accessibilityLabel={'Passwort zurücksetzen für Find your Activity'}

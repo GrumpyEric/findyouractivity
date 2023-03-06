@@ -2,7 +2,7 @@ import React from "react";
 import { Text } from "react-native";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Octicons";
-import { Colors } from "../constants/Colors";
+import Colors from "../constants/Colors";
 import { stylesGlobal } from "../constants/StylesGlobal";
 
 import PropTypes from 'prop-types'
