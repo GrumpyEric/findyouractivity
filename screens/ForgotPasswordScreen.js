@@ -38,7 +38,7 @@ const ForgotPasswordScreen = () => {
         accessibilityHint={"Das ist der Anmeldebildschirm. Hier bitte anmelden, um fortzufahren."}
         accessibilityRole={'header'}
       >
-        {'Passwort zurücksetzen'}
+        Passwort zurücksetzen
       </Text>
 
       <View style={[styles.itemStyle, {alignItems: 'center'}]}>
