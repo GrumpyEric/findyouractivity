@@ -13,7 +13,6 @@ import React, { Component, useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   View,
-  StatusBar,
   Text,
   Switch,
   ScrollView,
@@ -105,11 +104,6 @@ const EventScreen = ( {navigation} ) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar
-        animated
-        barStyle="light-content"
-        backgroundColor="rgba(35,112,118,1)"
-      />
       <View style={styles.headerColumn}>
         <EventHeader style={styles.header}></EventHeader>
         <View style={styles.alleMarkerAnzeigenRowRow}>

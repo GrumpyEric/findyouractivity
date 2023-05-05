@@ -5,7 +5,6 @@ import React, { Component, useRef, useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
-  StatusBar,
   Text,
   TextInput,
   ScrollView,
@@ -23,12 +22,6 @@ const Profile = ( {navigation} ) => {
     let eventArray = markersRef.filter(function (arr) {
         return arr.user === selectedUserContext._current_value.markers.uid
       })
-    
-      useEffect(() => {
-        //readUserFromDB(selectedUserContext._current_value.markers.uid)
-        //console.log("HAMPER: ", eventArray[0])
-    
-      }, []);
     
       // Zustand der Edit-Buttons
       const [editingUsername, setEditingUsername] = useState(false)
@@ -85,13 +78,9 @@ const Profile = ( {navigation} ) => {
         </TouchableOpacity>
       </TouchableOpacity>
     </View>
-      <StatusBar
-        animated
-        barStyle="light-content"
-        backgroundColor="rgba(35,112,118,1)"
-      />
+
       <View style={styles.buttonBackRowColumn}>
-        <Icon name="add-user" style={styles.icon}></Icon>
+        {/* <Icon name="add-user" style={styles.icon}></Icon> */}
         <Text style={styles.benutzernameLabel}>Benutzername</Text>
         <TextInput
           placeholder="Benutzername"
