@@ -75,6 +75,7 @@ const LoginScreen = () => {
             backgroundColor={Colors.findmyactivityYellow}
             accessibilityLabel={"Hier drücken"}
             accessibilityHint={"Zur Anmeldung mit allen ausgefüllten Textfeldern oben diesen Knopf drücken"}
+            icon={'login'}
           />
         </View>
 
@@ -86,6 +87,7 @@ const LoginScreen = () => {
           textColor={Colors.findmyactivityText}
           accessibilityLabel={"Hier drücken"}
           accessibilityHint={"Zur Registrierung mit allen ausgefüllten Textfeldern oben diesen Knopf drücken"}
+          icon={'person-add'}
         />
 
         <TextButton

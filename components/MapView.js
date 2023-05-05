@@ -138,6 +138,7 @@ const MapViewGoogle = (props) => {
         bottomPos={height * 0.25}
         rightPos={width * 0.025}
         icon={'location-arrow'}
+        text={'Position'}
       />
 
       {editMarkerMode._currentValue === false ?
@@ -146,6 +147,7 @@ const MapViewGoogle = (props) => {
         bottomPos={height * 0.35}
         rightPos={width * 0.025}
         icon={'filter'}
+        text={'Filter'}
       />
       : null}
 
@@ -207,25 +209,19 @@ const MapViewGoogle = (props) => {
       : null}
       
       <MapView
-        // key={refreshContext._currentValue}
         provider={PROVIDER_GOOGLE}
         region={region}
-        // onRegionChange={(region) => { setRegion(region); } }
         onRegionChangeComplete={(region) => { setRegion(region); } }
         ref={props.mapRef}
         style={props.style}
         initialRegion={props.initialRegion}
         showsUserLocation={true}
         showsMyLocationButton={false}
-        // customMapStyle={}
         onMapLoaded={props.onMapLoaded}
         toolbarEnabled={editMarkerMode._currentValue === true ? false : true}
         zoomControlEnabled={true}
         onLongPress = {(e) => updateUserMarker(e.nativeEvent.coordinate)}
-        onPanDrag={() => setMarkerButtonVisible(false)}
-        // onTouchCancel={() => (region) => { setRegion(region); } }
-        // onMarkerPress={() => setMarkerButtonVisible(true)}
-        //onRegionChangeComplete runs when the user stops dragging MapView        
+        onPanDrag={() => setMarkerButtonVisible(false)}      
       >
       {/* DB Markers */}
       {
@@ -326,7 +322,7 @@ export default MapViewGoogle
 const styles = StyleSheet.create({
  
   footerBar: {
-    height: 56,
+    height: '6.25%',
     width: '100%',
     position: 'absolute',
     bottom: 0

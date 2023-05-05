@@ -1,11 +1,13 @@
 import { TouchableOpacity, Text, StyleSheet } from "react-native"
 import Colors from "../constants/Colors"
 import { stylesGlobal } from "../constants/StylesGlobal"
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import PropTypes from 'prop-types'
 
 // component props: onPress, text, backgroundColor, borderColor
 const ButtonRegularWithBorder = (props) => {
+
   return (
     <TouchableOpacity
       onPress={props.onPress}
@@ -29,13 +31,20 @@ const ButtonRegularWithBorder = (props) => {
         text: props.isAccessibilityValueText
       }}
     >
+      {props.icon ?
+      <Icon
+        name={props.icon}
+        color={Colors.findmyactivityText}
+        size={20}
+      />
+      : null}
       <Text style={[stylesGlobal.buttonTextBlack, {color: Colors.findmyactivityText}]}>{props.text}</Text>
     </TouchableOpacity>
   )
 }
 
 ButtonRegularWithBorder.propTypes = { onPress: PropTypes.func.isRequired, text: PropTypes.string.isRequired, backgroundColor: PropTypes.string.isRequired, 
-  borderColor: PropTypes.string.isRequired, textColor: PropTypes.string,
+  borderColor: PropTypes.string.isRequired, textColor: PropTypes.string, icon: PropTypes.string,
 
   accessibilityLabel: PropTypes.string, accessibilityHint: PropTypes.string, 
   isAccessibilityStateDisabled: PropTypes.bool,
@@ -61,6 +70,8 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: "space-evenly"
     // marginTop: 40,
   },
 })

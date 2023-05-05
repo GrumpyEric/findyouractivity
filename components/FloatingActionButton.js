@@ -1,5 +1,6 @@
-import { TouchableOpacity, StyleSheet } from "react-native"
+import { TouchableOpacity, StyleSheet, Text } from "react-native"
 import Icon from "react-native-vector-icons/FontAwesome";
+import { stylesGlobal } from '../constants/StylesGlobal'
 
 import PropTypes from 'prop-types'
 
@@ -18,23 +19,28 @@ const FloatingActionButton = (props) => {
         alignItems: 'center',
         alignSelf: 'flex-end',
         justifyContent: 'center',
-        borderRadius: 30,
+        borderRadius: 35,
         zIndex: 5,
-        width: 60,
-        height: 60
+        width: 70,
+        height: 70
       }}
       onPress={props.onPress}
     >
       <Icon 
         name={props.icon}
-        size={35}
+        size={30}
         color='black'
       />
+      {props.text ?
+      <Text style={[stylesGlobal.buttonTextBlack, {fontSize: 14}]}>{props.text}</Text>
+      : null}
     </TouchableOpacity>
   )
 }
 
-FloatingActionButton.propTypes = { onPress: PropTypes.func.isRequired, bottomPos: PropTypes.number.isRequired, rightPos: PropTypes.number.isRequired, icon: PropTypes.string.isRequired }
+FloatingActionButton.propTypes = { onPress: PropTypes.func.isRequired, bottomPos: PropTypes.number.isRequired, 
+  rightPos: PropTypes.number.isRequired, icon: PropTypes.string.isRequired, text: PropTypes.text
+}
 
 export default FloatingActionButton
 

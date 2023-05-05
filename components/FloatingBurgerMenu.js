@@ -1,6 +1,6 @@
 import React from 'react'
 import { TouchableOpacity, StyleSheet, View, Text } from 'react-native'
-import { stylesglobal, width, height } from '../constants/StylesGlobal'
+import { width, height, stylesGlobal } from '../constants/StylesGlobal'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 import PropTypes from 'prop-types'
@@ -16,9 +16,11 @@ class FloatingBurgerMenu extends React.Component {
         >
           <Icon 
             name={this.props.icon}
-            size={35}
+            size={30}
             color='white'
+            style={styles.iconStyle}
           />
+          <Text style={stylesGlobal.buttonTextWhite}>Menü</Text>
         </TouchableOpacity>
       </View>
     )
@@ -37,16 +39,10 @@ const styles = StyleSheet.create({
     zIndex: 5,
     backgroundColor: 'black',
     justifyContent: 'center',
-    borderRadius: 30,
-    width: 60,
-    height: 60
-
-  },
-
-  textStyle: {
-    alignSelf: 'center', 
-    paddingHorizontal: '10%',
-    textAlign: 'center',
+    borderRadius: 35,
+    width: 70,
+    height: 70,
+    alignItems: 'center'
   },
 
   iconStyle: {

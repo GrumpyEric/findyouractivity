@@ -54,10 +54,11 @@ const styles = StyleSheet.create({
   },
 
   map_container: {
-    ...StyleSheet.absoluteFillObject,
-    flex: 1, //the container will fill the whole screen.
-    justifyContent: "flex-end",
-    alignItems: "center",
+    // ...StyleSheet.absoluteFillObject,
+    // flex: 1,
+    height: '93.75%'
+    // justifyContent: "flex-end",
+    // alignItems: "center",
   },
 
 })

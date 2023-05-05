@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.2,
     shadowRadius: 1.2,
-    elevation: 3
+    elevation: 3,
   },
   btnWrapper1: {
     flex: 0.34,

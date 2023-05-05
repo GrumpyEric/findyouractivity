@@ -106,9 +106,10 @@ const EventScreen = ( {navigation} ) => {
     <View style={styles.container}>
       <View style={styles.headerColumn}>
         <EventHeader style={styles.header}></EventHeader>
-        <View style={styles.alleMarkerAnzeigenRowRow}>
-          <View style={styles.alleMarkerAnzeigenRow}>
-            <Text style={{color: showMyMarkers ? '#CAD6E0' : Colors.findmyactivityText}}>Alle Marker</Text>
+        <View style={{alignItems: 'center'}}>
+          <Text style={{color: Colors.findmyactivityText}}>Ansicht umstellen auf:</Text>
+          <View style={{flexDirection: 'row'}}> 
+            <Text style={{color: showMyMarkers ? '#CAD6E0' : Colors.findmyactivityText, alignSelf: 'center'}}>Alle Marker</Text>
             <Switch
               value={showMyMarkers}
               disabled={false}
@@ -118,8 +119,8 @@ const EventScreen = ( {navigation} ) => {
               ios_backgroundColor="#3e3e3e"
               style={styles.switch}
             ></Switch>
+            <Text style={{color: showMyMarkers ? Colors.findmyactivityText : '#CAD6E0', marginLeft: 20, alignSelf: 'center'}}>Meine Marker</Text>
           </View>
-          <Text style={{color: showMyMarkers ? Colors.findmyactivityText : '#CAD6E0', marginLeft: 20}}>Meine Marker</Text>
         </View>
         <View style={styles.sliderStack}>
           <Slider 
@@ -164,12 +165,12 @@ const EventScreen = ( {navigation} ) => {
                     </TouchableOpacity>
                     <TextButton
                       onPress={() => editMarkerHandler(val)}
-                      text={'bearbeiten'}
+                      text={'Marker bearbeiten'}
                       textColor={Colors.findmyactivityBlue}
                     />
                     <TextButton
                       onPress={() => deleteMarkerHandler(val)}
-                      text={'löschen'}
+                      text={'Marker löschen'}
                       textColor={Colors.findmyactivityBlue}
                     />
                     {/* <Text> Distanz: {distanceToUserPos} km</Text> */}
@@ -199,12 +200,12 @@ const EventScreen = ( {navigation} ) => {
                     <View>
                     <TextButton
                       onPress={() => editMarkerHandler(val)}
-                      text={'bearbeiten'}
+                      text={'Marker bearbeiten'}
                       textColor={Colors.findmyactivityBlue}
                     />
                     <TextButton
                       onPress={() => deleteMarkerHandler(val)}
-                      text={'löschen'}
+                      text={'Marker löschen'}
                       textColor={Colors.findmyactivityBlue}
                     />
                     </View>

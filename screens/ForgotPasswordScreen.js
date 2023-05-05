@@ -6,11 +6,11 @@ import { auth } from '../firebase/firebase-config'
 
 import { height, stylesGlobal, width } from '../constants/StylesGlobal'
 import TextInputField from '../components/TextInputField'
-import ButtonSmall from '../components/ButtonSmall'
 
 import { handleForgotPassword } from '../constants/MainFunctions'
 import Colors from '../constants/Colors'
 import ButtonBack from '../components/ButtonBack'
+import ButtonRegular from '../components/ButtonRegular'
 
 const ForgotPasswordScreen = () => {
   const [email, setEmail] = useState('')
@@ -57,9 +57,10 @@ const ForgotPasswordScreen = () => {
       <View style={styles.buttonContainer}>
         
         <View style={styles.itemStyle}>
-          <ButtonSmall
+          <ButtonRegular
             onPress={() => handleForgotPassword(auth, email)}
             text={"Zurücksetzen"}
+            icon={'refresh'}
             backgroundColor={Colors.findmyactivityYellow}
             accessibilityLabel={"Hier drücken"}
             accessibilityHint={"Zum Zurücksetzen des Passwortes bei oben eingegebener E-Mail-Adresse hier drücken, um eine Anfrage loszuschicken."
