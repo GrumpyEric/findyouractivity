@@ -61,11 +61,6 @@ const stylesGlobal = StyleSheet.create({
     marginTop: 40,
   },
 
-  backButtonAbsolutePos: {
-    
-  }
-
-
 })
 
 export { stylesGlobal, width, height, isAndroid, isIOS, isTablet }

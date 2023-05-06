@@ -18,6 +18,7 @@ import ViewMarkerScreen from './screens/modals/ViewMarkerScreen';
 import ViewAuthorScreen from './screens/modals/ViewAuthorScreen';
 import ViewParticipantScreen from './screens/modals/ViewParticipantScreen';
 import EventScreen from './screens/EventScreen';
+import Colors from './constants/Colors';
 
 const Stack = createStackNavigator();
 const DrawerBurgerMenu = createDrawerNavigator();
@@ -47,11 +48,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <StatusBar
-        animated={true}
-        translucent={true}
-        backgroundColor='transparent'
-        barStyle={'dark-content'}
-        // hidden={hidden} 
+        backgroundColor={Colors.findmyactivityGreen}
+        // barStyle={'dark-content'}
       />
       <Stack.Navigator screenOptions={{
         headerShown: false

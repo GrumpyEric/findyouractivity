@@ -21,12 +21,6 @@ import FooterEvents from "../components/FooterEvents";
 
 const EventScreen = ( {navigation} ) => {
 
-    const [value, setValue] = useState()
-
-    useEffect(() => {
-        console.log(value);
-    }, [value])
-
     const moveToMarker = (inputMarker) => {
         mapRef.current.animateToRegion({
         latitude: inputMarker.latitude,
@@ -103,7 +97,7 @@ const EventScreen = ( {navigation} ) => {
   return (
     <View style={styles.container}>
       <View style={styles.headerColumn}>
-        <EventHeader style={styles.header}></EventHeader>
+        <EventHeader/>
         <View style={{alignItems: 'center'}}>
           <Text style={{color: Colors.findmyactivityText}}>Ansicht umstellen auf:</Text>
           <View style={{flexDirection: 'row'}}> 
@@ -231,9 +225,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "rgba(223,242,242,1)"
-  },
-  header: {
-    height: 40
   },
   alleMarkerAnzeigen: {
     color: "#121212"

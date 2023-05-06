@@ -1,10 +1,7 @@
-import React, { Component, useState } from "react";
+import React from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
-import { updateUserFromDB, readUserFromDB, getEventsFromUser, markersRef } from '../constants/MainFunctions';
-import { selectedUserContext, loggedInUser, userPosContext } from '../components/AppContext';
-
 const EventHeader = (props) => {
   const navigation = useNavigation()
 
@@ -41,35 +38,35 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "rgba(223,242,242,1)",
     paddingRight: 8,
-    paddingLeft: 8
+    paddingLeft: 8,
   },
   leftWrapper: {
     flex: 1,
     alignItems: "flex-start",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   leftIconButton: {
-    flexDirection: "row"
+    flexDirection: "row",
   },
   leftIcon: {
     color: "rgba(35,112,118,1)",
-    fontSize: 30
+    fontSize: 30,
   },
   zuruck: {
     fontSize: 17,
     color: "rgba(35,112,118,1)",
     paddingLeft: 5,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   textWrapper: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   profil: {
     fontSize: 17,
     lineHeight: 17,
-    color: "#000"
+    color: "#000",
   },
   button: {
     flex: 1,

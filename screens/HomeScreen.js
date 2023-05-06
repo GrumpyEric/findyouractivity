@@ -48,11 +48,7 @@ const styles = StyleSheet.create({
   },
 
   map_container: {
-    // ...StyleSheet.absoluteFillObject,
-    // flex: 1,
     height: '93.75%'
-    // justifyContent: "flex-end",
-    // alignItems: "center",
   },
 
 })

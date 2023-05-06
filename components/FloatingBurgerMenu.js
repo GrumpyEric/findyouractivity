@@ -33,7 +33,7 @@ export default FloatingBurgerMenu
 
 const styles = StyleSheet.create({
   buttonStyle: {
-    top: height * 0.05,
+    top: height * 0.025,
     left: width * 0.05,
     position: 'absolute',  
     zIndex: 5,
