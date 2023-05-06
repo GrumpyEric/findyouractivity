@@ -1,15 +1,13 @@
-import { stylesGlobal } from '../constants/StylesGlobal'
-import { auth, db } from "../firebase/firebase-config";
+import { auth } from "../firebase/firebase-config";
 import { deleteMarkerToDB, markersRef } from '../constants/MainFunctions';
 import { editMarkerMode, editMarkerObject, editMarkerValues, mapRef } from '../components/AppContext';
 import { getDistance } from 'geolib';
 import { userPosContext } from '../components/AppContext';
 import Colors from '../constants/Colors';
 import TextButton from '../components/TextButton';
-import { formatISO, formatRFC3339 } from 'date-fns';
 import Slider from '@react-native-community/slider';
 
-import React, { Component, useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,

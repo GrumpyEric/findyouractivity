@@ -1,12 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { StyleSheet, View, Text, Alert, ScrollView, TouchableOpacity } from 'react-native'
-import { stylesGlobal } from '../../constants/StylesGlobal'
+import React from 'react'
+import { StyleSheet, View, Text, Alert, ScrollView } from 'react-native'
 import { auth } from '../../firebase/firebase-config'
-import {  optOutOfEvent,optInToEvent } from '../../constants/MainFunctions'
+import { optOutOfEvent,optInToEvent } from '../../constants/MainFunctions'
 import ButtonSmall from '../../components/ButtonSmall'
 import TextButton from '../../components/TextButton'
 import ButtonBack from '../../components/ButtonBack'
-import Icon from "react-native-vector-icons/Octicons";
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
@@ -24,7 +22,6 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
   const maxParticipantDisplay = route.params.eventMaxParticipants
   const locationDescriptionDisplay = route.params.eventLocationDescription  
   const participantList = route.params.eventParticipantList
-
 
   const onParticipateButton = () =>
   {
@@ -61,8 +58,6 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
       ]);
     }
   }
-
-
 
   return (
     <View style={styles.container}>

@@ -1,7 +1,7 @@
-import { updateUserFromDB, readUserFromDB, getEventsFromUser, markersRef } from '../constants/MainFunctions';
+import { updateUserFromDB, readUserFromDB, markersRef } from '../constants/MainFunctions';
 import { selectedUserContext, loggedInUser, userPosContext } from '../components/AppContext';
 import { getDistance } from 'geolib';
-import React, { Component, useRef, useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -10,12 +10,8 @@ import {
   ScrollView,
   TouchableOpacity
 } from "react-native";
-import ButtonBack from "../components/ButtonBack";
-import Icon from "react-native-vector-icons/Entypo";
 import IconHeader from "react-native-vector-icons/Ionicons";
-import ButtonSave from "../components/ButtonSave";
 import FooterProfile from "../components/FooterProfile";
-import Header from '../components/Header';
 
 const Profile = ( {navigation} ) => {
 

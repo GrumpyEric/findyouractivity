@@ -1,8 +1,5 @@
-import { useEffect, useRef} from "react";
 import { View, StyleSheet, TextInput, Text } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome'
-import { Colors } from "react-native/Libraries/NewAppScreen";
-import { stylesGlobal } from "../constants/StylesGlobal";
 
 import PropTypes from 'prop-types'
 

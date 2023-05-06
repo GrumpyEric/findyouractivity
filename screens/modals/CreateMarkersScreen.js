@@ -7,7 +7,6 @@ import { addMarkerToDB, updateMarkerToDB } from '../../constants/MainFunctions'
 import { editMarkerMode, editMarkerValues, latitudeContext, longitudeContext, tagData } from '../../components/AppContext'
 import Colors from '../../constants/Colors'
 import ButtonSmall from '../../components/ButtonSmall'
-import CloseScreenButton from '../../components/CloseScreenButton'
 import TextButton from '../../components/TextButton'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import DropDownPicker from 'react-native-dropdown-picker';

@@ -63,8 +63,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center', 
     minHeight: '100%'
   }
-
-
 })
 
 export default ViewParticipantScreen

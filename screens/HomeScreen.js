@@ -8,13 +8,7 @@ import MapViewGoogle from '../components/MapView';
 import FloatingBurgerMenu from '../components/FloatingBurgerMenu';
 import { mapRef } from '../components/AppContext';
 
-import { collection, query, onSnapshot, updateDoc, deleteDoc } from "firebase/firestore";
-import { db } from '../firebase/firebase-config';
-
 const HomeScreen = ( {navigation} ) => {
-  const [eventNameInput, onChangeEventInput] = useState("");
-  const [eventDescInput, onChangeDescInput] = useState("");
-
   return (
     <View style={[stylesGlobal.screenContainer]}>
       <FloatingBurgerMenu

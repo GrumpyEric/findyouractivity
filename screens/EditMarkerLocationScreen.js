@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from 'react-native';
-
-import { hawRegion } from '../constants/TestCoords';
-
 import { height, stylesGlobal } from '../constants/StylesGlobal'
 import MapViewGoogle from '../components/MapView';
 import ButtonRegular from '../components/ButtonRegular';
 import Colors from '../constants/Colors';
-import { editMarkerValues, latitudeContext, longitudeContext, mapRef, mapRefEdit } from "../components/AppContext";
-import { useEffect } from "react";
+import { editMarkerValues, mapRefEdit } from "../components/AppContext";
 
 const EditMarkerLocationScreen = ( {navigation} ) => {
   const [eventNameInput, onChangeEventInput] = useState("");

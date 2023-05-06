@@ -6,8 +6,6 @@ import Slider from '@react-native-community/slider';
 
 import { applyFilters, db_markers } from '../constants/MainFunctions';
 
-import ButtonRegularWithBorder from '../components/ButtonRegular';
-
 import Colors from '../constants/Colors'
 import { stylesGlobal } from '../constants/StylesGlobal';
 
@@ -83,7 +81,6 @@ const FilterScreen = ( {navigation} ) => {
       
     }
   }
-
 
   const clearFilters = () => {
     resetRange()
