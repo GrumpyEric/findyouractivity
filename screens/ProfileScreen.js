@@ -12,99 +12,63 @@ import {
 } from "react-native";
 import IconHeader from "react-native-vector-icons/Ionicons";
 import FooterProfile from "../components/FooterProfile";
+import EventHeader from '../components/EventHeader';
+import { stylesGlobal } from '../constants/StylesGlobal';
+import TextInputField from '../components/TextInputField';
 
-const Profile = ( {navigation} ) => {
-
+  const Profile = ( {navigation} ) => {
     let eventArray = markersRef.filter(function (arr) {
         return arr.user === selectedUserContext._current_value.markers.uid
-      })
+    })
     
-      // Zustand der Edit-Buttons
-      const [editingUsername, setEditingUsername] = useState(false)
-      const [editingDescription, setEditingDescription] = useState(false)  
-      const [editingEmail, setEditingEmail] = useState(false)
-    
-      // Labels der Edit-Buttons
-      const [editUsernameLabel, setEditUsernameLabel] = useState("BEARBEITEN")
-      const [editDescriptionLabel, setEditDescriptionLabel] = useState("BEARBEITEN")
-    
-      // Zustand der Text-Ausgaben
-      const [displayUsername, setDisplayUsername] = useState(selectedUserContext._current_value.markers.username)
-      const [displayDescription, setDisplayDescription] = useState(selectedUserContext._current_value.markers.description)
-    
-      const onSaveButton = () => {
-        
-        updateUserFromDB(selectedUserContext._current_value.markers.uid, displayUsername, displayDescription)
-        setEditingUsername(false)
-        setEditingDescription(false)
-    
-        readUserFromDB(selectedUserContext._current_value.markers.uid)
-        navigation.pop();
-      }
+    // Zustand der Text-Ausgaben
+    const [displayUsername, setDisplayUsername] = useState(selectedUserContext._current_value.markers.username)
+    const [displayDescription, setDisplayDescription] = useState(selectedUserContext._current_value.markers.description)
+  
+    const onSaveButton = () => {
+      
+      updateUserFromDB(selectedUserContext._current_value.markers.uid, displayUsername, displayDescription)
+  
+      readUserFromDB(selectedUserContext._current_value.markers.uid)
+      navigation.pop();
+    }
 
-      const onCloseButton = () => {
-        navigation.pop();
-      }
+    const onCloseButton = () => {
+      navigation.pop();
+    }
 
   return (
     <View style={styles.container}>
-      <View style={[styles.containerHeader]}>
-      <View style={styles.leftWrapper}>
-        <TouchableOpacity
-          onPress={() => onCloseButton()}
-          style={styles.leftIconButton}
-        >
-          <IconHeader name="ios-arrow-back" style={styles.leftIcon}></IconHeader>
-          <Text style={styles.zuruck}>Zurück</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.textWrapper}>
-        <Text numberOfLines={1} style={styles.profil}>
-          Profil
-        </Text>
-      </View>
-      <TouchableOpacity
-        style={styles.button}
-      >
-        <TouchableOpacity 
-          style={styles.rightIconButton}
-          onPress={() => onSaveButton()}
-        >
-          <Text style={styles.speichern}>Speichern</Text>
-        </TouchableOpacity>
-      </TouchableOpacity>
-    </View>
+      <EventHeader
+        text={'Profil'}
+        saveButton
+        saveFunction={() => onSaveButton() }
+      />
 
-      <View style={styles.buttonBackRowColumn}>
-        {/* <Icon name="add-user" style={styles.icon}></Icon> */}
-        <Text style={styles.benutzernameLabel}>Benutzername</Text>
-        <TextInput
+      <View style={stylesGlobal.screenContainer}>
+        <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>Benutzername</Text>
+        <TextInputField
           placeholder="Benutzername"
-          placeholderTextColor="rgba(179,179,179,1)"
-          style={styles.benutzername}
           value={displayUsername}
-          editable={true}
           onChangeText={setDisplayUsername}
-        ></TextInput>
-        <Text style={styles.beschreibungLabel}>Beschreibung</Text>
-        <TextInput
+        />
+
+        <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>Beschreibung</Text>
+        <TextInputField
           placeholder="Beschreibung"
-          multiline={true}
-          clearTextOnFocus={false}
-          placeholderTextColor="rgba(179,179,179,1)"
+          multiline
           maxLength={250}
-          style={styles.beschreibung}
           value={displayDescription}
-          editable={true}
           onChangeText={setDisplayDescription}
-        ></TextInput>
-        <Text style={styles.eMailAdresseLabel}>E-Mail-Adresse</Text>
+        />
+        
+        <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>E-Mail-Adresse</Text>
         <Text
-            placeholder="E-Mail-Adresse"
-            placeholderTextColor="rgba(179,179,179,1)"
-            style={styles.email}
+          placeholder="E-Mail-Adresse"
+          placeholderTextColor="rgba(179,179,179,1)"
+          style={styles.email}
         >{loggedInUser._current_value.email.toString()}</Text>
-        <Text style={styles.eventsLabel}>Events</Text>
+        <Text style={[styles.eventsLabel, stylesGlobal.ueberschriftText2]}>Events</Text>
         <View style={styles.scrollAreaEvents}>
           <ScrollView
             contentContainerStyle={
@@ -182,7 +146,7 @@ const Profile = ( {navigation} ) => {
         </View>
       </View>
       <View style={styles.buttonBackRowColumnFiller}></View>
-      <FooterProfile style={styles.footer}></FooterProfile>
+        <FooterProfile style={styles.footer}></FooterProfile>
     </View>
   );
 }
@@ -192,8 +156,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgba(223,242,242,1)"
   },
-
-
   containerHeader: {
     flexDirection: "row",
     backgroundColor: "rgba(223,242,242,1)",
@@ -240,9 +202,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     alignSelf: "center"
   },
-
-
-
   cupertinoHeaderWithActionButton: {
     height: 57,
     backgroundColor: "rgba(223,242,242,1)",
@@ -263,19 +222,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginRight: 122
   },
-  benutzernameLabel: {
-    color: "#121212",
-    marginTop: 19,
-    marginLeft: 7
+  textLabels: {
+    textAlign: 'left',
+    width: '100%'
   },
   benutzername: {
-    color: "#121212",
+    // color: "#121212",
     height: 41,
     width: 325,
     backgroundColor: "rgba(255,255,255,1)",
     borderRadius: 10,
-    marginTop: 3,
-    marginLeft: 7,
+    // marginTop: 3,
+    // marginLeft: 7,
     paddingLeft: 10
   },
   beschreibungLabel: {
@@ -335,11 +293,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 18,
     marginLeft: 96
-  },
-  buttonBackRowColumn: {
-    marginTop: 38,
-    marginLeft: 10,
-    marginRight: 18
   },
   buttonBackRowColumnFiller: {
     flex: 1

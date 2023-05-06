@@ -12,11 +12,10 @@ import { stylesGlobal } from '../constants/StylesGlobal';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { arrayIsEmpty } from '../constants/HelperFunctionsAndVariables';
 import ButtonSmall from '../components/ButtonSmall';
+import EventHeader from '../components/EventHeader';
 
 
 const FilterScreen = ( {navigation} ) => {
-
-  const [selected, setSelected] = useState(filterContext._current_value);
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState(tagData);  
   const [value, setValue] = useState(filterContext._current_value);
@@ -100,9 +99,12 @@ const FilterScreen = ( {navigation} ) => {
   
  
 return(
-  <View style={hampter.screenContainer}>
+  <View style={styles.screenContainer}>
+    <EventHeader
+      text={'Filter'}
+    />
     <View style={{width: '100%', marginBottom: 40}}>
-      <Text style={hampter.standardText}>Radius</Text>
+      <Text style={stylesGlobal.ueberschriftText2}>Radius</Text>
       <Text>{radiusMarkersVisual === 'alle' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>
       <Slider
         minimumValue={0}
@@ -115,7 +117,8 @@ return(
         thumbTintColor={Colors.findmyactivityGreen}
       />
     </View>
-    
+
+    <Text style={stylesGlobal.ueberschriftText2}>Tags</Text>
     <DropDownPicker
       searchable={true}
       multiple={true}
@@ -128,7 +131,7 @@ return(
       setItems={setItems}
     />
 
-    <View style={hampter.button}>
+    <View style={styles.button}>
       <View style={{flexDirection:'row'}}>
         <View>
           <ButtonSmall
@@ -146,13 +149,6 @@ return(
           />
         </View>
       </View>
-      <View style={{marginTop: 40}}>
-        <ButtonSmall
-          text={'Schließen'}
-          onPress={() => { navigation.pop(); }}
-          backgroundColor={Colors.findmyactivityBackground}
-        /> 
-      </View>
     </View>
   </View>
 )
@@ -161,18 +157,13 @@ return(
 
 export default FilterScreen
 
-const hampter = StyleSheet.create({
+const styles = StyleSheet.create({
   screenContainer: {
     flex: stylesGlobal.screenContainer.flex,
-    paddingHorizontal: stylesGlobal.screenContainer.paddingHorizontal,
-    paddingVertical: stylesGlobal.screenContainer.paddingVertical,
+    // paddingHorizontal: stylesGlobal.screenContainer.paddingHorizontal,
+    // paddingVertical: stylesGlobal.screenContainer.paddingVertical,
     backgroundColor: stylesGlobal.screenContainer.backgroundColor,
     alignItems: 'center'
-  },
-
-  standardText: {
-    fontWeight: 'bold',
-    fontSize: stylesGlobal.standardText.fontSize
   },
 
   button: {

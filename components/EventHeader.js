@@ -2,8 +2,14 @@ import React from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
+
+import PropTypes from 'prop-types'
+import { stylesGlobal } from "../constants/StylesGlobal";
+import Colors from "../constants/Colors";
+
 const EventHeader = (props) => {
   const navigation = useNavigation()
+  const hasSave = props.saveButton || false
 
   const onCloseButton = () => {
     navigation.pop();
@@ -17,56 +23,70 @@ const EventHeader = (props) => {
           style={styles.leftIconButton}
         >
           <Icon name="ios-arrow-back" style={styles.leftIcon}></Icon>
-          <Text style={styles.zuruck}>Zurück</Text>
+          <Text style={[stylesGlobal.standardText, styles.zuruck]}>Zurück</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.textWrapper}>
-        <Text numberOfLines={1} style={styles.profil}>
-          Events
+        <Text numberOfLines={1} style={[styles.profil, stylesGlobal.ueberschriftText]}>
+          {props.text}
         </Text>
       </View>
-      <TouchableOpacity
-        style={styles.button}
-      >
-      </TouchableOpacity>
+      <View style={styles.rightWrapper}>
+        <TouchableOpacity
+          onPress={props.saveFunction}
+          style={styles.leftIconButton}
+        >
+          {hasSave ?
+          <>
+            <Text style={[stylesGlobal.standardText, styles.save]}>Speichern</Text>
+            <Icon name="save-outline" style={styles.leftIcon}></Icon>
+          </>
+          : null}
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
+EventHeader.propTypes = { style: PropTypes.any, text: PropTypes.string, saveButton: PropTypes.bool, saveFunction: PropTypes.func }
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    backgroundColor: "rgba(223,242,242,1)",
     paddingRight: 8,
     paddingLeft: 8,
+    paddingTop: 15
   },
   leftWrapper: {
     flex: 1,
     alignItems: "flex-start",
     justifyContent: "center",
   },
+  rightWrapper: {
+    flex: 1,
+    alignItems: "flex-end",
+    justifyContent: "center",
+  },
   leftIconButton: {
     flexDirection: "row",
   },
   leftIcon: {
-    color: "rgba(35,112,118,1)",
+    color: Colors.findmyactivityGreen,
     fontSize: 30,
   },
   zuruck: {
-    fontSize: 17,
-    color: "rgba(35,112,118,1)",
-    paddingLeft: 5,
+    color: Colors.findmyactivityGreen,
+    paddingLeft: 10,
+    alignSelf: "center",
+  },
+  save: {
+    color: Colors.findmyactivityGreen,
+    paddingRight: 10,
     alignSelf: "center",
   },
   textWrapper: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  profil: {
-    fontSize: 17,
-    lineHeight: 17,
-    color: "#000",
   },
   button: {
     flex: 1,

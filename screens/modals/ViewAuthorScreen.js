@@ -4,12 +4,14 @@ import { getDistance } from 'geolib';
 import React from "react";
 import { markersRef } from '../../constants/MainFunctions';
 import ButtonBack from '../../components/ButtonBack';
+import EventHeader from '../../components/EventHeader'
+import { stylesGlobal } from '../../constants/StylesGlobal';
 
-const ViewAuthorScreen = ( {route,navigation} ) => {
+const ViewAuthorScreen = ( { route,navigation } ) => {
 
   const displayID = route.params.authorID
-  const  displayUsername = route.params.authorUsername
-  const  displayDescription = route.params.authorDescription
+  const displayUsername = route.params.authorUsername
+  const displayDescription = route.params.authorDescription
 
   let eventArray = markersRef.filter(function (arr) {
     return arr.user === displayID
@@ -17,14 +19,11 @@ const ViewAuthorScreen = ( {route,navigation} ) => {
 
   return (
     <View style={styles.container}>
+      <EventHeader
+        text={'Author'}
+      />
       <View style={styles.buttonBackRowColumn}>
-        <View style={styles.buttonBackRow}>
-          <ButtonBack 
-            style={styles.buttonBack}
-            onPress={() => navigation.pop()}
-          />
-        </View>
-        <Text style={styles.benutzernameLabel}>Benutzername</Text>
+        <Text style={[styles.benutzernameLabel, stylesGlobal.ueberschriftText2]}>Benutzername</Text>
         <TextInput
           placeholder="Benutzername"
           placeholderTextColor="rgba(179,179,179,1)"
@@ -32,7 +31,7 @@ const ViewAuthorScreen = ( {route,navigation} ) => {
           value={displayUsername}
           editable={false}
         ></TextInput>
-        <Text style={styles.beschreibungLabel}>Beschreibung</Text>
+        <Text style={[styles.beschreibungLabel, stylesGlobal.ueberschriftText2]}>Beschreibung</Text>
         <TextInput
           placeholder="Beschreibung"
           multiline={true}
@@ -43,7 +42,7 @@ const ViewAuthorScreen = ( {route,navigation} ) => {
           value={displayDescription}
           editable={false}
         ></TextInput>
-        <Text style={styles.eventsLabel}>Events</Text>
+        <Text style={[styles.eventsLabel, stylesGlobal.ueberschriftText2]}>Events</Text>
         <View style={styles.scrollAreaEvents}>
           <ScrollView
             contentContainerStyle={

@@ -31,7 +31,7 @@ const LoginScreen = () => {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-    <View style={stylesGlobal.screenContainer}>
+    <View style={[stylesGlobal.screenContainer, styles.container]}>
       <Text 
         style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenViews, textAlign: 'center'}]}
         accessibilityLabel={'Anmeldung Find your Activity'}
@@ -107,6 +107,11 @@ const LoginScreen = () => {
 export default LoginScreen
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: Colors.findmyactivityBackground,
+    justifyContent: 'center'
+  },
+
   inputContainer: {
     width: '100%',
     marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenViews,

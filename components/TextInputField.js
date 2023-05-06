@@ -12,7 +12,7 @@ const TextInputField = (props) => {
 
   // TODO: ICONS AND TEXT ARE OFFSET
   return(
-    <View style={[styles.buttonStyle, {backgroundColor: props.backgroundColor, borderColor: props.borderColor}]}>
+    <View style={[styles.buttonStyle, {backgroundColor: 'white', borderColor: props.borderColor}]}>
       {hasLeftIcon ?
       <View style={{justifyContent: 'center', paddingRight: 10, width: 30}}>
         <Icon
@@ -29,7 +29,7 @@ const TextInputField = (props) => {
         secureTextEntry={props.secureTextEntry}
         keyboardType={props.keyboardType}
         maxLength={props.maxTextChars}
-        style={[styles.textInputStyle, {backgroundColor: props.backgroundColor}]}
+        style={[styles.textInputStyle, {backgroundColor: 'white'}]}
         multiline={props.multiline}
         onBlur={props.onBlur}
         onChange={props.onChange}
@@ -61,7 +61,7 @@ const TextInputField = (props) => {
 }
 
 TextInputField.propTypes = { placeholder: PropTypes.string, value: PropTypes.string.isRequired, onChangeText: PropTypes.func.isRequired, secureTextEntry: PropTypes.bool, 
-  keyboardType: PropTypes.string, maxLength: PropTypes.number, backgroundColor: PropTypes.string, borderColor: PropTypes.string, multiline: PropTypes.bool, 
+  keyboardType: PropTypes.string, maxLength: PropTypes.number, borderColor: PropTypes.string, multiline: PropTypes.bool, 
   onBlur: PropTypes.func, onChange: PropTypes.func,
 
   accessibilityLabel: PropTypes.string, accessibilityHint: PropTypes.string, accessibilityRole: PropTypes.any, 
@@ -85,12 +85,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
-    flex: 1
-    // borderWidth: 1
+    flex: 1,
   },
 
   buttonStyle: {
-    // width: '100%',
     flexDirection: 'row',
     borderRadius: 10,
     justifyContent: 'space-between',

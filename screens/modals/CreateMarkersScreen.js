@@ -15,6 +15,7 @@ import 'intl'
 import 'intl/locale-data/jsonp/de'
 import { intlFormat } from 'date-fns'
 import TextAndIconButton from '../../components/TextAndIconButton'
+import EventHeader from '../../components/EventHeader'
 
 const CreateMarkersScreen = ( {navigation} ) => {  
   const [eventName, setEventName] = useState(editMarkerMode._currentValue ? editMarkerValues._currentValue.name : '')
@@ -185,8 +186,10 @@ const CreateMarkersScreen = ( {navigation} ) => {
   
   return (
     <View style={styles.screenContainer}>
-      <ScrollView contentContainerStyle={styles.scrollViewContainer} showsVerticalScrollIndicator={false}>
-        <Text>{editMarkerMode._currentValue ? 'Marker bearbeiten' : 'Marker erstellen'}</Text>
+      <EventHeader
+        text={editMarkerMode._currentValue ? 'Marker bearbeiten' : 'Marker erstellen'}
+      />
+      <View style={{alignItems: 'center'}}>
         <TextInputField
           placeholder={'Eventname'}
           value={eventName}
@@ -291,7 +294,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
           null
           }
           <TextButton
-            text={'Set start time'}
+            text={pickedStartTime.current ? 'Startzeit ändern' : 'Startzeit auswählen'}
             onPress={() => {kindOfTimePicker.current = 'start'; showTimePicker()}}
           />
         </View>
@@ -316,7 +319,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
           null
           }
           <TextButton
-            text={'Set end time'}
+            text={pickedEndTime.current ? 'Endzeit ändern' : 'Endzeit auswählen'}
             textColor={Colors.findmyactivityBlue}
             onPress={() => {kindOfTimePicker.current = 'end'; showTimePicker()}}
           />
@@ -352,11 +355,6 @@ const CreateMarkersScreen = ( {navigation} ) => {
         </View>
         : 
         <View style={{flexDirection: 'row'}}>
-          <ButtonSmall
-            text={'Abbrechen'}
-            onPress={() => navigation.pop()}
-            backgroundColor={'red'}
-          />
 
           <ButtonSmall
             text={'Erstellen'}         
@@ -371,7 +369,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
           />
         </View>
         }
-      </ScrollView>
+      </View>
     </View>
   )
 }
@@ -379,7 +377,6 @@ const CreateMarkersScreen = ( {navigation} ) => {
 const styles = StyleSheet.create({
   screenContainer: {
     flex: stylesGlobal.screenContainer.flex,
-    paddingHorizontal: stylesGlobal.screenContainer.paddingHorizontal,
     backgroundColor: stylesGlobal.screenContainer.backgroundColor,
   },
 
@@ -387,7 +384,7 @@ const styles = StyleSheet.create({
     alignContent: 'stretch',
     alignItems: 'center', 
     justifyContent: 'center', 
-    minHeight: '100%'
+    // minHeight: '100%'
   }
 })
 

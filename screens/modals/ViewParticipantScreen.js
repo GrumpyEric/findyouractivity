@@ -2,12 +2,13 @@ import React, { useEffect, useRef, useState } from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import { stylesGlobal } from '../../constants/StylesGlobal'
 import { getParticipant } from '../../constants/MainFunctions'
-import {participantContext } from '../../components/AppContext'
+import { participantContext } from '../../components/AppContext'
 import ButtonSmall from '../../components/ButtonSmall'
 import TextButton from '../../components/TextButton'
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
+import EventHeader from '../../components/EventHeader'
 
 const ViewParticipantScreen = ( {route, navigation} ) => {  
 
@@ -20,7 +21,9 @@ const ViewParticipantScreen = ( {route, navigation} ) => {
 
   return (
     <View style={styles.screenContainer}>
-      <Text style={styles.ueberschriftText}> Teilnehmer: </Text>
+      <EventHeader
+        text={'Teilnehmer'}
+      />
       <ScrollView contentContainerStyle={styles.scrollViewContainer} showsVerticalScrollIndicator={false}>
       {
         members.map( (val,index) => {
@@ -33,12 +36,6 @@ const ViewParticipantScreen = ( {route, navigation} ) => {
         } )
       }
       </ScrollView>
-
-      <ButtonSmall
-            text={'Schließen'}
-            onPress={() => navigation.pop()}
-            backgroundColor={'red'}
-          />
     </View>
   )
 }
@@ -46,8 +43,8 @@ const ViewParticipantScreen = ( {route, navigation} ) => {
 const styles = StyleSheet.create({
   screenContainer: {
     flex: stylesGlobal.screenContainer.flex,
-    paddingHorizontal: stylesGlobal.screenContainer.paddingHorizontal,
-    paddingVertical: stylesGlobal.screenContainer.paddingVertical,
+    // paddingHorizontal: stylesGlobal.screenContainer.paddingHorizontal,
+    // paddingVertical: stylesGlobal.screenContainer.paddingVertical,
     backgroundColor: stylesGlobal.screenContainer.backgroundColor,
     alignItems: 'center'
   },
@@ -58,10 +55,8 @@ const styles = StyleSheet.create({
   },
 
   scrollViewContainer: {
-    alignContent: 'stretch',
     alignItems: 'center', 
     justifyContent: 'center', 
-    minHeight: '100%'
   }
 })
 

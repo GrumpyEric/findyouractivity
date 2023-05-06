@@ -8,6 +8,7 @@ import ButtonBack from '../../components/ButtonBack'
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
+import EventHeader from '../../components/EventHeader'
 
 const ViewMarkerScreen = ( {route, navigation} ) => {  
   const nameDisplay = route.params.eventName
@@ -61,13 +62,9 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.buttonBackRow}>
-        <ButtonBack 
-          style={styles.buttonBack}
-          onPress={() => navigation.pop()}
-        />
-        <Text style={styles.eventDetails}>Event Details</Text>
-      </View>
+      <EventHeader
+        text={'Eventdetails'}
+      />
       <ScrollView style={styles.scrollArea}>
       <Text> Name: {nameDisplay} </Text>
       <Text> Beschreibung: {descriptionDisplay} </Text>      

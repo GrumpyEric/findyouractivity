@@ -18,6 +18,7 @@ import {
 } from "react-native";
 import EventHeader from "../components/EventHeader";
 import FooterEvents from "../components/FooterEvents";
+import { stylesGlobal } from "../constants/StylesGlobal";
 
 const EventScreen = ( {navigation} ) => {
 
@@ -96,10 +97,13 @@ const EventScreen = ( {navigation} ) => {
 
   return (
     <View style={styles.container}>
+      <EventHeader
+        text={'Events'}
+      />
+
       <View style={styles.headerColumn}>
-        <EventHeader/>
         <View style={{alignItems: 'center'}}>
-          <Text style={{color: Colors.findmyactivityText}}>Ansicht umstellen auf:</Text>
+          <Text style={stylesGlobal.ueberschriftText2}>Ansicht umstellen auf:</Text>
           <View style={{flexDirection: 'row'}}> 
             <Text style={{color: showMyMarkers ? '#CAD6E0' : Colors.findmyactivityText, alignSelf: 'center'}}>Alle Marker</Text>
             <Switch
@@ -127,9 +131,10 @@ const EventScreen = ( {navigation} ) => {
             maximumTrackTintColor="rgba(35,112,118,1)"
             thumbTintColor="rgba(35,112,118,1)"
             style={styles.slider}></Slider>
-          <Text style={styles.radius}>Radius:</Text>
+          <Text style={[styles.radius, stylesGlobal.ueberschriftText2]}>Radius:</Text>
           <Text style={styles.radius1}>{radiusMarkersVisual === 'alle' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>
         </View>
+        <Text style={stylesGlobal.ueberschriftText2}>Events</Text>
         <View style={styles.scrollArea}>
           <ScrollView
             contentContainerStyle={styles.scrollArea_contentContainerStyle}
@@ -272,7 +277,7 @@ const styles = StyleSheet.create({
     width: 340,
     height: 59,
     marginTop: 37,
-    marginLeft: 10
+    marginLeft: 10,
   },
   scrollArea: {
     width: 340,

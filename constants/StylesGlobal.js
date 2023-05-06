@@ -25,6 +25,12 @@ const stylesGlobal = StyleSheet.create({
     color: Colors.findmyactivityText
   },
 
+  ueberschriftText2: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: Colors.findmyactivityText
+  },
+
   buttonTextBlack: {
     fontWeight: '700',
     fontSize: 16,
@@ -45,11 +51,9 @@ const stylesGlobal = StyleSheet.create({
   //----- Screenviews -----//
   screenContainer: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: '10%',
     paddingVertical: '5%',
-    backgroundColor: Colors.findmyactivityBackground
   },
 
   button: {
