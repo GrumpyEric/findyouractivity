@@ -19,9 +19,9 @@ const ViewAuthorScreen = ( { route,navigation } ) => {
 
   return (
     <View style={styles.container}>
-      <EventHeader
+      {/* <EventHeader
         text={'Author'}
-      />
+      /> */}
       <View style={styles.buttonBackRowColumn}>
         <Text style={[styles.benutzernameLabel, stylesGlobal.ueberschriftText2]}>Benutzername</Text>
         <TextInput

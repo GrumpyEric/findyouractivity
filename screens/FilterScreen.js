@@ -100,9 +100,9 @@ const FilterScreen = ( {navigation} ) => {
  
 return(
   <View style={styles.screenContainer}>
-    <EventHeader
+    {/* <EventHeader
       text={'Filter'}
-    />
+    /> */}
     <View style={{width: '100%', marginBottom: 40}}>
       <Text style={stylesGlobal.ueberschriftText2}>Radius</Text>
       <Text>{radiusMarkersVisual === 'alle' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>

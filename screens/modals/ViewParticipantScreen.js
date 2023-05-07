@@ -21,9 +21,9 @@ const ViewParticipantScreen = ( {route, navigation} ) => {
 
   return (
     <View style={styles.screenContainer}>
-      <EventHeader
+      {/* <EventHeader
         text={'Teilnehmer'}
-      />
+      /> */}
       <ScrollView contentContainerStyle={styles.scrollViewContainer} showsVerticalScrollIndicator={false}>
       {
         members.map( (val,index) => {

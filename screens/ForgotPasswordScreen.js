@@ -18,20 +18,18 @@ const ForgotPasswordScreen = () => {
 
   const handleGoBack = () => {
     navigation.replace("Login")
-    // navigation.goBack()
   }
 
   return (
-    <View style={stylesGlobal.screenContainer}>
+    <View style={[stylesGlobal.screenContainer, styles.container]}>
       
-      <View style={{position: 'absolute', bottom: height * 0.075, right: width * 0.075}}>
+      {/* <View style={{position: 'absolute', bottom: height * 0.075, right: width * 0.075}}> */}
         <ButtonBack
           onPress={() => handleGoBack()}
           text={'Zurück'}
         />
-      </View>
+      {/* </View> */}
 
-      
       <Text 
         style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenViews, textAlign: 'center'}]}
         accessibilityLabel={'Passwort zurücksetzen für Find your Activity'}
@@ -76,6 +74,11 @@ const ForgotPasswordScreen = () => {
 export default ForgotPasswordScreen
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: Colors.findmyactivityBackground,
+    justifyContent: 'center'
+  },
+  
   buttonContainer: {
     justifyContent: 'center',
     alignItems: 'center',

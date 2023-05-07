@@ -26,7 +26,7 @@ const LoginScreen = () => {
 
   // Handler for password-reset; changes screen
   const handleForgotPassword = () => {
-    navigation.replace("ForgotPW")
+    navigation.navigate("Passwort zurücksetzen")
   }
 
   return (

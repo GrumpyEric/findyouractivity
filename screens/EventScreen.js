@@ -16,9 +16,8 @@ import {
   ScrollView,
   TouchableOpacity
 } from "react-native";
-import EventHeader from "../components/EventHeader";
-import FooterEvents from "../components/FooterEvents";
 import { stylesGlobal } from "../constants/StylesGlobal";
+import FloatingBurgerMenu from "../components/FloatingBurgerMenu";
 
 const EventScreen = ( {navigation} ) => {
 
@@ -96,132 +95,129 @@ const EventScreen = ( {navigation} ) => {
     }, [radiusMarkers])
 
   return (
-    <View style={styles.container}>
-      <EventHeader
-        text={'Events'}
+    <View style={stylesGlobal.screenContainer}>
+      <FloatingBurgerMenu
+        onPress={() => navigation.openDrawer()}
+        icon={'navicon'}
       />
-
-      <View style={styles.headerColumn}>
-        <View style={{alignItems: 'center'}}>
-          <Text style={stylesGlobal.ueberschriftText2}>Ansicht umstellen auf:</Text>
-          <View style={{flexDirection: 'row'}}> 
-            <Text style={{color: showMyMarkers ? '#CAD6E0' : Colors.findmyactivityText, alignSelf: 'center'}}>Alle Marker</Text>
-            <Switch
-              value={showMyMarkers}
-              disabled={false}
-              onValueChange={() => setShowMyMarkers(!showMyMarkers)}
-              trackColor={{ false: "#237076", true: "#FBB900" }}
-              thumbColor={showMyMarkers ? "#237076" : "#FBB900"}
-              ios_backgroundColor="#3e3e3e"
-              style={styles.switch}
-            ></Switch>
-            <Text style={{color: showMyMarkers ? Colors.findmyactivityText : '#CAD6E0', marginLeft: 20, alignSelf: 'center'}}>Meine Marker</Text>
-          </View>
-        </View>
-        <View style={styles.sliderStack}>
-          <Slider 
-            value={radiusMarkers}
-            minimumValue={0}
-            maximumValue={21}
-            onSlidingComplete={(value) => value < 21 ? setRadiusMarkers(value) : setRadiusMarkers('alle')}
-            step={1}
+      <View style={{alignItems: 'center'}}>
+      <Text style={stylesGlobal.ueberschriftText}>Events</Text>
+        <Text style={stylesGlobal.ueberschriftText2}>Ansicht umstellen auf:</Text>
+        <View style={{flexDirection: 'row'}}> 
+          <Text style={{color: showMyMarkers ? '#CAD6E0' : Colors.findmyactivityText, alignSelf: 'center'}}>Alle Marker</Text>
+          <Switch
+            value={showMyMarkers}
             disabled={false}
-            onValueChange={(value) => value < 21 ? setRadiusMarkersVisual(value) : setRadiusMarkersVisual('alle')}
-            minimumTrackTintColor="rgba(251,185,0,1)"
-            maximumTrackTintColor="rgba(35,112,118,1)"
-            thumbTintColor="rgba(35,112,118,1)"
-            style={styles.slider}></Slider>
-          <Text style={[styles.radius, stylesGlobal.ueberschriftText2]}>Radius:</Text>
-          <Text style={styles.radius1}>{radiusMarkersVisual === 'alle' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>
-        </View>
-        <Text style={stylesGlobal.ueberschriftText2}>Events</Text>
-        <View style={styles.scrollArea}>
-          <ScrollView
-            contentContainerStyle={styles.scrollArea_contentContainerStyle}
-          >
-            <View>
-            {
-          showMyMarkers ?
-          myMarkersRef.map((val, index) => 
-            {
-              let distanceToUserPos = "?"//getDistance(val,props.userPosContext.coords) / 1000
-              // console.log(userPosContext._currentValue.coords);
-              if (userPosContext._currentValue.coords != undefined)
-              {
-                distanceToUserPos = getDistance(val, userPosContext._currentValue.coords) / 1000
-              }
-
-              if (distanceToUserPos < radiusMarkers || radiusMarkers === 'alle') {
-                // console.log(distanceToUserPos);
-                return (
-                  <View key={index} style={{backgroundColor: 'rgba(35, 112, 118, 0.2)', marginBottom: 10, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10}}>
-                    <TouchableOpacity onPress={() => moveToMarker(val)}>
-                      <Text key={Math.random().toString()}> {"Eventname: " + val.name} </Text>
-                      <Text key={Math.random().toString()}> {"Beschreibung: " + val.description} </Text>
-                      <Text> Distanz: {distanceToUserPos} km</Text>
-                    </TouchableOpacity>
-                    <TextButton
-                      onPress={() => editMarkerHandler(val)}
-                      text={'Marker bearbeiten'}
-                      textColor={Colors.findmyactivityBlue}
-                    />
-                    <TextButton
-                      onPress={() => deleteMarkerHandler(val)}
-                      text={'Marker löschen'}
-                      textColor={Colors.findmyactivityBlue}
-                    />
-                    {/* <Text> Distanz: {distanceToUserPos} km</Text> */}
-                  </View>
-                )
-              }
-            }
-          )
-          :
-          markersRef.map((val, index) => 
-            {
-              let distanceToUserPos = "?"//getDistance(val,props.userPosContext.coords) / 1000
-              if (userPosContext._currentValue.coords != undefined)
-              {
-                distanceToUserPos = getDistance(val, userPosContext._currentValue.coords) / 1000
-              }
-              if (distanceToUserPos < radiusMarkers || radiusMarkers === 'alle') {
-                return (
-                  <View key={index} style={{backgroundColor: 'rgba(35, 112, 118, 0.2)', marginBottom: 10, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10}}>
-                    <TouchableOpacity onPress={() => moveToMarker(val)}>
-                      <Text key={Math.random().toString()}> {"Eventname: " + val.name} </Text>
-                      <Text key={Math.random().toString()}> {"Beschreibung: " + val.description} </Text>
-                      <Text> Distanz: {distanceToUserPos} km</Text>
-                    </TouchableOpacity>
-                    {val.user === myUserID 
-                    ?
-                    <View>
-                    <TextButton
-                      onPress={() => editMarkerHandler(val)}
-                      text={'Marker bearbeiten'}
-                      textColor={Colors.findmyactivityBlue}
-                    />
-                    <TextButton
-                      onPress={() => deleteMarkerHandler(val)}
-                      text={'Marker löschen'}
-                      textColor={Colors.findmyactivityBlue}
-                    />
-                    </View>
-                    :
-                    null
-                    }
-                    {/* <Text> Distanz: {distanceToUserPos} km</Text> */}
-                  </View>
-                )
-              }
-            }
-          )
-        }
-            </View>
-          </ScrollView>
+            onValueChange={() => setShowMyMarkers(!showMyMarkers)}
+            trackColor={{ false: "#237076", true: "#FBB900" }}
+            thumbColor={showMyMarkers ? "#237076" : "#FBB900"}
+            ios_backgroundColor="#3e3e3e"
+            style={styles.switch}
+          ></Switch>
+          <Text style={{color: showMyMarkers ? Colors.findmyactivityText : '#CAD6E0', marginLeft: 20, alignSelf: 'center'}}>Meine Marker</Text>
         </View>
       </View>
-      <View style={styles.headerColumnFiller}></View>
-      <FooterEvents style={styles.footer}></FooterEvents>
+      <View style={styles.sliderStack}>
+        <Slider 
+          value={radiusMarkers}
+          minimumValue={0}
+          maximumValue={21}
+          onSlidingComplete={(value) => value < 21 ? setRadiusMarkers(value) : setRadiusMarkers('alle')}
+          step={1}
+          disabled={false}
+          onValueChange={(value) => value < 21 ? setRadiusMarkersVisual(value) : setRadiusMarkersVisual('alle')}
+          minimumTrackTintColor="rgba(251,185,0,1)"
+          maximumTrackTintColor="rgba(35,112,118,1)"
+          thumbTintColor="rgba(35,112,118,1)"
+          style={styles.slider}></Slider>
+        <Text style={[styles.radius, stylesGlobal.ueberschriftText2]}>Radius:</Text>
+        <Text style={styles.radius1}>{radiusMarkersVisual === 'alle' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>
+      </View>
+      <Text style={stylesGlobal.ueberschriftText2}>Events</Text>
+      <View style={styles.scrollArea}>
+        <ScrollView
+          contentContainerStyle={styles.scrollArea_contentContainerStyle}
+        >
+          <View>
+          {
+        showMyMarkers ?
+        myMarkersRef.map((val, index) => 
+          {
+            let distanceToUserPos = "?"//getDistance(val,props.userPosContext.coords) / 1000
+            // console.log(userPosContext._currentValue.coords);
+            if (userPosContext._currentValue.coords != undefined)
+            {
+              distanceToUserPos = getDistance(val, userPosContext._currentValue.coords) / 1000
+            }
+
+            if (distanceToUserPos < radiusMarkers || radiusMarkers === 'alle') {
+              // console.log(distanceToUserPos);
+              return (
+                <View key={index} style={{backgroundColor: 'rgba(35, 112, 118, 0.2)', marginBottom: 10, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10}}>
+                  <TouchableOpacity onPress={() => moveToMarker(val)}>
+                    <Text key={Math.random().toString()}> {"Eventname: " + val.name} </Text>
+                    <Text key={Math.random().toString()}> {"Beschreibung: " + val.description} </Text>
+                    <Text> Distanz: {distanceToUserPos} km</Text>
+                  </TouchableOpacity>
+                  <TextButton
+                    onPress={() => editMarkerHandler(val)}
+                    text={'Marker bearbeiten'}
+                    textColor={Colors.findmyactivityBlue}
+                  />
+                  <TextButton
+                    onPress={() => deleteMarkerHandler(val)}
+                    text={'Marker löschen'}
+                    textColor={Colors.findmyactivityBlue}
+                  />
+                  {/* <Text> Distanz: {distanceToUserPos} km</Text> */}
+                </View>
+              )
+            }
+          }
+        )
+        :
+        markersRef.map((val, index) => 
+          {
+            let distanceToUserPos = "?"//getDistance(val,props.userPosContext.coords) / 1000
+            if (userPosContext._currentValue.coords != undefined)
+            {
+              distanceToUserPos = getDistance(val, userPosContext._currentValue.coords) / 1000
+            }
+            if (distanceToUserPos < radiusMarkers || radiusMarkers === 'alle') {
+              return (
+                <View key={index} style={{backgroundColor: 'rgba(35, 112, 118, 0.2)', marginBottom: 10, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10}}>
+                  <TouchableOpacity onPress={() => moveToMarker(val)}>
+                    <Text key={Math.random().toString()}> {"Eventname: " + val.name} </Text>
+                    <Text key={Math.random().toString()}> {"Beschreibung: " + val.description} </Text>
+                    <Text> Distanz: {distanceToUserPos} km</Text>
+                  </TouchableOpacity>
+                  {val.user === myUserID 
+                  ?
+                  <View>
+                  <TextButton
+                    onPress={() => editMarkerHandler(val)}
+                    text={'Marker bearbeiten'}
+                    textColor={Colors.findmyactivityBlue}
+                  />
+                  <TextButton
+                    onPress={() => deleteMarkerHandler(val)}
+                    text={'Marker löschen'}
+                    textColor={Colors.findmyactivityBlue}
+                  />
+                  </View>
+                  :
+                  null
+                  }
+                  {/* <Text> Distanz: {distanceToUserPos} km</Text> */}
+                </View>
+              )
+            }
+          }
+        )
+      }
+          </View>
+        </ScrollView>
+      </View>
     </View>
   );
 }

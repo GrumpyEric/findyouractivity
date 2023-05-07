@@ -1,10 +1,11 @@
 import { TouchableOpacity, StyleSheet, Text } from "react-native"
-import Icon from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/MaterialIcons";
 import { stylesGlobal } from '../constants/StylesGlobal'
 
 import PropTypes from 'prop-types'
 
 const FloatingActionButton = (props) => {
+  // const IconVariable = 
   
   return(
     <TouchableOpacity
@@ -26,7 +27,7 @@ const FloatingActionButton = (props) => {
       }}
       onPress={props.onPress}
     >
-      <Icon 
+      <Icon
         name={props.icon}
         size={30}
         color='black'

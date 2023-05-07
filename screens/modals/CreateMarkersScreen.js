@@ -186,9 +186,9 @@ const CreateMarkersScreen = ( {navigation} ) => {
   
   return (
     <View style={styles.screenContainer}>
-      <EventHeader
+      {/* <EventHeader
         text={editMarkerMode._currentValue ? 'Marker bearbeiten' : 'Marker erstellen'}
-      />
+      /> */}
       <View style={{alignItems: 'center'}}>
         <TextInputField
           placeholder={'Eventname'}

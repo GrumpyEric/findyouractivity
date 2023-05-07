@@ -6,16 +6,15 @@ import { reverseGeocodeAsync } from "expo-location";
 import { hawRegion } from "../constants/TestCoords";
 import * as Location from 'expo-location';
 
-import { markersRef, userMarkerContext, saveNewMarkerLocation, manualReadMarkerFromDB, getUserInfoFromDB } from "../constants/MainFunctions";
+import { markersRef, saveNewMarkerLocation, getUserInfoFromDB } from "../constants/MainFunctions";
 import FloatingActionButton from "./FloatingActionButton";
-import { latitudeContext, longitudeContext, mapRef, filterContext, userPosContext, rangeContext, selectedAuthor, editMarkerMode, mapRefEdit, refreshContext } from "./AppContext";
+import { latitudeContext, longitudeContext, mapRef, userPosContext, rangeContext, selectedAuthor, editMarkerMode, mapRefEdit } from "./AppContext";
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
 import { format } from 'date-fns'
 import { useNavigation } from "@react-navigation/native";
 import ButtonRegular from "./ButtonRegular";
-import Footer from '../components/Footer'
 
 import PropTypes from 'prop-types'
 import Colors from "../constants/Colors";
@@ -137,7 +136,7 @@ const MapViewGoogle = (props) => {
         onPress={() => getCurrentPosition()}
         bottomPos={height * 0.25}
         rightPos={width * 0.025}
-        icon={'location-arrow'}
+        icon={'location-on'}
         text={'Position'}
       />
 
@@ -146,7 +145,7 @@ const MapViewGoogle = (props) => {
         onPress={() => navigation.navigate("FilterScreen")}
         bottomPos={height * 0.35}
         rightPos={width * 0.025}
-        icon={'filter'}
+        icon={'filter-alt'}
         text={'Filter'}
       />
       : null}
@@ -307,10 +306,6 @@ const MapViewGoogle = (props) => {
         )
       }
     </MapView>
-    
-    {editMarkerMode._currentValue === false ?
-    <Footer style={styles.footerBar}></Footer>
-    : null}
   </View>
   )
 }

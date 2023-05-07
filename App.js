@@ -1,8 +1,12 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+
 import { StatusBar } from 'react-native';
 
 import LoginScreen from './screens/LoginScreen';
@@ -12,17 +16,117 @@ import FilterScreen from './screens/FilterScreen';
 import CreateMarkersScreen from './screens/modals/CreateMarkersScreen';
 import BurgerMenuContent from './components/Drawer/BurgerMenuContent';
 import ProfileScreen from './screens/ProfileScreen';
-import { isIOS, isTablet } from './constants/StylesGlobal';
+import { isIOS, isTablet, stylesGlobal, width } from './constants/StylesGlobal';
 import EditMarkerLocationScreen from './screens/EditMarkerLocationScreen';
 import ViewMarkerScreen from './screens/modals/ViewMarkerScreen';
 import ViewAuthorScreen from './screens/modals/ViewAuthorScreen';
 import ViewParticipantScreen from './screens/modals/ViewParticipantScreen';
 import EventScreen from './screens/EventScreen';
 import Colors from './constants/Colors';
+import { TouchableOpacity } from 'react-native';
+import { Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-const Stack = createStackNavigator();
+const options = (navigation, route, props) => {
+  return (
+    {
+      headerTitle: '', 
+      headerLeft: () => headerLeft(navigation), 
+      headerRight: headerRight, 
+      headerStyle: {
+        backgroundColor: 
+          Colors.findmyactivityBackground,
+      },
+      props
+    }
+  )
+}
+
+const headerLeft = (navigation) => {
+  return (
+    <TouchableOpacity
+      onPress={() => navigation.goBack()}
+      style={styles.headerLeftStyle}
+    >
+      <Icon
+        name='arrow-left'
+        size={25}
+      />
+      <Text style={[stylesGlobal.standardText, {marginLeft: 5}]}>Zurück</Text>
+    </TouchableOpacity>
+  )
+}
+
+const headerRight = () => {
+  return (
+    <TouchableOpacity
+      onPress={null}
+      style={styles.headerRightStyle}
+    >
+      <Icon 
+        name="content-save"
+        size={25}
+        style={{marginRight: 5}}
+      />
+      <Text style={stylesGlobal.standardText}>Speichern</Text>
+
+    </TouchableOpacity>
+  )
+}
+
+const optionsNoHeader = () => {
+  return (
+    {
+      headerShown: false
+    }
+  )
+}
+
+const LoginStack = createStackNavigator();
+function LoginStackScreen() {
+  return (
+    <LoginStack.Navigator>
+      <LoginStack.Screen options={optionsNoHeader} name="LoginScreen" component={LoginScreen}/>
+      <LoginStack.Screen options={({ navigation, route }) => options(navigation, route)} name="Passwort zurücksetzen" component={ForgotPasswordScreen}/>
+    </LoginStack.Navigator>
+  )
+}
+
+const Tab = createBottomTabNavigator();
+function TabBarScreen() {
+  return (
+    <Tab.Navigator 
+      initialRouteName='Karte'
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'Profil') {
+            iconName = focused
+              ? 'account'
+              : 'account-outline';
+          } else if (route.name === 'Karte') {
+            iconName = focused ? 'map' : 'map-outline';
+          } else if (route.name === 'Events') {
+            iconName = focused ? 'calendar' : 'calendar-outline';
+          }
+          
+          return <Icon name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: Colors.findmyactivityYellow,
+        tabBarInactiveTintColor: Colors.findmyactivityWhite,
+        tabBarActiveBackgroundColor: Colors.findmyactivityText,
+        tabBarInactiveBackgroundColor: Colors.findmyactivityText
+      })}
+    >
+      <Tab.Screen options={optionsNoHeader} name="Profil" component={ProfileScreen} />
+      <Tab.Screen options={optionsNoHeader} name="Karte" component={HomeScreen} />
+      <Tab.Screen options={optionsNoHeader} name="Events" component={EventScreen} />
+    </Tab.Navigator>
+  )
+}
+
 const DrawerBurgerMenu = createDrawerNavigator();
-
 function BurgerMenuScreen() {
   return (
     // return left drawer navigator
@@ -31,70 +135,88 @@ function BurgerMenuScreen() {
       initialRouteName="HomeScreen"
       backBehavior='history'
       // Customize drawer
-      screenOptions={({ navigation }) => ({
+      screenOptions={() => ({
         drawerType: 'front',
         headerShown: false, 
       })}
       // Define drawer content; custom content in BurgerMenuContent.js
       drawerContent={(props) => <BurgerMenuContent {...props}/>}
     >
-      <DrawerBurgerMenu.Screen name="HomeScreen" component={HomeScreen}/>
+      <DrawerBurgerMenu.Screen name="Home" component={TabBarScreen}/>
       
     </DrawerBurgerMenu.Navigator>
   )
 }
 
+const HomeStack = createStackNavigator()
+function HomeStackScreen() {
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen options={optionsNoHeader} name='MainScreen' component={BurgerMenuScreen}/>
+      <HomeStack.Group screenOptions={ () => ({
+        animationEnabled: false,
+        presentation: 'transparentModal',
+        gestureEnabled: false, 
+        cardStyle: {
+          top: isTablet ? '20%' : '15%',
+          left: isTablet ? '20%' : null,
+          maxHeight: isTablet ? '60%' : '70%',
+          width: isTablet ? '60%' : '100%',
+          elevation: 10,
+          overflow: isIOS ? 'visible' : 'hidden',
+          backgroundColor: 'white',
+          borderRadius: 15,
+          shadowColor: "black",
+          shadowOffset: {
+            width: 0,
+            height: 5,
+          },
+          shadowOpacity: 0.34,
+          shadowRadius: 6.27,
+        },
+
+        })}>
+        <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)}  name='CreateMarkersScreen' component={CreateMarkersScreen}/>
+        <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name='EditMarkerLocationScreen' component={EditMarkerLocationScreen}/>
+        <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name="FilterScreen" component={FilterScreen}/>          
+        <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name="ViewMarkerScreen" component={ViewMarkerScreen}/>
+        <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name="ViewAuthorScreen" component={ViewAuthorScreen}/>          
+        <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name="ViewParticipantScreen" component={ViewParticipantScreen}/>
+      </HomeStack.Group>
+    </HomeStack.Navigator>
+  )
+}
+
+const Stack = createStackNavigator()
 export default function App() {
+
   return (
     <NavigationContainer>
       <StatusBar
-        backgroundColor={Colors.findmyactivityGreen}
+        backgroundColor={Colors.findmyactivityText}
         // barStyle={'dark-content'}
       />
+
       <Stack.Navigator screenOptions={{
-        headerShown: false
+        animation: 'none'
       }}>
-        <Stack.Group>
-          <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
-          <Stack.Screen name="Home" component={BurgerMenuScreen} />
-          <Stack.Screen name="ForgotPW" component={ForgotPasswordScreen} />
-          <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
-          <Stack.Screen name="EventScreen" component={EventScreen} />
-        </Stack.Group>
-
-        <Stack.Group screenOptions={ () => ({
-          presentation: 'transparentModal',
-          gestureEnabled: false, 
-          ...TransitionPresets.ScaleFromCenterAndroid,
-          cardStyle: {
-            top: isTablet ? '20%' : '15%',
-            left: isTablet ? '20%' : null,
-            maxHeight: isTablet ? '60%' : '70%',
-            width: isTablet ? '60%' : '100%',
-            elevation: 10,
-            overflow: isIOS ? 'visible' : 'hidden',
-            backgroundColor: 'white',
-            borderRadius: 15,
-            shadowColor: "black",
-            shadowOffset: {
-              width: 0,
-              height: 5,
-            },
-            shadowOpacity: 0.34,
-            shadowRadius: 6.27,
-          },
-
-          })}>
-          <Stack.Screen name='CreateMarkersScreen' component={CreateMarkersScreen}/>
-          <Stack.Screen name='EditMarkerLocationScreen' component={EditMarkerLocationScreen}/>
-          {/* <Stack.Screen name="MyMarkersScreen" component={MyMarkersScreen}/> */}
-          <Stack.Screen name="FilterScreen" component={FilterScreen}/>          
-          <Stack.Screen name="ViewMarkerScreen" component={ViewMarkerScreen}/>
-          <Stack.Screen name="ViewAuthorScreen" component={ViewAuthorScreen}/>          
-          <Stack.Screen name="ViewParticipantScreen" component={ViewParticipantScreen}/>
-        </Stack.Group>
-        
+        <Stack.Screen options={optionsNoHeader} name='Login' component={LoginStackScreen}/>
+        <Stack.Screen options={optionsNoHeader} name='Home' component={HomeStackScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  headerLeftStyle: {
+    marginLeft: width * 0.03, 
+    flexDirection: 'row', 
+    alignItems: 'center'
+  },
+
+  headerRightStyle: {
+    marginRight: width * 0.03, 
+    flexDirection: 'row', 
+    alignItems: 'center'
+  },
+})

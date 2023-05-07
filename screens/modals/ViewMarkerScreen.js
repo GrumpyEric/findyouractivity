@@ -62,9 +62,9 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
 
   return (
     <View style={styles.container}>
-      <EventHeader
+      {/* <EventHeader
         text={'Eventdetails'}
-      />
+      /> */}
       <ScrollView style={styles.scrollArea}>
       <Text> Name: {nameDisplay} </Text>
       <Text> Beschreibung: {descriptionDisplay} </Text>      

@@ -14,15 +14,15 @@ function BurgerMenuContent ( props )  {
       
       <DrawerItem
         label="Mein Profil"
-        onPress={() => { navigation.navigate("ProfileScreen"); navigation.dispatch(DrawerActions.closeDrawer()) }}
+        onPress={() => { navigation.navigate("Profil"); navigation.dispatch(DrawerActions.closeDrawer()) }}
       />
       <DrawerItem
         label="Karte"
-        onPress={() => navigation.navigate("HomeScreen")}
+        onPress={() => navigation.navigate("Home")}
       />
       <DrawerItem
         label="Liste der Events"
-        onPress={() => { navigation.navigate("EventScreen"); navigation.dispatch(DrawerActions.closeDrawer()) }}
+        onPress={() => { navigation.navigate("Events"); navigation.dispatch(DrawerActions.closeDrawer()) }}
       />
       <DrawerItem
         label="Ausloggen"

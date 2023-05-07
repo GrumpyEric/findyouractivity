@@ -1,18 +1,20 @@
 import React from "react";
-import { Text } from "react-native";
-import { StyleSheet, TouchableOpacity } from "react-native";
-import Icon from "react-native-vector-icons/Octicons";
+import { StyleSheet } from "react-native";
 import Colors from "../constants/Colors";
-import { stylesGlobal } from "../constants/StylesGlobal";
+import { height, stylesGlobal, width } from "../constants/StylesGlobal";
 
 import PropTypes from 'prop-types'
+import FloatingActionButton from "./FloatingActionButton";
 
 function ButtonBack(props) {
   return (
-    <TouchableOpacity onPress={props.onPress} style={[styles.container, props.style]}>
-      <Icon name="arrow-left" style={styles.icon}></Icon>
-      <Text style={stylesGlobal.buttonTextBlack}>{props.text}</Text>
-    </TouchableOpacity>
+    <FloatingActionButton
+      bottomPos={height * 0.05}
+      rightPos={width * 0.05}
+      icon="arrow-back"
+      text={'Zurück'}
+      onPress={props.onPress}
+    />
   );
 }
 

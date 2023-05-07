@@ -7,6 +7,7 @@ import { height, stylesGlobal } from '../constants/StylesGlobal'
 import MapViewGoogle from '../components/MapView';
 import FloatingBurgerMenu from '../components/FloatingBurgerMenu';
 import { mapRef } from '../components/AppContext';
+import { DrawerActions } from "@react-navigation/native";
 
 const HomeScreen = ( {navigation} ) => {
   return (
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
   },
 
   map_container: {
-    height: '93.75%'
+    flex: 1
   },
 
 })
