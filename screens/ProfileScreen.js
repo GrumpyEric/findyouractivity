@@ -6,11 +6,9 @@ import {
   StyleSheet,
   View,
   Text,
-  TextInput,
   ScrollView,
   TouchableOpacity
 } from "react-native";
-import IconHeader from "react-native-vector-icons/Ionicons";
 import FooterProfile from "../components/FooterProfile";
 import EventHeader from '../components/EventHeader';
 import { stylesGlobal } from '../constants/StylesGlobal';
@@ -63,12 +61,14 @@ import TextInputField from '../components/TextInputField';
         />
         
         <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>E-Mail-Adresse</Text>
-        <Text
+        <TextInputField
+          editable={false}
           placeholder="E-Mail-Adresse"
-          placeholderTextColor="rgba(179,179,179,1)"
-          style={styles.email}
-        >{loggedInUser._current_value.email.toString()}</Text>
-        <Text style={[styles.eventsLabel, stylesGlobal.ueberschriftText2]}>Events</Text>
+          value={loggedInUser._current_value.email.toString()}
+          onChangeText={null}
+        />
+
+        <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>Events</Text>
         <View style={styles.scrollAreaEvents}>
           <ScrollView
             contentContainerStyle={
@@ -226,52 +226,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     width: '100%'
   },
-  benutzername: {
-    // color: "#121212",
-    height: 41,
-    width: 325,
-    backgroundColor: "rgba(255,255,255,1)",
-    borderRadius: 10,
-    // marginTop: 3,
-    // marginLeft: 7,
-    paddingLeft: 10
-  },
-  beschreibungLabel: {
-    color: "#121212",
-    marginTop: 14,
-    marginLeft: 7
-  },
-  beschreibung: {
-    color: "#121212",
-    height: 94,
-    width: 325,
-    backgroundColor: "rgba(255,255,255,1)",
-    borderRadius: 10,
-    marginTop: 2,
-    marginLeft: 7,
-    paddingLeft: 10
-  },
-  eMailAdresseLabel: {
-    color: "#121212",
-    marginTop: 12,
-    marginLeft: 7
-  },
-  email: {
-    color: "#121212",
-    height: 41,
-    width: 325,
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    marginTop: 2,
-    marginLeft: 7,
-    paddingTop: 10,
-    paddingLeft: 10
-  },
-  eventsLabel: {
-    color: "#121212",
-    marginTop: 12,
-    marginLeft: 7
-  },
+  
   scrollAreaEvents: {
     width: 325,
     height: 200,

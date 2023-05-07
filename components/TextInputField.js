@@ -23,6 +23,7 @@ const TextInputField = (props) => {
       </View>
       : null}
       <TextInput
+        editable={props.editable}
         placeholder={props.placeholder}
         value={props.value}
         onChangeText={props.onChangeText}
@@ -62,7 +63,7 @@ const TextInputField = (props) => {
 
 TextInputField.propTypes = { placeholder: PropTypes.string, value: PropTypes.string.isRequired, onChangeText: PropTypes.func.isRequired, secureTextEntry: PropTypes.bool, 
   keyboardType: PropTypes.string, maxLength: PropTypes.number, borderColor: PropTypes.string, multiline: PropTypes.bool, 
-  onBlur: PropTypes.func, onChange: PropTypes.func,
+  onBlur: PropTypes.func, onChange: PropTypes.func, editable: PropTypes.bool,
 
   accessibilityLabel: PropTypes.string, accessibilityHint: PropTypes.string, accessibilityRole: PropTypes.any, 
   isAccessibilityStateDisabled: PropTypes.bool,

@@ -39,7 +39,7 @@ const FloatingActionButton = (props) => {
 }
 
 FloatingActionButton.propTypes = { onPress: PropTypes.func.isRequired, bottomPos: PropTypes.number.isRequired, 
-  rightPos: PropTypes.number.isRequired, icon: PropTypes.string.isRequired, text: PropTypes.text
+  rightPos: PropTypes.number.isRequired, icon: PropTypes.string.isRequired, text: PropTypes.string
 }
 
 export default FloatingActionButton
