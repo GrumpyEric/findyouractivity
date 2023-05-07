@@ -1,14 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import { stylesGlobal } from '../../constants/StylesGlobal'
 import { getParticipant } from '../../constants/MainFunctions'
 import { participantContext } from '../../components/AppContext'
-import ButtonSmall from '../../components/ButtonSmall'
 import TextButton from '../../components/TextButton'
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
-import EventHeader from '../../components/EventHeader'
 
 const ViewParticipantScreen = ( {route, navigation} ) => {  
 
@@ -21,9 +19,6 @@ const ViewParticipantScreen = ( {route, navigation} ) => {
 
   return (
     <View style={styles.screenContainer}>
-      {/* <EventHeader
-        text={'Teilnehmer'}
-      /> */}
       <ScrollView contentContainerStyle={styles.scrollViewContainer} showsVerticalScrollIndicator={false}>
       {
         members.map( (val,index) => {

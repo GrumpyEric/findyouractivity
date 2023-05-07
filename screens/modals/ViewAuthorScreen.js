@@ -3,8 +3,6 @@ import { userPosContext } from '../../components/AppContext';
 import { getDistance } from 'geolib';
 import React from "react";
 import { markersRef } from '../../constants/MainFunctions';
-import ButtonBack from '../../components/ButtonBack';
-import EventHeader from '../../components/EventHeader'
 import { stylesGlobal } from '../../constants/StylesGlobal';
 
 const ViewAuthorScreen = ( { route,navigation } ) => {
@@ -19,9 +17,6 @@ const ViewAuthorScreen = ( { route,navigation } ) => {
 
   return (
     <View style={styles.container}>
-      {/* <EventHeader
-        text={'Author'}
-      /> */}
       <View style={styles.buttonBackRowColumn}>
         <Text style={[styles.benutzernameLabel, stylesGlobal.ueberschriftText2]}>Benutzername</Text>
         <TextInput

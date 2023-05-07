@@ -4,11 +4,9 @@ import { auth } from '../../firebase/firebase-config'
 import { optOutOfEvent,optInToEvent } from '../../constants/MainFunctions'
 import ButtonSmall from '../../components/ButtonSmall'
 import TextButton from '../../components/TextButton'
-import ButtonBack from '../../components/ButtonBack'
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
-import EventHeader from '../../components/EventHeader'
 
 const ViewMarkerScreen = ( {route, navigation} ) => {  
   const nameDisplay = route.params.eventName
@@ -62,9 +60,6 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
 
   return (
     <View style={styles.container}>
-      {/* <EventHeader
-        text={'Eventdetails'}
-      /> */}
       <ScrollView style={styles.scrollArea}>
       <Text> Name: {nameDisplay} </Text>
       <Text> Beschreibung: {descriptionDisplay} </Text>      

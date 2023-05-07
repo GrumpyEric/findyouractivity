@@ -9,8 +9,6 @@ import {
   ScrollView,
   TouchableOpacity
 } from "react-native";
-import FooterProfile from "../components/FooterProfile";
-import EventHeader from '../components/EventHeader';
 import { stylesGlobal } from '../constants/StylesGlobal';
 import TextInputField from '../components/TextInputField';
 import FloatingBurgerMenu from '../components/FloatingBurgerMenu';
@@ -42,106 +40,110 @@ import FloatingBurgerMenu from '../components/FloatingBurgerMenu';
         onPress={() => navigation.openDrawer()}
         icon={'navicon'}
       />
-      <Text style={stylesGlobal.ueberschriftText}>Profil</Text>
-      <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>Benutzername</Text>
-      <TextInputField
-        placeholder="Benutzername"
-        value={displayUsername}
-        onChangeText={setDisplayUsername}
-      />
-
-      <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>Beschreibung</Text>
-      <TextInputField
-        placeholder="Beschreibung"
-        multiline
-        maxLength={250}
-        value={displayDescription}
-        onChangeText={setDisplayDescription}
-      />
       
-      <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>E-Mail-Adresse</Text>
-      <TextInputField
-        editable={false}
-        placeholder="E-Mail-Adresse"
-        value={loggedInUser._current_value.email.toString()}
-        onChangeText={null}
-      />
+      <View style={{marginTop: '20%', alignItems: 'center'}}>
 
-      <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>Events</Text>
-      <View style={styles.scrollAreaEvents}>
-        <ScrollView
-          contentContainerStyle={
-            styles.scrollAreaEvents_contentContainerStyle
-          }
-        >
-          <View>
-          {eventArray.map((val, index) => {
+        <Text style={stylesGlobal.ueberschriftText}>Profil</Text>
+        <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>Benutzername</Text>
+        <TextInputField
+          placeholder="Benutzername"
+          value={displayUsername}
+          onChangeText={setDisplayUsername}
+        />
 
-                  let distanceToUserPos = "?"//getDistance(val,props.userPosContext.coords) / 1000
-                  if (userPosContext._currentValue.coords != undefined)
-                  {
-                      distanceToUserPos = getDistance(val, userPosContext._currentValue.coords) / 1000
-                  }
+        <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>Beschreibung</Text>
+        <TextInputField
+          placeholder="Beschreibung"
+          multiline
+          maxLength={250}
+          value={displayDescription}
+          onChangeText={setDisplayDescription}
+        />
+        
+        <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>E-Mail-Adresse</Text>
+        <TextInputField
+          editable={false}
+          placeholder="E-Mail-Adresse"
+          value={loggedInUser._current_value.email.toString()}
+          onChangeText={null}
+        />
 
-                  const displayTags = (val) => {
-                      if( (val.tags != undefined)) 
-                      {
-                      return <Text> Tags: {val.tags.toString()}</Text>
-                      }
-                  }
+        <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>Events</Text>
+        <View style={styles.scrollAreaEvents}>
+          <ScrollView
+            contentContainerStyle={
+              styles.scrollAreaEvents_contentContainerStyle
+            }
+          >
+            <View>
+            {eventArray.map((val, index) => {
 
-                  const displayStartTime = (val) => {
+                    let distanceToUserPos = "?"//getDistance(val,props.userPosContext.coords) / 1000
+                    if (userPosContext._currentValue.coords != undefined)
+                    {
+                        distanceToUserPos = getDistance(val, userPosContext._currentValue.coords) / 1000
+                    }
 
-                      let startTimeRes = ""//val.startTime
+                    const displayTags = (val) => {
+                        if( (val.tags != undefined)) 
+                        {
+                        return <Text> Tags: {val.tags.toString()}</Text>
+                        }
+                    }
 
-                      if( (val.startTime != undefined) ) 
-                      {
-                      //return <Text> Start-Zeit: {val.startTime.toDate().toString()} </Text>
-                      startTimeRes = val.startTime.toDate().toString()
-                      }
-                      else if ( !(val.startTime != undefined) ) 
-                      {
-                      //return <Text> Start-Zeit: unbekannt </Text>
-                      startTimeRes = "unbekannt"
-                      }
-                      return  <Text> Start-Zeit: {startTimeRes} </Text>
-                  }
+                    const displayStartTime = (val) => {
 
-                  const displayEndTime = (val) => {
+                        let startTimeRes = ""//val.startTime
 
-                      let endTimeRes = ""//val.endTime
+                        if( (val.startTime != undefined) ) 
+                        {
+                        //return <Text> Start-Zeit: {val.startTime.toDate().toString()} </Text>
+                        startTimeRes = val.startTime.toDate().toString()
+                        }
+                        else if ( !(val.startTime != undefined) ) 
+                        {
+                        //return <Text> Start-Zeit: unbekannt </Text>
+                        startTimeRes = "unbekannt"
+                        }
+                        return  <Text> Start-Zeit: {startTimeRes} </Text>
+                    }
 
-                      if( (val.endTime != undefined) ) 
-                      {
-                      //return <Text> Start-Zeit: {val.startTime.toDate().toString()} </Text>
-                      endTimeRes = val.endTime.toDate().toString()
-                      }
-                      else if ( !(val.endTime != undefined) ) 
-                      {
-                      //return <Text> Start-Zeit: unbekannt </Text>
-                      endTimeRes = "unbekannt"
-                      }
+                    const displayEndTime = (val) => {
 
-                      return  <Text> End-Zeit: {endTimeRes} </Text>
-                  }
+                        let endTimeRes = ""//val.endTime
+
+                        if( (val.endTime != undefined) ) 
+                        {
+                        //return <Text> Start-Zeit: {val.startTime.toDate().toString()} </Text>
+                        endTimeRes = val.endTime.toDate().toString()
+                        }
+                        else if ( !(val.endTime != undefined) ) 
+                        {
+                        //return <Text> Start-Zeit: unbekannt </Text>
+                        endTimeRes = "unbekannt"
+                        }
+
+                        return  <Text> End-Zeit: {endTimeRes} </Text>
+                    }
 
 
-                  return (
-                      <View style={{backgroundColor: 'rgba(35, 112, 118, 0.2)', marginBottom: 10, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10}}>
-                      <TouchableOpacity onPress={() => console.log(val)}>
-                          <Text key={Math.random().toString()}> {val.name} </Text>
-                          <Text key={Math.random().toString()}> {val.description} </Text>
-                          { displayStartTime(val) }
-                          { displayEndTime(val) }
-                          <Text> Distanz: {distanceToUserPos} km</Text>
-                          { displayTags(val) }
-                      </TouchableOpacity>
-                      </View>
-                  )
-                  }
-              )}
-          </View>
-        </ScrollView>
+                    return (
+                        <View style={{backgroundColor: 'rgba(35, 112, 118, 0.2)', marginBottom: 10, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10}}>
+                        <TouchableOpacity onPress={() => console.log(val)}>
+                            <Text key={Math.random().toString()}> {val.name} </Text>
+                            <Text key={Math.random().toString()}> {val.description} </Text>
+                            { displayStartTime(val) }
+                            { displayEndTime(val) }
+                            <Text> Distanz: {distanceToUserPos} km</Text>
+                            { displayTags(val) }
+                        </TouchableOpacity>
+                        </View>
+                    )
+                    }
+                )}
+            </View>
+          </ScrollView>
+        </View>
       </View>
     </View>
   );

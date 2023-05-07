@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native'
+import { StyleSheet, View, Text, Alert } from 'react-native'
 import { stylesGlobal } from '../../constants/StylesGlobal'
 import TextInputField from '../../components/TextInputField'
 import { auth } from '../../firebase/firebase-config'
@@ -15,7 +15,6 @@ import 'intl'
 import 'intl/locale-data/jsonp/de'
 import { intlFormat } from 'date-fns'
 import TextAndIconButton from '../../components/TextAndIconButton'
-import EventHeader from '../../components/EventHeader'
 
 const CreateMarkersScreen = ( {navigation} ) => {  
   const [eventName, setEventName] = useState(editMarkerMode._currentValue ? editMarkerValues._currentValue.name : '')
@@ -186,9 +185,6 @@ const CreateMarkersScreen = ( {navigation} ) => {
   
   return (
     <View style={styles.screenContainer}>
-      {/* <EventHeader
-        text={editMarkerMode._currentValue ? 'Marker bearbeiten' : 'Marker erstellen'}
-      /> */}
       <View style={{alignItems: 'center'}}>
         <TextInputField
           placeholder={'Eventname'}

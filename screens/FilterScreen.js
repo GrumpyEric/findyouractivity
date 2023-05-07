@@ -12,8 +12,6 @@ import { stylesGlobal } from '../constants/StylesGlobal';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { arrayIsEmpty } from '../constants/HelperFunctionsAndVariables';
 import ButtonSmall from '../components/ButtonSmall';
-import EventHeader from '../components/EventHeader';
-
 
 const FilterScreen = ( {navigation} ) => {
   const [open, setOpen] = useState(false);

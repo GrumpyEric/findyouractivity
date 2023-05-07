@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, StyleSheet } from 'react-native';
 
 import { hawRegion } from '../constants/TestCoords';
@@ -7,7 +7,6 @@ import { height, stylesGlobal } from '../constants/StylesGlobal'
 import MapViewGoogle from '../components/MapView';
 import FloatingBurgerMenu from '../components/FloatingBurgerMenu';
 import { mapRef } from '../components/AppContext';
-import { DrawerActions } from "@react-navigation/native";
 
 const HomeScreen = ( {navigation} ) => {
   return (
