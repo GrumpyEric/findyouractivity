@@ -1,11 +1,11 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { auth } from './firebase/firebase-config';
 
 import { StatusBar } from 'react-native';
 
@@ -26,6 +26,7 @@ import Colors from './constants/Colors';
 import { TouchableOpacity } from 'react-native';
 import { Text } from 'react-native';
 import { StyleSheet } from 'react-native';
+import { handleSignOut } from './constants/MainFunctions';
 
 const options = (navigation, route, props) => {
   return (
@@ -92,11 +93,24 @@ function LoginStackScreen() {
   )
 }
 
+const LogoutTabNullComponent = () => {
+  return null
+}
+
+// const LogoutTabButton = () => {
+//   return (
+//     <TouchableOpacity>
+
+//     </TouchableOpacity>
+//   )
+// }
+
 const Tab = createBottomTabNavigator();
-function TabBarScreen() {
+function TabBarScreen({ navigation }) {
   return (
     <Tab.Navigator 
       initialRouteName='Karte'
+      backBehavior='initialRoute'  
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -109,19 +123,25 @@ function TabBarScreen() {
             iconName = focused ? 'map' : 'map-outline';
           } else if (route.name === 'Events') {
             iconName = focused ? 'calendar' : 'calendar-outline';
+          } else if (route.name === 'Logout') {
+            iconName = 'logout';
           }
           
-          return <Icon name={iconName} size={size} color={color} />;
+          return <Icon name={iconName} size={size} color={route.name === 'Logout' ? '#FF0000' : color} />;
         },
         tabBarActiveTintColor: Colors.findmyactivityYellow,
         tabBarInactiveTintColor: Colors.findmyactivityWhite,
         tabBarActiveBackgroundColor: Colors.findmyactivityText,
-        tabBarInactiveBackgroundColor: Colors.findmyactivityText
+        tabBarInactiveBackgroundColor: Colors.findmyactivityText,
+        
       })}
     >
-      <Tab.Screen options={optionsNoHeader} name="Profil" component={ProfileScreen} />
-      <Tab.Screen options={optionsNoHeader} name="Karte" component={HomeScreen} />
-      <Tab.Screen options={optionsNoHeader} name="Events" component={EventScreen} />
+      <Tab.Screen options={optionsNoHeader} name="Profil" component={ProfileScreen}/>
+      <Tab.Screen options={optionsNoHeader} name="Karte" component={HomeScreen}/>
+      <Tab.Screen options={optionsNoHeader} name="Events" component={EventScreen}/>
+      <Tab.Screen name="Logout" component={LogoutTabNullComponent} options={{tabBarButton: (props) => (
+        <TouchableOpacity {...props} onPress={() => handleSignOut(auth, navigation)}/>
+        )}}/>
     </Tab.Navigator>
   )
 }
@@ -194,7 +214,6 @@ export default function App() {
     <NavigationContainer>
       <StatusBar
         backgroundColor={Colors.findmyactivityText}
-        // barStyle={'dark-content'}
       />
 
       <Stack.Navigator screenOptions={{

@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   }
 });
 
-ButtonBack.propTypes = { onPress: PropTypes.func, style: PropTypes.any, text: PropTypes.text,
+ButtonBack.propTypes = { onPress: PropTypes.func, style: PropTypes.any, text: PropTypes.string,
 
   
 
