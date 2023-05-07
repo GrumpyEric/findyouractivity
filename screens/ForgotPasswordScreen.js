@@ -1,10 +1,10 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
 
 import { auth } from '../firebase/firebase-config'
 
-import { height, stylesGlobal, width } from '../constants/StylesGlobal'
+import { stylesGlobal } from '../constants/StylesGlobal'
 import TextInputField from '../components/TextInputField'
 
 import { handleForgotPassword } from '../constants/MainFunctions'
@@ -21,6 +21,7 @@ const ForgotPasswordScreen = () => {
   }
 
   return (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     <View style={[stylesGlobal.screenContainer, styles.container]}>
       
       {/* <View style={{position: 'absolute', bottom: height * 0.075, right: width * 0.075}}> */}
@@ -68,6 +69,7 @@ const ForgotPasswordScreen = () => {
 
       </View>
     </View>
+    </TouchableWithoutFeedback>
   )
 }
 

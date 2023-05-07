@@ -18,7 +18,7 @@ function BurgerMenuContent ( props )  {
       />
       <DrawerItem
         label="Karte"
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => { navigation.navigate("Karte"); navigation.dispatch(DrawerActions.closeDrawer()) }}
       />
       <DrawerItem
         label="Liste der Events"
@@ -34,7 +34,3 @@ function BurgerMenuContent ( props )  {
 }
 
 export default BurgerMenuContent
-
-const styles = StyleSheet.create({
-
-});
