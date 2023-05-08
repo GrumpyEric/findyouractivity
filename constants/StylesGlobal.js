@@ -10,6 +10,8 @@ const isTablet = (width > 450) ? true : false
 const isIOS = Platform.OS === 'ios'
 const isAndroid = Platform.OS === 'android'
 const deviceName = Device.modelName
+const paddingBetweenItems = 10
+const paddingBetweenViews = 20
 
 const stylesGlobal = StyleSheet.create({
   //----- Text -----//
@@ -44,8 +46,8 @@ const stylesGlobal = StyleSheet.create({
   },
 
   marginsAndPadding: {
-    paddingBetweenItems: 10,
-    paddingBetweenViews: 20
+    paddingBetweenItems: paddingBetweenItems,
+    paddingBetweenViews: paddingBetweenViews
   },
 
   //----- Screenviews -----//
@@ -54,6 +56,11 @@ const stylesGlobal = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: '10%',
     paddingVertical: '5%',
+  },
+
+  contentContainerMainScreens: {
+    paddingTop: '20%',
+    width: '100%'
   },
 
   button: {
@@ -67,4 +74,4 @@ const stylesGlobal = StyleSheet.create({
 
 })
 
-export { stylesGlobal, width, height, isAndroid, isIOS, isTablet }
+export { stylesGlobal, width, height, isAndroid, isIOS, isTablet, paddingBetweenItems, paddingBetweenViews }

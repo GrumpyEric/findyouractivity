@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Alert } from "react-native";
 import MapView, {PROVIDER_GOOGLE, Marker, Callout} from "react-native-maps";
 import { getDistance } from 'geolib';
 import { reverseGeocodeAsync } from "expo-location";
@@ -28,6 +28,7 @@ const MapViewGoogle = (props) => {
 
   // get current Region
   const [region, setRegion] = useState(props.initialRegion);
+  const [locationStatus, setLocationStatus] = useState(false)
 
   const [userMarker, setUserMarker] = useState([hawRegion]);
 
@@ -60,23 +61,48 @@ const MapViewGoogle = (props) => {
     
   }
 
-  // get user position
+  // // get user position
   useEffect(() => {
-    (async () => {      
-      let { status } = await Location.requestForegroundPermissionsAsync();
+    (async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        errorMsg('Permission to access location was denied');
+        setErrorMsg('Permission to access location was denied');
         return;
       }
 
-      let currentUserPos = await Location.getCurrentPositionAsync({});
-      // refreshMap()
-      setUserPos(currentUserPos);
-      userPosContext._currentValue = currentUserPos
-      //console.log(userPosContext._currentValue);
-      setIsUserPosLoaded(true)
+      const currentUserPos = await Location.getCurrentPositionAsync({});
+      // setUserPos(currentUserPos);
+      // userPosContext._currentValue = currentUserPos
+      // setIsUserPosLoaded(true)
     })();
   }, []);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const {foreground} = await Location.requestForegroundPermissionsAsync()
+  //     // if (foreground.granted) await Location.requestBackgroundPermissionsAsync()
+  //   })
+  // }, [])
+
+  // useEffect(() => {
+  //   Location.requestForegroundPermissionsAsync()
+  //   .then(() => {
+  //     Location.getForegroundPermissionsAsync()
+  //     .then((status) => {
+  //       console.log(status);
+  //     })
+  //     // if (status.granted.valueOf) {
+  //     //   Alert.alert('Standortberechtigungen wurden abgelehnt', 'Bitte betätigen Sie den "Position"-Knopf, um die eigene Position zu sehen');
+  //     // }
+  //   })
+
+  //   Location.getCurrentPositionAsync()
+  //   .then((currentUserPos) => {
+  //     setUserPos(currentUserPos);
+  //     userPosContext._currentValue = currentUserPos
+  //     setIsUserPosLoaded(true)
+  //   })
+  // }, []);
     
   const [selectedMarker, onSelectMarker] = useState();
 
@@ -101,26 +127,30 @@ const MapViewGoogle = (props) => {
   }
 
   const getCurrentPosition = () => {
-    // if (isUserPosLoaded === true) {
-    // console.log(userPos);
-    if (userPos.coords != undefined) {
-      console.log(),
-
-      editMarkerMode._currentValue === true
-      ? mapRefEdit.current.animateToRegion({
-          latitude: userPos.coords.latitude,
-          longitude: userPos.coords.longitude,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01
-        })
-
-      : mapRef.current.animateToRegion({
-          latitude: userPos.coords.latitude,
-          longitude: userPos.coords.longitude,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01
-        })
-  }}
+    Location.requestForegroundPermissionsAsync()
+    .then((status) => {
+      if (status.granted) {
+        if (userPos.coords != undefined) {
+          editMarkerMode._currentValue === true
+          ? mapRefEdit.current.animateToRegion({
+              latitude: userPos.coords.latitude,
+              longitude: userPos.coords.longitude,
+              latitudeDelta: 0.01,
+              longitudeDelta: 0.01
+            })
+    
+          : mapRef.current.animateToRegion({
+              latitude: userPos.coords.latitude,
+              longitude: userPos.coords.longitude,
+              latitudeDelta: 0.01,
+              longitudeDelta: 0.01
+            })
+        }
+      } else {
+        null
+      }
+    })
+  }
 
   useEffect(() => {
     //console.log(markersRef);
