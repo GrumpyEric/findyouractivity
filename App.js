@@ -135,7 +135,7 @@ function TabBarScreen({ navigation }) {
         
       })}
     >
-      <Tab.Screen options={({ navigation, route }) => options(navigation, route)} name="Profil" component={ProfileScreen} getComponent={}/>
+      <Tab.Screen options={({ navigation, route }) => options(navigation, route)} name="Profil" component={ProfileScreen}/>
       <Tab.Screen options={optionsNoHeader} name="Karte" component={HomeScreen}/>
       <Tab.Screen options={optionsNoHeader} name="Events" component={EventScreen}/>
       <Tab.Screen name="Logout" component={LogoutTabNullComponent} options={{tabBarButton: (props) => (
