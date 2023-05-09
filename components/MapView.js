@@ -26,6 +26,15 @@ const MapViewGoogle = (props) => {
   const [userPos, setUserPos] = useState([]);
   const [markerButtonVisible, setMarkerButtonVisible] = useState(false);
 
+  const [selectedMarker, onSelectMarker] = useState();
+
+  const HighlightMarker = inputMarker => {
+    onSelectMarker(inputMarker)
+    //alert(inputMarker.startTime)
+    //Alert.alert(selectedMarker.name.toString(), selectedMarker.description.toString() );
+    //Alert.alert(selectedMarker.longitude.toString(), selectedMarker.latitude.toString() );
+  }
+
   // get current Region
   const [region, setRegion] = useState(props.initialRegion);
   const [locationStatus, setLocationStatus] = useState(false)
