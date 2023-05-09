@@ -81,7 +81,7 @@ return (
 
       <View style={styles.contentSeparatorStyle}>
       <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>Events</Text>
-        <ScrollView style={styles.scrollAreaStyle}>
+        <ScrollView style={styles.scrollAreaStyle} contentContainerStyle={styles.scrollAreaContentContainerStyle}>
           {eventArray.map((val, index) => {
 
             let distanceToUserPos = "?"//getDistance(val,props.userPosContext.coords) / 1000
@@ -133,8 +133,8 @@ return (
             }
 
             return (
-              <View style={{marginBottom: 10, borderBottomWidth: 1}}>
-                <TouchableOpacity onPress={() => console.log(val)}>
+              <View style={{marginBottom: 15, borderTopWidth: index === 0 ? 0 : 1}}>
+                <TouchableOpacity onPress={() => console.log(val)} style={{marginTop: 10}}>
                   <Text key={Math.random().toString()}> {val.name} </Text>
                   <Text key={Math.random().toString()}> {val.description} </Text>
                   { displayStartTime(val) }
@@ -164,9 +164,14 @@ const styles = StyleSheet.create({
   },
 
   scrollAreaStyle: {
-    flexGrow: 1,
+    height: height * 0.3,
     borderWidth: 2,
-    borderRadius: 10
+    borderRadius: 10,
+    backgroundColor: Colors.findmyactivityWhite
+  },
+
+  scrollAreaContentContainerStyle: {
+    margin: 5,
   },
 
   contentSeparatorStyle: {
