@@ -61,104 +61,71 @@ const MapViewGoogle = (props) => {
     
   }
 
-  // // get user position
-  useEffect(() => {
-    (async () => {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }
-
-      const currentUserPos = await Location.getCurrentPositionAsync({});
-      // setUserPos(currentUserPos);
-      // userPosContext._currentValue = currentUserPos
-      // setIsUserPosLoaded(true)
-    })();
-  }, []);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const {foreground} = await Location.requestForegroundPermissionsAsync()
-  //     // if (foreground.granted) await Location.requestBackgroundPermissionsAsync()
-  //   })
-  // }, [])
-
-  // useEffect(() => {
-  //   Location.requestForegroundPermissionsAsync()
-  //   .then(() => {
-  //     Location.getForegroundPermissionsAsync()
-  //     .then((status) => {
-  //       console.log(status);
-  //     })
-  //     // if (status.granted.valueOf) {
-  //     //   Alert.alert('Standortberechtigungen wurden abgelehnt', 'Bitte betätigen Sie den "Position"-Knopf, um die eigene Position zu sehen');
-  //     // }
-  //   })
-
-  //   Location.getCurrentPositionAsync()
-  //   .then((currentUserPos) => {
-  //     setUserPos(currentUserPos);
-  //     userPosContext._currentValue = currentUserPos
-  //     setIsUserPosLoaded(true)
-  //   })
-  // }, []);
-    
-  const [selectedMarker, onSelectMarker] = useState();
-
-  const HighlightMarker = inputMarker => {
-    onSelectMarker(inputMarker)
-    //alert(inputMarker.startTime)
-    //Alert.alert(selectedMarker.name.toString(), selectedMarker.description.toString() );
-    //Alert.alert(selectedMarker.longitude.toString(), selectedMarker.latitude.toString() );
+  function tryTurnOnGPS() {
+    Location.getCurrentPositionAsync()
+      .then((currentUserPos) => {
+        setUserPos(currentUserPos);
+        userPosContext._currentValue = currentUserPos
+        setIsUserPosLoaded(true)
+      })
+      .catch(() => {
+        Location.hasServicesEnabledAsync()
+        .then((services) => {
+          if (!services) {
+            Alert.alert('Standortdienste sind nicht eingeschaltet', 'Bitte betätigen Sie den "Position"-Knopf, um die Standortdienste einzuschalten, sonst kann Ihre Position nicht gelesen werden')
+          }
+        })
+      })
   }
 
-  const geodude = async(eventLat,eventLng) => {
-    let address = "";
-    reverseGeocodeAsync({latitude:eventLat,longitude:eventLng})
-    .then((value) =>{      
-      address = `${value[0].name}, ${value[0].street}, ${value[0].postalCode}, ${value[0].city}`
-      //alert(address)
-      return address
-    })
-    .catch((error) => {
-      alert(error)
-    })
-  }
-
-  const getCurrentPosition = () => {
+  function getCurrentPosition() {
     Location.requestForegroundPermissionsAsync()
     .then((status) => {
       if (status.granted) {
-        if (userPos.coords != undefined) {
-          editMarkerMode._currentValue === true
-          ? mapRefEdit.current.animateToRegion({
-              latitude: userPos.coords.latitude,
-              longitude: userPos.coords.longitude,
-              latitudeDelta: 0.01,
-              longitudeDelta: 0.01
-            })
-    
-          : mapRef.current.animateToRegion({
-              latitude: userPos.coords.latitude,
-              longitude: userPos.coords.longitude,
-              latitudeDelta: 0.01,
-              longitudeDelta: 0.01
-            })
-        }
-      } else {
-        null
+
+        Location.hasServicesEnabledAsync()
+        .then((services) => {
+          if (!services) tryTurnOnGPS()
+        })
+        .then(() => {
+          if (userPos.coords != undefined) {
+            editMarkerMode._currentValue === true
+            ? mapRefEdit.current.animateToRegion({
+                latitude: userPos.coords.latitude,
+                longitude: userPos.coords.longitude,
+                latitudeDelta: 0.01,
+                longitudeDelta: 0.01
+              })
+      
+            : mapRef.current.animateToRegion({
+                latitude: userPos.coords.latitude,
+                longitude: userPos.coords.longitude,
+                latitudeDelta: 0.01,
+                longitudeDelta: 0.01
+              })
+          }
+        })
+        .catch(() => {
+          tryTurnOnGPS()
+        })
       }
+      
     })
   }
 
   useEffect(() => {
-    //console.log(markersRef);
-  }, [markersRef])
-
-  useEffect(() => {
-    console.log('MAPVIEW RANGE:', rangeContext._currentValue);
-  }, [region])
+    Location.requestForegroundPermissionsAsync()
+    .then((status) => {
+      if (!status.granted) {
+        Alert.alert('Standortberechtigungen wurden abgelehnt', 'Bitte betätigen Sie den "Position"-Knopf, um die eigene Position zu sehen');
+      } else {
+        Location.requestBackgroundPermissionsAsync()
+      }
+    })
+    .then(() => {
+      tryTurnOnGPS()
+    })
+  }, []);
   
   return (
     <View style={{...StyleSheet.absoluteFillObject}}>
@@ -166,7 +133,7 @@ const MapViewGoogle = (props) => {
         onPress={() => getCurrentPosition()}
         bottomPos={height * 0.25}
         rightPos={width * 0.025}
-        icon={'location-on'}
+        icon={'crosshairs-gps'}
         text={'Position'}
       />
 
@@ -175,18 +142,18 @@ const MapViewGoogle = (props) => {
         onPress={() => navigation.navigate("FilterScreen")}
         bottomPos={height * 0.35}
         rightPos={width * 0.025}
-        icon={'filter-alt'}
+        icon={'filter'}
         text={'Filter'}
       />
       : null}
 
-      {/* Hilfescreen? */}
-      {/* <FloatingActionButton
+      <FloatingActionButton
         onPress={() => null}
-        bottomPos={height * 0.35}
-        rightPos={10}
-        icon={'question'}
-      /> */}
+        bottomPos={height * 0.15}
+        rightPos={width * 0.025}
+        icon={'account-question'}
+        text={'Hilfe'}
+      />
 
       {markerButtonVisible && editMarkerMode._currentValue === false ?
       <View style={{
