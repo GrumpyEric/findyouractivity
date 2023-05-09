@@ -32,11 +32,10 @@ const options = (navigation, route, props) => {
   return (
     {
       headerTitle: '', 
-      headerLeft: () => headerLeft(navigation), 
+      headerLeft: () => route.name === 'Profil' ? null : headerLeft(navigation), 
       headerRight: headerRight, 
       headerStyle: {
-        backgroundColor: 
-          Colors.findmyactivityBackground,
+        backgroundColor: Colors.findmyactivityBackground,
       },
       props
     }
@@ -136,7 +135,7 @@ function TabBarScreen({ navigation }) {
         
       })}
     >
-      <Tab.Screen options={optionsNoHeader} name="Profil" component={ProfileScreen}/>
+      <Tab.Screen options={({ navigation, route }) => options(navigation, route)} name="Profil" component={ProfileScreen} getComponent={}/>
       <Tab.Screen options={optionsNoHeader} name="Karte" component={HomeScreen}/>
       <Tab.Screen options={optionsNoHeader} name="Events" component={EventScreen}/>
       <Tab.Screen name="Logout" component={LogoutTabNullComponent} options={{tabBarButton: (props) => (
@@ -196,7 +195,7 @@ function HomeStackScreen() {
         },
 
         })}>
-        <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)}  name='CreateMarkersScreen' component={CreateMarkersScreen}/>
+        <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name='CreateMarkersScreen' component={CreateMarkersScreen}/>
         <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name='EditMarkerLocationScreen' component={EditMarkerLocationScreen}/>
         <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name="FilterScreen" component={FilterScreen}/>          
         <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name="ViewMarkerScreen" component={ViewMarkerScreen}/>
@@ -228,14 +227,16 @@ export default function App() {
 
 const styles = StyleSheet.create({
   headerLeftStyle: {
-    marginLeft: width * 0.03, 
+    paddingLeft: width * 0.03, 
     flexDirection: 'row', 
-    alignItems: 'center'
+    alignItems: 'center',
+    position: 'absolute'
   },
 
   headerRightStyle: {
-    marginRight: width * 0.03, 
+    paddingRight: width * 0.03, 
     flexDirection: 'row', 
-    alignItems: 'center'
+    alignItems: 'center',
+    position: 'absolute'
   },
 })

@@ -1,5 +1,5 @@
 import { updateUserFromDB, readUserFromDB, markersRef } from '../constants/MainFunctions';
-import { selectedUserContext, loggedInUser, userPosContext } from '../components/AppContext';
+import { selectedUserContext, loggedInUser, userPosContext, mapRef } from '../components/AppContext';
 import { getDistance } from 'geolib';
 import React, { useState } from "react";
 import {
@@ -7,7 +7,8 @@ import {
   View,
   Text,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from "react-native";
 import { height, stylesGlobal } from '../constants/StylesGlobal';
 import TextInputField from '../components/TextInputField';
@@ -16,6 +17,10 @@ import Colors from '../constants/Colors';
 import ButtonBack from '../components/ButtonBack';
 
 const Profile = ( {navigation} ) => {
+  navigation.setOptions({
+    headerTransparent: true
+  })
+
   let eventArray = markersRef.filter(function (arr) {
       return arr.user === selectedUserContext._current_value.markers.uid
   })
@@ -25,22 +30,27 @@ const Profile = ( {navigation} ) => {
   const [displayDescription, setDisplayDescription] = useState(selectedUserContext._current_value.markers.description)
 
   const onSaveButton = () => {
-    
     updateUserFromDB(selectedUserContext._current_value.markers.uid, displayUsername, displayDescription)
-
     readUserFromDB(selectedUserContext._current_value.markers.uid)
-    navigation.pop();
+    Alert.alert('Ihr Profil wurde aktualisiert')
   }
 
-  const onCloseButton = () => {
-    navigation.pop();
+  const moveToMarker = (inputMarker) => {
+    navigation.goBack()
+    mapRef.current.animateToRegion({
+    latitude: inputMarker.latitude,
+    longitude: inputMarker.longitude,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01
+    })
   }
 
-return (
+  return (
   <View style={[stylesGlobal.screenContainer, styles.container]}>
     <FloatingBurgerMenu
       onPress={() => navigation.openDrawer()}
       icon={'navicon'}
+
     />
     <ButtonBack
       onPress={() => navigation.goBack()}
@@ -134,7 +144,7 @@ return (
 
             return (
               <View style={{marginBottom: 15, borderTopWidth: index === 0 ? 0 : 1}}>
-                <TouchableOpacity onPress={() => console.log(val)} style={{marginTop: 10}}>
+                <TouchableOpacity onPress={() => moveToMarker(val)} style={{marginTop: 10}}>
                   <Text key={Math.random().toString()}> {val.name} </Text>
                   <Text key={Math.random().toString()}> {val.description} </Text>
                   { displayStartTime(val) }
@@ -155,12 +165,13 @@ return (
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.findmyactivityBackground
+    backgroundColor: Colors.findmyactivityBackground,
   },
   
   textLabels: {
     alignSelf: 'flex-start',
-    width: '100%'
+    width: '100%',
+    marginBottom: 2
   },
 
   scrollAreaStyle: {
@@ -177,7 +188,7 @@ const styles = StyleSheet.create({
   contentSeparatorStyle: {
     marginVertical: stylesGlobal.marginsAndPadding.paddingBetweenItems,
     width: '100%',
-  }
+  },
 });
 
 export default Profile;

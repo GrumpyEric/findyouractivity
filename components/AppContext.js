@@ -41,5 +41,6 @@ export const selectedAuthor = createContext()
 
 export const participantContext = createContext()
 export const selectedMarkerContext = createContext()
+export const saveProfileChangesFunctionContext = createContext()
 
 // export {latitudeContext}

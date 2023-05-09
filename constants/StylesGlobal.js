@@ -59,7 +59,7 @@ const stylesGlobal = StyleSheet.create({
   },
 
   contentContainerMainScreens: {
-    paddingTop: '20%',
+    marginTop: '20%',
     width: '100%'
   },
 

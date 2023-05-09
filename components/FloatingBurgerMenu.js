@@ -27,7 +27,7 @@ class FloatingBurgerMenu extends React.Component {
   }
 }
 
-FloatingBurgerMenu.propTypes = { onPress: PropTypes.func.isRequired, icon: PropTypes.string.isRequired,  }
+FloatingBurgerMenu.propTypes = { onPress: PropTypes.func.isRequired, icon: PropTypes.string.isRequired }
 
 export default FloatingBurgerMenu
 
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     borderRadius: 35,
     width: 70,
     height: 70,
-    alignItems: 'center'
+    alignItems: 'center',
   },
 
   iconStyle: {

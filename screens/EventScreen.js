@@ -21,16 +21,15 @@ import FloatingBurgerMenu from "../components/FloatingBurgerMenu";
 import ButtonBack from "../components/ButtonBack";
 
 const EventScreen = ( {navigation} ) => {
-
-    const moveToMarker = (inputMarker) => {
-        mapRef.current.animateToRegion({
-        latitude: inputMarker.latitude,
-        longitude: inputMarker.longitude,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01
-        })
-        navigation.pop()
-    }
+  const moveToMarker = (inputMarker) => {
+    navigation.goBack()
+    mapRef.current.animateToRegion({
+    latitude: inputMarker.latitude,
+    longitude: inputMarker.longitude,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01
+    })
+  }
 
     function editMarkerHandler(val) {
         navigation.navigate('CreateMarkersScreen'); editMarker(val)
