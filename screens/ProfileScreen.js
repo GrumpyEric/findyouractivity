@@ -1,5 +1,5 @@
 import { updateUserFromDB, readUserFromDB, markersRef } from '../constants/MainFunctions';
-import { selectedUserContext, loggedInUser, userPosContext, mapRef } from '../components/AppContext';
+import { selectedUserContext, loggedInUser, userPosContext, mapRef, saveProfileChangesFunctionContext } from '../components/AppContext';
 import { getDistance } from 'geolib';
 import React, { useState } from "react";
 import {
@@ -34,6 +34,8 @@ const Profile = ( {navigation} ) => {
     readUserFromDB(selectedUserContext._current_value.markers.uid)
     Alert.alert('Ihr Profil wurde aktualisiert')
   }
+
+  saveProfileChangesFunctionContext._currentValue = onSaveButton
 
   const moveToMarker = (inputMarker) => {
     navigation.goBack()
@@ -100,13 +102,6 @@ const Profile = ( {navigation} ) => {
                 distanceToUserPos = getDistance(val, userPosContext._currentValue.coords) / 1000
             }
 
-            const displayTags = (val) => {
-                if( (val.tags != undefined)) 
-                {
-                return <Text> Tags: {val.tags.toString()}</Text>
-                }
-            }
-
             const displayStartTime = (val) => {
 
                 let startTimeRes = ""//val.startTime
@@ -121,7 +116,7 @@ const Profile = ( {navigation} ) => {
                 //return <Text> Start-Zeit: unbekannt </Text>
                 startTimeRes = "unbekannt"
                 }
-                return  <Text> Start-Zeit: {startTimeRes} </Text>
+                return <Text style={stylesGlobal.standardText}> Start-Zeit: {startTimeRes} </Text>
             }
 
             const displayEndTime = (val) => {
@@ -139,17 +134,26 @@ const Profile = ( {navigation} ) => {
                 endTimeRes = "unbekannt"
                 }
 
-                return <Text> End-Zeit: {endTimeRes} </Text>
+                return <Text style={stylesGlobal.standardText}> End-Zeit: {endTimeRes} </Text>
+            }
+
+            const displayTags = (val) => {
+              if( (val.tags != undefined)) {
+                return <Text style={stylesGlobal.standardText}> Tags: {val.tags.toString()}</Text>
+              }
             }
 
             return (
-              <View style={{marginBottom: 15, borderTopWidth: index === 0 ? 0 : 1}}>
+              <View style={{marginBottom: 15, borderTopWidth: index === 0 ? 0 : 1}} key={index}>
                 <TouchableOpacity onPress={() => moveToMarker(val)} style={{marginTop: 10}}>
-                  <Text key={Math.random().toString()}> {val.name} </Text>
-                  <Text key={Math.random().toString()}> {val.description} </Text>
+                  <Text style={[stylesGlobal.ueberschriftText2, {marginBottom: val.description ? 0 : 5} ]}> {val.name} </Text>
+                  {val.description 
+                    ? <Text style={[stylesGlobal.standardText, {marginBottom: 5}]}> {val.description} </Text>
+                    : null
+                  }
                   { displayStartTime(val) }
                   { displayEndTime(val) }
-                  <Text> Distanz: {distanceToUserPos} km</Text>
+                  <Text style={stylesGlobal.standardText}> Distanz: {distanceToUserPos} km</Text>
                   { displayTags(val) }
                 </TouchableOpacity>
               </View>

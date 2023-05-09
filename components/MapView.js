@@ -26,15 +26,6 @@ const MapViewGoogle = (props) => {
   const [userPos, setUserPos] = useState([]);
   const [markerButtonVisible, setMarkerButtonVisible] = useState(false);
 
-  const [selectedMarker, onSelectMarker] = useState();
-
-  const HighlightMarker = inputMarker => {
-    onSelectMarker(inputMarker)
-    //alert(inputMarker.startTime)
-    //Alert.alert(selectedMarker.name.toString(), selectedMarker.description.toString() );
-    //Alert.alert(selectedMarker.longitude.toString(), selectedMarker.latitude.toString() );
-  }
-
   // get current Region
   const [region, setRegion] = useState(props.initialRegion);
   const [locationStatus, setLocationStatus] = useState(false)
@@ -285,7 +276,7 @@ const MapViewGoogle = (props) => {
             return (
               <View key={index}>
                 {rangeContext._currentValue != null && distanceToUserPos != '?' && rangeContext._currentValue >= distanceToUserPos || rangeContext._currentValue === 21 ?
-                <Marker key={index} coordinate={val} pinColor={val.color} tracksViewChanges={true} onPress={() => { HighlightMarker(val); getUserInfoFromDB(val.user) }}>
+                <Marker key={index} coordinate={val} pinColor={val.color} tracksViewChanges={true} onPress={() => { getUserInfoFromDB(val.user) }}>
                   <Callout onPress={ () => navigation.navigate('ViewMarkerScreen', { creationDate:val.creation_date, eventName: val.name, eventDescription: val.description,  eventAuthorUsername: selectedAuthor._current_value.markers.username, eventAuthorDescription: selectedAuthor._current_value.markers.description, eventAuthorID: val.user, eventStartTime: displayStartTime(val), eventEndTime:displayEndTime(val), eventTags: displayTags(val), eventMaxParticipants: val.numberParticipants, eventLocationDescription: val.locationDescription, eventParticipantList: val.participantList } ) }>
                       <Text key={Math.random().toString()}> Name:  {val.name} </Text>
                       <Text key={Math.random().toString()}> Beschreibung:  {val.description} </Text>

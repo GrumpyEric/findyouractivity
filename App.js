@@ -27,6 +27,7 @@ import { TouchableOpacity } from 'react-native';
 import { Text } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { handleSignOut } from './constants/MainFunctions';
+import { saveProfileChangesFunctionContext } from './components/AppContext';
 
 const options = (navigation, route, props) => {
   return (
@@ -60,7 +61,7 @@ const headerLeft = (navigation) => {
 const headerRight = () => {
   return (
     <TouchableOpacity
-      onPress={null}
+      onPress={() => saveProfileChangesFunctionContext._currentValue()}
       style={styles.headerRightStyle}
     >
       <Icon 
