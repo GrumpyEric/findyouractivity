@@ -95,7 +95,7 @@ const EventScreen = ( {navigation} ) => {
     }, [radiusMarkers])
 
   return (
-    <View style={stylesGlobal.screenContainer}>
+    <View style={[stylesGlobal.screenContainer, styles.container]}>
       <FloatingBurgerMenu
         onPress={() => navigation.openDrawer()}
         icon={'navicon'}
@@ -104,10 +104,10 @@ const EventScreen = ( {navigation} ) => {
         onPress={() => navigation.goBack()}
         text={'Zurück'}
       />
-      <View style={{alignItems: 'center'}}>
-      <Text style={stylesGlobal.ueberschriftText}>Events</Text>
-        <Text style={stylesGlobal.ueberschriftText2}>Ansicht umstellen auf:</Text>
-        <View style={{flexDirection: 'row'}}> 
+      <View style={stylesGlobal.contentContainerMainScreens}>
+      <Text style={[stylesGlobal.ueberschriftText, {textAlign: 'center'}]}>Events</Text>
+        <Text style={[stylesGlobal.ueberschriftText2, {textAlign: 'center'}]}>Ansicht umstellen auf:</Text>
+        <View style={{flexDirection: 'row', justifyContent: "center"}}> 
           <Text style={{color: showMyMarkers ? '#CAD6E0' : Colors.findmyactivityText, alignSelf: 'center'}}>Alle Marker</Text>
           <Switch
             value={showMyMarkers}
@@ -228,8 +228,7 @@ const EventScreen = ( {navigation} ) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "rgba(223,242,242,1)"
+    backgroundColor: Colors.findmyactivityBackground
   },
   alleMarkerAnzeigen: {
     color: "#121212"
@@ -276,7 +275,7 @@ const styles = StyleSheet.create({
   sliderStack: {
     width: 340,
     height: 59,
-    marginTop: 37,
+    // marginTop: 37,
     marginLeft: 10,
   },
   scrollArea: {
