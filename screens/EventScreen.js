@@ -18,6 +18,7 @@ import {
 } from "react-native";
 import { stylesGlobal } from "../constants/StylesGlobal";
 import FloatingBurgerMenu from "../components/FloatingBurgerMenu";
+import ButtonBack from "../components/ButtonBack";
 
 const EventScreen = ( {navigation} ) => {
 
@@ -99,6 +100,10 @@ const EventScreen = ( {navigation} ) => {
       <FloatingBurgerMenu
         onPress={() => navigation.openDrawer()}
         icon={'navicon'}
+      />
+      <ButtonBack
+        onPress={() => navigation.goBack()}
+        text={'Zurück'}
       />
       <View style={{alignItems: 'center'}}>
       <Text style={stylesGlobal.ueberschriftText}>Events</Text>

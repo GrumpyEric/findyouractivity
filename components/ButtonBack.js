@@ -11,41 +11,13 @@ function ButtonBack(props) {
     <FloatingActionButton
       bottomPos={height * 0.05}
       rightPos={width * 0.05}
-      icon="arrow-back"
+      icon="arrow-left"
       text={'Zurück'}
       onPress={props.onPress}
     />
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 50,
-    shadowColor: "#111",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.2,
-    elevation: 2,
-    width: 75,
-    height: 75,
-    backgroundColor: Colors.findmyactivityYellow
-  },
-  icon: {
-    color: stylesGlobal.buttonTextBlack.color,
-    fontSize: 30,
-    alignSelf: "center"
-  }
-});
-
-ButtonBack.propTypes = { onPress: PropTypes.func, style: PropTypes.any, text: PropTypes.string,
-
-  
-
-}
+ButtonBack.propTypes = { onPress: PropTypes.func, style: PropTypes.any, text: PropTypes.string }
 
 export default ButtonBack;

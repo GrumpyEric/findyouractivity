@@ -7,11 +7,12 @@ import Slider from '@react-native-community/slider';
 import { applyFilters, db_markers } from '../constants/MainFunctions';
 
 import Colors from '../constants/Colors'
-import { stylesGlobal } from '../constants/StylesGlobal';
+import { height, stylesGlobal } from '../constants/StylesGlobal';
 
 import DropDownPicker from 'react-native-dropdown-picker';
 import { arrayIsEmpty } from '../constants/HelperFunctionsAndVariables';
 import ButtonSmall from '../components/ButtonSmall';
+import ButtonBack from '../components/ButtonBack';
 
 const FilterScreen = ( {navigation} ) => {
   const [open, setOpen] = useState(false);
@@ -98,9 +99,10 @@ const FilterScreen = ( {navigation} ) => {
  
 return(
   <View style={styles.screenContainer}>
-    {/* <EventHeader
-      text={'Filter'}
-    /> */}
+    <ButtonBack
+      onPress={() => handleGoBack()}
+      text={'Zurück'}
+    />
     <View style={{width: '100%', marginBottom: 40}}>
       <Text style={stylesGlobal.ueberschriftText2}>Radius</Text>
       <Text>{radiusMarkersVisual === 'alle' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>

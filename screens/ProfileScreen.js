@@ -13,6 +13,7 @@ import { height, stylesGlobal } from '../constants/StylesGlobal';
 import TextInputField from '../components/TextInputField';
 import FloatingBurgerMenu from '../components/FloatingBurgerMenu';
 import Colors from '../constants/Colors';
+import ButtonBack from '../components/ButtonBack';
 
 const Profile = ( {navigation} ) => {
   let eventArray = markersRef.filter(function (arr) {
@@ -41,7 +42,10 @@ return (
       onPress={() => navigation.openDrawer()}
       icon={'navicon'}
     />
-    
+    <ButtonBack
+      onPress={() => navigation.goBack()}
+      text={'Zurück'}
+    />
     <View style={stylesGlobal.contentContainerMainScreens}>
       <Text style={[stylesGlobal.ueberschriftText, {textAlign: 'center'}]}>Profil</Text>
 

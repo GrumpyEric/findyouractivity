@@ -24,12 +24,10 @@ const ForgotPasswordScreen = () => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     <View style={[stylesGlobal.screenContainer, styles.container]}>
       
-      {/* <View style={{position: 'absolute', bottom: height * 0.075, right: width * 0.075}}> */}
-        <ButtonBack
-          onPress={() => handleGoBack()}
-          text={'Zurück'}
-        />
-      {/* </View> */}
+      <ButtonBack
+        onPress={() => handleGoBack()}
+        text={'Zurück'}
+      />
 
       <Text 
         style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenViews, textAlign: 'center'}]}
