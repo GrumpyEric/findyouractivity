@@ -1,13 +1,13 @@
 
 import React, { useEffect, useState } from 'react'
-import { Alert,View, Text, TouchableOpacity, ScrollView,StyleSheet } from 'react-native';
+import { Alert,View, Text, StyleSheet } from 'react-native';
 import { filterContext,tagData, rangeContext } from '../components/AppContext';
 import Slider from '@react-native-community/slider';
 
 import { applyFilters, db_markers } from '../constants/MainFunctions';
 
 import Colors from '../constants/Colors'
-import { height, stylesGlobal } from '../constants/StylesGlobal';
+import { height, paddingBetweenItems, stylesGlobal } from '../constants/StylesGlobal';
 
 import DropDownPicker from 'react-native-dropdown-picker';
 import { arrayIsEmpty } from '../constants/HelperFunctionsAndVariables';
@@ -20,7 +20,7 @@ const FilterScreen = ( {navigation} ) => {
   const [value, setValue] = useState(filterContext._current_value);
 
   const [radiusMarkers, setRadiusMarkers] = useState(rangeContext._currentValue)
-  const [radiusMarkersVisual, setRadiusMarkersVisual] = useState(rangeContext._currentValue)
+  const [radiusMarkersVisual, setRadiusMarkersVisual] = useState(rangeContext._currentValue === 21 ? 'alle Marker anzeigen' : rangeContext._currentValue)
   
   // ausgewählte Filter als Badges anzeigen
   DropDownPicker.setMode("BADGE");
@@ -54,14 +54,12 @@ const FilterScreen = ( {navigation} ) => {
   function resetRange() {
     rangeContext._currentValue = 21
     setRadiusMarkers(21)
-    setRadiusMarkersVisual(21)
+    setRadiusMarkersVisual('alle Marker anzeigen')
     console.log('context:', rangeContext._currentValue);
     console.log('radius markers:', radiusMarkers);
   }
 
   const saveFilters = () => {
-    //alert("TODO: Filter-Auswahl speichern")
-    //filtersRef = selected
     filterContext._current_value = value
     changeRange();
     if (arrayIsEmpty(filterContext._current_value) || filterContext._current_value === undefined) {
@@ -75,7 +73,6 @@ const FilterScreen = ( {navigation} ) => {
       const alerta_msg = 'Filter wurde zu ' + filterContext._current_value.toString() + (radiusMarkers === 21 ? ' und Radius der angezeigten Marker wurde zu ALLEN Markern geändert!' : ' und Radius der angezeigten Marker wurde auf ' + rangeContext._currentValue + ' km' +  ' geändert!')
       Alert.alert(alerta_title, alerta_msg);
       rangeContext._currentValue = radiusMarkers
-      //navigation.pop()
       
     }
   }
@@ -88,31 +85,31 @@ const FilterScreen = ( {navigation} ) => {
     const alerta_title = "Erfolg"
     const alerta_text = "Filter wurden zurückgesetzt"
     Alert.alert(alerta_title,alerta_text) ;
-    //navigation.pop()
   }
   
 return(
-  <View style={styles.screenContainer}>
+  <View style={[stylesGlobal.screenContainer, styles.screenContainer]}>
+    <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems}]}>Filter</Text>
     <ButtonBack
-      onPress={() => handleGoBack()}
+      onPress={() => navigation.goBack()}
       text={'Zurück'}
     />
-    <View style={{width: '100%', marginBottom: 40}}>
+    <View style={{width: '100%', marginBottom: paddingBetweenItems}}>
       <Text style={stylesGlobal.ueberschriftText2}>Radius</Text>
-      <Text>{radiusMarkersVisual === 'alle' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>
+      <Text>{radiusMarkersVisual === 'alle Marker anzeigen' || radiusMarkersVisual === 21 ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>
       <Slider
         minimumValue={0}
         maximumValue={21}
         onSlidingComplete={(value) => { value < 21 ? setRadiusMarkers(value) : setRadiusMarkers('alle') } }
         step={1}
         value={radiusMarkers}
-        onValueChange={(value) => value < 21 ? setRadiusMarkersVisual(value) : setRadiusMarkersVisual('alle')}
+        onValueChange={(value) => value < 21 ? setRadiusMarkersVisual(value) : setRadiusMarkersVisual('alle Marker anzeigen')}
         minimumTrackTintColor={Colors.findmyactivityYellow}
         thumbTintColor={Colors.findmyactivityGreen}
       />
     </View>
 
-    <Text style={stylesGlobal.ueberschriftText2}>Tags</Text>
+    <Text style={[stylesGlobal.ueberschriftText2, {alignSelf: 'flex-start', marginBottom: 2}]}>Tags</Text>
     <DropDownPicker
       searchable={true}
       multiple={true}
@@ -123,6 +120,7 @@ return(
       setOpen={setOpen}
       setValue={setValue}
       setItems={setItems}
+      listMode='MODAL'
     />
 
     <View style={styles.button}>
@@ -132,12 +130,14 @@ return(
           onPress={() => saveFilters()}
           backgroundColor={Colors.findmyactivityYellow}
           borderColor={Colors.findmyactivityYellow}
+          width={150}
         />
         <ButtonVariable
           text={'Zurücksetzen'}
           onPress={() => clearFilters()}
           backgroundColor={'red'}
           borderColor={'red'}
+          width={150}
         />
       </View>
     </View>
@@ -150,15 +150,13 @@ export default FilterScreen
 
 const styles = StyleSheet.create({
   screenContainer: {
-    flex: stylesGlobal.screenContainer.flex,
-    // paddingHorizontal: stylesGlobal.screenContainer.paddingHorizontal,
-    // paddingVertical: stylesGlobal.screenContainer.paddingVertical,
-    backgroundColor: stylesGlobal.screenContainer.backgroundColor,
-    alignItems: 'center'
+    backgroundColor: Colors.findmyactivityBackground,
   },
 
   button: {
-    alignItems: 'center',
-    marginTop: 40,
+    marginTop: stylesGlobal.marginsAndPadding.paddingBetweenItems,
+    position: 'absolute',
+    bottom: height * 0.15,
+    zIndex: -1
   },
 })

@@ -11,13 +11,13 @@ import { latitudeContext, longitudeContext, mapRef, userPosContext, rangeContext
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
-import { format } from 'date-fns'
+import { format, isSameDay, isTomorrow } from 'date-fns'
 import { useNavigation } from "@react-navigation/native";
 import ButtonVariable from "./ButtonVariable";
 
 import PropTypes from 'prop-types'
 import Colors from "../constants/Colors";
-import { width, height } from "../constants/StylesGlobal";
+import { width, height, stylesGlobal } from "../constants/StylesGlobal";
 
 const MapViewGoogle = (props) => {
   const navigation = useNavigation()
@@ -230,53 +230,61 @@ const MapViewGoogle = (props) => {
               distanceToUserPos = getDistance(val, userPos.coords) / 1000
             }
 
-            const displayTags = (val) => {
-              if( (val.tags != undefined)) 
-              {
-                return <Text> Tags: {val.tags.toString()}</Text>
-              }
-            }
-
             const displayStartTime = (val) => {
 
-              let startTimeRes = ""//val.startTime
+              let startTimeRes = "unbekannt"
+              const startDate = val.startTime.toDate()
+              const today = new Date()
 
-              if( (val.startTime != undefined) ) 
-              {
-                //return <Text> Start-Zeit: {val.startTime.toDate().toString()} </Text>
-                startTimeRes = format(val.startTime.toDate(), 'dd.MM.yyyy, HH:mm') + ' Uhr'
+              if (val.startTime) {
+                if (isSameDay(startDate, today)) {
+                  startTimeRes = "Heute um " + format(startDate, 'HH:mm') + ' Uhr'
+                
+                } else if (isTomorrow(startDate)) {
+                  startTimeRes = "Morgen um " + format(startDate, 'HH:mm') + ' Uhr'
+
+                } else {
+                  startTimeRes = format(startDate, 'dd.MM.yyyy - HH:mm') + ' Uhr'
+                }
               }
-              else if ( !(val.startTime != undefined) ) 
-              {
-                //return <Text> Start-Zeit: unbekannt </Text>
-                startTimeRes = "unbekannt"
+              return <Text style={stylesGlobal.standardText}> Start: {startTimeRes} </Text>
+          }
+
+          const displayEndTime = (val) => {
+
+              let endTimeRes = "unbekannt"
+              const endDate = val.endTime.toDate()
+              const today = new Date()
+
+              if (val.endTime) {
+                if (isSameDay(endDate, today)) {
+                  endTimeRes = "Heute um " + format(endDate, 'HH:mm') + ' Uhr'
+                
+                } else if (isTomorrow(endDate)) {
+                  endTimeRes = "Morgen um " + format(endDate, 'HH:mm') + ' Uhr'
+
+                } else {
+                  endTimeRes = format(endDate, 'dd.MM.yyyy - HH:mm') + ' Uhr'
+                }
               }
-              return  <Text> Start-Zeit: {startTimeRes.toString()} </Text>
+
+              return <Text style={stylesGlobal.standardText}> Ende: {endTimeRes} </Text>
+          }
+
+          const displayTags = (val) => {
+            console.log(val.tags);
+            if( (val.tags.length)) {
+              return <Text style={stylesGlobal.standardText}> Tags: {val.tags.toString()}</Text>
+            } else {
+              return <Text style={stylesGlobal.standardText}> Tags: keine Tags vergeben</Text>
             }
-
-            const displayEndTime = (val) => {
-
-              let endTimeRes = ""//val.endTime
-
-              if( (val.endTime != undefined) ) 
-              {
-                //return <Text> Start-Zeit: {val.startTime.toDate().toString()} </Text>
-                endTimeRes = format(val.endTime.toDate(), 'dd.MM.yyyy, HH:mm') + ' Uhr'
-              }
-              else if ( !(val.endTime != undefined) ) 
-              {
-                //return <Text> Start-Zeit: unbekannt </Text>
-                endTimeRes = "unbekannt"
-              }
-
-              return  <Text> End-Zeit: {endTimeRes.toString()} </Text>
-            }
+          }
 
             return (
               <View key={index}>
-                {rangeContext._currentValue != null && distanceToUserPos != '?' && rangeContext._currentValue >= distanceToUserPos || rangeContext._currentValue === 21 ?
+                {rangeContext._currentValue != null && distanceToUserPos != '?' && rangeContext._currentValue >= distanceToUserPos || rangeContext._currentValue === 21 || rangeContext._currentValue === 'alle' ?
                 <Marker key={index} coordinate={val} pinColor={'#FF0000'} tracksViewChanges={true} onPress={() => { getUserInfoFromDB(val.user) }}>
-                  <Callout onPress={ () => navigation.navigate('ViewMarkerScreen', { creationDate:val.creation_date, eventName: val.name, eventDescription: val.description,  eventAuthorUsername: selectedAuthor._current_value.markers.username, eventAuthorDescription: selectedAuthor._current_value.markers.description, eventAuthorID: val.user, eventStartTime: displayStartTime(val), eventEndTime:displayEndTime(val), eventTags: displayTags(val), eventMaxParticipants: val.numberParticipants, eventLocationDescription: val.locationDescription, eventParticipantList: val.participantList } ) }>
+                  <Callout onPress={ () => navigation.navigate('ViewMarkerScreen', { creationDate: val.creation_date, eventName: val.name, eventDescription: val.description,  eventAuthorUsername: selectedAuthor._current_value.markers.username, eventAuthorDescription: selectedAuthor._current_value.markers.description, eventAuthorID: val.user, eventStartTime: displayStartTime(val), eventEndTime:displayEndTime(val), eventTags: displayTags(val), eventMaxParticipants: val.numberParticipants, eventLocationDescription: val.locationDescription, eventParticipantList: val.participantList } ) }>
                     <Text key={Math.random().toString()}> Name:  {val.name} </Text>
                     <Text key={Math.random().toString()}> Beschreibung:  {val.description} </Text>
                     <Text> Distanz: {distanceToUserPos} km</Text>

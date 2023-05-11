@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { StyleSheet, View, Text, Alert } from 'react-native'
+import React, { useRef, useState } from 'react'
+import { StyleSheet, View, Text, Alert, ScrollView } from 'react-native'
 import { stylesGlobal } from '../../constants/StylesGlobal'
 import TextInputField from '../../components/TextInputField'
 import { auth } from '../../firebase/firebase-config'
@@ -8,13 +8,13 @@ import { editMarkerMode, editMarkerValues, latitudeContext, longitudeContext, ta
 import Colors from '../../constants/Colors'
 import ButtonVariable from '../../components/ButtonVariable'
 import TextButton from '../../components/TextButton'
+import ButtonBack from '../../components/ButtonBack'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
 import { intlFormat } from 'date-fns'
-import TextAndIconButton from '../../components/TextAndIconButton'
 
 const CreateMarkersScreen = ( {navigation} ) => {  
   const [eventName, setEventName] = useState(editMarkerMode._currentValue ? editMarkerValues._currentValue.name : '')
@@ -168,74 +168,79 @@ const CreateMarkersScreen = ( {navigation} ) => {
   DropDownPicker.setLanguage("DE");
   
   return (
-    <View style={styles.screenContainer}>
-      <View style={{alignItems: 'center'}}>
-        <TextInputField
-          placeholder={'Eventname'}
-          value={eventName}
-          onChangeText={(text) => { setEventName(text); text.length < 1 ? setEventNameError(true) : setEventNameError(false) }}
-          keyboardType={'default'}
-          backgroundColor={Colors.findmyactivityWhite}
-          borderColor={eventNameError ? 'red' : Colors.findmyactivityBackground}
-          hasLeftIcon={true}
-          iconName={'edit'}
-          hasMaxLength={true}
-          maxTextChars={30}
-          showCharCounter={true}
-          onBlur={() => errorHandlerName() }
-        />
+    <View style={[stylesGlobal.screenContainer, {backgroundColor: Colors.findmyactivityBackground}]}>
+      <ButtonBack
+        onPress={() => navigation.goBack()}
+        text={'Zurück'}
+      />
+      <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems}]}>{editMarkerMode._currentValue ? 'Marker bearbeiten' : 'Marker erstellen'}</Text>
+      <ScrollView style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContainer}>
+      <TextInputField
+        placeholder={'Eventname'}
+        value={eventName}
+        onChangeText={(text) => { setEventName(text); text.length < 1 ? setEventNameError(true) : setEventNameError(false) }}
+        keyboardType={'default'}
+        backgroundColor={Colors.findmyactivityWhite}
+        borderColor={eventNameError ? 'red' : Colors.findmyactivityBackground}
+        hasLeftIcon={true}
+        iconName={'edit'}
+        hasMaxLength={true}
+        maxTextChars={30}
+        showCharCounter={true}
+        onBlur={() => errorHandlerName() }
+      />
 
-        {eventNameError ?
-        <Text>Textfeld 'Eventname' darf nicht leer sein! Bitte Eventnamen eingeben</Text>
-        : null}
+      {eventNameError ?
+      <Text>Textfeld 'Eventname' darf nicht leer sein! Bitte Eventnamen eingeben</Text>
+      : null}
 
-        <TextInputField
-          placeholder={'Eventbeschreibung (optional)'}
-          value={eventDescription}
-          onChangeText={text => setEventDescription(text)}
-          keyboardType={'default'}
-          backgroundColor={Colors.findmyactivityWhite}
-          borderColor={Colors.findmyactivityBackground}
-          hasLeftIcon={true}
-          iconName={'edit'}
-          hasMaxLength={true}
-          maxTextChars={10000}
-          showCharCounter={true}
-          multiline={true}
-        />
-        <TextInputField
-          placeholder={'Ortbeschreibung (optional)'}
-          value={placeDesciption}
-          onChangeText={text => setPlaceDescription(text)}
-          keyboardType={'default'}
-          backgroundColor={Colors.findmyactivityWhite}
-          borderColor={Colors.findmyactivityBackground}
-          hasLeftIcon={true}
-          iconName={'map-pin'}
-          hasMaxLength={true}
-          maxTextChars={50}
-          showCharCounter={true}
-        />
-        <TextInputField
-          placeholder={'Anzahl Teilnehmer (max. 999)'}
-          value={numberParticipants}
-          onChangeText={(text) => { setNumberParticipants(text); text.length < 1 ? setParticipantsError(true) : setParticipantsError(false) }}
-          keyboardType={'number-pad'}
-          backgroundColor={Colors.findmyactivityWhite}
-          borderColor={participantsError ? 'red' : Colors.findmyactivityBackground}
-          hasLeftIcon={true}
-          iconName={'male'}
-          hasMaxLength={true}
-          maxTextChars={3}
-          onBlur={() => errorHandlerParticipants()}
-        />
+      <TextInputField
+        placeholder={'Eventbeschreibung (optional)'}
+        value={eventDescription}
+        onChangeText={text => setEventDescription(text)}
+        keyboardType={'default'}
+        backgroundColor={Colors.findmyactivityWhite}
+        borderColor={Colors.findmyactivityBackground}
+        hasLeftIcon={true}
+        iconName={'edit'}
+        hasMaxLength={true}
+        maxTextChars={10000}
+        showCharCounter={true}
+        multiline={true}
+      />
+      <TextInputField
+        placeholder={'Ortbeschreibung (optional)'}
+        value={placeDesciption}
+        onChangeText={text => setPlaceDescription(text)}
+        keyboardType={'default'}
+        backgroundColor={Colors.findmyactivityWhite}
+        borderColor={Colors.findmyactivityBackground}
+        hasLeftIcon={true}
+        iconName={'map-pin'}
+        hasMaxLength={true}
+        maxTextChars={50}
+        showCharCounter={true}
+      />
+      <TextInputField
+        placeholder={'Anzahl Teilnehmer (max. 999)'}
+        value={numberParticipants}
+        onChangeText={(text) => { setNumberParticipants(text); text.length < 1 ? setParticipantsError(true) : setParticipantsError(false) }}
+        keyboardType={'number-pad'}
+        backgroundColor={Colors.findmyactivityWhite}
+        borderColor={participantsError ? 'red' : Colors.findmyactivityBackground}
+        hasLeftIcon={true}
+        iconName={'male'}
+        hasMaxLength={true}
+        maxTextChars={3}
+        onBlur={() => errorHandlerParticipants()}
+      />
 
-        {participantsError ?
-        <Text>Textfeld 'Anzahl Teilnehmer' darf nicht leer sein! Bitte Teilnehmeranzahl angeben</Text>
-        : null}
+      {participantsError ?
+      <Text>Textfeld 'Anzahl Teilnehmer' darf nicht leer sein! Bitte Teilnehmeranzahl angeben</Text>
+      : null}
 
-        {/* Tags */}
-        <DropDownPicker
+      {/* Tags */}
+      <DropDownPicker
         searchable={true}
         multiple={true}
         min={0}
@@ -245,12 +250,12 @@ const CreateMarkersScreen = ( {navigation} ) => {
         setOpen={setOpen}
         setValue={(val) =>setEventTags(val)}
         setItems={setItems}
+        listMode='MODAL'
       />
 
       {editMarkerMode._currentValue ?
-      <TextAndIconButton
+      <TextButton
         text='Hier drücken, um die Lage des Events zu ändern'
-        // TODO: new Modal for set new marker location in edit mode
         onPress={() => navigation.navigate('EditMarkerLocationScreen')}
       />
       : null}
@@ -311,6 +316,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
           onConfirm={handleConfirmTime}
           onCancel={hideTimePicker}
         />
+        </ScrollView>
 
         {editMarkerMode._currentValue 
         ?
@@ -335,9 +341,9 @@ const CreateMarkersScreen = ( {navigation} ) => {
             borderColor={Colors.findmyactivityYellow}
           />
         </View>
+        
         : 
         <View style={{flexDirection: 'row'}}>
-
           <ButtonVariable
             text={'Erstellen'}         
             onPress={() => {
@@ -353,7 +359,6 @@ const CreateMarkersScreen = ( {navigation} ) => {
           />
         </View>
         }
-      </View>
     </View>
   )
 }
@@ -364,11 +369,12 @@ const styles = StyleSheet.create({
     backgroundColor: stylesGlobal.screenContainer.backgroundColor,
   },
 
+  scrollViewStyle: {
+    width: '100%'
+  },
+
   scrollViewContainer: {
-    alignContent: 'stretch',
     alignItems: 'center', 
-    justifyContent: 'center', 
-    // minHeight: '100%'
   }
 })
 

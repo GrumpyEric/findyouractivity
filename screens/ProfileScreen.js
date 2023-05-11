@@ -24,9 +24,13 @@ const Profile = ( {navigation} ) => {
     headerTransparent: true
   })
 
-  let eventArray = markersRef.filter(function (arr) {
+  const [eventArray, setEventArray] = useState(markersRef.filter(function (arr) {
     return arr.user === selectedUserContext._current_value.markers.uid
-  })
+  }))
+
+  useEffect(() => {
+    console.log('markers changed!');
+  }, [markersRef])
   
   // Zustand der Text-Ausgaben
   const [displayUsername, setDisplayUsername] = useState(selectedUserContext._current_value.markers.username)

@@ -4,6 +4,8 @@ import { getDistance } from 'geolib';
 import React from "react";
 import { markersRef } from '../../constants/MainFunctions';
 import { stylesGlobal } from '../../constants/StylesGlobal';
+import Colors from '../../constants/Colors';
+import { format, isSameDay, isTomorrow } from 'date-fns';
 
 const ViewAuthorScreen = ( { route,navigation } ) => {
 
@@ -16,7 +18,8 @@ const ViewAuthorScreen = ( { route,navigation } ) => {
   })
 
   return (
-    <View style={styles.container}>
+    <View style={[stylesGlobal.screenContainer, {backgroundColor: Colors.findmyactivityBackground}]}>
+      <Text style={stylesGlobal.ueberschriftText}>Ersteller des Markers</Text>
       <View style={styles.buttonBackRowColumn}>
         <Text style={[styles.benutzernameLabel, stylesGlobal.ueberschriftText2]}>Benutzername</Text>
         <TextInput
@@ -54,47 +57,55 @@ const ViewAuthorScreen = ( { route,navigation } ) => {
                 distanceToUserPos = getDistance(val, userPosContext._currentValue.coords) / 1000
               }
 
-              const displayTags = (val) => {
-                if( (val.tags != undefined)) 
-                {
-                  return <Text> Tags: {val.tags.toString()}</Text>
-                }
-              }
-
               const displayStartTime = (val) => {
 
-                let startTimeRes = ""//val.startTime
-
-                if( (val.startTime != undefined) ) 
-                {
-                  //return <Text> Start-Zeit: {val.startTime.toDate().toString()} </Text>
-                  startTimeRes = val.startTime.toDate().toString()
+                let startTimeRes = "unbekannt"
+                const startDate = val.startTime.toDate()
+                const today = new Date()
+  
+                if (val.startTime) {
+                  if (isSameDay(startDate, today)) {
+                    startTimeRes = "Heute um " + format(startDate, 'HH:mm') + ' Uhr'
+                  
+                  } else if (isTomorrow(startDate)) {
+                    startTimeRes = "Morgen um " + format(startDate, 'HH:mm') + ' Uhr'
+  
+                  } else {
+                    startTimeRes = format(startDate, 'dd.MM.yyyy - HH:mm') + ' Uhr'
+                  }
                 }
-                else if ( !(val.startTime != undefined) ) 
-                {
-                  //return <Text> Start-Zeit: unbekannt </Text>
-                  startTimeRes = "unbekannt"
+                return <Text style={stylesGlobal.standardText}> Start: {startTimeRes} </Text>
+            }
+  
+            const displayEndTime = (val) => {
+  
+                let endTimeRes = "unbekannt"
+                const endDate = val.endTime.toDate()
+                const today = new Date()
+  
+                if (val.endTime) {
+                  if (isSameDay(endDate, today)) {
+                    endTimeRes = "Heute um " + format(endDate, 'HH:mm') + ' Uhr'
+                  
+                  } else if (isTomorrow(endDate)) {
+                    endTimeRes = "Morgen um " + format(endDate, 'HH:mm') + ' Uhr'
+  
+                  } else {
+                    endTimeRes = format(endDate, 'dd.MM.yyyy - HH:mm') + ' Uhr'
+                  }
                 }
-                return  <Text> Start-Zeit: {startTimeRes} </Text>
+  
+                return <Text style={stylesGlobal.standardText}> Ende: {endTimeRes} </Text>
+            }
+  
+            const displayTags = (val) => {
+              console.log(val.tags);
+              if( (val.tags.length)) {
+                return <Text style={stylesGlobal.standardText}> Tags: {val.tags.toString()}</Text>
+              } else {
+                return <Text style={stylesGlobal.standardText}> Tags: keine Tags vergeben</Text>
               }
-
-              const displayEndTime = (val) => {
-
-                let endTimeRes = ""//val.endTime
-
-                if( (val.endTime != undefined) ) 
-                {
-                  //return <Text> Start-Zeit: {val.startTime.toDate().toString()} </Text>
-                  endTimeRes = val.endTime.toDate().toString()
-                }
-                else if ( !(val.endTime != undefined) ) 
-                {
-                  //return <Text> Start-Zeit: unbekannt </Text>
-                  endTimeRes = "unbekannt"
-                }
-
-                return  <Text> End-Zeit: {endTimeRes} </Text>
-              }
+            }
 
 
               return (

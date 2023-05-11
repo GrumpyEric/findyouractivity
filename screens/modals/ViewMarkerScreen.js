@@ -67,37 +67,34 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
         onPress={() => navigation.goBack()}
         text={'Zurück'}
       />
-      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-      <Text style={stylesGlobal.ueberschriftText}>{nameDisplay}</Text>
+      <ScrollView style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContainer}>
+      <Text style={[stylesGlobal.ueberschriftText, styles.textCenterStyle]}>{nameDisplay}</Text>
       {descriptionDisplay ?
-      <Text style={stylesGlobal.standardText}>{descriptionDisplay} </Text>  
+      <Text style={[stylesGlobal.standardText, styles.spacingBetweenText, styles.textCenterStyle]}>{descriptionDisplay} </Text>  
       : null}
       {locationDescriptionDisplay ?
-      <Text style={stylesGlobal.standardText}> Wo?: {locationDescriptionDisplay} </Text>
+      <Text style={[stylesGlobal.standardText, styles.textCenterStyle]}>Wo?: {locationDescriptionDisplay} </Text>
       : null}
-      <Text style={[stylesGlobal.standardText, {justifyContent: 'center'}]}> Erstellt von: 
-        <TextButton
-          text={authorUsernameDisplay}
-          onPress={() => {navigation.navigate('ViewAuthorScreen', { authorID: authorDisplay, authorUsername: authorUsernameDisplay, authorDescription: authorDescriptionDisplay}) } }
-        /> 
-      </Text>
-      <ButtonVariable
-        text={'Profil von ' + authorUsernameDisplay + ' ansehen'}
-        onPress={() => {navigation.navigate('ViewAuthorScreen', { authorID: authorDisplay, authorUsername: authorUsernameDisplay, authorDescription: authorDescriptionDisplay}) } }
-        backgroundColor={Colors.findmyactivityYellow}
-        borderColor={Colors.findmyactivityYellow}
-      />
-      <Text>Anzahl der Teilnehmer: {participantList.length} von maximal {maxParticipantDisplay} </Text>
-      <ButtonVariable
-        text={'Teilnehmerliste anzeigen'}
-        onPress={() => { navigation.navigate('ViewParticipantScreen', {memberList: participantList} ) } }
-        backgroundColor={Colors.findmyactivityYellow}
-        borderColor={Colors.findmyactivityYellow}
-        width={100}
-      />
+      {/* <View style={{flexDirection: 'row'}}> */}
+        {/* <TextButton
+            text={authorUsernameDisplay}
+            onPress={() => {navigation.navigate('ViewAuthorScreen', { authorID: authorDisplay, authorUsername: authorUsernameDisplay, authorDescription: authorDescriptionDisplay}) } }
+        /> */}
+      {/* </View> */}
+      <Text style={[stylesGlobal.standardText, styles.spacingBetweenText, styles.textCenterStyle]}>Anzahl der Teilnehmer: {participantList.length} / {maxParticipantDisplay} </Text>
+      {/* <View style={{marginVertical: stylesGlobal.marginsAndPadding.paddingBetweenItems}}>
+        <ButtonVariable
+          text={'Teilnehmer anzeigen'}
+          onPress={() => { navigation.navigate('ViewParticipantScreen', {memberList: participantList} ) } }
+          backgroundColor={Colors.findmyactivityYellow}
+          borderColor={Colors.findmyactivityYellow}
+          width={175}
+        />
+      </View> */}
       {startTimeDisplay}
       {endTimeDisplay}
       {tagDisplay}
+      <Text style={[stylesGlobal.standardText, styles.textCenterStyle]}>Erstellt von: {authorUsernameDisplay}</Text>
       </ScrollView>
         <ButtonVariable
           text={'Teilnehmen'}
@@ -106,7 +103,6 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
           borderColor={Colors.findmyactivityYellow}
           width={200}
         />
-      
     </View>
   )
 }
@@ -116,6 +112,18 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.findmyactivityBackground,
   },
 
+  scrollViewStyle: {
+    width: '100%',
+  },
+  
+  spacingBetweenText: {
+    marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems
+  },
+
+  textCenterStyle: {
+    textAlign: 'center'
+  },
+
   scrollViewContainer: {
     alignItems: 'center',
     height: height * 0.4,
@@ -123,60 +131,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: Colors.findmyactivityWhite
   },
-
-  buttonBack: {
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 28,
-    shadowColor: "#111",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.2,
-    elevation: 2,
-    minWidth: 55,
-    minHeight: 55,
-    backgroundColor: "rgba(35,112,118,1)",
-    marginRight: 65
-  },
-  icon: {
-    color: "#fff",
-    fontSize: 35,
-    alignSelf: "center"
-  },
-
-  container: {
-    backgroundColor: "rgba(223,242,242,1)"
-  },
-  eventDetails: {
-    color: "#121212",
-    fontSize: 20,
-    marginTop: 15
-  },
-  buttonBackRow: {
-    height: 56,
-    flexDirection: "row",
-    marginTop: 5,
-    marginLeft: 5,
-    marginRight: 121
-  },
-  scrollArea: {
-    width: 350,
-    height: 300,
-    backgroundColor: "rgba(223,242,242,1)",
-    borderWidth: 2,
-    borderColor: "rgba(35,112,118,1)",
-    borderRadius: 10,
-    marginTop: 23,
-    alignSelf: 'center'
-  },
-  scrollArea_contentContainerStyle: {
-    width: 350
-  }
-
-
 })
 
 export default ViewMarkerScreen

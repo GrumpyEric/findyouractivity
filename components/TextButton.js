@@ -29,12 +29,18 @@ const TextButton = (props) => {
         text: props.isAccessibilityValueText
       }}
     >
-      <Text style={[stylesGlobal.buttonTextBlack, {color: Colors.findmyactivityText}]}>{props.text}</Text>
+      {props.icon ?
+      <Icon 
+        name={props.icon}
+      />
+      : null}
+      <Text style={[stylesGlobal.buttonTextBlack, {color: props.textColor}]}>{props.text}</Text>
     </TouchableOpacity>
   )
 }
 
-TextButton.propTypes = { onPress: PropTypes.func.isRequired, text: PropTypes.string.isRequired,
+TextButton.propTypes = { onPress: PropTypes.func.isRequired, text: PropTypes.string.isRequired, textColor: PropTypes.string,
+  icon: PropTypes.string,
   
   accessibilityLabel: PropTypes.string, accessibilityHint: PropTypes.string, 
   isAccessibilityStateDisabled: PropTypes.bool,

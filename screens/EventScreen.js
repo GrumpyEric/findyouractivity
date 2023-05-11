@@ -4,7 +4,6 @@ import { editMarkerMode, editMarkerObject, editMarkerValues, mapRef } from '../c
 import { getDistance } from 'geolib';
 import { userPosContext } from '../components/AppContext';
 import Colors from '../constants/Colors';
-import TextButton from '../components/TextButton';
 import Slider from '@react-native-community/slider';
 
 import React, { useState } from "react";
@@ -127,12 +126,9 @@ const EventScreen = ( {navigation} ) => {
             maximumValue={21}
             onSlidingComplete={(value) => value < 21 ? setRadiusMarkers(value) : setRadiusMarkers('alle')}
             step={1}
-            disabled={false}
             onValueChange={(value) => value < 21 ? setRadiusMarkersVisual(value) : setRadiusMarkersVisual('alle Marker anzeigen')}
-            minimumTrackTintColor="rgba(251,185,0,1)"
-            maximumTrackTintColor="rgba(35,112,118,1)"
-            thumbTintColor="rgba(35,112,118,1)"
-            style={styles.slider}
+            minimumTrackTintColor={Colors.findmyactivityYellow}
+            thumbTintColor={Colors.findmyactivityGreen}
           />
         </View>
 

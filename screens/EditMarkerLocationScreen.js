@@ -26,11 +26,9 @@ const EditMarkerLocationScreen = ( {navigation} ) => {
         style={styles.map_container}
         initialRegion={markerToEdit}
         mapRef={mapRefEdit}
-        // onMapLoaded={() => showCallout}
       />
 
       <View style={styles.button}>
-        {/* if new marker has been set, then show button */}
         <ButtonVariable
           text={'ABBRECHEN'}
           onPress={() => navigation.goBack()}

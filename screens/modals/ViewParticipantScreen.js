@@ -1,12 +1,13 @@
 import React from 'react'
-import { StyleSheet, View, ScrollView } from 'react-native'
-import { stylesGlobal } from '../../constants/StylesGlobal'
+import { StyleSheet, View, ScrollView, Text } from 'react-native'
+import { height, stylesGlobal } from '../../constants/StylesGlobal'
 import { getParticipant } from '../../constants/MainFunctions'
 import { participantContext } from '../../components/AppContext'
 import TextButton from '../../components/TextButton'
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
+import Colors from '../../constants/Colors'
 
 const ViewParticipantScreen = ( {route, navigation} ) => {  
 
@@ -18,15 +19,16 @@ const ViewParticipantScreen = ( {route, navigation} ) => {
   }
 
   return (
-    <View style={styles.screenContainer}>
-      <ScrollView contentContainerStyle={styles.scrollViewContainer} showsVerticalScrollIndicator={false}>
+    <View style={[stylesGlobal.screenContainer, {backgroundColor: Colors.findmyactivityBackground}]}>
+      <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems}]}>Teilnehmerliste</Text>
+      <ScrollView style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContainer}>
       {
         members.map( (val,index) => {
           return (
             <TextButton
-            text={val +' (Profile ansehen)'}
-            onPress={ () => { onParticipantButton(val) } }
-      />
+              text={val +' (Profil ansehen)'}
+              onPress={ () => { onParticipantButton(val) } }
+            />
           )
         } )
       }
@@ -35,24 +37,19 @@ const ViewParticipantScreen = ( {route, navigation} ) => {
   )
 }
 
-const styles = StyleSheet.create({
-  screenContainer: {
-    flex: stylesGlobal.screenContainer.flex,
-    // paddingHorizontal: stylesGlobal.screenContainer.paddingHorizontal,
-    // paddingVertical: stylesGlobal.screenContainer.paddingVertical,
-    backgroundColor: stylesGlobal.screenContainer.backgroundColor,
-    alignItems: 'center'
-  },
+export default ViewParticipantScreen
 
-  ueberschriftText: {
-    fontWeight: stylesGlobal.ueberschriftText.fontWeight,
-    fontSize: stylesGlobal.ueberschriftText.fontSize
+const styles = StyleSheet.create({
+  scrollViewStyle: {
+    width: '100%',
   },
 
   scrollViewContainer: {
-    alignItems: 'center', 
-    justifyContent: 'center', 
-  }
+    paddingVertical: stylesGlobal.marginsAndPadding.paddingBetweenItems,
+    alignItems: 'center',
+    height: height * 0.4,
+    borderWidth: 2,
+    borderRadius: 10,
+    backgroundColor: Colors.findmyactivityWhite
+  },
 })
-
-export default ViewParticipantScreen

@@ -97,7 +97,6 @@ const LoginScreen = () => {
         <TextButton
           onPress={handleForgotPassword}
           text={"Passwort vergessen"}
-          textColor={Colors.findmyactivityBlue}
           accessibilityLabel={"Hier drücken"}
           accessibilityHint={"Wenn Sie Ihr Passwort vergessen haben, dann hier drücken, um zum Bildschirm für das Zurücksetzen des Passwortes zu kommen"}
         />
