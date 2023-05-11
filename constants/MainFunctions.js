@@ -89,7 +89,6 @@ export const readMarkerFromDB = onSnapshot(query(collection(db, "markers")), (Qu
   manualReadMarkerFromDB()
 })
 
-
 // manuelles einlesen der DB
 export const manualReadMarkerFromDB = async() => {
   let db_markers = [];
@@ -101,10 +100,8 @@ export const manualReadMarkerFromDB = async() => {
   applyFilters(db_markers)
 }
 
-
 // wendet die vom nutzer eingestellten filter ein
 export const applyFilters = (db_markers) => {
-
   const initMarkers = db_markers // backup der db-marker
   const validMarkers = [];
   const preferTags = filterContext._current_value
@@ -134,8 +131,6 @@ export const applyFilters = (db_markers) => {
   {
     markersRef = db_markers
   }
-  //alert(validMarkers)
-  //markersRef = validMarkers
 }
 
 
@@ -222,8 +217,7 @@ import { emailRegexTest } from './HelperFunctionsAndVariables';
 export const addMarkerToDB = async(auth, eventNameInput, eventDescInput, eventLocationDesc, startDate, endDate, numberParticipants, tags, userMarkerLatitude, userMarkerLongitude, ) => {
   let userID = auth.currentUser.uid.toString()
   let timeStampObj = Timestamp.now()
-  // let date = new Date()
-  // TODO: timestamp in UNIX-Format setzen; DONE
+
   await setDoc(doc(db, "markers", userID+"_"+( timeStampObj.toDate().getTime() ) ), {
     markers: {
       name: eventNameInput,

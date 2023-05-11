@@ -88,12 +88,6 @@ const EventScreen = ( {navigation} ) => {
         return arr.user === myUserID
     })
 
-    // console.log(myMarkersRef);
-
-    useEffect(() => {
-        //console.log(radiusMarkers);
-    }, [radiusMarkers])
-
   return (
     <View style={[stylesGlobal.screenContainer, styles.container]}>
       <FloatingBurgerMenu

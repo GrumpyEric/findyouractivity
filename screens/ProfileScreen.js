@@ -1,7 +1,7 @@
-import { updateUserFromDB, readUserFromDB, markersRef } from '../constants/MainFunctions';
+import { updateUserFromDB, readUserFromDB, markersRef, readMarkerFromDB } from '../constants/MainFunctions';
 import { selectedUserContext, loggedInUser, userPosContext, mapRef, saveProfileChangesFunctionContext } from '../components/AppContext';
 import { getDistance } from 'geolib';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -15,6 +15,7 @@ import TextInputField from '../components/TextInputField';
 import FloatingBurgerMenu from '../components/FloatingBurgerMenu';
 import Colors from '../constants/Colors';
 import ButtonBack from '../components/ButtonBack';
+import { format, isSameDay, isTomorrow } from 'date-fns';
 
 const Profile = ( {navigation} ) => {
   navigation.setOptions({
@@ -22,8 +23,24 @@ const Profile = ( {navigation} ) => {
   })
 
   let eventArray = markersRef.filter(function (arr) {
-      return arr.user === selectedUserContext._current_value.markers.uid
+    return arr.user === selectedUserContext._current_value.markers.uid
   })
+
+  // const [eventArray, setEventArray] = useState([])
+
+  useEffect(() => {
+    console.log('rerender');
+    readMarkerFromDB()
+
+    // setEventArray(markersRef.filter(function (arr) {
+    //   if (selectedUserContext._current_value.markers.uid) {
+    //     return arr.user === selectedUserContext._current_value.markers.uid
+    //   } else {
+    //     null
+    //   }
+    // }))
+  }, [])
+  
   
   // Zustand der Text-Ausgaben
   const [displayUsername, setDisplayUsername] = useState(selectedUserContext._current_value.markers.username)
@@ -94,8 +111,9 @@ const Profile = ( {navigation} ) => {
       <View style={styles.contentSeparatorStyle}>
       <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>Events</Text>
         <ScrollView style={styles.scrollAreaStyle} contentContainerStyle={styles.scrollAreaContentContainerStyle}>
-          {eventArray.map((val, index) => {
-
+          {
+          eventArray.length ?
+          eventArray.map((val, index) => {
             let distanceToUserPos = "?"//getDistance(val,props.userPosContext.coords) / 1000
             if (userPosContext._currentValue.coords != undefined)
             {
@@ -104,42 +122,51 @@ const Profile = ( {navigation} ) => {
 
             const displayStartTime = (val) => {
 
-                let startTimeRes = ""//val.startTime
+                let startTimeRes = "unbekannt"
+                const startDate = val.startTime.toDate()
+                const today = new Date()
 
-                if( (val.startTime != undefined) ) 
-                {
-                //return <Text> Start-Zeit: {val.startTime.toDate().toString()} </Text>
-                startTimeRes = val.startTime.toDate().toString()
-                }
-                else if ( !(val.startTime != undefined) ) 
-                {
-                //return <Text> Start-Zeit: unbekannt </Text>
-                startTimeRes = "unbekannt"
+                if (val.startTime) {
+                  if (isSameDay(startDate, today)) {
+                    startTimeRes = "Heute um " + format(startDate, 'HH:mm') + ' Uhr'
+                  
+                  } else if (isTomorrow(startDate)) {
+                    startTimeRes = "Morgen um " + format(startDate, 'HH:mm') + ' Uhr'
+
+                  } else {
+                    startTimeRes = format(startDate, 'dd.MM.yyyy - HH:mm') + ' Uhr'
+                  }
                 }
                 return <Text style={stylesGlobal.standardText}> Start-Zeit: {startTimeRes} </Text>
             }
 
             const displayEndTime = (val) => {
 
-                let endTimeRes = ""//val.endTime
+                let endTimeRes = "unbekannt"
+                const endDate = val.endTime.toDate()
+                const today = new Date()
 
-                if( (val.endTime != undefined) ) 
-                {
-                //return <Text> Start-Zeit: {val.startTime.toDate().toString()} </Text>
-                endTimeRes = val.endTime.toDate().toString()
-                }
-                else if ( !(val.endTime != undefined) ) 
-                {
-                //return <Text> Start-Zeit: unbekannt </Text>
-                endTimeRes = "unbekannt"
+                if (val.endTime) {
+                  if (isSameDay(endDate, today)) {
+                    endTimeRes = "Heute um " + format(endDate, 'HH:mm') + ' Uhr'
+                  
+                  } else if (isTomorrow(endDate)) {
+                    endTimeRes = "Morgen um " + format(endDate, 'HH:mm') + ' Uhr'
+
+                  } else {
+                    endTimeRes = format(endDate, 'dd.MM.yyyy - HH:mm') + ' Uhr'
+                  }
                 }
 
                 return <Text style={stylesGlobal.standardText}> End-Zeit: {endTimeRes} </Text>
             }
 
             const displayTags = (val) => {
-              if( (val.tags != undefined)) {
+              console.log(val.tags);
+              if( (val.tags.length)) {
                 return <Text style={stylesGlobal.standardText}> Tags: {val.tags.toString()}</Text>
+              } else {
+                return <Text style={stylesGlobal.standardText}> Tags: keine Tags vergeben</Text>
               }
             }
 
@@ -158,8 +185,13 @@ const Profile = ( {navigation} ) => {
                 </TouchableOpacity>
               </View>
             )
-            }
-            )}
+          })
+          :
+            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+              <Text style={stylesGlobal.ueberschriftText2}>Sie haben noch keine eigenen Marker gesetzt. Setzen Sie erstmal Marker auf der Karte, um hier dann die eigenen Marker sehen zu können.</Text>
+            </View>
+          }
+            
           </ScrollView>
         </View>
       </View>

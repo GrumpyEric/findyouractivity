@@ -28,8 +28,6 @@ const MapViewGoogle = (props) => {
 
   // get current Region
   const [region, setRegion] = useState(props.initialRegion);
-  const [locationStatus, setLocationStatus] = useState(false)
-
   const [userMarker, setUserMarker] = useState([hawRegion]);
 
   let userMarkerLatitude = 0
@@ -126,6 +124,10 @@ const MapViewGoogle = (props) => {
       tryTurnOnGPS()
     })
   }, []);
+
+  useEffect(() => {
+    console.log(markersRef);
+  }, [markersRef])
   
   return (
     <View style={{...StyleSheet.absoluteFillObject}}>
@@ -221,7 +223,6 @@ const MapViewGoogle = (props) => {
       >
       {/* DB Markers */}
       {
-        // markersRef.current.map((val, index) => 
         markersRef.map((val, index) => 
           {
             
@@ -310,13 +311,3 @@ const MapViewGoogle = (props) => {
 MapViewGoogle.propTypes = { initialRegion: PropTypes.object, style: PropTypes.any, onMapLoaded: PropTypes.func, mapRef: PropTypes.any.isRequired }
 
 export default MapViewGoogle
-
-const styles = StyleSheet.create({
- 
-  footerBar: {
-    height: '6.25%',
-    width: '100%',
-    position: 'absolute',
-    bottom: 0
-  }
-});
