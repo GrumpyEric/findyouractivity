@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, StyleSheet } from 'react-native';
 import { height, stylesGlobal } from '../constants/StylesGlobal'
 import MapViewGoogle from '../components/MapView';
-import ButtonRegular from '../components/ButtonRegular';
+import ButtonVariable from '../components/ButtonVariable';
 import Colors from '../constants/Colors';
 import { editMarkerValues, mapRefEdit } from "../components/AppContext";
 
@@ -31,10 +31,12 @@ const EditMarkerLocationScreen = ( {navigation} ) => {
 
       <View style={styles.button}>
         {/* if new marker has been set, then show button */}
-        <ButtonRegular
+        <ButtonVariable
           text={'ABBRECHEN'}
           onPress={() => navigation.goBack()}
-          backgroundColor={Colors.findmyactivityBlue}
+          backgroundColor={'red'}
+          borderColor={Colors.findmyactivityText}
+          width={200}
         /> 
       </View>
     </View>

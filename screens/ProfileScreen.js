@@ -16,7 +16,7 @@ import FloatingBurgerMenu from '../components/FloatingBurgerMenu';
 import Colors from '../constants/Colors';
 import ButtonBack from '../components/ButtonBack';
 import { format, isSameDay, isTomorrow } from 'date-fns';
-import ButtonTiny from '../components/ButtonTiny';
+import ButtonVariable from '../components/ButtonVariable';
 import { auth } from '../firebase/firebase-config';
 
 const Profile = ( {navigation} ) => {
@@ -167,7 +167,7 @@ const Profile = ( {navigation} ) => {
                     startTimeRes = "Morgen um " + format(startDate, 'HH:mm') + ' Uhr'
 
                   } else {
-                    startTimeRes = format(startDate, 'dd.MM.yyyy - HH:mm') + ' Uhr'
+                    startTimeRes = format(startDate, 'dd.MM.yyyy, HH:mm') + ' Uhr'
                   }
                 }
                 return <Text style={stylesGlobal.standardText}> Start-Zeit: {startTimeRes} </Text>
@@ -187,7 +187,7 @@ const Profile = ( {navigation} ) => {
                     endTimeRes = "Morgen um " + format(endDate, 'HH:mm') + ' Uhr'
 
                   } else {
-                    endTimeRes = format(endDate, 'dd.MM.yyyy - HH:mm') + ' Uhr'
+                    endTimeRes = format(endDate, 'dd.MM.yyyy, HH:mm') + ' Uhr'
                   }
                 }
 
@@ -218,13 +218,15 @@ const Profile = ( {navigation} ) => {
                 </TouchableOpacity>
 
                 <View style={{flexDirection: 'row', justifyContent: "space-around", marginTop: stylesGlobal.marginsAndPadding.paddingBetweenItems}}>
-                  <ButtonTiny
+                  <ButtonVariable
                     backgroundColor={Colors.findmyactivityYellow}
+                    borderColor={Colors.findmyactivityYellow}
                     onPress={() => editMarkerHandler(val)}
                     text={'Marker bearbeiten'}
                   />
-                  <ButtonTiny
+                  <ButtonVariable
                     backgroundColor={'red'}
+                    borderColor={'red'}
                     onPress={() => deleteMarkerHandler(val)}
                     text={'Marker löschen'}
                   />

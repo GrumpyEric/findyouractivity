@@ -19,7 +19,7 @@ import {
 import { height, stylesGlobal } from "../constants/StylesGlobal";
 import FloatingBurgerMenu from "../components/FloatingBurgerMenu";
 import ButtonBack from "../components/ButtonBack";
-import ButtonTiny from "../components/ButtonTiny";
+import ButtonVariable from "../components/ButtonVariable";
 import { format, isSameDay, isTomorrow } from "date-fns";
 
 const EventScreen = ( {navigation} ) => {
@@ -219,13 +219,15 @@ const EventScreen = ( {navigation} ) => {
                   </TouchableOpacity>
 
                   <View style={{flexDirection: 'row', justifyContent: "space-around", marginTop: stylesGlobal.marginsAndPadding.paddingBetweenItems}}>
-                    <ButtonTiny
+                    <ButtonVariable
                       backgroundColor={Colors.findmyactivityYellow}
+                      borderColor={Colors.findmyactivityYellow}
                       onPress={() => editMarkerHandler(val)}
                       text={'Marker bearbeiten'}
                     />
-                    <ButtonTiny
+                    <ButtonVariable
                       backgroundColor={'red'}
+                      borderColor={'red'}
                       onPress={() => deleteMarkerHandler(val)}
                       text={'Marker löschen'}
                     />
@@ -319,13 +321,15 @@ const EventScreen = ( {navigation} ) => {
                 {val.user === myUserID 
                 ?
                 <View style={{flexDirection: 'row', justifyContent: "space-around", marginTop: stylesGlobal.marginsAndPadding.paddingBetweenItems}}>
-                  <ButtonTiny
+                  <ButtonVariable
                     backgroundColor={Colors.findmyactivityYellow}
+                    borderColor={Colors.findmyactivityYellow}
                     onPress={() => editMarkerHandler(val)}
                     text={'Marker bearbeiten'}
                   />
-                  <ButtonTiny
+                  <ButtonVariable
                     backgroundColor={'red'}
+                    borderColor={'red'}
                     onPress={() => deleteMarkerHandler(val)}
                     text={'Marker löschen'}
                   />

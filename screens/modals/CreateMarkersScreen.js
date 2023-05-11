@@ -6,7 +6,7 @@ import { auth } from '../../firebase/firebase-config'
 import { addMarkerToDB, updateMarkerToDB } from '../../constants/MainFunctions'
 import { editMarkerMode, editMarkerValues, latitudeContext, longitudeContext, tagData } from '../../components/AppContext'
 import Colors from '../../constants/Colors'
-import ButtonSmall from '../../components/ButtonSmall'
+import ButtonVariable from '../../components/ButtonVariable'
 import TextButton from '../../components/TextButton'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -314,14 +314,15 @@ const CreateMarkersScreen = ( {navigation} ) => {
 
         {editMarkerMode._currentValue 
         ?
-        <View style={{flexDirection: 'row'}}>
-          <ButtonSmall
+        <View style={{flexDirection: 'row', width: '100%', justifyContent: 'space-evenly'}}>
+          <ButtonVariable
             text={'Abbrechen'}
             onPress={() => { navigation.pop(); editMarkerMode._currentValue = false }}
             backgroundColor={'red'}
+            borderColor={'red'}
           />
 
-          <ButtonSmall
+          <ButtonVariable
             text={'Aktualisieren'}         
             onPress={() => {
               errorHandlerName()
@@ -330,13 +331,14 @@ const CreateMarkersScreen = ( {navigation} ) => {
                 ? Alert.alert('Achtung!', errorMessageHandler())
                 : updateMarker()
             }}
-            backgroundColor={Colors.findmyactivityBlue}
+            backgroundColor={Colors.findmyactivityYellow}
+            borderColor={Colors.findmyactivityYellow}
           />
         </View>
         : 
         <View style={{flexDirection: 'row'}}>
 
-          <ButtonSmall
+          <ButtonVariable
             text={'Erstellen'}         
             onPress={() => {
               errorHandlerName()
@@ -345,7 +347,9 @@ const CreateMarkersScreen = ( {navigation} ) => {
                 ? Alert.alert('Achtung!', errorMessageHandler())
                 : createMarker()
             }}
-            backgroundColor={Colors.findmyactivityBlue}
+            backgroundColor={Colors.findmyactivityYellow}
+            borderColor={Colors.findmyactivityYellow}
+            width={200}
           />
         </View>
         }

@@ -33,8 +33,20 @@ const options = (navigation, route, props) => {
   return (
     {
       headerTitle: '', 
-      headerLeft: () => route.name === 'Profil' ? null : headerLeft(navigation), 
-      headerRight: headerRight, 
+      headerLeft: () => 
+        route.name === 'Profil'
+        ? null 
+        : headerLeft(navigation), 
+      headerRight: () => 
+        route.name === 'CreateMarkersScreen' ||
+        route.name === 'EditMarkerLocationScreen' ||
+        route.name === 'FilterScreen' ||
+        route.name === 'ViewMarkerScreen' ||
+        route.name === 'ViewAuthorScreen' ||
+        route.name === 'ViewParticipantScreen' ||
+        route.name === 'Passwort zurücksetzen'
+        ? null
+        : headerRight(), 
       headerStyle: {
         backgroundColor: Colors.findmyactivityBackground,
       },
@@ -197,7 +209,7 @@ function HomeStackScreen() {
 
         })}>
         <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name='CreateMarkersScreen' component={CreateMarkersScreen}/>
-        <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name='EditMarkerLocationScreen' component={EditMarkerLocationScreen}/>
+        <HomeStack.Screen options={optionsNoHeader} name='EditMarkerLocationScreen' component={EditMarkerLocationScreen}/>
         <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name="FilterScreen" component={FilterScreen}/>          
         <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name="ViewMarkerScreen" component={ViewMarkerScreen}/>
         <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name="ViewAuthorScreen" component={ViewAuthorScreen}/>          

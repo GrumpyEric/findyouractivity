@@ -2,11 +2,14 @@ import React from 'react'
 import { StyleSheet, View, Text, Alert, ScrollView } from 'react-native'
 import { auth } from '../../firebase/firebase-config'
 import { optOutOfEvent,optInToEvent } from '../../constants/MainFunctions'
-import ButtonSmall from '../../components/ButtonSmall'
+import ButtonVariable from '../../components/ButtonVariable'
 import TextButton from '../../components/TextButton'
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
+import { height, stylesGlobal } from '../../constants/StylesGlobal'
+import ButtonBack from '../../components/ButtonBack'
+import Colors from '../../constants/Colors'
 
 const ViewMarkerScreen = ( {route, navigation} ) => {  
   const nameDisplay = route.params.eventName
@@ -59,32 +62,50 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
   }
 
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.scrollArea}>
-      <Text> Name: {nameDisplay} </Text>
-      <Text> Beschreibung: {descriptionDisplay} </Text>      
-      <Text> Ortbeschreibung: {locationDescriptionDisplay} </Text>
-      <Text> Autor: {authorUsernameDisplay} </Text>
-      <TextButton
-            text={'(Profile ansehen)'}
-            onPress={ () => {navigation.navigate('ViewAuthorScreen', { authorID: authorDisplay, authorUsername: authorUsernameDisplay, authorDescription: authorDescriptionDisplay}) } }
+    <View style={[stylesGlobal.screenContainer, styles.container]}>
+      <ButtonBack
+        onPress={() => navigation.goBack()}
+        text={'Zurück'}
       />
-      <Text> Anzahl der Teilnehmer: {participantList.length} / {maxParticipantDisplay} </Text>
-      <TextButton
-            text={'(Teilnehmer-Liste anzeigen)'}
-            onPress={ () => { navigation.navigate('ViewParticipantScreen', {memberList: participantList} ) } }
+      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+      <Text style={stylesGlobal.ueberschriftText}>{nameDisplay}</Text>
+      {descriptionDisplay ?
+      <Text style={stylesGlobal.standardText}>{descriptionDisplay} </Text>  
+      : null}
+      {locationDescriptionDisplay ?
+      <Text style={stylesGlobal.standardText}> Wo?: {locationDescriptionDisplay} </Text>
+      : null}
+      <Text style={[stylesGlobal.standardText, {justifyContent: 'center'}]}> Erstellt von: 
+        <TextButton
+          text={authorUsernameDisplay}
+          onPress={() => {navigation.navigate('ViewAuthorScreen', { authorID: authorDisplay, authorUsername: authorUsernameDisplay, authorDescription: authorDescriptionDisplay}) } }
+        /> 
+      </Text>
+      <ButtonVariable
+        text={'Profil von ' + authorUsernameDisplay + ' ansehen'}
+        onPress={() => {navigation.navigate('ViewAuthorScreen', { authorID: authorDisplay, authorUsername: authorUsernameDisplay, authorDescription: authorDescriptionDisplay}) } }
+        backgroundColor={Colors.findmyactivityYellow}
+        borderColor={Colors.findmyactivityYellow}
+      />
+      <Text>Anzahl der Teilnehmer: {participantList.length} von maximal {maxParticipantDisplay} </Text>
+      <ButtonVariable
+        text={'Teilnehmerliste anzeigen'}
+        onPress={() => { navigation.navigate('ViewParticipantScreen', {memberList: participantList} ) } }
+        backgroundColor={Colors.findmyactivityYellow}
+        borderColor={Colors.findmyactivityYellow}
+        width={100}
       />
       {startTimeDisplay}
       {endTimeDisplay}
       {tagDisplay}
       </ScrollView>
-      <View style={{alignSelf: 'center', marginBottom: 10}}>
-        <ButtonSmall
+        <ButtonVariable
           text={'Teilnehmen'}
           onPress={() => onParticipateButton() }
-          backgroundColor={'#FBB900'}
+          backgroundColor={Colors.findmyactivityYellow}
+          borderColor={Colors.findmyactivityYellow}
+          width={200}
         />
-      </View>
       
     </View>
   )
@@ -92,15 +113,15 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "rgba(223,242,242,1)"
+    backgroundColor: Colors.findmyactivityBackground,
   },
 
   scrollViewContainer: {
-    alignContent: 'stretch',
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    minHeight: '100%'
+    alignItems: 'center',
+    height: height * 0.4,
+    borderWidth: 2,
+    borderRadius: 10,
+    backgroundColor: Colors.findmyactivityWhite
   },
 
   buttonBack: {
@@ -127,7 +148,6 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    flex: 1,
     backgroundColor: "rgba(223,242,242,1)"
   },
   eventDetails: {

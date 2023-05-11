@@ -53,7 +53,7 @@ export default TextButton
 
 const styles = StyleSheet.create ({
   button: {
-    marginTop: 5,
-    marginBottom: 20,
+    // marginTop: 5,
+    // marginBottom: 20,
   },
 })

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, Alert } from "react-native";
-import MapView, {PROVIDER_GOOGLE, Marker, Callout} from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE, Marker, Callout } from "react-native-maps";
 import { getDistance } from 'geolib';
-import { reverseGeocodeAsync } from "expo-location";
 import { hawRegion } from "../constants/TestCoords";
 import * as Location from 'expo-location';
 
@@ -14,7 +13,7 @@ import 'intl'
 import 'intl/locale-data/jsonp/de'
 import { format } from 'date-fns'
 import { useNavigation } from "@react-navigation/native";
-import ButtonRegular from "./ButtonRegular";
+import ButtonVariable from "./ButtonVariable";
 
 import PropTypes from 'prop-types'
 import Colors from "../constants/Colors";
@@ -168,11 +167,12 @@ const MapViewGoogle = (props) => {
         zIndex: 5,
         // width: 60,
         }}> 
-        <ButtonRegular
+        <ButtonVariable
           text={'Marker erstellen'}
           onPress={() => { editMarkerMode._currentValue = false; navigation.navigate('CreateMarkersScreen') }}
           backgroundColor={Colors.findmyactivityYellow}
-          // onPress={() => addMarkerToDB(auth, 'EVENTNAME', 'EVENTDESC', 53.6, 10.045)}
+          borderColor={Colors.findmyactivityText}
+          width={200}
         /> 
       </View>
 
@@ -192,11 +192,12 @@ const MapViewGoogle = (props) => {
         zIndex: 5,
         // width: 60,
         }}> 
-        <ButtonRegular
+        <ButtonVariable
           text={'Markerposition aktualisieren'}
           onPress={() => { navigation.goBack(); saveNewMarkerLocation() }}
           backgroundColor={Colors.findmyactivityYellow}
-          // onPress={() => addMarkerToDB(auth, 'EVENTNAME', 'EVENTDESC', 53.6, 10.045)}
+          borderColor={Colors.findmyactivityText}
+          width={200}
         /> 
       </View>
     

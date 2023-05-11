@@ -10,7 +10,7 @@ import TextInputField from '../components/TextInputField'
 import { handleForgotPassword } from '../constants/MainFunctions'
 import Colors from '../constants/Colors'
 import ButtonBack from '../components/ButtonBack'
-import ButtonRegular from '../components/ButtonRegular'
+import ButtonVariable from '../components/ButtonVariable'
 
 const ForgotPasswordScreen = () => {
   const [email, setEmail] = useState('')
@@ -54,14 +54,16 @@ const ForgotPasswordScreen = () => {
       <View style={styles.buttonContainer}>
         
         <View style={styles.itemStyle}>
-          <ButtonRegular
+          <ButtonVariable
             onPress={() => handleForgotPassword(auth, email)}
             text={"Zurücksetzen"}
             icon={'refresh'}
             backgroundColor={Colors.findmyactivityYellow}
+            borderColor={Colors.findmyactivityYellow}
             accessibilityLabel={"Hier drücken"}
             accessibilityHint={"Zum Zurücksetzen des Passwortes bei oben eingegebener E-Mail-Adresse hier drücken, um eine Anfrage loszuschicken."
             + "Falls die oben eingegebene E-Mail-Adresse bei uns vorhanden ist, schicken wir Ihnen einen Link per Mail, wo Sie Ihr Passwort neu setzen können"}
+            width={200}
           />
         </View>
 

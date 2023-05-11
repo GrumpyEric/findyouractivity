@@ -5,13 +5,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import PropTypes from 'prop-types'
 
-// component props: onPress, text, backgroundColor, borderColor
-const ButtonRegularWithBorder = (props) => {
-
+// component props: onPress, text, backgroundColor, MarginBottom
+const ButtonVariable = (props) => {
   return (
     <TouchableOpacity
       onPress={props.onPress}
-      style={[styles.button, {backgroundColor: props.backgroundColor, borderColor: props.borderColor}]}
+      style={[styles.button, {backgroundColor: props.backgroundColor, borderColor: props.borderColor, width: props.width}]}
 
       accessible={true}
       accessibilityLabel={props.accessibilityLabel}
@@ -43,10 +42,10 @@ const ButtonRegularWithBorder = (props) => {
   )
 }
 
-ButtonRegularWithBorder.propTypes = { onPress: PropTypes.func.isRequired, text: PropTypes.string.isRequired, backgroundColor: PropTypes.string.isRequired, 
-  borderColor: PropTypes.string.isRequired, textColor: PropTypes.string, icon: PropTypes.string,
+ButtonVariable.propTypes = { onPress: PropTypes.func.isRequired, text: PropTypes.string.isRequired, backgroundColor: PropTypes.string.isRequired, 
+  borderColor: PropTypes.string, textColor: PropTypes.string, icon: PropTypes.string, width: PropTypes.any,
 
-  accessibilityLabel: PropTypes.string, accessibilityHint: PropTypes.string, 
+  accessibilityLabel: PropTypes.string, accessibilityHint: PropTypes.string,
   isAccessibilityStateDisabled: PropTypes.bool,
   isAccessibilityStateSelected: PropTypes.bool,
   isAccessibilityStateChecked: PropTypes.bool,
@@ -59,19 +58,16 @@ ButtonRegularWithBorder.propTypes = { onPress: PropTypes.func.isRequired, text: 
   isAccessibilityValueText: PropTypes.string
 }
 
-export default ButtonRegularWithBorder
+export default ButtonVariable
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: Colors.findmyactivityWhite,
     borderWidth: 2,
     borderColor: Colors.findmyactivityYellow,
-    width: 200,
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: "space-evenly"
-    // marginTop: 40,
   },
 })

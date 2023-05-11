@@ -11,7 +11,7 @@ import { height, stylesGlobal } from '../constants/StylesGlobal';
 
 import DropDownPicker from 'react-native-dropdown-picker';
 import { arrayIsEmpty } from '../constants/HelperFunctionsAndVariables';
-import ButtonSmall from '../components/ButtonSmall';
+import ButtonVariable from '../components/ButtonVariable';
 import ButtonBack from '../components/ButtonBack';
 
 const FilterScreen = ( {navigation} ) => {
@@ -126,22 +126,19 @@ return(
     />
 
     <View style={styles.button}>
-      <View style={{flexDirection:'row'}}>
-        <View>
-          <ButtonSmall
-            text={'Anwenden'}
-            onPress={() => saveFilters()}
-            backgroundColor={Colors.findmyactivityBlue}
-            color={Colors.findmyactivityWhite}
-          />
-        </View>
-        <View>
-          <ButtonSmall
-            text={'Zurücksetzen'}
-            onPress={() => clearFilters()}
-            backgroundColor={Colors.findmyactivityYellow}
-          />
-        </View>
+      <View style={{flexDirection:'row', justifyContent: 'space-evenly', width: '100%'}}>
+        <ButtonVariable
+          text={'Anwenden'}
+          onPress={() => saveFilters()}
+          backgroundColor={Colors.findmyactivityYellow}
+          borderColor={Colors.findmyactivityYellow}
+        />
+        <ButtonVariable
+          text={'Zurücksetzen'}
+          onPress={() => clearFilters()}
+          backgroundColor={'red'}
+          borderColor={'red'}
+        />
       </View>
     </View>
   </View>
