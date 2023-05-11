@@ -143,6 +143,7 @@ const EventScreen = ( {navigation} ) => {
           <View>
           {
           showMyMarkers ?
+          myMarkersRef.length ?
           myMarkersRef.map((val, index) => 
           {
             let distanceToUserPos = "?"//getDistance(val,props.userPosContext.coords) / 1000
@@ -203,7 +204,6 @@ const EventScreen = ( {navigation} ) => {
           }
 
             if (distanceToUserPos < radiusMarkers || radiusMarkers === 'alle') {
-              // console.log(distanceToUserPos);
               return (
                 <View key={index} style={{ marginBottom: 15, borderTopWidth: index === 0 ? 0 : 1 }}>
                   <TouchableOpacity onPress={() => moveToMarker(val)} style={{marginTop: 10}}>
@@ -237,6 +237,11 @@ const EventScreen = ( {navigation} ) => {
           }
         )
         :
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={stylesGlobal.ueberschriftText2}>Sie haben noch keine eigenen Marker gesetzt. Setzen Sie erstmal Marker auf der Karte, um hier dann die eigenen Marker sehen zu können.</Text>
+          </View>
+        :
+        markersRef.length ?
         markersRef.map((val, index) => 
           {
             let distanceToUserPos = "?"//getDistance(val,props.userPosContext.coords) / 1000
@@ -334,6 +339,10 @@ const EventScreen = ( {navigation} ) => {
             }
           }
         )
+        :
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={stylesGlobal.ueberschriftText2}>Es hat noch niemand Marker gesetzt. Setzen Sie den ersten Marker auf der Karte!</Text>
+          </View>
       }
           </View>
         </ScrollView>

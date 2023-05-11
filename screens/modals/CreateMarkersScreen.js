@@ -48,10 +48,6 @@ const CreateMarkersScreen = ( {navigation} ) => {
     setTimePickerVisibility(false);
   };
 
-  useEffect(() => {
-    console.log(editMarkerValues._currentValue);
-  }, [])
-
   function errorHandlerName() {
     if (eventName.length < 1) {
       setEventNameError(true)
@@ -168,18 +164,6 @@ const CreateMarkersScreen = ( {navigation} ) => {
 
     hideTimePicker();
   };
-
-  useEffect(() => {
-    console.log('start time', pickedStartTime);
-  }, [pickedStartTime])
-
-  useEffect(() => {
-    console.log('end time', pickedEndTime);
-  }, [pickedEndTime])
-
-  useEffect(() => {
-    console.log(kindOfTimePicker.current);
-  }, [kindOfTimePicker.current])
 
   DropDownPicker.setLanguage("DE");
   

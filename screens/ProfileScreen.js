@@ -27,22 +27,6 @@ const Profile = ( {navigation} ) => {
   let eventArray = markersRef.filter(function (arr) {
     return arr.user === selectedUserContext._current_value.markers.uid
   })
-
-  // const [eventArray, setEventArray] = useState([])
-
-  useEffect(() => {
-    console.log('rerender');
-    readMarkerFromDB()
-
-    // setEventArray(markersRef.filter(function (arr) {
-    //   if (selectedUserContext._current_value.markers.uid) {
-    //     return arr.user === selectedUserContext._current_value.markers.uid
-    //   } else {
-    //     null
-    //   }
-    // }))
-  }, [])
-  
   
   // Zustand der Text-Ausgaben
   const [displayUsername, setDisplayUsername] = useState(selectedUserContext._current_value.markers.username)

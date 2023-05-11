@@ -90,13 +90,7 @@ const FilterScreen = ( {navigation} ) => {
     Alert.alert(alerta_title,alerta_text) ;
     //navigation.pop()
   }
-
-  useEffect(() => {
-    console.log('radius:', radiusMarkers);
-    console.log('radius context:', rangeContext._currentValue)
-  }, [radiusMarkers])
   
- 
 return(
   <View style={styles.screenContainer}>
     <ButtonBack
