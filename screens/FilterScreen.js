@@ -94,7 +94,7 @@ return(
       onPress={() => navigation.goBack()}
       text={'Zurück'}
     />
-    <View style={{width: '100%', marginBottom: paddingBetweenItems}}>
+    <View style={styles.contentContainerStyle}>
       <Text style={stylesGlobal.ueberschriftText2}>Radius</Text>
       <Text>{radiusMarkersVisual === 'alle Marker anzeigen' || radiusMarkersVisual === 21 ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>
       <Slider
@@ -107,24 +107,22 @@ return(
         minimumTrackTintColor={Colors.findmyactivityYellow}
         thumbTintColor={Colors.findmyactivityGreen}
       />
-    </View>
 
-    <Text style={[stylesGlobal.ueberschriftText2, {alignSelf: 'flex-start', marginBottom: 2}]}>Tags</Text>
-    <DropDownPicker
-      searchable={true}
-      multiple={true}
-      min={0}
-      open={open}
-      value={value}
-      items={items}
-      setOpen={setOpen}
-      setValue={setValue}
-      setItems={setItems}
-      listMode='MODAL'
-    />
+      <Text style={[stylesGlobal.ueberschriftText2, {alignSelf: 'flex-start', marginBottom: 2}]}>Tags</Text>
+      <DropDownPicker
+        searchable={true}
+        multiple={true}
+        min={0}
+        open={open}
+        value={value}
+        items={items}
+        setOpen={setOpen}
+        setValue={setValue}
+        setItems={setItems}
+        listMode='MODAL'
+      />
 
-    <View style={styles.button}>
-      <View style={{flexDirection:'row', justifyContent: 'space-evenly', width: '100%'}}>
+      <View style={styles.button}>
         <ButtonVariable
           text={'Anwenden'}
           onPress={() => saveFilters()}
@@ -154,9 +152,17 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    marginTop: stylesGlobal.marginsAndPadding.paddingBetweenItems,
-    position: 'absolute',
-    bottom: height * 0.15,
-    zIndex: -1
+    flexDirection: 'row', 
+    justifyContent: 'space-evenly', 
+    width: '100%',
+  },
+
+  contentContainerStyle: {
+    height: height * 0.45,
+    width: '100%',
+    borderWidth: 2,
+    borderRadius: 10,
+    padding: 10,
+    backgroundColor: Colors.findmyactivityWhite
   },
 })
