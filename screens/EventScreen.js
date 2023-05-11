@@ -7,7 +7,7 @@ import Colors from '../constants/Colors';
 import TextButton from '../components/TextButton';
 import Slider from '@react-native-community/slider';
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -16,9 +16,11 @@ import {
   ScrollView,
   TouchableOpacity
 } from "react-native";
-import { stylesGlobal } from "../constants/StylesGlobal";
+import { height, stylesGlobal } from "../constants/StylesGlobal";
 import FloatingBurgerMenu from "../components/FloatingBurgerMenu";
 import ButtonBack from "../components/ButtonBack";
+import ButtonTiny from "../components/ButtonTiny";
+import { format, isSameDay, isTomorrow } from "date-fns";
 
 const EventScreen = ( {navigation} ) => {
   const moveToMarker = (inputMarker) => {
@@ -32,7 +34,7 @@ const EventScreen = ( {navigation} ) => {
   }
 
     function editMarkerHandler(val) {
-        navigation.navigate('CreateMarkersScreen'); editMarker(val)
+      navigation.navigate('CreateMarkersScreen'); editMarker(val)
     }
 
     function deleteMarkerHandler(val) {
@@ -85,8 +87,8 @@ const EventScreen = ( {navigation} ) => {
     // console.log(myUserID);
 
     let myMarkersRef = markersRef.filter(function (arr) {
-        return arr.user === myUserID
-    })
+      return arr.user === myUserID
+  })
 
   return (
     <View style={[stylesGlobal.screenContainer, styles.container]}>
@@ -99,7 +101,8 @@ const EventScreen = ( {navigation} ) => {
         text={'Zurück'}
       />
       <View style={stylesGlobal.contentContainerMainScreens}>
-      <Text style={[stylesGlobal.ueberschriftText, {textAlign: 'center'}]}>Events</Text>
+        <Text style={[stylesGlobal.ueberschriftText, {textAlign: 'center'}]}>Events</Text>
+      
         <Text style={[stylesGlobal.ueberschriftText2, {textAlign: 'center'}]}>Ansicht umstellen auf:</Text>
         <View style={{flexDirection: 'row', justifyContent: "center"}}> 
           <Text style={{color: showMyMarkers ? '#CAD6E0' : Colors.findmyactivityText, alignSelf: 'center'}}>Alle Marker</Text>
@@ -114,32 +117,33 @@ const EventScreen = ( {navigation} ) => {
           ></Switch>
           <Text style={{color: showMyMarkers ? Colors.findmyactivityText : '#CAD6E0', marginLeft: 20, alignSelf: 'center'}}>Meine Marker</Text>
         </View>
-      </View>
-      <View style={styles.sliderStack}>
-        <Slider 
-          value={radiusMarkers}
-          minimumValue={0}
-          maximumValue={21}
-          onSlidingComplete={(value) => value < 21 ? setRadiusMarkers(value) : setRadiusMarkers('alle')}
-          step={1}
-          disabled={false}
-          onValueChange={(value) => value < 21 ? setRadiusMarkersVisual(value) : setRadiusMarkersVisual('alle')}
-          minimumTrackTintColor="rgba(251,185,0,1)"
-          maximumTrackTintColor="rgba(35,112,118,1)"
-          thumbTintColor="rgba(35,112,118,1)"
-          style={styles.slider}></Slider>
-        <Text style={[styles.radius, stylesGlobal.ueberschriftText2]}>Radius:</Text>
-        <Text style={styles.radius1}>{radiusMarkersVisual === 'alle' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>
-      </View>
-      <Text style={stylesGlobal.ueberschriftText2}>Events</Text>
-      <View style={styles.scrollArea}>
-        <ScrollView
-          contentContainerStyle={styles.scrollArea_contentContainerStyle}
-        >
+
+        <View style={styles.contentSeparatorStyle}>
+          <Text style={[stylesGlobal.ueberschriftText2, {marginBottom: 2}]}>Radius:</Text>
+          <Text style={styles.radius1}>{radiusMarkersVisual === 'alle Marker anzeigen' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>
+          <Slider 
+            value={radiusMarkers}
+            minimumValue={0}
+            maximumValue={21}
+            onSlidingComplete={(value) => value < 21 ? setRadiusMarkers(value) : setRadiusMarkers('alle')}
+            step={1}
+            disabled={false}
+            onValueChange={(value) => value < 21 ? setRadiusMarkersVisual(value) : setRadiusMarkersVisual('alle Marker anzeigen')}
+            minimumTrackTintColor="rgba(251,185,0,1)"
+            maximumTrackTintColor="rgba(35,112,118,1)"
+            thumbTintColor="rgba(35,112,118,1)"
+            style={styles.slider}
+          />
+        </View>
+
+        <View style={styles.eventsStyle}>
+        <Text style={[stylesGlobal.ueberschriftText2, {marginBottom: 2}]}>{showMyMarkers ? 'Meine Events' : 'Alle Events'}</Text>
+
+          <ScrollView style={styles.scrollAreaStyle} contentContainerStyle={styles.scrollAreaContentContainerStyle}>
           <View>
           {
-        showMyMarkers ?
-        myMarkersRef.map((val, index) => 
+          showMyMarkers ?
+          myMarkersRef.map((val, index) => 
           {
             let distanceToUserPos = "?"//getDistance(val,props.userPosContext.coords) / 1000
             // console.log(userPosContext._currentValue.coords);
@@ -148,26 +152,85 @@ const EventScreen = ( {navigation} ) => {
               distanceToUserPos = getDistance(val, userPosContext._currentValue.coords) / 1000
             }
 
+            const displayStartTime = (val) => {
+
+              let startTimeRes = "unbekannt"
+              const startDate = val.startTime.toDate()
+              const today = new Date()
+
+              if (val.startTime) {
+                if (isSameDay(startDate, today)) {
+                  startTimeRes = "Heute um " + format(startDate, 'HH:mm') + ' Uhr'
+                
+                } else if (isTomorrow(startDate)) {
+                  startTimeRes = "Morgen um " + format(startDate, 'HH:mm') + ' Uhr'
+
+                } else {
+                  startTimeRes = format(startDate, 'dd.MM.yyyy - HH:mm') + ' Uhr'
+                }
+              }
+              return <Text style={stylesGlobal.standardText}> Start-Zeit: {startTimeRes} </Text>
+          }
+
+          const displayEndTime = (val) => {
+
+              let endTimeRes = "unbekannt"
+              const endDate = val.endTime.toDate()
+              const today = new Date()
+
+              if (val.endTime) {
+                if (isSameDay(endDate, today)) {
+                  endTimeRes = "Heute um " + format(endDate, 'HH:mm') + ' Uhr'
+                
+                } else if (isTomorrow(endDate)) {
+                  endTimeRes = "Morgen um " + format(endDate, 'HH:mm') + ' Uhr'
+
+                } else {
+                  endTimeRes = format(endDate, 'dd.MM.yyyy - HH:mm') + ' Uhr'
+                }
+              }
+
+              return <Text style={stylesGlobal.standardText}> End-Zeit: {endTimeRes} </Text>
+          }
+
+          const displayTags = (val) => {
+            console.log(val.tags);
+            if( (val.tags.length)) {
+              return <Text style={stylesGlobal.standardText}> Tags: {val.tags.toString()}</Text>
+            } else {
+              return <Text style={stylesGlobal.standardText}> Tags: keine Tags vergeben</Text>
+            }
+          }
+
             if (distanceToUserPos < radiusMarkers || radiusMarkers === 'alle') {
               // console.log(distanceToUserPos);
               return (
-                <View key={index} style={{backgroundColor: 'rgba(35, 112, 118, 0.2)', marginBottom: 10, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10}}>
-                  <TouchableOpacity onPress={() => moveToMarker(val)}>
-                    <Text key={Math.random().toString()}> {"Eventname: " + val.name} </Text>
-                    <Text key={Math.random().toString()}> {"Beschreibung: " + val.description} </Text>
-                    <Text> Distanz: {distanceToUserPos} km</Text>
+                <View key={index} style={{ marginBottom: 15, borderTopWidth: index === 0 ? 0 : 1 }}>
+                  <TouchableOpacity onPress={() => moveToMarker(val)} style={{marginTop: 10}}>
+                    <Text style={[stylesGlobal.ueberschriftText2, {marginBottom: val.description ? 0 : 5} ]}> {val.name} </Text>
+                    {val.description 
+                      ? <Text style={[stylesGlobal.standardText, {marginBottom: 5}]}> {val.description} </Text>
+                      : null
+                    }
+                    { displayStartTime(val) }
+                    { displayEndTime(val) }
+                    <Text style={stylesGlobal.standardText}> Distanz: {distanceToUserPos} km</Text>
+                    { displayTags(val) }
                   </TouchableOpacity>
-                  <TextButton
-                    onPress={() => editMarkerHandler(val)}
-                    text={'Marker bearbeiten'}
-                    textColor={Colors.findmyactivityBlue}
-                  />
-                  <TextButton
-                    onPress={() => deleteMarkerHandler(val)}
-                    text={'Marker löschen'}
-                    textColor={Colors.findmyactivityBlue}
-                  />
-                  {/* <Text> Distanz: {distanceToUserPos} km</Text> */}
+
+                  <View style={{flexDirection: 'row', justifyContent: "space-around", marginTop: stylesGlobal.marginsAndPadding.paddingBetweenItems}}>
+                    <ButtonTiny
+                      backgroundColor={Colors.findmyactivityYellow}
+                      onPress={() => editMarkerHandler(val)}
+                      text={'Marker bearbeiten'}
+                    />
+                    <ButtonTiny
+                      backgroundColor={'red'}
+                      onPress={() => deleteMarkerHandler(val)}
+                      text={'Marker löschen'}
+                    />
+                  </View>
+
                 </View>
               )
             }
@@ -181,33 +244,92 @@ const EventScreen = ( {navigation} ) => {
             {
               distanceToUserPos = getDistance(val, userPosContext._currentValue.coords) / 1000
             }
+
+            const displayStartTime = (val) => {
+
+              let startTimeRes = "unbekannt"
+              const startDate = val.startTime.toDate()
+              const today = new Date()
+
+              if (val.startTime) {
+                if (isSameDay(startDate, today)) {
+                  startTimeRes = "Heute um " + format(startDate, 'HH:mm') + ' Uhr'
+                
+                } else if (isTomorrow(startDate)) {
+                  startTimeRes = "Morgen um " + format(startDate, 'HH:mm') + ' Uhr'
+
+                } else {
+                  startTimeRes = format(startDate, 'dd.MM.yyyy - HH:mm') + ' Uhr'
+                }
+              }
+              return <Text style={stylesGlobal.standardText}> Start-Zeit: {startTimeRes} </Text>
+          }
+
+          const displayEndTime = (val) => {
+
+              let endTimeRes = "unbekannt"
+              const endDate = val.endTime.toDate()
+              const today = new Date()
+
+              if (val.endTime) {
+                if (isSameDay(endDate, today)) {
+                  endTimeRes = "Heute um " + format(endDate, 'HH:mm') + ' Uhr'
+                
+                } else if (isTomorrow(endDate)) {
+                  endTimeRes = "Morgen um " + format(endDate, 'HH:mm') + ' Uhr'
+
+                } else {
+                  endTimeRes = format(endDate, 'dd.MM.yyyy - HH:mm') + ' Uhr'
+                }
+              }
+
+              return <Text style={stylesGlobal.standardText}> End-Zeit: {endTimeRes} </Text>
+          }
+
+          const displayTags = (val) => {
+            console.log(val.tags);
+            if( (val.tags.length)) {
+              return <Text style={stylesGlobal.standardText}> Tags: {val.tags.toString()}</Text>
+            } else {
+              return <Text style={stylesGlobal.standardText}> Tags: keine Tags vergeben</Text>
+            }
+          }
+
             if (distanceToUserPos < radiusMarkers || radiusMarkers === 'alle') {
               return (
-                <View key={index} style={{backgroundColor: 'rgba(35, 112, 118, 0.2)', marginBottom: 10, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 10}}>
-                  <TouchableOpacity onPress={() => moveToMarker(val)}>
-                    <Text key={Math.random().toString()}> {"Eventname: " + val.name} </Text>
-                    <Text key={Math.random().toString()}> {"Beschreibung: " + val.description} </Text>
-                    <Text> Distanz: {distanceToUserPos} km</Text>
-                  </TouchableOpacity>
-                  {val.user === myUserID 
-                  ?
-                  <View>
-                  <TextButton
+
+                <View key={index} style={{ marginBottom: 15, borderTopWidth: index === 0 ? 0 : 1 }}>
+                <TouchableOpacity onPress={() => moveToMarker(val)} style={{marginTop: 10}}>
+                  <Text style={[stylesGlobal.ueberschriftText2, {marginBottom: val.description ? 0 : 5} ]}> {val.name} </Text>
+                  {val.description 
+                    ? <Text style={[stylesGlobal.standardText, {marginBottom: 5}]}> {val.description} </Text>
+                    : null
+                  }
+                  { displayStartTime(val) }
+                  { displayEndTime(val) }
+                  <Text style={stylesGlobal.standardText}> Distanz: {distanceToUserPos} km</Text>
+                  { displayTags(val) }
+                </TouchableOpacity>
+
+                {val.user === myUserID 
+                ?
+                <View style={{flexDirection: 'row', justifyContent: "space-around", marginTop: stylesGlobal.marginsAndPadding.paddingBetweenItems}}>
+                  <ButtonTiny
+                    backgroundColor={Colors.findmyactivityYellow}
                     onPress={() => editMarkerHandler(val)}
                     text={'Marker bearbeiten'}
-                    textColor={Colors.findmyactivityBlue}
                   />
-                  <TextButton
+                  <ButtonTiny
+                    backgroundColor={'red'}
                     onPress={() => deleteMarkerHandler(val)}
                     text={'Marker löschen'}
-                    textColor={Colors.findmyactivityBlue}
                   />
-                  </View>
-                  :
-                  null
-                  }
-                  {/* <Text> Distanz: {distanceToUserPos} km</Text> */}
                 </View>
+                :
+                null
+                }
+
+              </View>
               )
             }
           }
@@ -215,7 +337,8 @@ const EventScreen = ( {navigation} ) => {
       }
           </View>
         </ScrollView>
-      </View>
+        </View>
+      </View>      
     </View>
   );
 }
@@ -224,78 +347,22 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.findmyactivityBackground
   },
-  alleMarkerAnzeigen: {
-    color: "#121212"
+
+  contentSeparatorStyle: {
+    marginVertical: stylesGlobal.marginsAndPadding.paddingBetweenItems,
   },
-  switch: {
-    marginLeft: 20
-  },
-  alleMarkerAnzeigenRow: {
-    height: 20,
-    flexDirection: "row"
-  },
-  alleMarkerAnzeigen1: {
-    color: "#121212",
-    flex: 1,
-    marginLeft: 20
-  },
-  alleMarkerAnzeigenRowRow: {
-    height: 20,
-    flexDirection: "row",
-    marginTop: 26,
-    marginLeft: 75,
-    marginRight: 10
-  },
-  slider: {
-    position: "absolute",
-    top: 15,
-    height: 44,
-    width: 365,
-    left: 0,
-    color: "#237076"
-  },
-  radius: {
-    top: 0,
-    left: 16,
-    position: "absolute",
-    color: "#121212"
-  },
-  radius1: {
-    top: 0,
-    left: 65,
-    position: "absolute",
-    color: "#121212"
-  },
-  sliderStack: {
-    width: 340,
-    height: 59,
-    // marginTop: 37,
-    marginLeft: 10,
-  },
-  scrollArea: {
-    width: 340,
-    height: 460,
-    backgroundColor: "rgba(223,242,242,1)",
-    borderWidth: 1,
-    borderColor: "rgba(35,112,118,1)",
+
+  scrollAreaStyle: {
+    height: height * 0.45,
+    borderWidth: 2,
     borderRadius: 10,
-    marginTop: 4,
-    alignSelf: "center"
+    backgroundColor: Colors.findmyactivityWhite
   },
-  scrollArea_contentContainerStyle: {
-    width: 340,
-    paddingHorizontal: 10,
-    paddingVertical: 10
+
+  scrollAreaContentContainerStyle: {
+    margin: 5,
   },
-  headerColumn: {
-    marginTop: 24
-  },
-  headerColumnFiller: {
-    flex: 1
-  },
-  footer: {
-    height: 56
-  }
+
 });
 
 export default EventScreen;

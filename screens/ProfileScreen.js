@@ -1,5 +1,5 @@
-import { updateUserFromDB, readUserFromDB, markersRef, readMarkerFromDB } from '../constants/MainFunctions';
-import { selectedUserContext, loggedInUser, userPosContext, mapRef, saveProfileChangesFunctionContext } from '../components/AppContext';
+import { updateUserFromDB, readUserFromDB, markersRef, readMarkerFromDB, deleteMarkerToDB } from '../constants/MainFunctions';
+import { selectedUserContext, loggedInUser, userPosContext, mapRef, saveProfileChangesFunctionContext, editMarkerMode, editMarkerValues, editMarkerObject } from '../components/AppContext';
 import { getDistance } from 'geolib';
 import React, { useEffect, useState } from "react";
 import {
@@ -16,6 +16,8 @@ import FloatingBurgerMenu from '../components/FloatingBurgerMenu';
 import Colors from '../constants/Colors';
 import ButtonBack from '../components/ButtonBack';
 import { format, isSameDay, isTomorrow } from 'date-fns';
+import ButtonTiny from '../components/ButtonTiny';
+import { auth } from '../firebase/firebase-config';
 
 const Profile = ( {navigation} ) => {
   navigation.setOptions({
@@ -64,6 +66,53 @@ const Profile = ( {navigation} ) => {
     })
   }
 
+  function editMarkerHandler(val) {
+    navigation.navigate('CreateMarkersScreen'); editMarker(val)
+  }
+
+  function deleteMarkerHandler(val) {
+    Alert.alert(
+    'Löschen des Markers',
+    'Wollen Sie den Marker wirklich löschen?',
+    [
+        {
+        text: 'Löschen',
+        onPress: () => { deleteMarkerToDB(auth, val.creation_date) }
+        },
+        {
+        text: 'Abbrechen',
+        onPress: () => {  }
+        }
+    ]
+    )
+  }
+
+  const editMarker = (markerValues) => {
+    editMarkerMode._currentValue = true
+
+    // editMarkerValues._currentValue.creationDate = ((markerValues.creation_date.nanoseconds / 1000000000 + markerValues.creation_date.seconds) * 1000)
+    // editMarkerValues._currentValue.creationDate = Timestamp.fromMillis( (markerValues.creation_date.nanoseconds / 10000000 + markerValues.creation_date.seconds) * 1000 )
+    editMarkerValues._currentValue.creationDate = markerValues.creation_date
+    editMarkerValues._currentValue.name = markerValues.name
+    editMarkerValues._currentValue.description = markerValues.description
+    editMarkerValues._currentValue.locationDescription = markerValues.locationDescription
+    editMarkerValues._currentValue.startDate = new Date(markerValues.startTime.seconds*1000)
+    editMarkerValues._currentValue.endDate = new Date(markerValues.endTime.seconds*1000)
+    editMarkerValues._currentValue.numberParticipants = markerValues.numberParticipants
+    editMarkerValues._currentValue.tags = markerValues.tags
+    editMarkerValues._currentValue.latitude = markerValues.latitude
+    editMarkerValues._currentValue.longitude = markerValues.longitude
+
+    editMarkerObject._currentValue = markerValues
+    console.log('MY VALUES', markerValues);
+
+    // Timestamp creation date:
+    // console.log('creation date:', (markerValues.creation_date.nanoseconds / 1000000000 + markerValues.creation_date.seconds) * 1000 );
+    // important for update marker: db, "markers", userID_timestampcreationdate (in seconds)
+
+    console.log('create date:', editMarkerValues._currentValue.creationDate );
+}
+
   return (
   <View style={[stylesGlobal.screenContainer, styles.container]}>
     <FloatingBurgerMenu
@@ -109,7 +158,7 @@ const Profile = ( {navigation} ) => {
       </View>
 
       <View style={styles.contentSeparatorStyle}>
-      <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>Events</Text>
+      <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>Meine Events</Text>
         <ScrollView style={styles.scrollAreaStyle} contentContainerStyle={styles.scrollAreaContentContainerStyle}>
           {
           eventArray.length ?
@@ -183,6 +232,19 @@ const Profile = ( {navigation} ) => {
                   <Text style={stylesGlobal.standardText}> Distanz: {distanceToUserPos} km</Text>
                   { displayTags(val) }
                 </TouchableOpacity>
+
+                <View style={{flexDirection: 'row', justifyContent: "space-around", marginTop: stylesGlobal.marginsAndPadding.paddingBetweenItems}}>
+                  <ButtonTiny
+                    backgroundColor={Colors.findmyactivityYellow}
+                    onPress={() => editMarkerHandler(val)}
+                    text={'Marker bearbeiten'}
+                  />
+                  <ButtonTiny
+                    backgroundColor={'red'}
+                    onPress={() => deleteMarkerHandler(val)}
+                    text={'Marker löschen'}
+                  />
+                </View>
               </View>
             )
           })
