@@ -95,10 +95,10 @@ const EventScreen = ( {navigation} ) => {
         onPress={() => navigation.openDrawer()}
         icon={'navicon'}
       />
-      <ButtonBack
+      {/* <ButtonBack
         onPress={() => navigation.goBack()}
         text={'Zurück'}
-      />
+      /> */}
       <View style={stylesGlobal.contentContainerMainScreens}>
         <Text style={[stylesGlobal.ueberschriftText, {textAlign: 'center'}]}>Events</Text>
       
@@ -163,10 +163,14 @@ const EventScreen = ( {navigation} ) => {
                   startTimeRes = "Morgen um " + format(startDate, 'HH:mm') + ' Uhr'
 
                 } else {
-                  startTimeRes = format(startDate, 'dd.MM.yyyy - HH:mm') + ' Uhr'
+                  startTimeRes = format(startDate, 'dd.MM.yyyy, HH:mm') + ' Uhr'
                 }
               }
-              return <Text style={stylesGlobal.standardText}> Start-Zeit: {startTimeRes} </Text>
+              return (
+                <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Start:{'\n'}
+                  <Text style={stylesGlobal.standardText}>{startTimeRes}</Text>
+                </Text>
+              )
           }
 
           const displayEndTime = (val) => {
@@ -183,35 +187,46 @@ const EventScreen = ( {navigation} ) => {
                   endTimeRes = "Morgen um " + format(endDate, 'HH:mm') + ' Uhr'
 
                 } else {
-                  endTimeRes = format(endDate, 'dd.MM.yyyy - HH:mm') + ' Uhr'
+                  endTimeRes = format(endDate, 'dd.MM.yyyy, HH:mm') + ' Uhr'
                 }
               }
 
-              return <Text style={stylesGlobal.standardText}> End-Zeit: {endTimeRes} </Text>
+              return (
+                <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Ende:{'\n'}
+                  <Text style={stylesGlobal.standardText}>{endTimeRes}</Text>
+                </Text>
+              )
           }
 
           const displayTags = (val) => {
             console.log(val.tags);
-            if( (val.tags.length)) {
-              return <Text style={stylesGlobal.standardText}> Tags: {val.tags.toString()}</Text>
-            } else {
-              return <Text style={stylesGlobal.standardText}> Tags: keine Tags vergeben</Text>
-            }
+              return (
+              <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Tags:{'\n'}
+                <Text style={stylesGlobal.standardText}>{val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}</Text>
+              </Text>
+            )
           }
 
             if (distanceToUserPos < radiusMarkers || radiusMarkers === 'alle') {
               return (
                 <View key={index} style={{ marginBottom: 15, borderTopWidth: index === 0 ? 0 : 1 }}>
                   <TouchableOpacity onPress={() => moveToMarker(val)} style={{marginTop: 10}}>
-                    <Text style={[stylesGlobal.ueberschriftText2, {marginBottom: val.description ? 0 : 5} ]}> {val.name} </Text>
+                    <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Eventname:{'\n'}
+                      <Text style={stylesGlobal.standardText}>{val.name}</Text>
+                    </Text>
                     {val.description 
-                      ? <Text style={[stylesGlobal.standardText, {marginBottom: 5}]}> {val.description} </Text>
-                      : null
-                    }
+                    ? 
+                    <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Beschreibung:{'\n'}
+                      <Text style={stylesGlobal.standardText}>{val.description}</Text>
+                    </Text>  
+                    : null}
                     { displayStartTime(val) }
                     { displayEndTime(val) }
-                    <Text style={stylesGlobal.standardText}> Distanz: {distanceToUserPos} km</Text>
+                    <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Distanz:{'\n'}
+                      <Text style={stylesGlobal.standardText}>{distanceToUserPos} km</Text>
+                    </Text>
                     { displayTags(val) }
+                    <Text style={stylesGlobal.ueberschriftText2}>Auf das Feld klicken, um zum Event zu springen</Text>
                   </TouchableOpacity>
 
                   <View style={{flexDirection: 'row', justifyContent: "space-around", marginTop: stylesGlobal.marginsAndPadding.paddingBetweenItems}}>
@@ -262,10 +277,14 @@ const EventScreen = ( {navigation} ) => {
                   startTimeRes = "Morgen um " + format(startDate, 'HH:mm') + ' Uhr'
 
                 } else {
-                  startTimeRes = format(startDate, 'dd.MM.yyyy - HH:mm') + ' Uhr'
+                  startTimeRes = format(startDate, 'dd.MM.yyyy, HH:mm') + ' Uhr'
                 }
               }
-              return <Text style={stylesGlobal.standardText}> Start-Zeit: {startTimeRes} </Text>
+              return (
+                <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Start:{'\n'}
+                  <Text style={stylesGlobal.standardText}>{startTimeRes}</Text>
+                </Text>
+              )
           }
 
           const displayEndTime = (val) => {
@@ -282,37 +301,48 @@ const EventScreen = ( {navigation} ) => {
                   endTimeRes = "Morgen um " + format(endDate, 'HH:mm') + ' Uhr'
 
                 } else {
-                  endTimeRes = format(endDate, 'dd.MM.yyyy - HH:mm') + ' Uhr'
+                  endTimeRes = format(endDate, 'dd.MM.yyyy, HH:mm') + ' Uhr'
                 }
               }
 
-              return <Text style={stylesGlobal.standardText}> End-Zeit: {endTimeRes} </Text>
+              return (
+                <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Ende:{'\n'}
+                  <Text style={stylesGlobal.standardText}>{endTimeRes}</Text>
+                </Text>
+              )
           }
 
           const displayTags = (val) => {
             console.log(val.tags);
-            if( (val.tags.length)) {
-              return <Text style={stylesGlobal.standardText}> Tags: {val.tags.toString()}</Text>
-            } else {
-              return <Text style={stylesGlobal.standardText}> Tags: keine Tags vergeben</Text>
-            }
+              return (
+              <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Tags:{'\n'}
+                <Text style={stylesGlobal.standardText}>{val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}</Text>
+              </Text>
+            )
           }
 
             if (distanceToUserPos < radiusMarkers || radiusMarkers === 'alle') {
               return (
 
                 <View key={index} style={{ marginBottom: 15, borderTopWidth: index === 0 ? 0 : 1 }}>
-                <TouchableOpacity onPress={() => moveToMarker(val)} style={{marginTop: 10}}>
-                  <Text style={[stylesGlobal.ueberschriftText2, {marginBottom: val.description ? 0 : 5} ]}> {val.name} </Text>
-                  {val.description 
-                    ? <Text style={[stylesGlobal.standardText, {marginBottom: 5}]}> {val.description} </Text>
-                    : null
-                  }
-                  { displayStartTime(val) }
-                  { displayEndTime(val) }
-                  <Text style={stylesGlobal.standardText}> Distanz: {distanceToUserPos} km</Text>
-                  { displayTags(val) }
-                </TouchableOpacity>
+                  <TouchableOpacity onPress={() => moveToMarker(val)} style={{marginTop: 10}}>
+                    <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Eventname:{'\n'}
+                      <Text style={stylesGlobal.standardText}>{val.name}</Text>
+                    </Text>
+                    {val.description 
+                    ? 
+                    <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Beschreibung:{'\n'}
+                      <Text style={stylesGlobal.standardText}>{val.description}</Text>
+                    </Text>  
+                    : null}
+                    { displayStartTime(val) }
+                    { displayEndTime(val) }
+                    <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Distanz:{'\n'}
+                      <Text style={stylesGlobal.standardText}>{distanceToUserPos} km</Text>
+                    </Text>
+                    { displayTags(val) }
+                    <Text style={stylesGlobal.ueberschriftText2}>Auf das Feld klicken, um zum Event zu springen</Text>
+                  </TouchableOpacity>
 
                 {val.user === myUserID 
                 ?

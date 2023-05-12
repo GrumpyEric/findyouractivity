@@ -108,26 +108,26 @@ const Profile = ( {navigation} ) => {
       icon={'navicon'}
 
     />
-    <ButtonBack
+    {/* <ButtonBack
       onPress={() => navigation.goBack()}
       text={'Zurück'}
-    />
+    /> */}
     <View style={stylesGlobal.contentContainerMainScreens}>
       <Text style={[stylesGlobal.ueberschriftText, {textAlign: 'center'}]}>Profil</Text>
 
       <View style={styles.contentSeparatorStyle}>
-        <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>Benutzername</Text>
+        <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>Mein Benutzername (änderbar)</Text>
         <TextInputField
-          placeholder="Benutzername"
+          placeholder="Mein Benutzername"
           value={displayUsername}
           onChangeText={setDisplayUsername}
         />
       </View>
 
       <View style={styles.contentSeparatorStyle}>
-        <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>Beschreibung</Text>
+        <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>Meine Beschreibung (änderbar)</Text>
         <TextInputField
-          placeholder="Beschreibung"
+          placeholder="Meine Beschreibung"
           multiline
           maxLength={250}
           value={displayDescription}
@@ -136,10 +136,10 @@ const Profile = ( {navigation} ) => {
       </View>
       
       <View style={styles.contentSeparatorStyle}>
-        <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>E-Mail-Adresse</Text>
+        <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>Meine E-Mail-Adresse</Text>
         <TextInputField
           editable={false}
-          placeholder="E-Mail-Adresse"
+          placeholder="Meine E-Mail-Adresse"
           value={loggedInUser._current_value.email.toString()}
           onChangeText={null}
         />
@@ -174,7 +174,11 @@ const Profile = ( {navigation} ) => {
                     startTimeRes = format(startDate, 'dd.MM.yyyy, HH:mm') + ' Uhr'
                   }
                 }
-                return <Text style={stylesGlobal.standardText}> Start-Zeit: {startTimeRes} </Text>
+                return (
+                  <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Start:{'\n'}
+                    <Text style={stylesGlobal.standardText}>{startTimeRes}</Text>
+                  </Text>
+                )
             }
 
             const displayEndTime = (val) => {
@@ -195,30 +199,41 @@ const Profile = ( {navigation} ) => {
                   }
                 }
 
-                return <Text style={stylesGlobal.standardText}> End-Zeit: {endTimeRes} </Text>
+                return (
+                  <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Ende:{'\n'}
+                    <Text style={stylesGlobal.standardText}>{endTimeRes}</Text>
+                  </Text>
+                )
             }
 
             const displayTags = (val) => {
               console.log(val.tags);
-              if( (val.tags.length)) {
-                return <Text style={stylesGlobal.standardText}> Tags: {val.tags.toString()}</Text>
-              } else {
-                return <Text style={stylesGlobal.standardText}> Tags: keine Tags vergeben</Text>
-              }
+                return (
+                <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Tags:{'\n'}
+                  <Text style={stylesGlobal.standardText}>{val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}</Text>
+                </Text>
+              )
             }
 
             return (
               <View style={{marginBottom: 15, borderTopWidth: index === 0 ? 0 : 1}} key={index}>
                 <TouchableOpacity onPress={() => moveToMarker(val)} style={{marginTop: 10}}>
-                  <Text style={[stylesGlobal.ueberschriftText2, {marginBottom: val.description ? 0 : 5} ]}> {val.name} </Text>
+                  <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Eventname:{'\n'}
+                    <Text style={stylesGlobal.standardText}>{val.name}</Text>
+                  </Text>
                   {val.description 
-                    ? <Text style={[stylesGlobal.standardText, {marginBottom: 5}]}> {val.description} </Text>
-                    : null
-                  }
+                  ? 
+                  <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Beschreibung:{'\n'}
+                    <Text style={stylesGlobal.standardText}>{val.description}</Text>
+                  </Text>  
+                  : null}
                   { displayStartTime(val) }
                   { displayEndTime(val) }
-                  <Text style={stylesGlobal.standardText}> Distanz: {distanceToUserPos} km</Text>
+                  <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Distanz:{'\n'}
+                    <Text style={stylesGlobal.standardText}>{distanceToUserPos} km</Text>
+                  </Text>
                   { displayTags(val) }
+                  <Text style={stylesGlobal.ueberschriftText2}>Auf das Feld klicken, um zum Event zu springen</Text>
                 </TouchableOpacity>
 
                 <View style={{flexDirection: 'row', justifyContent: "space-around", marginTop: stylesGlobal.marginsAndPadding.paddingBetweenItems}}>

@@ -244,10 +244,14 @@ const MapViewGoogle = (props) => {
                   startTimeRes = "Morgen um " + format(startDate, 'HH:mm') + ' Uhr'
 
                 } else {
-                  startTimeRes = format(startDate, 'dd.MM.yyyy - HH:mm') + ' Uhr'
+                  startTimeRes = format(startDate, 'dd.MM.yyyy, HH:mm') + ' Uhr'
                 }
               }
-              return <Text style={stylesGlobal.standardText}> Start: {startTimeRes} </Text>
+              return (
+                <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Start:{'\n'}
+                  <Text style={stylesGlobal.standardText}>{startTimeRes}</Text>
+                </Text>
+              )
           }
 
           const displayEndTime = (val) => {
@@ -264,27 +268,31 @@ const MapViewGoogle = (props) => {
                   endTimeRes = "Morgen um " + format(endDate, 'HH:mm') + ' Uhr'
 
                 } else {
-                  endTimeRes = format(endDate, 'dd.MM.yyyy - HH:mm') + ' Uhr'
+                  endTimeRes = format(endDate, 'dd.MM.yyyy, HH:mm') + ' Uhr'
                 }
               }
 
-              return <Text style={stylesGlobal.standardText}> Ende: {endTimeRes} </Text>
+              return (
+                <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Ende:{'\n'}
+                  <Text style={stylesGlobal.standardText}>{endTimeRes}</Text>
+                </Text>
+              )
           }
 
           const displayTags = (val) => {
             console.log(val.tags);
-            if( (val.tags.length)) {
-              return <Text style={stylesGlobal.standardText}> Tags: {val.tags.toString()}</Text>
-            } else {
-              return <Text style={stylesGlobal.standardText}> Tags: keine Tags vergeben</Text>
-            }
+              return (
+              <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Tags:{'\n'}
+                <Text style={stylesGlobal.standardText}>{val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}</Text>
+              </Text>
+            )
           }
 
             return (
               <View key={index}>
                 {rangeContext._currentValue != null && distanceToUserPos != '?' && rangeContext._currentValue >= distanceToUserPos || rangeContext._currentValue === 21 || rangeContext._currentValue === 'alle' ?
                 <Marker key={index} coordinate={val} pinColor={'#FF0000'} tracksViewChanges={true} onPress={() => { getUserInfoFromDB(val.user) }}>
-                  <Callout onPress={ () => navigation.navigate('ViewMarkerScreen', { creationDate: val.creation_date, eventName: val.name, eventDescription: val.description,  eventAuthorUsername: selectedAuthor._current_value.markers.username, eventAuthorDescription: selectedAuthor._current_value.markers.description, eventAuthorID: val.user, eventStartTime: displayStartTime(val), eventEndTime:displayEndTime(val), eventTags: displayTags(val), eventMaxParticipants: val.numberParticipants, eventLocationDescription: val.locationDescription, eventParticipantList: val.participantList } ) }>
+                  <Callout onPress={ () => navigation.navigate('ViewMarkerScreen', { creationDate: val.creation_date, eventName: val.name, eventDescription: val.description, eventAuthorUsername: selectedAuthor._current_value.markers.username, eventAuthorDescription: selectedAuthor._current_value.markers.description, eventAuthorID: val.user, eventStartTime: displayStartTime(val), eventEndTime: displayEndTime(val), eventTags: displayTags(val), eventMaxParticipants: val.numberParticipants, eventLocationDescription: val.locationDescription, eventParticipantList: val.participantList } ) }>
                     <Text key={Math.random().toString()}> Name:  {val.name} </Text>
                     <Text key={Math.random().toString()}> Beschreibung:  {val.description} </Text>
                     <Text> Distanz: {distanceToUserPos} km</Text>

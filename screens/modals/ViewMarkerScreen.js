@@ -67,42 +67,44 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
         onPress={() => navigation.goBack()}
         text={'Zurück'}
       />
+      <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems}]}>Event</Text>
       <ScrollView style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContainer}>
-      <Text style={[stylesGlobal.ueberschriftText, styles.textCenterStyle]}>{nameDisplay}</Text>
-      {descriptionDisplay ?
-      <Text style={[stylesGlobal.standardText, styles.spacingBetweenText, styles.textCenterStyle]}>{descriptionDisplay} </Text>  
-      : null}
-      {locationDescriptionDisplay ?
-      <Text style={[stylesGlobal.standardText, styles.textCenterStyle]}>Wo?: {locationDescriptionDisplay} </Text>
-      : null}
-      {/* <View style={{flexDirection: 'row'}}> */}
-        {/* <TextButton
-            text={authorUsernameDisplay}
-            onPress={() => {navigation.navigate('ViewAuthorScreen', { authorID: authorDisplay, authorUsername: authorUsernameDisplay, authorDescription: authorDescriptionDisplay}) } }
-        /> */}
-      {/* </View> */}
-      <Text style={[stylesGlobal.standardText, styles.spacingBetweenText, styles.textCenterStyle]}>Anzahl der Teilnehmer: {participantList.length} / {maxParticipantDisplay} </Text>
-      {/* <View style={{marginVertical: stylesGlobal.marginsAndPadding.paddingBetweenItems}}>
-        <ButtonVariable
-          text={'Teilnehmer anzeigen'}
-          onPress={() => { navigation.navigate('ViewParticipantScreen', {memberList: participantList} ) } }
-          backgroundColor={Colors.findmyactivityYellow}
-          borderColor={Colors.findmyactivityYellow}
-          width={175}
-        />
-      </View> */}
-      {startTimeDisplay}
-      {endTimeDisplay}
-      {tagDisplay}
-      <Text style={[stylesGlobal.standardText, styles.textCenterStyle]}>Erstellt von: {authorUsernameDisplay}</Text>
+        <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Eventname:{'\n'}
+          <Text style={stylesGlobal.standardText}>{nameDisplay}</Text>
+        </Text>
+
+        {descriptionDisplay ?
+        <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Beschreibung:{'\n'}
+          <Text style={stylesGlobal.standardText}>{descriptionDisplay}</Text>
+        </Text>  
+        : null}
+
+        {locationDescriptionDisplay ?
+        <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Wo?:{'\n'}
+          <Text style={stylesGlobal.standardText}>{locationDescriptionDisplay}</Text>
+        </Text>
+        : null}
+
+        <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Anzahl der Teilnehmer:{'\n'}
+          <Text style={stylesGlobal.standardText}>{participantList.length} / {maxParticipantDisplay}</Text>
+        </Text>
+
+        {startTimeDisplay}
+        {endTimeDisplay}
+        {tagDisplay}
+
+        <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.textCenterStyle]}>Erstellt von:{'\n'}
+          <Text style={stylesGlobal.standardText}>{authorUsernameDisplay}</Text>
+        </Text>
+
       </ScrollView>
-        <ButtonVariable
-          text={'Teilnehmen'}
-          onPress={() => onParticipateButton() }
-          backgroundColor={Colors.findmyactivityYellow}
-          borderColor={Colors.findmyactivityYellow}
-          width={200}
-        />
+      <ButtonVariable
+        text={'Teilnehmen'}
+        onPress={() => onParticipateButton() }
+        backgroundColor={Colors.findmyactivityYellow}
+        borderColor={Colors.findmyactivityYellow}
+        width={200}
+      />
     </View>
   )
 }
@@ -114,6 +116,7 @@ const styles = StyleSheet.create({
 
   scrollViewStyle: {
     width: '100%',
+    marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems
   },
   
   spacingBetweenText: {
@@ -121,15 +124,14 @@ const styles = StyleSheet.create({
   },
 
   textCenterStyle: {
-    textAlign: 'center'
+    textAlign: 'left'
   },
 
   scrollViewContainer: {
-    alignItems: 'center',
-    height: height * 0.4,
     borderWidth: 2,
     borderRadius: 10,
-    backgroundColor: Colors.findmyactivityWhite
+    backgroundColor: Colors.findmyactivityWhite,
+    padding: 10
   },
 })
 

@@ -63,13 +63,12 @@ const stylesGlobal = StyleSheet.create({
     width: '100%'
   },
 
-  button: {
-    backgroundColor: '#0782F9',
-    width: '60%',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginTop: 40,
+  spacingBetweenText: {
+    marginBottom: paddingBetweenItems
+  },
+
+  textCenterStyle: {
+    textAlign: 'left'
   },
 
 })

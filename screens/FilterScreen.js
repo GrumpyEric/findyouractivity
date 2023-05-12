@@ -122,23 +122,23 @@ return(
         setItems={setItems}
         listMode='MODAL'
       />
+    </View>
 
-      <View style={styles.button}>
-        <ButtonVariable
-          text={'Anwenden'}
-          onPress={() => saveFilters()}
-          backgroundColor={Colors.findmyactivityYellow}
-          borderColor={Colors.findmyactivityYellow}
-          width={150}
-        />
-        <ButtonVariable
-          text={'Zurücksetzen'}
-          onPress={() => clearFilters()}
-          backgroundColor={'red'}
-          borderColor={'red'}
-          width={150}
-        />
-      </View>
+    <View style={styles.button}>
+      <ButtonVariable
+        text={'Anwenden'}
+        onPress={() => saveFilters()}
+        backgroundColor={Colors.findmyactivityYellow}
+        borderColor={Colors.findmyactivityYellow}
+        width={150}
+      />
+      <ButtonVariable
+        text={'Zurücksetzen'}
+        onPress={() => clearFilters()}
+        backgroundColor={'red'}
+        borderColor={'red'}
+        width={150}
+      />
     </View>
   </View>
 )
@@ -159,7 +159,8 @@ const styles = StyleSheet.create({
   },
 
   contentContainerStyle: {
-    height: height * 0.45,
+    marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems,
+    flex: 1,
     width: '100%',
     borderWidth: 2,
     borderRadius: 10,
