@@ -24,6 +24,7 @@ const FilterScreen = ( {navigation} ) => {
   
   // ausgewählte Filter als Badges anzeigen
   DropDownPicker.setMode("BADGE");
+  DropDownPicker.setLanguage("DE");
 
   // deutsche Übersetzung für die Dropdown_Liste
   DropDownPicker.addTranslation("DE", {

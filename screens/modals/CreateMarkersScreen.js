@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { StyleSheet, View, Text, Alert, ScrollView } from 'react-native'
+import { StyleSheet, View, Text, Alert, ScrollView, BackHandler } from 'react-native'
 import { stylesGlobal } from '../../constants/StylesGlobal'
 import TextInputField from '../../components/TextInputField'
 import { auth } from '../../firebase/firebase-config'
@@ -69,7 +69,6 @@ const CreateMarkersScreen = ( {navigation} ) => {
   }
 
   function errorMessageHandler() {
-    console.log(<b>hi</b>);
     let errors = {
       eventName: {name: 'Eventname', status: eventNameError}, 
       participants: {name: 'Teilnehmeranzahl', status: participantsError}, 
@@ -78,7 +77,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
     }
 
     let errorPropertyNames = Object.getOwnPropertyNames(errors)
-    let insideErrorPropertyNames = Object.getOwnPropertyNames(errors[errorPropertyNames[0]])
+    // let insideErrorPropertyNames = Object.getOwnPropertyNames(errors[errorPropertyNames[0]])
     let errorCount = 0
     let loopCount = 0
     let errorMsg = ''
@@ -166,101 +165,126 @@ const CreateMarkersScreen = ( {navigation} ) => {
   };
 
   DropDownPicker.setLanguage("DE");
+
+  BackHandler.addEventListener('hardwareBackPress', function () {
+    if (editMarkerMode._currentValue === true) {
+      navigation.goBack()
+      editMarkerMode._currentValue = false
+    
+    } else {
+      navigation.goBack()
+    }
+  });
   
   return (
     <View style={[stylesGlobal.screenContainer, {backgroundColor: Colors.findmyactivityBackground}]}>
       <ButtonBack
-        onPress={() => navigation.goBack()}
+        onPress={() => { navigation.goBack(); editMarkerMode._currentValue === true ? editMarkerMode._currentValue = false : null }}
         text={'Zurück'}
       />
       <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems}]}>{editMarkerMode._currentValue ? 'Marker bearbeiten' : 'Marker erstellen'}</Text>
-      <ScrollView style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContainer}>
-      <TextInputField
-        placeholder={'Eventname'}
-        value={eventName}
-        onChangeText={(text) => { setEventName(text); text.length < 1 ? setEventNameError(true) : setEventNameError(false) }}
-        keyboardType={'default'}
-        backgroundColor={Colors.findmyactivityWhite}
-        borderColor={eventNameError ? 'red' : Colors.findmyactivityBackground}
-        hasLeftIcon={true}
-        iconName={'edit'}
-        hasMaxLength={true}
-        maxTextChars={30}
-        showCharCounter={true}
-        onBlur={() => errorHandlerName() }
-      />
+      <ScrollView style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContainer} persistentScrollbar >
+      
+      <View style={styles.itemSpacerStyle}>
+        <TextInputField
+          placeholder={'Eventname'}
+          value={eventName}
+          onChangeText={(text) => { setEventName(text); text.length < 1 ? setEventNameError(true) : setEventNameError(false) }}
+          keyboardType={'default'}
+          backgroundColor={Colors.findmyactivityWhite}
+          borderColor={eventNameError ? 'red' : Colors.findmyactivityText}
+          hasLeftIcon={true}
+          iconName={'edit'}
+          hasMaxLength={true}
+          maxTextChars={30}
+          showCharCounter={true}
+          onBlur={() => errorHandlerName() }
+        />
 
-      {eventNameError ?
-      <Text>Textfeld 'Eventname' darf nicht leer sein! Bitte Eventnamen eingeben</Text>
-      : null}
+        {eventNameError ?
+          <Text>Textfeld 'Eventname' darf nicht leer sein! Bitte Eventnamen eingeben</Text>
+        : null}
+      </View>
 
-      <TextInputField
-        placeholder={'Eventbeschreibung (optional)'}
-        value={eventDescription}
-        onChangeText={text => setEventDescription(text)}
-        keyboardType={'default'}
-        backgroundColor={Colors.findmyactivityWhite}
-        borderColor={Colors.findmyactivityBackground}
-        hasLeftIcon={true}
-        iconName={'edit'}
-        hasMaxLength={true}
-        maxTextChars={10000}
-        showCharCounter={true}
-        multiline={true}
-      />
-      <TextInputField
-        placeholder={'Ortbeschreibung (optional)'}
-        value={placeDesciption}
-        onChangeText={text => setPlaceDescription(text)}
-        keyboardType={'default'}
-        backgroundColor={Colors.findmyactivityWhite}
-        borderColor={Colors.findmyactivityBackground}
-        hasLeftIcon={true}
-        iconName={'map-pin'}
-        hasMaxLength={true}
-        maxTextChars={50}
-        showCharCounter={true}
-      />
-      <TextInputField
-        placeholder={'Anzahl Teilnehmer (max. 999)'}
-        value={numberParticipants}
-        onChangeText={(text) => { setNumberParticipants(text); text.length < 1 ? setParticipantsError(true) : setParticipantsError(false) }}
-        keyboardType={'number-pad'}
-        backgroundColor={Colors.findmyactivityWhite}
-        borderColor={participantsError ? 'red' : Colors.findmyactivityBackground}
-        hasLeftIcon={true}
-        iconName={'male'}
-        hasMaxLength={true}
-        maxTextChars={3}
-        onBlur={() => errorHandlerParticipants()}
-      />
+      <View style={styles.itemSpacerStyle}>
+        <TextInputField
+          placeholder={'Eventbeschreibung (optional)'}
+          value={eventDescription}
+          onChangeText={text => setEventDescription(text)}
+          keyboardType={'default'}
+          backgroundColor={Colors.findmyactivityWhite}
+          borderColor={Colors.findmyactivityText}
+          hasLeftIcon={true}
+          iconName={'edit'}
+          hasMaxLength={true}
+          maxTextChars={10000}
+          showCharCounter={true}
+          multiline={true}
+        />
+      </View>
 
-      {participantsError ?
-      <Text>Textfeld 'Anzahl Teilnehmer' darf nicht leer sein! Bitte Teilnehmeranzahl angeben</Text>
-      : null}
+      <View style={styles.itemSpacerStyle}>
+        <TextInputField
+          placeholder={'Ortbeschreibung (optional)'}
+          value={placeDesciption}
+          onChangeText={text => setPlaceDescription(text)}
+          keyboardType={'default'}
+          backgroundColor={Colors.findmyactivityWhite}
+          borderColor={Colors.findmyactivityText}
+          hasLeftIcon={true}
+          iconName={'map-pin'}
+          hasMaxLength={true}
+          maxTextChars={50}
+          showCharCounter={true}
+        />
+      </View>
 
-      {/* Tags */}
-      <DropDownPicker
-        searchable={true}
-        multiple={true}
-        min={0}
-        open={open}
-        value={tags}
-        items={items}
-        setOpen={setOpen}
-        setValue={(val) =>setEventTags(val)}
-        setItems={setItems}
-        listMode='MODAL'
-      />
+      <View style={styles.itemSpacerStyle}>
+        <TextInputField
+          placeholder={'Anzahl Teilnehmer (max. 999)'}
+          value={numberParticipants}
+          onChangeText={(text) => { setNumberParticipants(text); text.length < 1 ? setParticipantsError(true) : setParticipantsError(false) }}
+          keyboardType={'number-pad'}
+          backgroundColor={Colors.findmyactivityWhite}
+          borderColor={participantsError ? 'red' : Colors.findmyactivityText}
+          hasLeftIcon={true}
+          iconName={'male'}
+          hasMaxLength={true}
+          maxTextChars={3}
+          onBlur={() => errorHandlerParticipants()}
+        />
+
+        {participantsError ?
+        <Text>Textfeld 'Anzahl Teilnehmer' darf nicht leer sein! Bitte Teilnehmeranzahl angeben</Text>
+        : null}
+      </View>
+
+      <View style={styles.itemSpacerStyle}>
+        {/* Tags */}
+        <DropDownPicker
+          searchable={true}
+          multiple={true}
+          min={0}
+          open={open}
+          value={tags}
+          items={items}
+          setOpen={setOpen}
+          setValue={(val) =>setEventTags(val)}
+          setItems={setItems}
+          listMode='MODAL'
+        />
+      </View>
 
       {editMarkerMode._currentValue ?
-      <TextButton
-        text='Hier drücken, um die Lage des Events zu ändern'
-        onPress={() => navigation.navigate('EditMarkerLocationScreen')}
-      />
+      <View style={{paddingBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems}}>
+        <TextButton
+          text='Hier drücken, um die Lage des Events zu ändern'
+          onPress={() => navigation.navigate('EditMarkerLocationScreen')}
+        />
+      </View>
       : null}
 
-        <View style={{flexDirection: 'row'}}>
+        <View style={{marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems, alignItems: 'center'}}>
         {pickedStartTime.current !== undefined
         ?
           <Text style={{alignSelf: 'center'}}>
@@ -273,7 +297,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
             minute: '2-digit'
             }, 
               {locale: 'de-DE',}
-            )}
+            )} Uhr
           </Text>
           :
           null
@@ -284,12 +308,12 @@ const CreateMarkersScreen = ( {navigation} ) => {
           />
         </View>
 
-        <View style={{flexDirection: 'row'}}>
+        <View style={{marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems, alignItems: 'center'}}>
         {pickedEndTime.current !== undefined
         ?
         // <Text>{format(pickedStartTime.current, 'dd.MM.YYY')}</Text>
           <Text style={{alignSelf: 'center'}}>
-            End: {intlFormat(pickedEndTime.current, {
+            Ende: {intlFormat(pickedEndTime.current, {
             weekday: 'long',
             year: 'numeric',
             month: 'long',
@@ -298,14 +322,13 @@ const CreateMarkersScreen = ( {navigation} ) => {
             minute: '2-digit'
             }, 
               {locale: 'de-DE',}
-            )}
+            )} Uhr
           </Text>
           :
           null
           }
           <TextButton
             text={pickedEndTime.current ? 'Endzeit ändern' : 'Endzeit auswählen'}
-            textColor={Colors.findmyactivityBlue}
             onPress={() => {kindOfTimePicker.current = 'end'; showTimePicker()}}
           />
         </View>
@@ -321,12 +344,12 @@ const CreateMarkersScreen = ( {navigation} ) => {
         {editMarkerMode._currentValue 
         ?
         <View style={{flexDirection: 'row', width: '100%', justifyContent: 'space-evenly'}}>
-          <ButtonVariable
+          {/* <ButtonVariable
             text={'Abbrechen'}
             onPress={() => { navigation.pop(); editMarkerMode._currentValue = false }}
             backgroundColor={'red'}
             borderColor={'red'}
-          />
+          /> */}
 
           <ButtonVariable
             text={'Aktualisieren'}         
@@ -339,25 +362,24 @@ const CreateMarkersScreen = ( {navigation} ) => {
             }}
             backgroundColor={Colors.findmyactivityYellow}
             borderColor={Colors.findmyactivityYellow}
-          />
-        </View>
-        
-        : 
-        <View style={{flexDirection: 'row'}}>
-          <ButtonVariable
-            text={'Erstellen'}         
-            onPress={() => {
-              errorHandlerName()
-              errorHandlerParticipants()
-              eventNameError === true || participantsError === true || eventNameError === undefined || participantsError === undefined || pickedStartTime.current === undefined || pickedEndTime.current === undefined
-                ? Alert.alert('Achtung!', errorMessageHandler())
-                : createMarker()
-            }}
-            backgroundColor={Colors.findmyactivityYellow}
-            borderColor={Colors.findmyactivityYellow}
             width={200}
           />
         </View>
+        
+        :
+        <ButtonVariable
+          text={'Erstellen'}         
+          onPress={() => {
+            errorHandlerName()
+            errorHandlerParticipants()
+            eventNameError === true || participantsError === true || eventNameError === undefined || participantsError === undefined || pickedStartTime.current === undefined || pickedEndTime.current === undefined
+              ? Alert.alert('Achtung!', errorMessageHandler())
+              : createMarker()
+          }}
+          backgroundColor={Colors.findmyactivityYellow}
+          borderColor={Colors.findmyactivityYellow}
+          width={200}
+        />
         }
     </View>
   )
@@ -370,11 +392,18 @@ const styles = StyleSheet.create({
   },
 
   scrollViewStyle: {
-    width: '100%'
+    width: '100%',
+    marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems,
   },
 
   scrollViewContainer: {
-    alignItems: 'center', 
+    alignItems: 'center',
+    marginRight: 10
+  },
+
+  itemSpacerStyle: {
+    width: '100%', 
+    marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems
   }
 })
 

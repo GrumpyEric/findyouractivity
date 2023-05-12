@@ -34,7 +34,7 @@ const TextButton = (props) => {
         name={props.icon}
       />
       : null}
-      <Text style={[stylesGlobal.buttonTextBlack, {color: props.textColor}]}>{props.text}</Text>
+      <Text style={[stylesGlobal.buttonTextBlack, {color: props.textColor, textAlign: "center"}]}>{props.text}</Text>
     </TouchableOpacity>
   )
 }

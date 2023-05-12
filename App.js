@@ -27,7 +27,7 @@ import { TouchableOpacity } from 'react-native';
 import { Text } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { handleSignOut } from './constants/MainFunctions';
-import { saveProfileChangesFunctionContext } from './components/AppContext';
+import { editMarkerMode, saveProfileChangesFunctionContext } from './components/AppContext';
 
 const options = (navigation, route, props) => {
   return (
@@ -36,7 +36,7 @@ const options = (navigation, route, props) => {
       headerLeft: () => 
         route.name === 'Profil'
         ? null 
-        : headerLeft(navigation), 
+        : headerLeft(navigation, route), 
       headerRight: () => 
         route.name === 'CreateMarkersScreen' ||
         route.name === 'EditMarkerLocationScreen' ||
@@ -55,10 +55,17 @@ const options = (navigation, route, props) => {
   )
 }
 
-const headerLeft = (navigation) => {
+const headerLeft = (navigation, route) => {
   return (
     <TouchableOpacity
-      onPress={() => navigation.goBack()}
+      onPress={() => 
+        {
+          navigation.goBack()
+          if (route.name === 'CreateMarkersScreen') {
+            editMarkerMode._currentValue === true ? editMarkerMode._currentValue = false : null
+          }
+        }
+      }
       style={styles.headerLeftStyle}
     >
       <Icon
@@ -108,14 +115,6 @@ function LoginStackScreen() {
 const LogoutTabNullComponent = () => {
   return null
 }
-
-// const LogoutTabButton = () => {
-//   return (
-//     <TouchableOpacity>
-
-//     </TouchableOpacity>
-//   )
-// }
 
 const Tab = createBottomTabNavigator();
 function TabBarScreen({ navigation }) {
@@ -190,15 +189,17 @@ function HomeStackScreen() {
         presentation: 'transparentModal',
         gestureEnabled: false, 
         cardStyle: {
-          top: isTablet ? '20%' : '15%',
+          top: isTablet ? '20%' : '10%',
           left: isTablet ? '20%' : null,
-          maxHeight: isTablet ? '60%' : '70%',
+          maxHeight: isTablet ? '60%' : '80%',
           width: isTablet ? '60%' : '100%',
           elevation: 10,
           overflow: isIOS ? 'visible' : 'hidden',
           backgroundColor: 'white',
           borderRadius: 15,
           shadowColor: "black",
+          borderWidth: 2,
+          borderColor: Colors.findmyactivityText,
           shadowOffset: {
             width: 0,
             height: 5,
