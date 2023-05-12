@@ -291,12 +291,23 @@ const MapViewGoogle = (props) => {
             return (
               <View key={index}>
                 {rangeContext._currentValue != null && distanceToUserPos != '?' && rangeContext._currentValue >= distanceToUserPos || rangeContext._currentValue === 21 || rangeContext._currentValue === 'alle' ?
-                <Marker key={index} coordinate={val} pinColor={'#FF0000'} tracksViewChanges={true} onPress={() => { getUserInfoFromDB(val.user) }}>
-                  <Callout onPress={ () => navigation.navigate('ViewMarkerScreen', { creationDate: val.creation_date, eventName: val.name, eventDescription: val.description, eventAuthorUsername: selectedAuthor._current_value.markers.username, eventAuthorDescription: selectedAuthor._current_value.markers.description, eventAuthorID: val.user, eventStartTime: displayStartTime(val), eventEndTime: displayEndTime(val), eventTags: displayTags(val), eventMaxParticipants: val.numberParticipants, eventLocationDescription: val.locationDescription, eventParticipantList: val.participantList } ) }>
-                    <Text key={Math.random().toString()}> Name:  {val.name} </Text>
-                    <Text key={Math.random().toString()}> Beschreibung:  {val.description} </Text>
-                    <Text> Distanz: {distanceToUserPos} km</Text>
-                    <Text> Hier klicken für mehr Infos! </Text>
+                <Marker key={index} coordinate={val} pinColor={'red'} tracksViewChanges={true} onPress={() => { getUserInfoFromDB(val.user) }}>
+                  <Callout style={{flex: 1}} onPress={ () => navigation.navigate('ViewMarkerScreen', { creationDate: val.creation_date, eventName: val.name, eventDescription: val.description, eventAuthorUsername: selectedAuthor._current_value.markers.username, eventAuthorDescription: selectedAuthor._current_value.markers.description, eventAuthorID: val.user, eventStartTime: displayStartTime(val), eventEndTime: displayEndTime(val), eventTags: displayTags(val), eventMaxParticipants: val.numberParticipants, eventLocationDescription: val.locationDescription, eventParticipantList: val.participantList } ) }>
+                    <Text style={stylesGlobal.ueberschriftText2}>Eventname: 
+                      <Text style={stylesGlobal.standardText}> {val.name}</Text>
+                    </Text>
+
+                    {val.description ?
+                    <Text style={stylesGlobal.ueberschriftText2}>Beschreibung: 
+                      <Text style={stylesGlobal.standardText}> {val.description}</Text>
+                    </Text>
+                    : null}
+
+                    <Text style={stylesGlobal.ueberschriftText2}>Distanz: 
+                      <Text style={stylesGlobal.standardText}> {distanceToUserPos} km</Text>
+                    </Text>
+
+                    <Text style={stylesGlobal.ueberschriftText2}>Klicken für mehr Infos!</Text>
                   </Callout>
                 </Marker>
                 : null}
