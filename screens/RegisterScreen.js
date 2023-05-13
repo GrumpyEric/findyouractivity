@@ -66,6 +66,7 @@ const RegisterScreen = () => {
       <Text 
         style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenViews, textAlign: 'center'}]}
         accessibilityLabel={RegisterTitleText}
+        aria-label={RegisterTitleText}
         accessibilityHint={RegisterHintText}
         accessibilityRole={'header'}
       >
