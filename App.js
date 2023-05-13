@@ -28,6 +28,7 @@ import { Text } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { handleSignOut } from './constants/MainFunctions';
 import { editMarkerMode, saveProfileChangesFunctionContext } from './components/AppContext';
+import RegisterScreen from './screens/RegisterScreen';
 
 const options = (navigation, route, props) => {
   return (
@@ -44,7 +45,8 @@ const options = (navigation, route, props) => {
         route.name === 'ViewMarkerScreen' ||
         route.name === 'ViewAuthorScreen' ||
         route.name === 'ViewParticipantScreen' ||
-        route.name === 'Passwort zurücksetzen'
+        route.name === 'Passwort zurücksetzen' ||
+        route.name === 'RegisterScreen'
         ? null
         : headerRight(), 
       headerStyle: {
@@ -107,6 +109,7 @@ function LoginStackScreen() {
   return (
     <LoginStack.Navigator>
       <LoginStack.Screen options={optionsNoHeader} name="LoginScreen" component={LoginScreen}/>
+      <LoginStack.Screen options={({ navigation, route }) => options(navigation, route)} name="RegisterScreen" component={RegisterScreen}/>
       <LoginStack.Screen options={({ navigation, route }) => options(navigation, route)} name="Passwort zurücksetzen" component={ForgotPasswordScreen}/>
     </LoginStack.Navigator>
   )

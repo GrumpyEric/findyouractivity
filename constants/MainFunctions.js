@@ -50,10 +50,20 @@ export const handleLogin = (auth, email, password, navigation) => {
       navigation.replace("Home")
     }
     else {
-      alert("User not verified, yet! Please verify your E-Mail address.")
+      Alert.alert("Benutzer ist registiert, aber noch nicht per E-Mail verifiziert. Bitte folgen Sie dem Link in der E-Mail oder fordern Sie einen neuen Link an")
     }
   })
-  .catch(error => alert(error.message))
+  .catch((error) => {
+    switch (error.code) {
+      case "auth/missing-password":
+        Alert.alert("Passwort fehlt", "Bitte geben Sie ein Passwort ein!")
+        break
+      case "auth/invalid-email":
+        Alert.alert("E-Mail fehlt oder falsch", "Bitte geben Sie eine gültige E-Mail-Adresse an!")
+      default:
+        Alert.alert("E-Mail oder Passwort falsch", "Bitte überprüfen Sie Ihre eingegebenen Daten!")
+    }
+  })
 }
 
 // SignOut Stuff

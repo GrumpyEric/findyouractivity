@@ -15,7 +15,7 @@ import ButtonVariable from '../components/ButtonVariable'
 
 auth.languageCode = auth.useDeviceLanguage();
 
-const LoginScreen = () => {
+const RegisterScreen = () => {
   // useState hooks for text input
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -51,11 +51,6 @@ const LoginScreen = () => {
           accessibilityLabel={'Hier Text eingeben'}
           accessibilityHint={"Es wird eine E-Mail-Adresse gefordert; die Tastatur hat sich geöffnet, bitte E-Mail-Adresse eingeben"}
         />
-        {
-          email 
-            ? null
-            : <Text>Überprüfen Sie Ihre eingegebene E-Mail-Adresse</Text>
-        }
         <TextInputField
           placeholder={"Passwort"}
           value={password}
@@ -87,7 +82,7 @@ const LoginScreen = () => {
 
         <View style={styles.buttonsStyle}>
           <ButtonVariable
-            onPress={() => navigation.navigate('RegisterScreen')}
+            onPress={() => handleSignUp(auth, email, password)}
             text={"Registrieren"}
             backgroundColor={'white'}
             borderColor={Colors.findmyactivityYellow}
@@ -112,7 +107,7 @@ const LoginScreen = () => {
   )
 }
 
-export default LoginScreen
+export default RegisterScreen
 
 const styles = StyleSheet.create({
   container: {
