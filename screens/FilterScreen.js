@@ -24,7 +24,6 @@ const FilterScreen = ( {navigation} ) => {
   
   // ausgewählte Filter als Badges anzeigen
   DropDownPicker.setMode("BADGE");
-  DropDownPicker.setLanguage("DE");
 
   // deutsche Übersetzung für die Dropdown_Liste
   DropDownPicker.addTranslation("DE", {
@@ -35,7 +34,7 @@ const FilterScreen = ( {navigation} ) => {
       // Feel free to add more
       n: '{count} Tags wurden ausgewählt'
     },
-    NOTHING_TO_SHOW: "NOTHING TO SHOW"
+    NOTHING_TO_SHOW: "Keine Tags zur Auswahl"
   });
   
   // deutsche Sprache einsetzen
@@ -111,6 +110,7 @@ return(
 
       <Text style={[stylesGlobal.ueberschriftText2, {alignSelf: 'flex-start', marginBottom: 2}]}>Tags</Text>
       <DropDownPicker
+        style={{borderWidth: 2}}
         searchable={true}
         multiple={true}
         min={0}

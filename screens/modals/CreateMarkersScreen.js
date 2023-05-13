@@ -175,6 +175,19 @@ const CreateMarkersScreen = ( {navigation} ) => {
       navigation.goBack()
     }
   });
+
+  DropDownPicker.setMode("BADGE");
+  DropDownPicker.addTranslation("DE", {
+    PLACEHOLDER: "Wähle die gewünschten Tags aus",
+    SEARCH_PLACEHOLDER: "Suche...",
+    SELECTED_ITEMS_COUNT_TEXT: {
+      1: '1 Tags wurde ausgewählt',
+      // Feel free to add more
+      n: '{count} Tags wurden ausgewählt'
+    },
+    NOTHING_TO_SHOW: "Keine Tags zur Auswahl"
+  });
+  DropDownPicker.setLanguage("DE");
   
   return (
     <View style={[stylesGlobal.screenContainer, {backgroundColor: Colors.findmyactivityBackground}]}>
@@ -183,9 +196,11 @@ const CreateMarkersScreen = ( {navigation} ) => {
         text={'Zurück'}
       />
       <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems}]}>{editMarkerMode._currentValue ? 'Marker bearbeiten' : 'Marker erstellen'}</Text>
-      <ScrollView style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContainer} persistentScrollbar >
+      <ScrollView style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContainer} persistentScrollbar>
+      <Text style={[stylesGlobal.standardText, {alignSelf: 'flex-start', marginBottom: 5}]}>Felder mit einem * sind Pfilchtfelder!</Text>
       
       <View style={styles.itemSpacerStyle}>
+        <Text style={stylesGlobal.ueberschriftText2}>Eventname*</Text>
         <TextInputField
           placeholder={'Eventname'}
           value={eventName}
@@ -207,6 +222,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
       </View>
 
       <View style={styles.itemSpacerStyle}>
+      <Text style={stylesGlobal.ueberschriftText2}>Eventbeschreibung</Text>
         <TextInputField
           placeholder={'Eventbeschreibung (optional)'}
           value={eventDescription}
@@ -224,6 +240,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
       </View>
 
       <View style={styles.itemSpacerStyle}>
+      <Text style={stylesGlobal.ueberschriftText2}>Ortbeschreibung</Text>
         <TextInputField
           placeholder={'Ortbeschreibung (optional)'}
           value={placeDesciption}
@@ -240,6 +257,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
       </View>
 
       <View style={styles.itemSpacerStyle}>
+      <Text style={stylesGlobal.ueberschriftText2}>Teilnehmeranzahl*</Text>
         <TextInputField
           placeholder={'Anzahl Teilnehmer (max. 999)'}
           value={numberParticipants}
@@ -261,7 +279,9 @@ const CreateMarkersScreen = ( {navigation} ) => {
 
       <View style={styles.itemSpacerStyle}>
         {/* Tags */}
+        <Text style={stylesGlobal.ueberschriftText2}>Tags</Text>
         <DropDownPicker
+          style={{borderWidth: 2}}
           searchable={true}
           multiple={true}
           min={0}
@@ -303,7 +323,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
           null
           }
           <TextButton
-            text={pickedStartTime.current ? 'Startzeit ändern' : 'Startzeit auswählen'}
+            text={pickedStartTime.current ? 'Startzeit ändern*' : 'Startzeit auswählen*'}
             onPress={() => {kindOfTimePicker.current = 'start'; showTimePicker()}}
           />
         </View>
@@ -311,7 +331,6 @@ const CreateMarkersScreen = ( {navigation} ) => {
         <View style={{marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems, alignItems: 'center'}}>
         {pickedEndTime.current !== undefined
         ?
-        // <Text>{format(pickedStartTime.current, 'dd.MM.YYY')}</Text>
           <Text style={{alignSelf: 'center'}}>
             Ende: {intlFormat(pickedEndTime.current, {
             weekday: 'long',
@@ -328,7 +347,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
           null
           }
           <TextButton
-            text={pickedEndTime.current ? 'Endzeit ändern' : 'Endzeit auswählen'}
+            text={pickedEndTime.current ? 'Endzeit ändern*' : 'Endzeit auswählen*'}
             onPress={() => {kindOfTimePicker.current = 'end'; showTimePicker()}}
           />
         </View>
