@@ -38,6 +38,7 @@ const TextInputField = (props) => {
 
         accessible={true}
         accessibilityLabel={props.accessibilityLabel}
+        aria-label={props.accessibilityLabel}
         accessibilityHint={props.accessibilityHint}
         // accessibilityRole={}
         accessibilityState={{
@@ -66,7 +67,7 @@ TextInputField.propTypes = { placeholder: PropTypes.string, value: PropTypes.str
   keyboardType: PropTypes.string, maxLength: PropTypes.number, borderColor: PropTypes.string, multiline: PropTypes.bool, 
   onBlur: PropTypes.func, onChange: PropTypes.func, editable: PropTypes.bool, onFocus: PropTypes.func,
 
-  accessibilityLabel: PropTypes.string, accessibilityHint: PropTypes.string, accessibilityRole: PropTypes.any, 
+  accessibilityLabel: PropTypes.string, accessibilityHint: PropTypes.string, accessibilityRole: PropTypes.any,
   isAccessibilityStateDisabled: PropTypes.bool,
   isAccessibilityStateSelected: PropTypes.bool,
   isAccessibilityStateChecked: PropTypes.bool,

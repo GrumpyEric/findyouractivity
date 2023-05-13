@@ -12,7 +12,8 @@ const TextButton = (props) => {
       style={styles.button}
 
       accessible={true}
-      accessibilityLabel={props.accessibilityLabel}
+      accessibilityLabel={props.text}
+      aria-label={props.text}
       accessibilityHint={props.accessibilityHint}
       accessibilityRole={"button"}
       accessibilityState={{

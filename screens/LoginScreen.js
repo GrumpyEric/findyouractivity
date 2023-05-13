@@ -7,14 +7,13 @@ import { auth } from '../firebase/firebase-config'
 import TextInputField from '../components/TextInputField'
 import { stylesGlobal } from '../constants/StylesGlobal'
 import TextButton from '../components/TextButton'
-import { handleSignUp, handleLogin } from '../constants/MainFunctions'
+import { handleLogin } from '../constants/MainFunctions'
 import Colors from '../constants/Colors'
 import { TouchableWithoutFeedback } from 'react-native'
 import { Keyboard } from 'react-native'
 import ButtonVariable from '../components/ButtonVariable'
-import { errorEmailCheckContext, errorPasswordCheckContext } from '../components/AppContext'
 import { emailRegexTest } from '../constants/HelperFunctionsAndVariables'
-import { useEffect } from 'react'
+import { AccessibilityHintEmailText, AccessibilityHintPasswortText, AccessibilityHintTitleText, EmailErrorText, EmailPlaceholderText, EmailTitleText, ForgotButtonHint, ForgotButtonText, ForgotButtonTitle, LoginButtonHint, LoginButtonText, LoginTitleText, PasswortErrorText, PasswortPlaceholderText, PasswortTitleText, RegisterButtonHint, RegisterButtonText } from '../constants/Fixtures'
 
 auth.languageCode = auth.useDeviceLanguage();
 
@@ -45,52 +44,65 @@ const LoginScreen = () => {
     handleLogin(auth, email, password, navigation)
   }
 
-  useEffect(() => {
-    console.log('email', emailErrorState);
-  }, [emailErrorState])
-
-  useEffect(() => {
-    console.log('passwort', passwordErrorState);
-  }, [passwordErrorState])
-
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     <View style={[stylesGlobal.screenContainer, styles.container]}>
       <Text 
         style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenViews, textAlign: 'center'}]}
-        accessibilityLabel={'Anmeldung Find your Activity'}
-        accessibilityHint={"Das ist der Anmeldebildschirm. Hier bitte anmelden, um fortzufahren."}
+        accessibilityLabel={LoginTitleText}
+        aria-label={LoginTitleText}
+        accessibilityHint={AccessibilityHintTitleText}
         accessibilityRole={'header'}
       >
-        {'Anmeldung \n Find your Activity'}
+        {LoginTitleText}
       </Text>
 
       <View style={styles.inputContainer}>
 
         <View style={styles.singleInputContainer}>
-          <Text style={stylesGlobal.ueberschriftText2}>E-Mail</Text>
+          <Text 
+            style={stylesGlobal.ueberschriftText2}
+            accessibilityLabel={EmailTitleText}
+            aria-label={EmailTitleText}
+            accessibilityRole='text'
+          >
+            {EmailTitleText}
+          </Text>
           <TextInputField
-            placeholder={"muster@mail.de"}
+            placeholder={EmailPlaceholderText}
             value={email}
             onChangeText={text => setEmail(text)}
             onFocus={() => setEmailErrorState(false)}
             keyboardType={'email-address'}
             backgroundColor={Colors.findmyactivityWhite}
             borderColor={emailErrorState ? 'red' : Colors.findmyactivityText}
-            accessibilityLabel={'Hier Text eingeben'}
-            accessibilityHint={"Es wird eine E-Mail-Adresse gefordert; die Tastatur hat sich geöffnet, bitte E-Mail-Adresse eingeben"}
+            accessibilityLabel={EmailPlaceholderText}
+            label={EmailPlaceholderText}
+            accessibilityHint={AccessibilityHintEmailText}
           />
           {
           emailErrorState && (!email || !emailRegexTest(email))
-            ? <Text style={[stylesGlobal.standardText, {color: 'red', textAlign: 'center'}]}>Überprüfen Sie Ihre eingegebene E-Mail-Adresse</Text>
+            ? <Text 
+                style={[stylesGlobal.standardText, {color: 'red', textAlign: 'center'}]}
+                accessibilityLabel={EmailErrorText}
+                aria-label={EmailErrorText}
+              >
+                {EmailErrorText}
+              </Text>
             : <Text accessible={false}></Text>
           }
         </View>
 
         <View>
-          <Text style={stylesGlobal.ueberschriftText2}>Passwort</Text>
+          <Text 
+            style={stylesGlobal.ueberschriftText2}
+            accessibilityLabel={PasswortTitleText}
+            aria-label={PasswortTitleText}
+          >
+            {PasswortTitleText}
+          </Text>
           <TextInputField
-            placeholder={"passwort123"}
+            placeholder={PasswortPlaceholderText}
             value={password}
             onChangeText={text => setPassword(text)}
             onFocus={() => setPasswordErrorState(false)}
@@ -98,12 +110,18 @@ const LoginScreen = () => {
             keyboardType={'default'}
             backgroundColor={Colors.findmyactivityWhite}
             borderColor={passwordErrorState ? 'red' : Colors.findmyactivityText}
-            accessibilityLabel={'Hier Text eingeben'}
-            accessibilityHint={"Es wird ein Passwort gefordert; die Tastatur hat sich geöffnet, bitte E-Mail-Adresse eingeben"}
+            accessibilityLabel={PasswortPlaceholderText}
+            accessibilityHint={AccessibilityHintPasswortText}
           />
           {
           passwordErrorState
-            ? <Text style={[stylesGlobal.standardText, {color: 'red', textAlign: 'center'}]}>Überprüfen Sie Ihre eingegebenes Passwort</Text>
+            ? <Text 
+                style={[stylesGlobal.standardText, {color: 'red', textAlign: 'center'}]}
+                accessibilityLabel={PasswortErrorText}
+                aria-label={PasswortErrorText}
+              >
+                {PasswortErrorText}
+              </Text>
             : <Text accessible={false}></Text>
           }
         </View>
@@ -114,11 +132,11 @@ const LoginScreen = () => {
         <View style={styles.buttonsStyle}>
           <ButtonVariable
             onPress={() => loginHandler()}
-            text={"Anmelden"}
+            text={LoginButtonText}
             backgroundColor={Colors.findmyactivityYellow}
             borderColor={Colors.findmyactivityYellow}
-            accessibilityLabel={"Hier drücken"}
-            accessibilityHint={"Zur Anmeldung mit allen ausgefüllten Textfeldern oben diesen Knopf drücken"}
+            accessibilityLabel={LoginButtonText}
+            accessibilityHint={LoginButtonHint}
             icon={'login'}
             width={200}
           />
@@ -127,24 +145,30 @@ const LoginScreen = () => {
         <View style={styles.buttonsStyle}>
           <ButtonVariable
             onPress={() => navigation.navigate('RegisterScreen')}
-            text={"Neu hier?\nRegistrieren"}
+            text={RegisterButtonText}
             backgroundColor={'white'}
             borderColor={Colors.findmyactivityYellow}
             textColor={Colors.findmyactivityText}
-            accessibilityLabel={"Hier drücken"}
-            accessibilityHint={"Zur Registrierung mit allen ausgefüllten Textfeldern oben diesen Knopf drücken"}
+            accessibilityLabel={RegisterButtonText}
+            accessibilityHint={RegisterButtonHint}
             icon={'person-add'}
             width={200}
           />
         </View>
 
-        <Text style={stylesGlobal.standardText}>Passwort vergessen?</Text>
+        <Text 
+          style={stylesGlobal.standardText}
+          accessibilityLabel={ForgotButtonTitle}
+          aria-label={ForgotButtonTitle}
+        >
+          {ForgotButtonTitle}
+        </Text>
         <TextButton
           onPress={handleForgotPassword}
-          text={"Passwort zurücksetzen"}
+          text={ForgotButtonText}
 
-          accessibilityLabel={"Hier drücken"}
-          accessibilityHint={"Wenn Sie Ihr Passwort vergessen haben, dann hier drücken, um zum Bildschirm für das Zurücksetzen des Passwortes zu kommen"}
+          accessibilityLabel={ForgotButtonText}
+          accessibilityHint={ForgotButtonHint}
         />
       </View>
       

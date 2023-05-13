@@ -26,6 +26,25 @@ const FloatingActionButton = (props) => {
         height: 70
       }}
       onPress={props.onPress}
+
+      accessible={true}
+      accessibilityLabel={props.text}
+      aria-label={props.text}
+      accessibilityHint={props.accessibilityHint}
+      accessibilityRole={"button"}
+      accessibilityState={{
+        disabled: props.isAccessibilityStateDisabled,
+        selected: props.isAccessibilityStateSelected,
+        checked: props.isAccessibilityStateChecked,
+        busy: props.isAccessibilityStateBusy,
+        expanded: props.isAccessibilityStateExpanded
+      }}
+      accessibilityValue={{
+        min: props.isAccessibilityValueMin,
+        max: props.isAccessibilityValueMax,
+        now: props.isAccessibilityValueNow,
+        text: props.isAccessibilityValueText
+      }}
     >
       <Icon
         name={props.icon}
@@ -40,7 +59,19 @@ const FloatingActionButton = (props) => {
 }
 
 FloatingActionButton.propTypes = { onPress: PropTypes.func.isRequired, bottomPos: PropTypes.number.isRequired, 
-  rightPos: PropTypes.number.isRequired, icon: PropTypes.string.isRequired, text: PropTypes.string
+  rightPos: PropTypes.number.isRequired, icon: PropTypes.string.isRequired, text: PropTypes.string,
+
+  accessibilityLabel: PropTypes.string, accessibilityHint: PropTypes.string,
+  isAccessibilityStateDisabled: PropTypes.bool,
+  isAccessibilityStateSelected: PropTypes.bool,
+  isAccessibilityStateChecked: PropTypes.bool,
+  isAccessibilityStateBusy: PropTypes.bool,
+  isAccessibilityStateExpanded: PropTypes.bool,
+
+  isAccessibilityValueMin: PropTypes.number,
+  isAccessibilityValueMax: PropTypes.number,
+  isAccessibilityValueNow: PropTypes.number,
+  isAccessibilityValueText: PropTypes.string
 }
 
 export default FloatingActionButton

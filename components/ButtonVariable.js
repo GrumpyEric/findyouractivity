@@ -13,7 +13,8 @@ const ButtonVariable = (props) => {
       style={[styles.button, {backgroundColor: props.backgroundColor, borderColor: props.borderColor, width: props.width}]}
 
       accessible={true}
-      accessibilityLabel={props.accessibilityLabel}
+      accessibilityLabel={props.text}
+      aria-label={props.text}
       accessibilityHint={props.accessibilityHint}
       accessibilityRole={"button"}
       accessibilityState={{

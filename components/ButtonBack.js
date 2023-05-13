@@ -14,10 +14,11 @@ function ButtonBack(props) {
       icon="arrow-left"
       text={'Zurück'}
       onPress={props.onPress}
+      accessibilityHint={props.accessibilityHint}
     />
   );
 }
 
-ButtonBack.propTypes = { onPress: PropTypes.func, style: PropTypes.any, text: PropTypes.string }
+ButtonBack.propTypes = { onPress: PropTypes.func, style: PropTypes.any, text: PropTypes.string, accessibilityHint: PropTypes.string }
 
 export default ButtonBack;

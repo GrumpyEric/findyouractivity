@@ -16,6 +16,7 @@ import { errorEmailCheckContext, errorPasswordCheckContext } from '../components
 import { emailRegexTest } from '../constants/HelperFunctionsAndVariables'
 import { useEffect } from 'react'
 import ButtonBack from '../components/ButtonBack'
+import { AccessibilityHintEmailText, AccessibilityHintPasswortText, EmailErrorText, EmailPlaceholderText, EmailTitleText, InnerRegisterButtonHint, InnerRegisterButtonText, LoginBackHint, PasswortErrorText, PasswortPlaceholderText, PasswortTitleText, RegisterHintText, RegisterTitleText } from '../constants/Fixtures'
 
 auth.languageCode = auth.useDeviceLanguage();
 
@@ -60,42 +61,60 @@ const RegisterScreen = () => {
       <ButtonBack
         onPress={() => navigation.goBack()}
         text={'Zurück'}
+        accessibilityHint={LoginBackHint}
       />
       <Text 
         style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenViews, textAlign: 'center'}]}
-        accessibilityLabel={'Registrierung Find your Activity'}
-        accessibilityHint={"Das ist der Anmeldebildschirm. Hier bitte anmelden, um fortzufahren."}
+        accessibilityLabel={RegisterTitleText}
+        accessibilityHint={RegisterHintText}
         accessibilityRole={'header'}
       >
-        {'Anmeldung \n Find your Activity'}
+        {RegisterTitleText}
       </Text>
 
       <View style={styles.inputContainer}>
 
         <View style={styles.singleInputContainer}>
-          <Text style={stylesGlobal.ueberschriftText2}>E-Mail</Text>
-          <TextInputField
-            placeholder={"muster@mail.de"}
+          <Text 
+            style={stylesGlobal.ueberschriftText2}
+            accessibilityLabel={EmailTitleText}
+            aria-label={EmailTitleText}
+          >
+            {EmailTitleText}
+          </Text>
+          <TextInputField 
+            placeholder={EmailPlaceholderText}
             value={email}
             onChangeText={text => setEmail(text)}
             onFocus={() => setEmailErrorState(false)}
             keyboardType={'email-address'}
             backgroundColor={Colors.findmyactivityWhite}
             borderColor={emailErrorState ? 'red' : Colors.findmyactivityText}
-            accessibilityLabel={'Hier Text eingeben'}
-            accessibilityHint={"Es wird eine E-Mail-Adresse gefordert; die Tastatur hat sich geöffnet, bitte E-Mail-Adresse eingeben"}
+            accessibilityLabel={EmailPlaceholderText}
+            accessibilityHint={AccessibilityHintEmailText}
           />
-          {
-          emailErrorState && (!email || !emailRegexTest(email))
-            ? <Text style={[stylesGlobal.standardText, {color: 'red', textAlign: 'center'}]}>Überprüfen Sie Ihre eingegebene E-Mail-Adresse</Text>
+          { emailErrorState && (!email || !emailRegexTest(email))
+            ? <Text 
+                style={[stylesGlobal.standardText, {color: 'red', textAlign: 'center'}]}
+                accessibilityLabel={EmailErrorText}
+                aria-label={EmailErrorText}
+              >
+                {EmailErrorText}
+              </Text>
             : <Text accessible={false}></Text>
           }
         </View>
 
         <View>
-          <Text style={stylesGlobal.ueberschriftText2}>Passwort</Text>
+          <Text 
+            style={stylesGlobal.ueberschriftText2}
+            accessibilityLabel={PasswortTitleText}
+            aria-label={PasswortTitleText}
+          >
+            {PasswortTitleText}
+          </Text>
           <TextInputField
-            placeholder={"passwort123"}
+            placeholder={PasswortPlaceholderText}
             value={password}
             onChangeText={text => setPassword(text)}
             onFocus={() => setPasswordErrorState(false)}
@@ -103,13 +122,19 @@ const RegisterScreen = () => {
             keyboardType={'default'}
             backgroundColor={Colors.findmyactivityWhite}
             borderColor={passwordErrorState ? 'red' : Colors.findmyactivityText}
-            accessibilityLabel={'Hier Text eingeben'}
-            accessibilityHint={"Es wird ein Passwort gefordert; die Tastatur hat sich geöffnet, bitte E-Mail-Adresse eingeben"}
+            accessibilityLabel={PasswortPlaceholderText}
+            accessibilityHint={AccessibilityHintPasswortText}
           />
           <Text style={[stylesGlobal.standardText, {textAlign: 'center'}]}>Hinweis: Das Passwort muss mindestens 8 Zeichen lang sein!</Text>
           {
           passwordErrorState
-            ? <Text style={[stylesGlobal.standardText, {color: 'red', textAlign: 'center'}]}>Überprüfen Sie Ihre eingegebenes Passwort</Text>
+            ? <Text 
+                style={[stylesGlobal.standardText, {color: 'red', textAlign: 'center'}]}
+                accessibilityLabel={PasswortErrorText}
+                aria-label={PasswortErrorText}
+              >
+                {PasswortErrorText}
+              </Text>
             : <Text accessible={false}></Text>
           }
         </View>
@@ -120,12 +145,12 @@ const RegisterScreen = () => {
         <View style={styles.buttonsStyle}>
           <ButtonVariable
             onPress={() => registerHandler()}
-            text={"Registrieren"}
+            text={InnerRegisterButtonText}
             backgroundColor={Colors.findmyactivityYellow}
             borderColor={Colors.findmyactivityYellow}
             textColor={Colors.findmyactivityText}
-            accessibilityLabel={"Hier drücken"}
-            accessibilityHint={"Zur Registrierung mit allen ausgefüllten Textfeldern oben diesen Knopf drücken"}
+            accessibilityLabel={InnerRegisterButtonText}
+            accessibilityHint={InnerRegisterButtonHint}
             icon={'person-add'}
             width={200}
           />

@@ -12,6 +12,7 @@ import Colors from '../constants/Colors'
 import ButtonBack from '../components/ButtonBack'
 import ButtonVariable from '../components/ButtonVariable'
 import { emailRegexTest } from '../constants/HelperFunctionsAndVariables'
+import { AccessibilityHintEmailText, EmailErrorText, EmailPlaceholderText, EmailTitleText, ForgotResetHint, ForgotResetText, ForgotTitleHint, ForgotTitleText, LoginBackHint } from '../constants/Fixtures'
 
 const ForgotPasswordScreen = () => {
   const [email, setEmail] = useState('')
@@ -36,32 +37,46 @@ const ForgotPasswordScreen = () => {
       <ButtonBack
         onPress={() => handleGoBack()}
         text={'Zurück'}
+        accessibilityHint={LoginBackHint}
       />
 
       <Text 
         style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenViews, textAlign: 'center'}]}
-        accessibilityLabel={'Passwort zurücksetzen für Find your Activity'}
-        accessibilityHint={"Das ist der Anmeldebildschirm. Hier bitte anmelden, um fortzufahren."}
+        accessibilityLabel={ForgotTitleText}
+        aria-label={ForgotTitleText}
+        accessibilityHint={ForgotTitleHint}
         accessibilityRole={'header'}
       >
-        Passwort zurücksetzen
+        {ForgotTitleText}
       </Text>
 
       <View style={[styles.itemStyle, {alignItems: 'center'}]}>
-        <Text style={[stylesGlobal.ueberschriftText2, {alignSelf: 'flex-start'}]}>E-Mail</Text>
+        <Text 
+          style={[stylesGlobal.ueberschriftText2, {alignSelf: 'flex-start'}]}
+          accessibilityLabel={EmailTitleText}
+          aria-label={EmailTitleText}
+        >
+          {EmailTitleText}
+        </Text>
         <TextInputField 
-          placeholder={"muster@mail.de"}
+          placeholder={EmailPlaceholderText}
           value={email}
           onChangeText={text => setEmail(text)}
           onFocus={() => setEmailErrorState(false)}
           keyboardType={'email-address'}
           backgroundColor={Colors.findmyactivityWhite}
           borderColor={emailErrorState ? 'red' : Colors.findmyactivityText}
-          accessibilityLabel={'Hier Text eingeben'}
-          accessibilityHint={"Es wird eine E-Mail-Adresse gefordert; die Tastatur hat sich geöffnet, bitte E-Mail-Adresse eingeben"}
+          accessibilityLabel={EmailPlaceholderText}
+          accessibilityHint={AccessibilityHintEmailText}
         />
           { emailErrorState && (!email || !emailRegexTest(email))
-            ? <Text style={[stylesGlobal.standardText, {color: 'red', textAlign: 'center'}]}>Überprüfen Sie Ihre eingegebene E-Mail-Adresse</Text>
+            ? <Text 
+                style={[stylesGlobal.standardText, {color: 'red', textAlign: 'center'}]}
+                accessibilityLabel={EmailErrorText}
+                aria-label={EmailErrorText}
+              >
+                {EmailErrorText}
+              </Text>
             : <Text accessible={false}></Text>
           }
       </View>
@@ -71,13 +86,12 @@ const ForgotPasswordScreen = () => {
         <View style={styles.itemStyle}>
           <ButtonVariable
             onPress={() => forgotHandler()}
-            text={"Zurücksetzen"}
+            text={ForgotResetText}
             icon={'refresh'}
             backgroundColor={Colors.findmyactivityYellow}
             borderColor={Colors.findmyactivityYellow}
-            accessibilityLabel={"Hier drücken"}
-            accessibilityHint={"Zum Zurücksetzen des Passwortes bei oben eingegebener E-Mail-Adresse hier drücken, um eine Anfrage loszuschicken."
-            + "Falls die oben eingegebene E-Mail-Adresse bei uns vorhanden ist, schicken wir Ihnen einen Link per Mail, wo Sie Ihr Passwort neu setzen können"}
+            accessibilityLabel={ForgotResetText}
+            accessibilityHint={ForgotResetHint}
             width={200}
           />
         </View>
