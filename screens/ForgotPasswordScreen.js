@@ -11,13 +11,22 @@ import { handleForgotPassword } from '../constants/MainFunctions'
 import Colors from '../constants/Colors'
 import ButtonBack from '../components/ButtonBack'
 import ButtonVariable from '../components/ButtonVariable'
+import { emailRegexTest } from '../constants/HelperFunctionsAndVariables'
 
 const ForgotPasswordScreen = () => {
   const [email, setEmail] = useState('')
+  const [emailErrorState, setEmailErrorState] = useState(false)
   const navigation = useNavigation()
 
   const handleGoBack = () => {
     navigation.replace("Login")
+  }
+
+  function forgotHandler() {
+    if (!email || !emailRegexTest(email)) {
+      setEmailErrorState(true)
+    }
+    handleForgotPassword(auth, email)
   }
 
   return (
@@ -39,23 +48,29 @@ const ForgotPasswordScreen = () => {
       </Text>
 
       <View style={[styles.itemStyle, {alignItems: 'center'}]}>
+        <Text style={[stylesGlobal.ueberschriftText2, {alignSelf: 'flex-start'}]}>E-Mail</Text>
         <TextInputField 
-          placeholder={"E-Mail"}
+          placeholder={"muster@mail.de"}
           value={email}
           onChangeText={text => setEmail(text)}
+          onFocus={() => setEmailErrorState(false)}
           keyboardType={'email-address'}
           backgroundColor={Colors.findmyactivityWhite}
-          borderColor={Colors.findmyactivityBackground}
+          borderColor={emailErrorState ? 'red' : Colors.findmyactivityText}
           accessibilityLabel={'Hier Text eingeben'}
           accessibilityHint={"Es wird eine E-Mail-Adresse gefordert; die Tastatur hat sich geöffnet, bitte E-Mail-Adresse eingeben"}
         />
+          { emailErrorState && (!email || !emailRegexTest(email))
+            ? <Text style={[stylesGlobal.standardText, {color: 'red', textAlign: 'center'}]}>Überprüfen Sie Ihre eingegebene E-Mail-Adresse</Text>
+            : <Text accessible={false}></Text>
+          }
       </View>
 
       <View style={styles.buttonContainer}>
         
         <View style={styles.itemStyle}>
           <ButtonVariable
-            onPress={() => handleForgotPassword(auth, email)}
+            onPress={() => forgotHandler()}
             text={"Zurücksetzen"}
             icon={'refresh'}
             backgroundColor={Colors.findmyactivityYellow}

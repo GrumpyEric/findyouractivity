@@ -7,11 +7,8 @@ export const handleForgotPassword = (auth, email) => {
     .then(() => {
       Alert.alert('Erfolg!', 'Falls sich Ihre eingegebene E-Mail-Adresse in unserem System befindet, dann bekommen Sie dort in Kürze einen Link zum Zurücksetzen des Passwortes.')
     })
-    // TODO: create alert, when email is invalid
     .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
+      Alert.alert('Fehler', 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut')
     });
   
   } else {
