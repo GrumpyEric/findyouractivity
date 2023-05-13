@@ -12,6 +12,10 @@ import Colors from '../constants/Colors'
 import { TouchableWithoutFeedback } from 'react-native'
 import { Keyboard } from 'react-native'
 import ButtonVariable from '../components/ButtonVariable'
+import { errorEmailCheckContext, errorPasswordCheckContext } from '../components/AppContext'
+import { emailRegexTest } from '../constants/HelperFunctionsAndVariables'
+import { useEffect } from 'react'
+import ButtonBack from '../components/ButtonBack'
 
 auth.languageCode = auth.useDeviceLanguage();
 
@@ -20,20 +24,46 @@ const RegisterScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  const [emailErrorState, setEmailErrorState] = useState(false)
+  const [passwordErrorState, setPasswordErrorState] = useState(false)
+
   // Navigation to switch between screens
   const navigation = useNavigation()
 
   // Handler for password-reset; changes screen
-  const handleForgotPassword = () => {
-    navigation.navigate("Passwort zurücksetzen")
+  // const handleForgotPassword = () => {
+  //   navigation.navigate("Passwort zurücksetzen")
+  // }
+
+  function registerHandler() {
+    if (!email || !emailRegexTest(email)) {
+      setEmailErrorState(true)
+    }
+
+    if (!password || password.length < 8) {
+      setPasswordErrorState(true)
+    }
+    handleSignUp(auth, email, password, navigation)
   }
+
+  useEffect(() => {
+    console.log('email', emailErrorState);
+  }, [emailErrorState])
+
+  useEffect(() => {
+    console.log('passwort', passwordErrorState);
+  }, [passwordErrorState])
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     <View style={[stylesGlobal.screenContainer, styles.container]}>
+      <ButtonBack
+        onPress={() => navigation.goBack()}
+        text={'Zurück'}
+      />
       <Text 
         style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenViews, textAlign: 'center'}]}
-        accessibilityLabel={'Anmeldung Find your Activity'}
+        accessibilityLabel={'Registrierung Find your Activity'}
         accessibilityHint={"Das ist der Anmeldebildschirm. Hier bitte anmelden, um fortzufahren."}
         accessibilityRole={'header'}
       >
@@ -41,50 +71,57 @@ const RegisterScreen = () => {
       </Text>
 
       <View style={styles.inputContainer}>
-        <TextInputField
-          placeholder={"E-Mail"}
-          value={email}
-          onChangeText={text => setEmail(text)}
-          keyboardType={'email-address'}
-          backgroundColor={Colors.findmyactivityWhite}
-          borderColor={Colors.findmyactivityBackground}
-          accessibilityLabel={'Hier Text eingeben'}
-          accessibilityHint={"Es wird eine E-Mail-Adresse gefordert; die Tastatur hat sich geöffnet, bitte E-Mail-Adresse eingeben"}
-        />
-        <TextInputField
-          placeholder={"Passwort"}
-          value={password}
-          onChangeText={text => setPassword(text)}
-          secureTextEntry={true}
-          keyboardType={'default'}
-          backgroundColor={Colors.findmyactivityWhite}
-          borderColor={Colors.findmyactivityBackground}
 
-          accessibilityLabel={'Hier Text eingeben'}
-          accessibilityHint={"Es wird ein Passwort gefordert; die Tastatur hat sich geöffnet, bitte E-Mail-Adresse eingeben"}
-        />
+        <View style={styles.singleInputContainer}>
+          <Text style={stylesGlobal.ueberschriftText2}>E-Mail</Text>
+          <TextInputField
+            placeholder={"muster@mail.de"}
+            value={email}
+            onChangeText={text => setEmail(text)}
+            onFocus={() => setEmailErrorState(false)}
+            keyboardType={'email-address'}
+            backgroundColor={Colors.findmyactivityWhite}
+            borderColor={emailErrorState ? 'red' : Colors.findmyactivityText}
+            accessibilityLabel={'Hier Text eingeben'}
+            accessibilityHint={"Es wird eine E-Mail-Adresse gefordert; die Tastatur hat sich geöffnet, bitte E-Mail-Adresse eingeben"}
+          />
+          {
+          emailErrorState && (!email || !emailRegexTest(email))
+            ? <Text style={[stylesGlobal.standardText, {color: 'red', textAlign: 'center'}]}>Überprüfen Sie Ihre eingegebene E-Mail-Adresse</Text>
+            : <Text accessible={false}></Text>
+          }
+        </View>
+
+        <View>
+          <Text style={stylesGlobal.ueberschriftText2}>Passwort</Text>
+          <TextInputField
+            placeholder={"passwort123"}
+            value={password}
+            onChangeText={text => setPassword(text)}
+            onFocus={() => setPasswordErrorState(false)}
+            secureTextEntry={true}
+            keyboardType={'default'}
+            backgroundColor={Colors.findmyactivityWhite}
+            borderColor={passwordErrorState ? 'red' : Colors.findmyactivityText}
+            accessibilityLabel={'Hier Text eingeben'}
+            accessibilityHint={"Es wird ein Passwort gefordert; die Tastatur hat sich geöffnet, bitte E-Mail-Adresse eingeben"}
+          />
+          <Text style={[stylesGlobal.standardText, {textAlign: 'center'}]}>Hinweis: Das Passwort muss mindestens 8 Zeichen lang sein!</Text>
+          {
+          passwordErrorState
+            ? <Text style={[stylesGlobal.standardText, {color: 'red', textAlign: 'center'}]}>Überprüfen Sie Ihre eingegebenes Passwort</Text>
+            : <Text accessible={false}></Text>
+          }
+        </View>
       </View>
 
       <View style={styles.buttonContainer}>
 
         <View style={styles.buttonsStyle}>
           <ButtonVariable
-            onPress={() => handleLogin(auth, email, password, navigation)}
-            text={"Anmelden"}
-            backgroundColor={Colors.findmyactivityYellow}
-            borderColor={Colors.findmyactivityYellow}
-            accessibilityLabel={"Hier drücken"}
-            accessibilityHint={"Zur Anmeldung mit allen ausgefüllten Textfeldern oben diesen Knopf drücken"}
-            icon={'login'}
-            width={200}
-          />
-        </View>
-
-        <View style={styles.buttonsStyle}>
-          <ButtonVariable
-            onPress={() => handleSignUp(auth, email, password)}
+            onPress={() => registerHandler()}
             text={"Registrieren"}
-            backgroundColor={'white'}
+            backgroundColor={Colors.findmyactivityYellow}
             borderColor={Colors.findmyactivityYellow}
             textColor={Colors.findmyactivityText}
             accessibilityLabel={"Hier drücken"}
@@ -93,13 +130,7 @@ const RegisterScreen = () => {
             width={200}
           />
         </View>
-
-        <TextButton
-          onPress={handleForgotPassword}
-          text={"Passwort vergessen"}
-          accessibilityLabel={"Hier drücken"}
-          accessibilityHint={"Wenn Sie Ihr Passwort vergessen haben, dann hier drücken, um zum Bildschirm für das Zurücksetzen des Passwortes zu kommen"}
-        />
+        
       </View>
       
     </View>
@@ -118,6 +149,10 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: '100%',
     marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenViews,
+  },
+
+  singleInputContainer: {
+    marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenViews / 2,
   },
 
   buttonContainer: {

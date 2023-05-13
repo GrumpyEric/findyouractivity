@@ -29,10 +29,34 @@ export const handleSignUp = (auth, email, password) => {
     const user = userCredential.user;
   sendEmailVerification(auth.currentUser)
     .then(() => {
-      alert("E-Mail verification sent! Please confirm your identity to sign-in.")
+      Alert.alert("Authentifizierungs-E-Mail gesendet!", "Bitte bestätigen Sie Ihre Identität, indem Sie auf den Link in der E-Mail klicken!")
     });
     })
-  .catch(error => alert(error.message))
+  .catch((error) => {
+    if (error.code === "auth/email-already-in-use") {
+      Alert.alert("Diese E-Mail ist schon in Verwendung", "Bitte nutzen Sie eine andere E-Mail oder setzen Sie Ihr Passwort zurück, falls Sie es vergessen haben!")
+    }
+
+    else if (error.code === 'auth/weak-password') {
+      Alert.alert("Ihr gewähltes Passwort ist zu schwach", "Bitte nutzen Sie mindestens 8 Zeichen für Ihr Passwort!")
+    }
+
+    else if (!email || !emailRegexTest(email)) {
+      Alert.alert("E-Mail fehlt oder falsch", "Bitte geben Sie eine gültige E-Mail-Adresse an!")
+    }
+
+    else if (error.code === "auth/wrong-password") {
+      Alert.alert("E-Mail oder Passwort falsch", "Bitte geben Sie E-Mail oder Passwort erneut ein!")
+    }
+
+    else if (!password) {
+      Alert.alert("Passwort fehlt", "Bitte geben Sie ein Passwort ein!")
+    }
+
+    else if (!email || (!emailRegexTest(email) && (!password || error.code === "auth/wrong-password")) || error.code === "auth/wrong-password") {
+      Alert.alert("E-Mail oder Passwort falsch", "Bitte geben Sie E-Mail oder Passwort erneut ein!")
+    }
+  })
 }
 
 // Handler for sign-in; signs into app and checks if user is email-verified
@@ -53,14 +77,9 @@ export const handleLogin = (auth, email, password, navigation) => {
     }
   })
   .catch((error) => {
-    console.log(error);
     if (error.code === "auth/too-many-requests") {
       Alert.alert("Zu viele Anmeldeversuche", "Bitte setzen Sie Ihr Passwort zurück oder versuchen Sie es später nocheinmal!")
     }
-
-    // if (error.code === "auth/email-already-in-use") {
-    //   Alert.alert("Diese E-Mail ist schon in Verwendung", "Bitte nutzen Sie eine andere E-Mail oder setzen Sie Ihr Passwort zurück, falls Sie es vergessen haben!")
-    // }
 
     else if (!email || !emailRegexTest(email)) {
       Alert.alert("E-Mail fehlt oder falsch", "Bitte geben Sie eine gültige E-Mail-Adresse an!")
@@ -77,22 +96,6 @@ export const handleLogin = (auth, email, password, navigation) => {
     else if (!email || (!emailRegexTest(email) && (!password || error.code === "auth/wrong-password")) || error.code === "auth/wrong-password") {
       Alert.alert("E-Mail oder Passwort falsch", "Bitte geben Sie E-Mail oder Passwort erneut ein!")
     }
-
-    // if (error.code === )
-    // switch (error.code) {
-    //   case "auth/missing-password":
-    //     Alert.alert("Passwort fehlt", "Bitte geben Sie ein Passwort ein!")
-    //     // errorPasswordCheckContext._currentValue = true
-    //     break
-    //   case "auth/invalid-email":
-    //     Alert.alert("E-Mail fehlt oder falsch", "Bitte geben Sie eine gültige E-Mail-Adresse an!")
-    //     // errorEmailCheckContext._currentValue = true
-    //     break
-    //   default:
-    //     Alert.alert("E-Mail oder Passwort falsch", "Bitte überprüfen Sie Ihre eingegebenen Daten!")
-    //     // errorEmailCheckContext._currentValue = true
-    //     // errorPasswordCheckContext._currentValue = true
-    // }
   })
 }
 

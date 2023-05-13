@@ -127,7 +127,7 @@ const LoginScreen = () => {
         <View style={styles.buttonsStyle}>
           <ButtonVariable
             onPress={() => navigation.navigate('RegisterScreen')}
-            text={"Registrieren"}
+            text={"Neu hier?\nRegistrieren"}
             backgroundColor={'white'}
             borderColor={Colors.findmyactivityYellow}
             textColor={Colors.findmyactivityText}
@@ -138,9 +138,11 @@ const LoginScreen = () => {
           />
         </View>
 
+        <Text style={stylesGlobal.standardText}>Passwort vergessen?</Text>
         <TextButton
           onPress={handleForgotPassword}
-          text={"Passwort vergessen"}
+          text={"Passwort zurücksetzen"}
+
           accessibilityLabel={"Hier drücken"}
           accessibilityHint={"Wenn Sie Ihr Passwort vergessen haben, dann hier drücken, um zum Bildschirm für das Zurücksetzen des Passwortes zu kommen"}
         />
