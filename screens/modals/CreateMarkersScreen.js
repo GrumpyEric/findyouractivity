@@ -207,7 +207,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
           onChangeText={(text) => { setEventName(text); text.length < 1 ? setEventNameError(true) : setEventNameError(false) }}
           keyboardType={'default'}
           backgroundColor={Colors.findmyactivityWhite}
-          borderColor={eventNameError ? 'red' : Colors.findmyactivityText}
+          borderColor={eventNameError ? Colors.findmyactivityError : Colors.findmyactivityText}
           hasLeftIcon={true}
           iconName={'edit'}
           hasMaxLength={true}
@@ -264,7 +264,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
           onChangeText={(text) => { setNumberParticipants(text); text.length < 1 ? setParticipantsError(true) : setParticipantsError(false) }}
           keyboardType={'number-pad'}
           backgroundColor={Colors.findmyactivityWhite}
-          borderColor={participantsError ? 'red' : Colors.findmyactivityText}
+          borderColor={participantsError ? Colors.findmyactivityError : Colors.findmyactivityText}
           hasLeftIcon={true}
           iconName={'male'}
           hasMaxLength={true}
@@ -366,8 +366,8 @@ const CreateMarkersScreen = ( {navigation} ) => {
           {/* <ButtonVariable
             text={'Abbrechen'}
             onPress={() => { navigation.pop(); editMarkerMode._currentValue = false }}
-            backgroundColor={'red'}
-            borderColor={'red'}
+            backgroundColor={Colors.findmyactivityError}
+            borderColor={Colors.findmyactivityError}
           /> */}
 
           <ButtonVariable

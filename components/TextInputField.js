@@ -2,6 +2,7 @@ import { View, StyleSheet, TextInput, Text } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 import PropTypes from 'prop-types'
+import Colors from "../constants/Colors";
 
 // component props: placeholder, value, onChangeText, secureTextEntry, keyboardType, backgroundColor, borderColor, multiline
 const TextInputField = (props) => { 
@@ -10,7 +11,6 @@ const TextInputField = (props) => {
   const hasLeftIcon = props.hasLeftIcon
   const showCharCounter = props.showCharCounter
 
-  // TODO: ICONS AND TEXT ARE OFFSET
   return(
     <View style={[styles.buttonStyle, {backgroundColor: 'white', borderColor: props.borderColor}]}>
       {hasLeftIcon ?
@@ -25,6 +25,7 @@ const TextInputField = (props) => {
       <TextInput
         editable={props.editable}
         placeholder={props.placeholder}
+        placeholderTextColor={Colors.findmyactivityPlaceholder}
         value={props.value}
         onChangeText={props.onChangeText}
         secureTextEntry={props.secureTextEntry}

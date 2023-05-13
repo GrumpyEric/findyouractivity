@@ -237,8 +237,8 @@ const EventScreen = ( {navigation} ) => {
                       text={'Marker bearbeiten'}
                     />
                     <ButtonVariable
-                      backgroundColor={'red'}
-                      borderColor={'red'}
+                      backgroundColor={Colors.findmyactivityError}
+                      borderColor={Colors.findmyactivityError}
                       onPress={() => deleteMarkerHandler(val)}
                       text={'Marker löschen'}
                     />
@@ -354,8 +354,8 @@ const EventScreen = ( {navigation} ) => {
                     text={'Marker bearbeiten'}
                   />
                   <ButtonVariable
-                    backgroundColor={'red'}
-                    borderColor={'red'}
+                    backgroundColor={Colors.findmyactivityError}
+                    borderColor={Colors.findmyactivityError}
                     onPress={() => deleteMarkerHandler(val)}
                     text={'Marker löschen'}
                   />
