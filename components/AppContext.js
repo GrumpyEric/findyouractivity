@@ -43,7 +43,7 @@ export const participantContext = createContext()
 export const selectedMarkerContext = createContext()
 export const saveProfileChangesFunctionContext = createContext()
 
-export const emailCheckContext = createContext(false)
-export const passwordCheckContext = createContext(false)
+export const errorEmailCheckContext = createContext(false)
+export const errorPasswordCheckContext = createContext(false)
 
 // export {latitudeContext}

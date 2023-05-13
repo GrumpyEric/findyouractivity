@@ -43,26 +43,56 @@ export const handleLogin = (auth, email, password, navigation) => {
   .then(userCredential => {
     const user = userCredential.user;
     if (user.emailVerified) {
-      
       loggedInUser._current_value = user
       // user zur DB hinzufügen falls noch nicht vorhanden ist
       readUserFromDB(user.uid);
       navigation.replace("Home")
     }
     else {
-      Alert.alert("Benutzer ist registiert, aber noch nicht per E-Mail verifiziert. Bitte folgen Sie dem Link in der E-Mail oder fordern Sie einen neuen Link an")
+      Alert.alert("Benutzer ist registiert, aber noch nicht per E-Mail verifiziert. Bitte folgen Sie dem Link in der E-Mail oder fordern Sie einen neuen Link an!")
     }
   })
   .catch((error) => {
-    switch (error.code) {
-      case "auth/missing-password":
-        Alert.alert("Passwort fehlt", "Bitte geben Sie ein Passwort ein!")
-        break
-      case "auth/invalid-email":
-        Alert.alert("E-Mail fehlt oder falsch", "Bitte geben Sie eine gültige E-Mail-Adresse an!")
-      default:
-        Alert.alert("E-Mail oder Passwort falsch", "Bitte überprüfen Sie Ihre eingegebenen Daten!")
+    console.log(error);
+    if (error.code === "auth/too-many-requests") {
+      Alert.alert("Zu viele Anmeldeversuche", "Bitte setzen Sie Ihr Passwort zurück oder versuchen Sie es später nocheinmal!")
     }
+
+    // if (error.code === "auth/email-already-in-use") {
+    //   Alert.alert("Diese E-Mail ist schon in Verwendung", "Bitte nutzen Sie eine andere E-Mail oder setzen Sie Ihr Passwort zurück, falls Sie es vergessen haben!")
+    // }
+
+    else if (!email || !emailRegexTest(email)) {
+      Alert.alert("E-Mail fehlt oder falsch", "Bitte geben Sie eine gültige E-Mail-Adresse an!")
+    }
+
+    else if (error.code === "auth/wrong-password") {
+      Alert.alert("E-Mail oder Passwort falsch", "Bitte geben Sie E-Mail oder Passwort erneut ein!")
+    }
+
+    else if (!password) {
+      Alert.alert("Passwort fehlt", "Bitte geben Sie ein Passwort ein!")
+    }
+
+    else if (!email || (!emailRegexTest(email) && (!password || error.code === "auth/wrong-password")) || error.code === "auth/wrong-password") {
+      Alert.alert("E-Mail oder Passwort falsch", "Bitte geben Sie E-Mail oder Passwort erneut ein!")
+    }
+
+    // if (error.code === )
+    // switch (error.code) {
+    //   case "auth/missing-password":
+    //     Alert.alert("Passwort fehlt", "Bitte geben Sie ein Passwort ein!")
+    //     // errorPasswordCheckContext._currentValue = true
+    //     break
+    //   case "auth/invalid-email":
+    //     Alert.alert("E-Mail fehlt oder falsch", "Bitte geben Sie eine gültige E-Mail-Adresse an!")
+    //     // errorEmailCheckContext._currentValue = true
+    //     break
+    //   default:
+    //     Alert.alert("E-Mail oder Passwort falsch", "Bitte überprüfen Sie Ihre eingegebenen Daten!")
+    //     // errorEmailCheckContext._currentValue = true
+    //     // errorPasswordCheckContext._currentValue = true
+    // }
   })
 }
 
@@ -83,7 +113,7 @@ export const handleSignOut = (auth, navigation) => {
 import { collection, query, onSnapshot, updateDoc, deleteDoc, FieldValue } from "firebase/firestore";
 import { db } from '../firebase/firebase-config';
 
-import { filterContext, selectedUserContext, loggedInUser, selectedAuthor, participantContext, editMarkerValues, latitudeContext, longitudeContext } from '../components/AppContext';
+import { filterContext, selectedUserContext, loggedInUser, selectedAuthor, participantContext, editMarkerValues, latitudeContext, longitudeContext, errorPasswordCheckContext, errorEmailCheckContext } from '../components/AppContext';
 // import { useRef } from 'react';
 
 export let markersRef

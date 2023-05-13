@@ -34,7 +34,8 @@ const TextInputField = (props) => {
         multiline={props.multiline}
         onBlur={props.onBlur}
         onChange={props.onChange}
-        
+        onFocus={props.onFocus}
+
         accessible={true}
         accessibilityLabel={props.accessibilityLabel}
         accessibilityHint={props.accessibilityHint}
@@ -63,7 +64,7 @@ const TextInputField = (props) => {
 
 TextInputField.propTypes = { placeholder: PropTypes.string, value: PropTypes.string.isRequired, onChangeText: PropTypes.func.isRequired, secureTextEntry: PropTypes.bool, 
   keyboardType: PropTypes.string, maxLength: PropTypes.number, borderColor: PropTypes.string, multiline: PropTypes.bool, 
-  onBlur: PropTypes.func, onChange: PropTypes.func, editable: PropTypes.bool,
+  onBlur: PropTypes.func, onChange: PropTypes.func, editable: PropTypes.bool, onFocus: PropTypes.func,
 
   accessibilityLabel: PropTypes.string, accessibilityHint: PropTypes.string, accessibilityRole: PropTypes.any, 
   isAccessibilityStateDisabled: PropTypes.bool,

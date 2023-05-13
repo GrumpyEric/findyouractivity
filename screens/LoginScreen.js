@@ -12,6 +12,9 @@ import Colors from '../constants/Colors'
 import { TouchableWithoutFeedback } from 'react-native'
 import { Keyboard } from 'react-native'
 import ButtonVariable from '../components/ButtonVariable'
+import { errorEmailCheckContext, errorPasswordCheckContext } from '../components/AppContext'
+import { emailRegexTest } from '../constants/HelperFunctionsAndVariables'
+import { useEffect } from 'react'
 
 auth.languageCode = auth.useDeviceLanguage();
 
@@ -20,6 +23,9 @@ const LoginScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  const [emailErrorState, setEmailErrorState] = useState(false)
+  const [passwordErrorState, setPasswordErrorState] = useState(false)
+
   // Navigation to switch between screens
   const navigation = useNavigation()
 
@@ -27,6 +33,25 @@ const LoginScreen = () => {
   const handleForgotPassword = () => {
     navigation.navigate("Passwort zurücksetzen")
   }
+
+  function loginHandler() {
+    if (!email || !emailRegexTest(email)) {
+      setEmailErrorState(true)
+    }
+
+    if (!password) {
+      setPasswordErrorState(true)
+    }
+    handleLogin(auth, email, password, navigation)
+  }
+
+  useEffect(() => {
+    console.log('email', emailErrorState);
+  }, [emailErrorState])
+
+  useEffect(() => {
+    console.log('passwort', passwordErrorState);
+  }, [passwordErrorState])
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -41,40 +66,54 @@ const LoginScreen = () => {
       </Text>
 
       <View style={styles.inputContainer}>
-        <TextInputField
-          placeholder={"E-Mail"}
-          value={email}
-          onChangeText={text => setEmail(text)}
-          keyboardType={'email-address'}
-          backgroundColor={Colors.findmyactivityWhite}
-          borderColor={Colors.findmyactivityBackground}
-          accessibilityLabel={'Hier Text eingeben'}
-          accessibilityHint={"Es wird eine E-Mail-Adresse gefordert; die Tastatur hat sich geöffnet, bitte E-Mail-Adresse eingeben"}
-        />
-        {
-          email 
-            ? null
-            : <Text>Überprüfen Sie Ihre eingegebene E-Mail-Adresse</Text>
-        }
-        <TextInputField
-          placeholder={"Passwort"}
-          value={password}
-          onChangeText={text => setPassword(text)}
-          secureTextEntry={true}
-          keyboardType={'default'}
-          backgroundColor={Colors.findmyactivityWhite}
-          borderColor={Colors.findmyactivityBackground}
 
-          accessibilityLabel={'Hier Text eingeben'}
-          accessibilityHint={"Es wird ein Passwort gefordert; die Tastatur hat sich geöffnet, bitte E-Mail-Adresse eingeben"}
-        />
+        <View style={styles.singleInputContainer}>
+          <Text style={stylesGlobal.ueberschriftText2}>E-Mail</Text>
+          <TextInputField
+            placeholder={"muster@mail.de"}
+            value={email}
+            onChangeText={text => setEmail(text)}
+            onFocus={() => setEmailErrorState(false)}
+            keyboardType={'email-address'}
+            backgroundColor={Colors.findmyactivityWhite}
+            borderColor={emailErrorState ? 'red' : Colors.findmyactivityText}
+            accessibilityLabel={'Hier Text eingeben'}
+            accessibilityHint={"Es wird eine E-Mail-Adresse gefordert; die Tastatur hat sich geöffnet, bitte E-Mail-Adresse eingeben"}
+          />
+          {
+          emailErrorState && (!email || !emailRegexTest(email))
+            ? <Text style={[stylesGlobal.standardText, {color: 'red', textAlign: 'center'}]}>Überprüfen Sie Ihre eingegebene E-Mail-Adresse</Text>
+            : <Text accessible={false}></Text>
+          }
+        </View>
+
+        <View>
+          <Text style={stylesGlobal.ueberschriftText2}>Passwort</Text>
+          <TextInputField
+            placeholder={"passwort123"}
+            value={password}
+            onChangeText={text => setPassword(text)}
+            onFocus={() => setPasswordErrorState(false)}
+            secureTextEntry={true}
+            keyboardType={'default'}
+            backgroundColor={Colors.findmyactivityWhite}
+            borderColor={passwordErrorState ? 'red' : Colors.findmyactivityText}
+            accessibilityLabel={'Hier Text eingeben'}
+            accessibilityHint={"Es wird ein Passwort gefordert; die Tastatur hat sich geöffnet, bitte E-Mail-Adresse eingeben"}
+          />
+          {
+          passwordErrorState
+            ? <Text style={[stylesGlobal.standardText, {color: 'red', textAlign: 'center'}]}>Überprüfen Sie Ihre eingegebenes Passwort</Text>
+            : <Text accessible={false}></Text>
+          }
+        </View>
       </View>
 
       <View style={styles.buttonContainer}>
 
         <View style={styles.buttonsStyle}>
           <ButtonVariable
-            onPress={() => handleLogin(auth, email, password, navigation)}
+            onPress={() => loginHandler()}
             text={"Anmelden"}
             backgroundColor={Colors.findmyactivityYellow}
             borderColor={Colors.findmyactivityYellow}
@@ -123,6 +162,10 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: '100%',
     marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenViews,
+  },
+
+  singleInputContainer: {
+    marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenViews / 2,
   },
 
   buttonContainer: {
