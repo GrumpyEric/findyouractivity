@@ -1,7 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
-import Colors from "../constants/Colors";
-import { height, stylesGlobal, width } from "../constants/StylesGlobal";
+import { height, width } from "../constants/StylesGlobal";
 
 import PropTypes from 'prop-types'
 import FloatingActionButton from "./FloatingActionButton";

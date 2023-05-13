@@ -14,6 +14,8 @@ const FloatingActionButton = (props) => {
         position: 'absolute',
         bottom: props.bottomPos,
         right: props.rightPos,
+        left: props.leftPos,
+        top: props.topPos,
         borderWidth: StyleSheet.hairlineWidth,
         borderColor: 'black',
         elevation: 3,
@@ -58,8 +60,9 @@ const FloatingActionButton = (props) => {
   )
 }
 
-FloatingActionButton.propTypes = { onPress: PropTypes.func.isRequired, bottomPos: PropTypes.number.isRequired, 
-  rightPos: PropTypes.number.isRequired, icon: PropTypes.string.isRequired, text: PropTypes.string,
+FloatingActionButton.propTypes = { onPress: PropTypes.func.isRequired, bottomPos: PropTypes.number, 
+  rightPos: PropTypes.number, icon: PropTypes.string, text: PropTypes.string,
+  leftPos: PropTypes.number, topPos: PropTypes.number,
 
   accessibilityLabel: PropTypes.string, accessibilityHint: PropTypes.string,
   isAccessibilityStateDisabled: PropTypes.bool,

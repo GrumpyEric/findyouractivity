@@ -1,52 +1,24 @@
-import React from 'react'
-import { TouchableOpacity, StyleSheet, View, Text } from 'react-native'
-import { width, height, stylesGlobal } from '../constants/StylesGlobal'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import React from "react";
+import { height, width } from "../constants/StylesGlobal";
 
 import PropTypes from 'prop-types'
+import FloatingActionButton from "./FloatingActionButton";
 
-// component props: onPress, icon
-class FloatingBurgerMenu extends React.Component {
-  render() {
-    return (
-      <View style={styles.buttonStyle}>
-        <TouchableOpacity 
-          onPress={() => this.props.onPress()}
-          style={{justifyContent: 'center', alignSelf: 'center'}}
-        >
-          <Icon 
-            name={this.props.icon}
-            size={30}
-            color='white'
-            style={styles.iconStyle}
-          />
-          <Text style={stylesGlobal.buttonTextWhite}>Menü</Text>
-        </TouchableOpacity>
-      </View>
-    )
-  }
+function ButtonBack(props) {
+  return (
+    <FloatingActionButton
+      // bottomPos={height * 0.5}
+      // rightPos={width * 0.05}
+      topPos={height * 0.025}
+      leftPos={width * 0.05}
+      icon="menu"
+      text={'Menü'}
+      onPress={props.onPress}
+      accessibilityHint={props.accessibilityHint}
+    />
+  );
 }
 
-FloatingBurgerMenu.propTypes = { onPress: PropTypes.func.isRequired, icon: PropTypes.string.isRequired }
+ButtonBack.propTypes = { onPress: PropTypes.func, style: PropTypes.any, text: PropTypes.string, accessibilityHint: PropTypes.string }
 
-export default FloatingBurgerMenu
-
-const styles = StyleSheet.create({
-  buttonStyle: {
-    top: height * 0.025,
-    left: width * 0.05,
-    position: 'absolute',  
-    zIndex: 5,
-    backgroundColor: 'black',
-    justifyContent: 'center',
-    borderRadius: 35,
-    width: 70,
-    height: 70,
-    alignItems: 'center',
-  },
-
-  iconStyle: {
-    alignSelf: 'center',
-  }
-
-});
+export default ButtonBack;

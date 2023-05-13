@@ -1,7 +1,7 @@
 import { updateUserFromDB, readUserFromDB, deleteMarkerToDB } from '../constants/MainFunctions';
 import { selectedUserContext, loggedInUser, userPosContext, mapRef, saveProfileChangesFunctionContext, editMarkerMode, editMarkerValues, editMarkerObject, markersContext } from '../components/AppContext';
 import { getDistance } from 'geolib';
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -14,11 +14,9 @@ import { height, stylesGlobal } from '../constants/StylesGlobal';
 import TextInputField from '../components/TextInputField';
 import FloatingBurgerMenu from '../components/FloatingBurgerMenu';
 import Colors from '../constants/Colors';
-import ButtonBack from '../components/ButtonBack';
 import { format, isSameDay, isTomorrow } from 'date-fns';
 import ButtonVariable from '../components/ButtonVariable';
 import { auth } from '../firebase/firebase-config';
-import { useIsFocused } from '@react-navigation/native';
 
 const Profile = ( {navigation} ) => {
   navigation.setOptions({
@@ -103,12 +101,8 @@ const Profile = ( {navigation} ) => {
     <FloatingBurgerMenu
       onPress={() => navigation.openDrawer()}
       icon={'navicon'}
-
+      
     />
-    {/* <ButtonBack
-      onPress={() => navigation.goBack()}
-      text={'Zurück'}
-    /> */}
     <View style={stylesGlobal.contentContainerMainScreens}>
       <Text style={[stylesGlobal.ueberschriftText, {textAlign: 'center'}]}>Profil</Text>
 
