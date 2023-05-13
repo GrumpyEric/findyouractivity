@@ -1,6 +1,6 @@
 import { auth } from "../firebase/firebase-config";
-import { deleteMarkerToDB, markersRef } from '../constants/MainFunctions';
-import { editMarkerMode, editMarkerObject, editMarkerValues, mapRef } from '../components/AppContext';
+import { deleteMarkerToDB } from '../constants/MainFunctions';
+import { editMarkerMode, editMarkerObject, editMarkerValues, mapRef, markersContext } from '../components/AppContext';
 import { getDistance } from 'geolib';
 import { userPosContext } from '../components/AppContext';
 import Colors from '../constants/Colors';
@@ -17,9 +17,9 @@ import {
 } from "react-native";
 import { height, stylesGlobal } from "../constants/StylesGlobal";
 import FloatingBurgerMenu from "../components/FloatingBurgerMenu";
-import ButtonBack from "../components/ButtonBack";
 import ButtonVariable from "../components/ButtonVariable";
 import { format, isSameDay, isTomorrow } from "date-fns";
+import { useEffect } from "react";
 
 const EventScreen = ( {navigation} ) => {
   const moveToMarker = (inputMarker) => {
@@ -32,61 +32,61 @@ const EventScreen = ( {navigation} ) => {
     })
   }
 
-    function editMarkerHandler(val) {
-      navigation.navigate('CreateMarkersScreen'); editMarker(val)
-    }
+  function editMarkerHandler(val) {
+    navigation.navigate('CreateMarkersScreen'); editMarker(val)
+  }
 
-    function deleteMarkerHandler(val) {
-        Alert.alert(
-        'Löschen des Markers',
-        'Wollen Sie den Marker wirklich löschen?',
-        [
-            {
-            text: 'Löschen',
-            onPress: () => { deleteMarkerToDB(auth, val.creation_date) }
-            },
-            {
-            text: 'Abbrechen',
-            onPress: () => {  }
-            }
-        ]
-        )
-    }
+  function deleteMarkerHandler(val) {
+    Alert.alert(
+    'Löschen des Markers',
+    'Wollen Sie den Marker wirklich löschen?',
+    [
+        {
+        text: 'Löschen',
+        onPress: () => { deleteMarkerToDB(auth, val.creation_date) }
+        },
+        {
+        text: 'Abbrechen',
+        onPress: () => {  }
+        }
+    ]
+    )
+  }
 
-    const editMarker = (markerValues) => {
-        editMarkerMode._currentValue = true
+  const editMarker = (markerValues) => {
+    editMarkerMode._currentValue = true
 
-        // editMarkerValues._currentValue.creationDate = ((markerValues.creation_date.nanoseconds / 1000000000 + markerValues.creation_date.seconds) * 1000)
-        // editMarkerValues._currentValue.creationDate = Timestamp.fromMillis( (markerValues.creation_date.nanoseconds / 10000000 + markerValues.creation_date.seconds) * 1000 )
-        editMarkerValues._currentValue.creationDate = markerValues.creation_date
-        editMarkerValues._currentValue.name = markerValues.name
-        editMarkerValues._currentValue.description = markerValues.description
-        editMarkerValues._currentValue.locationDescription = markerValues.locationDescription
-        editMarkerValues._currentValue.startDate = new Date(markerValues.startTime.seconds*1000)
-        editMarkerValues._currentValue.endDate = new Date(markerValues.endTime.seconds*1000)
-        editMarkerValues._currentValue.numberParticipants = markerValues.numberParticipants
-        editMarkerValues._currentValue.tags = markerValues.tags
-        editMarkerValues._currentValue.latitude = markerValues.latitude
-        editMarkerValues._currentValue.longitude = markerValues.longitude
+    // editMarkerValues._currentValue.creationDate = ((markerValues.creation_date.nanoseconds / 1000000000 + markerValues.creation_date.seconds) * 1000)
+    // editMarkerValues._currentValue.creationDate = Timestamp.fromMillis( (markerValues.creation_date.nanoseconds / 10000000 + markerValues.creation_date.seconds) * 1000 )
+    editMarkerValues._currentValue.creationDate = markerValues.creation_date
+    editMarkerValues._currentValue.name = markerValues.name
+    editMarkerValues._currentValue.description = markerValues.description
+    editMarkerValues._currentValue.locationDescription = markerValues.locationDescription
+    editMarkerValues._currentValue.startDate = new Date(markerValues.startTime.seconds*1000)
+    editMarkerValues._currentValue.endDate = new Date(markerValues.endTime.seconds*1000)
+    editMarkerValues._currentValue.numberParticipants = markerValues.numberParticipants
+    editMarkerValues._currentValue.tags = markerValues.tags
+    editMarkerValues._currentValue.latitude = markerValues.latitude
+    editMarkerValues._currentValue.longitude = markerValues.longitude
 
-        editMarkerObject._currentValue = markerValues
-        console.log('MY VALUES', markerValues);
+    editMarkerObject._currentValue = markerValues
+    console.log('MY VALUES', markerValues);
 
-        // Timestamp creation date:
-        // console.log('creation date:', (markerValues.creation_date.nanoseconds / 1000000000 + markerValues.creation_date.seconds) * 1000 );
-        // important for update marker: db, "markers", userID_timestampcreationdate (in seconds)
+    // Timestamp creation date:
+    // console.log('creation date:', (markerValues.creation_date.nanoseconds / 1000000000 + markerValues.creation_date.seconds) * 1000 );
+    // important for update marker: db, "markers", userID_timestampcreationdate (in seconds)
 
-        console.log('create date:', editMarkerValues._currentValue.creationDate );
-    }
+    console.log('create date:', editMarkerValues._currentValue.creationDate );
+  }
 
-    const [showMyMarkers, setShowMyMarkers] = useState(true)
-    const myUserID = auth.currentUser.uid
-    const [radiusMarkers, setRadiusMarkers] = useState(5)
-    const [radiusMarkersVisual, setRadiusMarkersVisual] = useState(5)
-    // console.log(myUserID);
+  const [showMyMarkers, setShowMyMarkers] = useState(true)
+  const myUserID = auth.currentUser.uid
+  const [radiusMarkers, setRadiusMarkers] = useState(5)
+  const [radiusMarkersVisual, setRadiusMarkersVisual] = useState(5)
+  // console.log(myUserID);
 
-    let myMarkersRef = markersRef.filter(function (arr) {
-      return arr.user === myUserID
+  let myMarkersRef = markersContext._currentValue.filter(function (arr) {
+    return arr.user === myUserID
   })
 
   return (
@@ -254,8 +254,8 @@ const EventScreen = ( {navigation} ) => {
             <Text style={stylesGlobal.ueberschriftText2}>Sie haben noch keine eigenen Marker gesetzt. Setzen Sie erstmal Marker auf der Karte, um hier dann die eigenen Marker sehen zu können.</Text>
           </View>
         :
-        markersRef.length ?
-        markersRef.map((val, index) => 
+        markersContext._currentValue.length ?
+        markersContext._currentValue.map((val, index) => 
           {
             let distanceToUserPos = "?"//getDistance(val,props.userPosContext.coords) / 1000
             if (userPosContext._currentValue.coords != undefined)

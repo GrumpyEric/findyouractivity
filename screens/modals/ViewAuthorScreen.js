@@ -1,19 +1,18 @@
 import { View, Text, TouchableOpacity, ScrollView, TextInput, StyleSheet } from 'react-native';
-import { userPosContext } from '../../components/AppContext';
+import { markersContext, userPosContext } from '../../components/AppContext';
 import { getDistance } from 'geolib';
 import React from "react";
-import { markersRef } from '../../constants/MainFunctions';
 import { stylesGlobal } from '../../constants/StylesGlobal';
 import Colors from '../../constants/Colors';
 import { format, isSameDay, isTomorrow } from 'date-fns';
 
-const ViewAuthorScreen = ( { route,navigation } ) => {
+const ViewAuthorScreen = ( { route, navigation } ) => {
 
   const displayID = route.params.authorID
   const displayUsername = route.params.authorUsername
   const displayDescription = route.params.authorDescription
 
-  let eventArray = markersRef.filter(function (arr) {
+  let eventArray = markersContext._currentValue.filter(function (arr) {
     return arr.user === displayID
   })
 

@@ -5,9 +5,9 @@ import { getDistance } from 'geolib';
 import { hawRegion } from "../constants/TestCoords";
 import * as Location from 'expo-location';
 
-import { markersRef, saveNewMarkerLocation, getUserInfoFromDB } from "../constants/MainFunctions";
+import { saveNewMarkerLocation, getUserInfoFromDB, applyFilters } from "../constants/MainFunctions";
 import FloatingActionButton from "./FloatingActionButton";
-import { latitudeContext, longitudeContext, mapRef, userPosContext, rangeContext, selectedAuthor, editMarkerMode, mapRefEdit } from "./AppContext";
+import { latitudeContext, longitudeContext, mapRef, userPosContext, rangeContext, selectedAuthor, editMarkerMode, mapRefEdit, markersContext } from "./AppContext";
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
@@ -18,8 +18,25 @@ import ButtonVariable from "./ButtonVariable";
 import PropTypes from 'prop-types'
 import Colors from "../constants/Colors";
 import { width, height, stylesGlobal } from "../constants/StylesGlobal";
+import { collection, onSnapshot, query } from "firebase/firestore";
+import { db } from "../firebase/firebase-config";
 
 const MapViewGoogle = (props) => {
+  const [markers, setMarkers] = useState([])
+
+  useEffect(() => {
+    const q = query(collection(db, "markers"))
+
+    const unsubscribeReadMarkers = onSnapshot(q, (querySnapshot) => {
+      let db_markers = []
+      querySnapshot.forEach((doc) => {
+        db_markers.push(doc.data().markers)
+      })
+      markersContext._currentValue = (applyFilters(db_markers, setMarkers))
+    })
+  }, [])
+  
+
   const navigation = useNavigation()
   const [isUserPosLoaded, setIsUserPosLoaded] = useState(false)
   const [userPos, setUserPos] = useState([]);
@@ -220,8 +237,7 @@ const MapViewGoogle = (props) => {
       >
       {/* DB Markers */}
       {
-        // markersRef.length ?
-        markersRef.map((val, index) => 
+        markers.map((val, index) => 
           {
             
             let distanceToUserPos = "?"//getDistance(val,props.userPos.coords) / 1000

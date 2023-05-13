@@ -113,36 +113,10 @@ export const handleSignOut = (auth, navigation) => {
 import { collection, query, onSnapshot, updateDoc, deleteDoc, FieldValue } from "firebase/firestore";
 import { db } from '../firebase/firebase-config';
 
-import { filterContext, selectedUserContext, loggedInUser, selectedAuthor, participantContext, editMarkerValues, latitudeContext, longitudeContext, errorPasswordCheckContext, errorEmailCheckContext } from '../components/AppContext';
-// import { useRef } from 'react';
-
-export let markersRef
-export let db_markers = [];
-
-export const readMarkerFromDB = onSnapshot(query(collection(db, "markers")), (QuerySnapshot) => {
-    db_markers = [];
-    QuerySnapshot.forEach( (doc) => {
-      db_markers.push(doc.data().markers);
-    } );
-    applyFilters(db_markers)
-}, (error) => {
-  manualReadMarkerFromDB()
-})
-
-// manuelles einlesen der DB
-export const manualReadMarkerFromDB = async() => {
-  let db_markers = [];
-  const docSnap = await getDocs(collection(db, "markers"));
-  docSnap.forEach( (doc) => {
-    db_markers.push(doc.data().markers);
-    console.log("manualReadMarkerFrom DB DocSnap: ", doc.id)
-  } );
-  applyFilters(db_markers)
-}
+import { filterContext, selectedUserContext, loggedInUser, selectedAuthor, participantContext, editMarkerValues, latitudeContext, longitudeContext, errorPasswordCheckContext, errorEmailCheckContext, markersContext } from '../components/AppContext';
 
 // wendet die vom nutzer eingestellten filter ein
-export const applyFilters = (db_markers) => {
-  const initMarkers = db_markers // backup der db-marker
+export const applyFilters = (db_markers, setMarkers) => {
   const validMarkers = [];
   const preferTags = filterContext._current_value
   if ( preferTags != undefined )
@@ -164,12 +138,16 @@ export const applyFilters = (db_markers) => {
           }
         }
       })
-    })    
-    markersRef = validMarkers
+    })
+    setMarkers(validMarkers)
+    return validMarkers
+    // markersContext._currentValue = validMarkers
   }
   else
   {
-    markersRef = db_markers
+    setMarkers(db_markers)
+    return db_markers
+    // markersContext._currentValue = db_markers
   }
 }
 

@@ -1,5 +1,5 @@
-import { updateUserFromDB, readUserFromDB, markersRef, readMarkerFromDB, deleteMarkerToDB } from '../constants/MainFunctions';
-import { selectedUserContext, loggedInUser, userPosContext, mapRef, saveProfileChangesFunctionContext, editMarkerMode, editMarkerValues, editMarkerObject } from '../components/AppContext';
+import { updateUserFromDB, readUserFromDB, deleteMarkerToDB } from '../constants/MainFunctions';
+import { selectedUserContext, loggedInUser, userPosContext, mapRef, saveProfileChangesFunctionContext, editMarkerMode, editMarkerValues, editMarkerObject, markersContext } from '../components/AppContext';
 import { getDistance } from 'geolib';
 import React, { useEffect, useState } from "react";
 import {
@@ -18,19 +18,16 @@ import ButtonBack from '../components/ButtonBack';
 import { format, isSameDay, isTomorrow } from 'date-fns';
 import ButtonVariable from '../components/ButtonVariable';
 import { auth } from '../firebase/firebase-config';
+import { useIsFocused } from '@react-navigation/native';
 
 const Profile = ( {navigation} ) => {
   navigation.setOptions({
     headerTransparent: true
   })
-
-  const [eventArray, setEventArray] = useState(markersRef.filter(function (arr) {
+  
+  const [eventArray, setEventArray] = useState(markersContext._currentValue.filter(function (arr) {
     return arr.user === selectedUserContext._current_value.markers.uid
   }))
-
-  useEffect(() => {
-    console.log('markers changed!');
-  }, [markersRef])
   
   // Zustand der Text-Ausgaben
   const [displayUsername, setDisplayUsername] = useState(selectedUserContext._current_value.markers.username)

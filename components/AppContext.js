@@ -46,4 +46,6 @@ export const saveProfileChangesFunctionContext = createContext()
 export const errorEmailCheckContext = createContext(false)
 export const errorPasswordCheckContext = createContext(false)
 
+export const markersContext = createContext([])
+
 // export {latitudeContext}
