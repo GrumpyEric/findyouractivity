@@ -1,6 +1,7 @@
 const Colors = {
   findmyactivityText: '#151D22',
   findmyactivityError: '#DA0202',
+  findmyactivityAccept: '#1E7B1E',
   findmyactivityPlaceholder: '#575757',
 
   findmyactivityYellow: '#FBB900',

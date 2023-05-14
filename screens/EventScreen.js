@@ -79,7 +79,7 @@ const EventScreen = ( {navigation} ) => {
     console.log('create date:', editMarkerValues._currentValue.creationDate );
   }
 
-  const [showMyMarkers, setShowMyMarkers] = useState(true)
+  const [showAllMyMarkers, setShowAllMarkers] = useState(true)
   const myUserID = auth.currentUser.uid
   const [radiusMarkers, setRadiusMarkers] = useState(5)
   const [radiusMarkersVisual, setRadiusMarkersVisual] = useState(5)
@@ -95,25 +95,20 @@ const EventScreen = ( {navigation} ) => {
         onPress={() => navigation.openDrawer()}
         icon={'navicon'}
       />
-      {/* <ButtonBack
-        onPress={() => navigation.goBack()}
-        text={'Zurück'}
-      /> */}
       <View style={stylesGlobal.contentContainerMainScreens}>
         <Text style={[stylesGlobal.ueberschriftText, {textAlign: 'center'}]}>Events</Text>
       
-        <Text style={[stylesGlobal.ueberschriftText2, {textAlign: 'center'}]}>Ansicht umstellen auf:</Text>
-        <View style={{flexDirection: 'row', justifyContent: "center"}}> 
-          <Text style={[stylesGlobal.standardText, {color: Colors.findmyactivityText, alignSelf: 'center', textDecorationLine: showMyMarkers ? null : "underline", }]}>Alle Marker</Text>
+        <View style={{flexDirection: 'row', justifyContent: "center", alignItems: "center"}}> 
+          <Text style={[stylesGlobal.ueberschriftText2]}>{showAllMyMarkers ? 'Ansicht auf nur meine Marker umstellen' : 'Ansicht auf alle Marker umstellen'}</Text>
           <Switch
-            value={showMyMarkers}
+            value={showAllMyMarkers}
             disabled={false}
-            onValueChange={() => setShowMyMarkers(!showMyMarkers)}
-            trackColor={{ false: Colors.findmyactivityText, true: Colors.findmyactivityText }}
-            thumbColor={Colors.findmyactivityYellow}
+            onValueChange={() => setShowAllMarkers(!showAllMyMarkers)}
+            trackColor={{ false: Colors.findmyactivityError, true: Colors.findmyactivityAccept }}
+            thumbColor={Colors.findmyactivityWhite}
             style={styles.switch}
           ></Switch>
-          <Text style={[stylesGlobal.standardText, {color: Colors.findmyactivityText, marginLeft: 20, alignSelf: 'center', textDecorationLine: showMyMarkers ? "underline" : null, }]}>Meine Marker</Text>
+          {/* <Text style={[stylesGlobal.standardText, {color: Colors.findmyactivityText, alignSelf: 'center'}]}>{showAllMyMarkers ? 'Alle Marker' : 'Meine Marker'}</Text> */}
         </View>
 
         <View style={styles.contentSeparatorStyle}>
@@ -132,12 +127,12 @@ const EventScreen = ( {navigation} ) => {
         </View>
 
         <View style={styles.eventsStyle}>
-        <Text style={[stylesGlobal.ueberschriftText2, {marginBottom: 2}]}>{showMyMarkers ? 'Meine Events' : 'Alle Events'}</Text>
+        <Text style={[stylesGlobal.ueberschriftText2, {marginBottom: 2}]}>{showAllMyMarkers ? 'Alle Events' : 'Meine Events'}</Text>
 
           <ScrollView style={styles.scrollAreaStyle} contentContainerStyle={styles.scrollAreaContentContainerStyle}>
           <View>
           {
-          showMyMarkers ?
+          !showAllMyMarkers ?
           myMarkersRef.length ?
           myMarkersRef.map((val, index) => 
           {
