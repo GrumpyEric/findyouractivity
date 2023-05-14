@@ -75,7 +75,7 @@ const LoginScreen = () => {
             onFocus={() => setEmailErrorState(false)}
             keyboardType={'email-address'}
             backgroundColor={Colors.findmyactivityWhite}
-            borderColor={emailErrorState ? Colors.findmyactivityError : Colors.findmyactivityText}
+            borderColor={emailErrorState ? 'red' : Colors.findmyactivityText}
             accessibilityLabel={EmailPlaceholderText}
             label={EmailPlaceholderText}
             accessibilityHint={AccessibilityHintEmailText}
@@ -83,7 +83,7 @@ const LoginScreen = () => {
           {
           emailErrorState && (!email || !emailRegexTest(email))
             ? <Text 
-                style={[stylesGlobal.standardText, {color: Colors.findmyactivityError, textAlign: 'center'}]}
+                style={[stylesGlobal.standardText, {color: 'red', textAlign: 'center'}]}
                 accessibilityLabel={EmailErrorText}
                 aria-label={EmailErrorText}
               >
@@ -109,14 +109,14 @@ const LoginScreen = () => {
             secureTextEntry={true}
             keyboardType={'default'}
             backgroundColor={Colors.findmyactivityWhite}
-            borderColor={passwordErrorState ? Colors.findmyactivityError : Colors.findmyactivityText}
+            borderColor={passwordErrorState ? 'red' : Colors.findmyactivityText}
             accessibilityLabel={PasswortPlaceholderText}
             accessibilityHint={AccessibilityHintPasswortText}
           />
           {
           passwordErrorState
             ? <Text 
-                style={[stylesGlobal.standardText, {color: Colors.findmyactivityError, textAlign: 'center'}]}
+                style={[stylesGlobal.standardText, {color: 'red', textAlign: 'center'}]}
                 accessibilityLabel={PasswortErrorText}
                 aria-label={PasswortErrorText}
               >

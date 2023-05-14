@@ -235,8 +235,8 @@ const Profile = ( {navigation} ) => {
                     text={'Marker bearbeiten'}
                   />
                   <ButtonVariable
-                    backgroundColor={Colors.findmyactivityError}
-                    borderColor={Colors.findmyactivityError}
+                    backgroundColor={'red'}
+                    borderColor={'red'}
                     onPress={() => deleteMarkerHandler(val)}
                     text={'Marker löschen'}
                   />

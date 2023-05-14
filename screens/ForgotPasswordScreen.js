@@ -65,13 +65,13 @@ const ForgotPasswordScreen = () => {
           onFocus={() => setEmailErrorState(false)}
           keyboardType={'email-address'}
           backgroundColor={Colors.findmyactivityWhite}
-          borderColor={emailErrorState ? Colors.findmyactivityError : Colors.findmyactivityText}
+          borderColor={emailErrorState ? 'red' : Colors.findmyactivityText}
           accessibilityLabel={EmailPlaceholderText}
           accessibilityHint={AccessibilityHintEmailText}
         />
           { emailErrorState && (!email || !emailRegexTest(email))
             ? <Text 
-                style={[stylesGlobal.standardText, {color: Colors.findmyactivityError, textAlign: 'center'}]}
+                style={[stylesGlobal.standardText, {color: 'red', textAlign: 'center'}]}
                 accessibilityLabel={EmailErrorText}
                 aria-label={EmailErrorText}
               >

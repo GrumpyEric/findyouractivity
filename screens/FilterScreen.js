@@ -105,7 +105,7 @@ return(
         value={radiusMarkers}
         onValueChange={(value) => value < 21 ? setRadiusMarkersVisual(value) : setRadiusMarkersVisual('alle Marker anzeigen')}
         minimumTrackTintColor={Colors.findmyactivityYellow}
-        thumbTintColor={Colors.findmyactivityGreen}
+        thumbTintColor={Colors.findmyactivityText}
       />
 
       <Text style={[stylesGlobal.ueberschriftText2, {alignSelf: 'flex-start', marginBottom: 2}]}>Tags</Text>
@@ -135,8 +135,8 @@ return(
       <ButtonVariable
         text={'Zurücksetzen'}
         onPress={() => clearFilters()}
-        backgroundColor={Colors.findmyactivityError}
-        borderColor={Colors.findmyactivityError}
+        backgroundColor={'red'}
+        borderColor={'red'}
         width={150}
       />
     </View>

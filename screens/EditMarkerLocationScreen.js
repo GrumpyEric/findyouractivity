@@ -13,7 +13,7 @@ const EditMarkerLocationScreen = ( {navigation} ) => {
   const markerToEdit = {
     name: editMarkerValues._currentValue.name,
     description: editMarkerValues._currentValue.description,
-    color: Colors.findmyactivityGreen,
+    color: Colors.findmyactivityYellow,
     latitude: editMarkerValues._currentValue.latitude,
     longitude: editMarkerValues._currentValue.longitude,
     latitudeDelta: 0.01,
@@ -32,7 +32,7 @@ const EditMarkerLocationScreen = ( {navigation} ) => {
         <ButtonVariable
           text={'ABBRECHEN'}
           onPress={() => navigation.goBack()}
-          backgroundColor={Colors.findmyactivityError}
+          backgroundColor={'red'}
           borderColor={Colors.findmyactivityText}
           width={200}
         /> 
