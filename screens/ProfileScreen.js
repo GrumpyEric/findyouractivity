@@ -17,6 +17,7 @@ import Colors from '../constants/Colors';
 import { format, isSameDay, isTomorrow } from 'date-fns';
 import ButtonVariable from '../components/ButtonVariable';
 import { auth } from '../firebase/firebase-config';
+import { DeleteMarkerText1, DeleteMarkerText2, ProfileDeleteMarkerText, ProfileDescriptionHint, ProfileDescriptionText, ProfileEditMarkerText, ProfileEmailHint, ProfileEmailText, ProfileEventsClickText, ProfileEventsDescriptionText, ProfileEventsDistanceText, ProfileEventsEndeText, ProfileEventsNameText, ProfileEventsStartText, ProfileEventsTagsText, ProfileEventsText, ProfileNoMarkersText, ProfileTitleText, ProfileUsernameHint, ProfileUsernameText } from '../constants/Fixtures';
 
 const Profile = ( {navigation} ) => {
   navigation.setOptions({
@@ -55,8 +56,8 @@ const Profile = ( {navigation} ) => {
 
   function deleteMarkerHandler(val) {
     Alert.alert(
-    'Löschen des Markers',
-    'Wollen Sie den Marker wirklich löschen?',
+    DeleteMarkerText1,
+    DeleteMarkerText2,
     [
         {
         text: 'Löschen',
@@ -104,21 +105,46 @@ const Profile = ( {navigation} ) => {
       
     />
     <View style={stylesGlobal.contentContainerMainScreens}>
-      <Text style={[stylesGlobal.ueberschriftText, {textAlign: 'center'}]}>Profil</Text>
+      <Text 
+        style={[stylesGlobal.ueberschriftText, {textAlign: 'center'}]}
+        accessibilityLabel={ProfileTitleText}
+        aria-label={ProfileTitleText}
+        accessibilityRole='header'
+      >
+        {ProfileTitleText}
+      </Text>
 
       <View style={styles.contentSeparatorStyle}>
-        <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>Mein Benutzername (änderbar)</Text>
+        <Text 
+          style={[styles.textLabels, stylesGlobal.ueberschriftText2]}
+          accessibilityLabel={ProfileUsernameText}
+          aria-label={ProfileUsernameText}
+          accessibilityRole='header'
+        >
+          {ProfileUsernameText}
+        </Text>
         <TextInputField
-          placeholder="Mein Benutzername"
+          placeholder={ProfileUsernameText}
+          accessibilityLabel={ProfileUsernameText}
+          accessibilityHint={ProfileUsernameHint}
           value={displayUsername}
           onChangeText={setDisplayUsername}
         />
       </View>
 
       <View style={styles.contentSeparatorStyle}>
-        <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>Meine Beschreibung (änderbar)</Text>
+        <Text 
+          style={[styles.textLabels, stylesGlobal.ueberschriftText2]}
+          accessibilityLabel={ProfileDescriptionText}
+          aria-label={ProfileDescriptionText}
+          accessibilityRole='header'
+        >
+          {ProfileDescriptionText}
+        </Text>
         <TextInputField
-          placeholder="Meine Beschreibung"
+          placeholder={ProfileDescriptionText}
+          accessibilityLabel={ProfileDescriptionText}
+          accessibilityHint={ProfileDescriptionHint}
           multiline
           maxLength={250}
           value={displayDescription}
@@ -127,17 +153,33 @@ const Profile = ( {navigation} ) => {
       </View>
       
       <View style={styles.contentSeparatorStyle}>
-        <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>Meine E-Mail-Adresse</Text>
+        <Text 
+          style={[styles.textLabels, stylesGlobal.ueberschriftText2]}
+          accessibilityLabel={ProfileEmailText}
+          aria-label={ProfileEmailText}
+          accessibilityRole='header'
+        >
+          {ProfileEmailText}
+        </Text>
         <TextInputField
           editable={false}
-          placeholder="Meine E-Mail-Adresse"
+          placeholder={ProfileEmailText}
+          accessibilityLabel={ProfileEmailText}
+          accessibilityHint={ProfileEmailHint}
           value={loggedInUser._current_value.email.toString()}
           onChangeText={null}
         />
       </View>
 
       <View style={styles.contentSeparatorStyle}>
-      <Text style={[styles.textLabels, stylesGlobal.ueberschriftText2]}>Meine Events</Text>
+      <Text 
+        style={[styles.textLabels, stylesGlobal.ueberschriftText2]}
+        accessibilityLabel={ProfileEventsText}
+        aria-label={ProfileEventsText}
+        accessibilityRole='header'
+      >
+        {ProfileEventsText}
+      </Text>
         <ScrollView style={styles.scrollAreaStyle} contentContainerStyle={styles.scrollAreaContentContainerStyle}>
           {
           eventArray.length ?
@@ -166,8 +208,19 @@ const Profile = ( {navigation} ) => {
                   }
                 }
                 return (
-                  <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Start:{'\n'}
-                    <Text style={stylesGlobal.standardText}>{startTimeRes}</Text>
+                  <Text 
+                    style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                    accessibilityLabel={ProfileEventsStartText}
+                    aria-label={ProfileEventsStartText}
+                  >
+                    {ProfileEventsStartText + '\n'}
+                    <Text 
+                      style={stylesGlobal.standardText}
+                      accessibilityLabel={startTimeRes}
+                      aria-label={startTimeRes}
+                    >
+                      {startTimeRes}
+                    </Text>
                   </Text>
                 )
             }
@@ -191,8 +244,19 @@ const Profile = ( {navigation} ) => {
                 }
 
                 return (
-                  <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Ende:{'\n'}
-                    <Text style={stylesGlobal.standardText}>{endTimeRes}</Text>
+                  <Text 
+                    style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                    accessibilityLabel={ProfileEventsEndeText}
+                    aria-label={ProfileEventsEndeText}
+                  >
+                    {ProfileEventsEndeText + '\n'}
+                    <Text 
+                      style={stylesGlobal.standardText}
+                      accessibilityLabel={endTimeRes}
+                      aria-label={endTimeRes}
+                    >
+                      {endTimeRes}
+                    </Text>
                   </Text>
                 )
             }
@@ -200,8 +264,19 @@ const Profile = ( {navigation} ) => {
             const displayTags = (val) => {
               console.log(val.tags);
                 return (
-                <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Tags:{'\n'}
-                  <Text style={stylesGlobal.standardText}>{val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}</Text>
+                <Text 
+                  style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                  accessibilityLabel={ProfileEventsTagsText}
+                  aria-label={ProfileEventsTagsText}
+                >
+                  {ProfileEventsTagsText + '\n'}
+                  <Text 
+                    style={stylesGlobal.standardText}
+                    accessibilityLabel={val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                    aria-label={val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                  >
+                    {val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                  </Text>
                 </Text>
               )
             }
@@ -209,22 +284,61 @@ const Profile = ( {navigation} ) => {
             return (
               <View style={{marginBottom: 15, borderTopWidth: index === 0 ? 0 : 1}} key={index}>
                 <TouchableOpacity onPress={() => moveToMarker(val)} style={{marginTop: 10}}>
-                  <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Eventname:{'\n'}
-                    <Text style={stylesGlobal.standardText}>{val.name}</Text>
+                  <Text 
+                    style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                    accessibilityLabel={ProfileEventsNameText}
+                    aria-label={ProfileEventsNameText}
+                  >
+                    {ProfileEventsNameText + '\n'}
+                    <Text 
+                      style={stylesGlobal.standardText}
+                      accessibilityLabel={val.name}
+                      aria-label={val.name}
+                    >
+                      {val.name}
+                    </Text>
                   </Text>
                   {val.description 
                   ? 
-                  <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Beschreibung:{'\n'}
-                    <Text style={stylesGlobal.standardText}>{val.description}</Text>
+                  <Text 
+                    style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                    accessibilityLabel={ProfileEventsDescriptionText}
+                    aria-label={ProfileEventsDescriptionText}
+                  >
+                    {ProfileEventsDescriptionText + '\n'}
+                    <Text
+                      style={stylesGlobal.standardText}
+                      accessibilityLabel={val.description}
+                      aria-label={val.description}
+                    >
+                      {val.description}
+                    </Text>
                   </Text>  
                   : null}
                   { displayStartTime(val) }
                   { displayEndTime(val) }
-                  <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Distanz:{'\n'}
-                    <Text style={stylesGlobal.standardText}>{distanceToUserPos} km</Text>
+                  <Text 
+                    style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                    accessibilityLabel={ProfileEventsDistanceText}
+                    aria-label={ProfileEventsDistanceText}
+                  >
+                    {ProfileEventsDistanceText + '\n'}
+                    <Text 
+                      style={stylesGlobal.standardText}
+                      accessibilityLabel={distanceToUserPos + ' km'}
+                      aria-label={distanceToUserPos + ' km'}
+                    >
+                      {distanceToUserPos} km
+                    </Text>
                   </Text>
                   { displayTags(val) }
-                  <Text style={stylesGlobal.ueberschriftText2}>Auf das Feld klicken, um zum Event zu springen</Text>
+                  <Text 
+                    style={stylesGlobal.ueberschriftText2}
+                    accessibilityLabel={ProfileEventsClickText}
+                    aria-label={ProfileEventsClickText}
+                  >
+                    {ProfileEventsClickText}
+                  </Text>
                 </TouchableOpacity>
 
                 <View style={{flexDirection: 'row', justifyContent: "space-around", marginTop: stylesGlobal.marginsAndPadding.paddingBetweenItems}}>
@@ -232,13 +346,13 @@ const Profile = ( {navigation} ) => {
                     backgroundColor={Colors.findmyactivityYellow}
                     borderColor={Colors.findmyactivityYellow}
                     onPress={() => editMarkerHandler(val)}
-                    text={'Marker bearbeiten'}
+                    text={ProfileEditMarkerText}
                   />
                   <ButtonVariable
                     backgroundColor={'red'}
                     borderColor={'red'}
                     onPress={() => deleteMarkerHandler(val)}
-                    text={'Marker löschen'}
+                    text={ProfileDeleteMarkerText}
                   />
                 </View>
               </View>
@@ -246,7 +360,13 @@ const Profile = ( {navigation} ) => {
           })
           :
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
-              <Text style={stylesGlobal.ueberschriftText2}>Sie haben noch keine eigenen Marker gesetzt. Setzen Sie erstmal Marker auf der Karte, um hier dann die eigenen Marker sehen zu können.</Text>
+              <Text 
+                style={stylesGlobal.ueberschriftText2}
+                accessibilityLabel={ProfileNoMarkersText}
+                aria-label={ProfileNoMarkersText}
+              >
+                {ProfileNoMarkersText}
+              </Text>
             </View>
           }
             

@@ -46,7 +46,7 @@ const ButtonVariable = (props) => {
 ButtonVariable.propTypes = { onPress: PropTypes.func.isRequired, text: PropTypes.string.isRequired, backgroundColor: PropTypes.string.isRequired, 
   borderColor: PropTypes.string, textColor: PropTypes.string, icon: PropTypes.string, width: PropTypes.any,
 
-  accessibilityLabel: PropTypes.string, accessibilityHint: PropTypes.string,
+  accessibilityHint: PropTypes.string,
   isAccessibilityStateDisabled: PropTypes.bool,
   isAccessibilityStateSelected: PropTypes.bool,
   isAccessibilityStateChecked: PropTypes.bool,

@@ -38,4 +38,29 @@ export const RegisterHintText = 'Das ist der Registrierungsbildschirm. Hier bitt
 export const InnerRegisterButtonText = 'Registrieren'
 export const InnerRegisterButtonHint = 'Zur Registrierung alle Textfelder ausfüllen und dann registieren drücken'
 
+// PROFILESCREEN //
+export const DeleteMarkerText1 = 'Löschen des Markers'
+export const DeleteMarkerText2 = 'Wollen Sie den Marker wirklich löschen?'
 
+export const ProfileTitleText = 'Profil'
+export const ProfileUsernameText = 'Mein Benutzername (änderbar)'
+export const ProfileUsernameHint = 'Hier können Sie Ihren Benutzernamen anpassen!'
+
+export const ProfileDescriptionText = 'Meine Beschreibung (änderbar)'
+export const ProfileDescriptionHint = 'Hier können Sie Ihre Profilbeschreibung anpassen!'
+
+export const ProfileEmailText = 'Meine E-Mail-Adresse'
+export const ProfileEmailHint = 'Hier steht Ihre E-Mail-Adresse geschrieben, die Sie bei der Anmeldung verwenden; diese ist nicht änderbar!'
+
+export const ProfileEventsText = 'Meine Events'
+export const ProfileEventsStartText = 'Start:'
+export const ProfileEventsEndeText = 'Ende:'
+export const ProfileEventsTagsText = 'Tags:'
+export const ProfileEventsNameText = 'Eventname:'
+export const ProfileEventsDescriptionText = 'Beschreibung:'
+export const ProfileEventsDistanceText = 'Distanz:'
+export const ProfileEventsClickText = 'Auf das Feld klicken, um zum Event zu springen'
+
+export const ProfileEditMarkerText = 'Marker bearbeiten'
+export const ProfileDeleteMarkerText = 'Marker löschen'
+export const ProfileNoMarkersText = 'Sie haben noch keine eigenen Marker gesetzt. Setzen Sie erstmal Marker auf der Karte, um hier dann die eigenen Marker sehen zu können.'
