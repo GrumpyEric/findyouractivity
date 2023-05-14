@@ -104,22 +104,21 @@ const EventScreen = ( {navigation} ) => {
       
         <Text style={[stylesGlobal.ueberschriftText2, {textAlign: 'center'}]}>Ansicht umstellen auf:</Text>
         <View style={{flexDirection: 'row', justifyContent: "center"}}> 
-          <Text style={{color: showMyMarkers ? '#CAD6E0' : Colors.findmyactivityText, alignSelf: 'center'}}>Alle Marker</Text>
+          <Text style={[stylesGlobal.standardText, {color: Colors.findmyactivityText, alignSelf: 'center', textDecorationLine: showMyMarkers ? null : "underline", }]}>Alle Marker</Text>
           <Switch
             value={showMyMarkers}
             disabled={false}
             onValueChange={() => setShowMyMarkers(!showMyMarkers)}
-            trackColor={{ false: "#237076", true: "#FBB900" }}
-            thumbColor={showMyMarkers ? "#237076" : "#FBB900"}
-            ios_backgroundColor="#3e3e3e"
+            trackColor={{ false: Colors.findmyactivityText, true: Colors.findmyactivityText }}
+            thumbColor={Colors.findmyactivityYellow}
             style={styles.switch}
           ></Switch>
-          <Text style={{color: showMyMarkers ? Colors.findmyactivityText : '#CAD6E0', marginLeft: 20, alignSelf: 'center'}}>Meine Marker</Text>
+          <Text style={[stylesGlobal.standardText, {color: Colors.findmyactivityText, marginLeft: 20, alignSelf: 'center', textDecorationLine: showMyMarkers ? "underline" : null, }]}>Meine Marker</Text>
         </View>
 
         <View style={styles.contentSeparatorStyle}>
           <Text style={[stylesGlobal.ueberschriftText2, {marginBottom: 2}]}>Radius:</Text>
-          <Text style={styles.radius1}>{radiusMarkersVisual === 'alle Marker anzeigen' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>
+          <Text style={stylesGlobal.standardText}>{radiusMarkersVisual === 'alle Marker anzeigen' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>
           <Slider 
             value={radiusMarkers}
             minimumValue={0}
@@ -128,7 +127,7 @@ const EventScreen = ( {navigation} ) => {
             step={1}
             onValueChange={(value) => value < 21 ? setRadiusMarkersVisual(value) : setRadiusMarkersVisual('alle Marker anzeigen')}
             minimumTrackTintColor={Colors.findmyactivityYellow}
-            thumbTintColor={Colors.findmyactivityGreen}
+            thumbTintColor={Colors.findmyactivityYellow}
           />
         </View>
 
@@ -142,8 +141,7 @@ const EventScreen = ( {navigation} ) => {
           myMarkersRef.length ?
           myMarkersRef.map((val, index) => 
           {
-            let distanceToUserPos = "?"//getDistance(val,props.userPosContext.coords) / 1000
-            // console.log(userPosContext._currentValue.coords);
+            let distanceToUserPos = "?"
             if (userPosContext._currentValue.coords != undefined)
             {
               distanceToUserPos = getDistance(val, userPosContext._currentValue.coords) / 1000
@@ -237,7 +235,7 @@ const EventScreen = ( {navigation} ) => {
                       text={'Marker bearbeiten'}
                     />
                     <ButtonVariable
-                      backgroundColor={Colors.findmyactivityError}
+                      backgroundColor={Colors.findmyactivityWhite}
                       borderColor={Colors.findmyactivityError}
                       onPress={() => deleteMarkerHandler(val)}
                       text={'Marker löschen'}

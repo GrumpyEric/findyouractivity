@@ -135,8 +135,8 @@ return(
       <ButtonVariable
         text={'Zurücksetzen'}
         onPress={() => clearFilters()}
-        backgroundColor={'red'}
-        borderColor={'red'}
+        backgroundColor={Colors.findmyactivityWhite}
+        borderColor={Colors.findmyactivityError}
         width={150}
       />
     </View>

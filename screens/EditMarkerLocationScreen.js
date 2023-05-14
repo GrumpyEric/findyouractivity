@@ -30,9 +30,9 @@ const EditMarkerLocationScreen = ( {navigation} ) => {
 
       <View style={styles.button}>
         <ButtonVariable
-          text={'ABBRECHEN'}
+          text={'Abbrechen'}
           onPress={() => navigation.goBack()}
-          backgroundColor={'red'}
+          backgroundColor={Colors.findmyactivityError}
           borderColor={Colors.findmyactivityText}
           width={200}
         /> 
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   input: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.findmyactivityWhite,
     height: 40,
     margin: 1,
     borderWidth: 1,
