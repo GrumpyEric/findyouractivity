@@ -10,6 +10,7 @@ const TextInputField = (props) => {
   const hasMaxLength = props.hasMaxLength
   const hasLeftIcon = props.hasLeftIcon
   const showCharCounter = props.showCharCounter
+  const editable = props.editable
 
   return(
     <View style={[styles.buttonStyle, {backgroundColor: 'white', borderColor: props.borderColor}]}>
@@ -23,7 +24,7 @@ const TextInputField = (props) => {
       </View>
       : null}
       <TextInput
-        editable={props.editable}
+        editable={editable}
         placeholder={props.placeholder}
         placeholderTextColor={Colors.findmyactivityPlaceholder}
         value={props.value}
@@ -31,7 +32,7 @@ const TextInputField = (props) => {
         secureTextEntry={props.secureTextEntry}
         keyboardType={props.keyboardType}
         maxLength={props.maxTextChars}
-        style={[styles.textInputStyle, {backgroundColor: 'white'}]}
+        style={[styles.textInputStyle, {backgroundColor: 'white', color: editable ? Colors.findmyactivityText : Colors.findmyactivityPlaceholder}]}
         multiline={props.multiline}
         onBlur={props.onBlur}
         onChange={props.onChange}

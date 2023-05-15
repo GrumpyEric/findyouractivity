@@ -33,7 +33,8 @@ const EditMarkerLocationScreen = ( {navigation} ) => {
           text={'Abbrechen'}
           onPress={() => navigation.goBack()}
           backgroundColor={Colors.findmyactivityError}
-          borderColor={Colors.findmyactivityText}
+          borderColor={Colors.findmyactivityError}
+          textColor={Colors.findmyactivityWhite}
           width={200}
         /> 
       </View>

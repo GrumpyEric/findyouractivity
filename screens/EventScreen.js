@@ -106,13 +106,12 @@ const EventScreen = ( {navigation} ) => {
             onValueChange={() => setShowAllMarkers(!showAllMyMarkers)}
             trackColor={{ false: Colors.findmyactivityError, true: Colors.findmyactivityAccept }}
             thumbColor={Colors.findmyactivityWhite}
-            style={styles.switch}
           ></Switch>
           {/* <Text style={[stylesGlobal.standardText, {color: Colors.findmyactivityText, alignSelf: 'center'}]}>{showAllMyMarkers ? 'Alle Marker' : 'Meine Marker'}</Text> */}
         </View>
 
-        <View style={styles.contentSeparatorStyle}>
-          <Text style={[stylesGlobal.ueberschriftText2, {marginBottom: 2}]}>Radius:</Text>
+        <Text style={[stylesGlobal.ueberschriftText2, {marginBottom: 2}]}>Umkreis anzuzeigender Marker:</Text>
+        <View style={[styles.contentSeparatorStyle, {backgroundColor: Colors.findmyactivityWhite, padding: 5, borderWidth: 2, borderRadius: 10, marginTop: 0}]}>
           <Text style={stylesGlobal.standardText}>{radiusMarkersVisual === 'alle Marker anzeigen' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>
           <Slider 
             value={radiusMarkers}
@@ -230,8 +229,9 @@ const EventScreen = ( {navigation} ) => {
                       text={'Marker bearbeiten'}
                     />
                     <ButtonVariable
-                      backgroundColor={Colors.findmyactivityWhite}
+                      backgroundColor={Colors.findmyactivityError}
                       borderColor={Colors.findmyactivityError}
+                      textColor={Colors.findmyactivityWhite}
                       onPress={() => deleteMarkerHandler(val)}
                       text={'Marker löschen'}
                     />
@@ -349,6 +349,7 @@ const EventScreen = ( {navigation} ) => {
                   <ButtonVariable
                     backgroundColor={Colors.findmyactivityError}
                     borderColor={Colors.findmyactivityError}
+                    textColor={Colors.findmyactivityWhite}
                     onPress={() => deleteMarkerHandler(val)}
                     text={'Marker löschen'}
                   />

@@ -58,7 +58,8 @@ const ForgotPasswordScreen = () => {
         >
           {EmailTitleText}
         </Text>
-        <TextInputField 
+        <TextInputField
+          editable
           placeholder={EmailPlaceholderText}
           value={email}
           onChangeText={text => setEmail(text)}

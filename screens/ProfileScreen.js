@@ -124,6 +124,7 @@ const Profile = ( {navigation} ) => {
           {ProfileUsernameText}
         </Text>
         <TextInputField
+          editable
           placeholder={ProfileUsernameText}
           accessibilityLabel={ProfileUsernameText}
           accessibilityHint={ProfileUsernameHint}
@@ -142,6 +143,7 @@ const Profile = ( {navigation} ) => {
           {ProfileDescriptionText}
         </Text>
         <TextInputField
+          editable
           placeholder={ProfileDescriptionText}
           accessibilityLabel={ProfileDescriptionText}
           accessibilityHint={ProfileDescriptionHint}
@@ -349,8 +351,9 @@ const Profile = ( {navigation} ) => {
                     text={ProfileEditMarkerText}
                   />
                   <ButtonVariable
-                    backgroundColor={Colors.findmyactivityWhite}
+                    backgroundColor={Colors.findmyactivityError}
                     borderColor={Colors.findmyactivityError}
+                    textColor={Colors.findmyactivityWhite}
                     onPress={() => deleteMarkerHandler(val)}
                     text={ProfileDeleteMarkerText}
                   />

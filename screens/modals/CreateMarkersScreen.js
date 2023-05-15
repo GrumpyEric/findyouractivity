@@ -202,6 +202,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
       <View style={styles.itemSpacerStyle}>
         <Text style={stylesGlobal.ueberschriftText2}>Eventname*</Text>
         <TextInputField
+          editable
           placeholder={'Eventname'}
           value={eventName}
           onChangeText={(text) => { setEventName(text); text.length < 1 ? setEventNameError(true) : setEventNameError(false) }}
@@ -224,6 +225,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
       <View style={styles.itemSpacerStyle}>
       <Text style={stylesGlobal.ueberschriftText2}>Eventbeschreibung</Text>
         <TextInputField
+          editable
           placeholder={'Eventbeschreibung (optional)'}
           value={eventDescription}
           onChangeText={text => setEventDescription(text)}
@@ -242,6 +244,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
       <View style={styles.itemSpacerStyle}>
       <Text style={stylesGlobal.ueberschriftText2}>Ortbeschreibung</Text>
         <TextInputField
+          editable
           placeholder={'Ortbeschreibung (optional)'}
           value={placeDesciption}
           onChangeText={text => setPlaceDescription(text)}
@@ -259,6 +262,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
       <View style={styles.itemSpacerStyle}>
       <Text style={stylesGlobal.ueberschriftText2}>Teilnehmeranzahl*</Text>
         <TextInputField
+          editable
           placeholder={'Anzahl Teilnehmer (max. 999)'}
           value={numberParticipants}
           onChangeText={(text) => { setNumberParticipants(text); text.length < 1 ? setParticipantsError(true) : setParticipantsError(false) }}

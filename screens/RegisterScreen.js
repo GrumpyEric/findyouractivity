@@ -83,7 +83,8 @@ const RegisterScreen = () => {
           >
             {EmailTitleText}
           </Text>
-          <TextInputField 
+          <TextInputField
+            editable
             placeholder={EmailPlaceholderText}
             value={email}
             onChangeText={text => setEmail(text)}
@@ -115,6 +116,7 @@ const RegisterScreen = () => {
             {PasswortTitleText}
           </Text>
           <TextInputField
+            editable
             placeholder={PasswortPlaceholderText}
             value={password}
             onChangeText={text => setPassword(text)}

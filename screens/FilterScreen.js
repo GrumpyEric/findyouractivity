@@ -95,7 +95,7 @@ return(
       text={'Zurück'}
     />
     <View style={styles.contentContainerStyle}>
-      <Text style={stylesGlobal.ueberschriftText2}>Radius</Text>
+      <Text style={stylesGlobal.ueberschriftText2}>Umkreis anzuzeigender Marker</Text>
       <Text>{radiusMarkersVisual === 'alle Marker anzeigen' || radiusMarkersVisual === 21 ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>
       <Slider
         minimumValue={0}
@@ -135,8 +135,9 @@ return(
       <ButtonVariable
         text={'Zurücksetzen'}
         onPress={() => clearFilters()}
-        backgroundColor={Colors.findmyactivityWhite}
+        backgroundColor={Colors.findmyactivityError}
         borderColor={Colors.findmyactivityError}
+        textColor={Colors.findmyactivityWhite}
         width={150}
       />
     </View>
