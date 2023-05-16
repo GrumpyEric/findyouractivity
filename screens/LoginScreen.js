@@ -45,7 +45,7 @@ const LoginScreen = () => {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    // <TouchableWithoutFeedback accessible={false} onPress={() => Keyboard.dismiss()}>
     <View style={[stylesGlobal.screenContainer, styles.container]}>
       <Text 
         style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenViews, textAlign: 'center'}]}
@@ -175,7 +175,7 @@ const LoginScreen = () => {
       </View>
       
     </View>
-    </TouchableWithoutFeedback>
+    // </TouchableWithoutFeedback>
   )
 }
 

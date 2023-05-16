@@ -31,7 +31,7 @@ const ForgotPasswordScreen = () => {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    // <TouchableWithoutFeedback accessible={false} onPress={() => Keyboard.dismiss()}>
     <View style={[stylesGlobal.screenContainer, styles.container]}>
       
       <ButtonBack
@@ -99,7 +99,7 @@ const ForgotPasswordScreen = () => {
 
       </View>
     </View>
-    </TouchableWithoutFeedback>
+    // </TouchableWithoutFeedback>
   )
 }
 

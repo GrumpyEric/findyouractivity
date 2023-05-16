@@ -56,13 +56,8 @@ const RegisterScreen = () => {
   }, [passwordErrorState])
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    // <TouchableWithoutFeedback accessible={false} importantForAccessibility='no' aria-hidden onPress={() => Keyboard.dismiss()}>
     <View style={[stylesGlobal.screenContainer, styles.container]}>
-      <ButtonBack
-        onPress={() => navigation.goBack()}
-        text={'Zurück'}
-        accessibilityHint={LoginBackHint}
-      />
       <Text 
         style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenViews, textAlign: 'center'}]}
         accessibilityLabel={RegisterTitleText}
@@ -160,9 +155,13 @@ const RegisterScreen = () => {
         </View>
         
       </View>
-      
+      <ButtonBack
+        onPress={() => navigation.goBack()}
+        text={'Zurück'}
+        accessibilityHint={LoginBackHint}
+      />
     </View>
-    </TouchableWithoutFeedback>
+    // </TouchableWithoutFeedback>
   )
 }
 
