@@ -162,7 +162,7 @@ const MapViewGoogle = (props) => {
       : null}
 
       <FloatingActionButton
-        onPress={() => null}
+        onPress={() => navigation.navigate("HilfeScreen")}
         bottomPos={height * 0.15}
         rightPos={width * 0.025}
         icon={'account-question'}

@@ -29,6 +29,7 @@ import { StyleSheet } from 'react-native';
 import { handleSignOut } from './constants/MainFunctions';
 import { editMarkerMode, saveProfileChangesFunctionContext } from './components/AppContext';
 import RegisterScreen from './screens/RegisterScreen';
+import HilfeScreen from './screens/modals/HilfeScreen';
 
 const options = (navigation, route, props) => {
   return (
@@ -213,6 +214,7 @@ function HomeStackScreen() {
 
         })}>
         <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name='CreateMarkersScreen' component={CreateMarkersScreen}/>
+        <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name='HilfeScreen' component={HilfeScreen}/>
         <HomeStack.Screen options={optionsNoHeader} name='EditMarkerLocationScreen' component={EditMarkerLocationScreen}/>
         <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name="FilterScreen" component={FilterScreen}/>          
         <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name="ViewMarkerScreen" component={ViewMarkerScreen}/>
