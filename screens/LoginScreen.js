@@ -69,7 +69,7 @@ const LoginScreen = () => {
             {EmailTitleText}
           </Text>
           <TextInputField
-            editable
+            editable={true}
             placeholder={EmailPlaceholderText}
             value={email}
             onChangeText={text => setEmail(text)}
@@ -103,7 +103,7 @@ const LoginScreen = () => {
             {PasswortTitleText}
           </Text>
           <TextInputField
-            editable
+            editable={true}
             placeholder={PasswortPlaceholderText}
             value={password}
             onChangeText={text => setPassword(text)}

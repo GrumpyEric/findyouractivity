@@ -19,8 +19,6 @@ import ProfileScreen from './screens/ProfileScreen';
 import { isIOS, isTablet, stylesGlobal, width } from './constants/StylesGlobal';
 import EditMarkerLocationScreen from './screens/EditMarkerLocationScreen';
 import ViewMarkerScreen from './screens/modals/ViewMarkerScreen';
-import ViewAuthorScreen from './screens/modals/ViewAuthorScreen';
-import ViewParticipantScreen from './screens/modals/ViewParticipantScreen';
 import EventScreen from './screens/EventScreen';
 import Colors from './constants/Colors';
 import { TouchableOpacity } from 'react-native';
@@ -44,8 +42,6 @@ const options = (navigation, route, props) => {
         route.name === 'EditMarkerLocationScreen' ||
         route.name === 'FilterScreen' ||
         route.name === 'ViewMarkerScreen' ||
-        route.name === 'ViewAuthorScreen' ||
-        route.name === 'ViewParticipantScreen' ||
         route.name === 'Passwort zurücksetzen' ||
         route.name === 'RegisterScreen'
         ? null
@@ -218,8 +214,6 @@ function HomeStackScreen() {
         <HomeStack.Screen options={optionsNoHeader} name='EditMarkerLocationScreen' component={EditMarkerLocationScreen}/>
         <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name="FilterScreen" component={FilterScreen}/>          
         <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name="ViewMarkerScreen" component={ViewMarkerScreen}/>
-        <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name="ViewAuthorScreen" component={ViewAuthorScreen}/>          
-        <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name="ViewParticipantScreen" component={ViewParticipantScreen}/>
       </HomeStack.Group>
     </HomeStack.Navigator>
   )

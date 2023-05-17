@@ -1,8 +1,11 @@
-import { View, StyleSheet, TextInput, Text } from "react-native";
+import { View, StyleSheet, Text, Pressable } from "react-native";
+import { TextInput } from "react-native-gesture-handler";
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 import PropTypes from 'prop-types'
 import Colors from "../constants/Colors";
+import { useState } from "react";
+import { useRef } from "react";
 
 // component props: placeholder, value, onChangeText, secureTextEntry, keyboardType, backgroundColor, borderColor, multiline
 const TextInputField = (props) => { 
@@ -11,9 +14,12 @@ const TextInputField = (props) => {
   const hasLeftIcon = props.hasLeftIcon
   const showCharCounter = props.showCharCounter
   const editable = props.editable
+  const [borderColor, setBorderColor] = useState(props.borderColor)
+
+  const ref = useRef()
 
   return(
-    <View style={[styles.buttonStyle, {backgroundColor: 'white', borderColor: props.borderColor}]}>
+    <Pressable onPress={() => ref.current.focus()} style={[styles.buttonStyle, {backgroundColor: 'white', borderColor: props.borderColor}]}>
       {hasLeftIcon ?
       <View style={{justifyContent: 'center', paddingRight: 10, width: 30}}>
         <Icon
@@ -24,6 +30,11 @@ const TextInputField = (props) => {
       </View>
       : null}
       <TextInput
+        collapsable={false}
+        dataDetectorTypes={props.dataDetectorTypes}
+        onPressOut={() => ref.current.focus()}
+        focusable={true}
+        ref={ref}
         editable={editable}
         placeholder={props.placeholder}
         placeholderTextColor={Colors.findmyactivityPlaceholder}
@@ -34,40 +45,39 @@ const TextInputField = (props) => {
         maxLength={props.maxTextChars}
         style={[styles.textInputStyle, {backgroundColor: 'white', color: editable ? Colors.findmyactivityText : Colors.findmyactivityPlaceholder}]}
         multiline={props.multiline}
-        onBlur={props.onBlur}
+        onBlur={() => { props.onBlur ? props.onBlur() : null; setBorderColor(props.borderColor) }}
         onChange={props.onChange}
-        onFocus={props.onFocus}
+        onFocus={() => { props.onFocus ? props.onFocus() : null; setBorderColor(Colors.findmyactivityYellow) }}
 
-        accessible={true}
         accessibilityLabel={props.accessibilityLabel}
         aria-label={props.accessibilityLabel}
         accessibilityHint={props.accessibilityHint}
         // accessibilityRole={}
-        accessibilityState={{
-          disabled: props.isAccessibilityStateDisabled,
-          selected: props.isAccessibilityStateSelected,
-          checked: props.isAccessibilityStateChecked,
-          busy: props.isAccessibilityStateBusy,
-          expanded: props.isAccessibilityStateExpanded
-        }}
-        accessibilityValue={{
-          min: props.isAccessibilityValueMin,
-          max: props.isAccessibilityValueMax,
-          now: props.isAccessibilityValueNow,
-          text: props.isAccessibilityValueText
-        }}
+        // accessibilityState={{
+        //   disabled: props.isAccessibilityStateDisabled,
+        //   selected: props.isAccessibilityStateSelected,
+        //   checked: props.isAccessibilityStateChecked,
+        //   busy: props.isAccessibilityStateBusy,
+        //   expanded: props.isAccessibilityStateExpanded
+        // }}
+        // accessibilityValue={{
+        //   min: props.isAccessibilityValueMin,
+        //   max: props.isAccessibilityValueMax,
+        //   now: props.isAccessibilityValueNow,
+        //   text: props.isAccessibilityValueText
+        // }}
         
       />
       {hasMaxLength && showCharCounter ?
       <Text style={[{alignSelf: 'center', paddingLeft: '5%'}]}>{props.value === undefined ? 0 : props.value.length}/{maxTextChars}</Text>
       : null}
-    </View>
+    </Pressable>
   )
 }
 
 TextInputField.propTypes = { placeholder: PropTypes.string, value: PropTypes.string.isRequired, onChangeText: PropTypes.func.isRequired, secureTextEntry: PropTypes.bool, 
   keyboardType: PropTypes.string, maxLength: PropTypes.number, borderColor: PropTypes.string, multiline: PropTypes.bool, 
-  onBlur: PropTypes.func, onChange: PropTypes.func, editable: PropTypes.bool, onFocus: PropTypes.func,
+  onBlur: PropTypes.func, onChange: PropTypes.func, editable: PropTypes.bool, onFocus: PropTypes.func, dataDetectorTypes: PropTypes.any,
 
   accessibilityLabel: PropTypes.string, accessibilityHint: PropTypes.string, accessibilityRole: PropTypes.any,
   isAccessibilityStateDisabled: PropTypes.bool,
