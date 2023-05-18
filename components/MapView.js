@@ -145,7 +145,7 @@ const MapViewGoogle = (props) => {
     <View style={{...StyleSheet.absoluteFillObject}}>
       <FloatingActionButton
         onPress={() => getCurrentPosition()}
-        bottomPos={height * 0.25}
+        bottomPos={height * 0.15}
         rightPos={width * 0.025}
         icon={'crosshairs-gps'}
         text={'Position'}
@@ -154,20 +154,12 @@ const MapViewGoogle = (props) => {
       {editMarkerMode._currentValue === false ?
       <FloatingActionButton
         onPress={() => navigation.navigate("FilterScreen")}
-        bottomPos={height * 0.35}
+        bottomPos={height * 0.25}
         rightPos={width * 0.025}
         icon={'filter'}
         text={'Filter'}
       />
       : null}
-
-      <FloatingActionButton
-        onPress={() => navigation.navigate("HilfeScreen")}
-        bottomPos={height * 0.15}
-        rightPos={width * 0.025}
-        icon={'account-question'}
-        text={'Hilfe'}
-      />
 
       {markerButtonVisible && editMarkerMode._currentValue === false ?
       <View style={{

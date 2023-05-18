@@ -16,7 +16,6 @@ import {
   TouchableOpacity
 } from "react-native";
 import { height, stylesGlobal } from "../constants/StylesGlobal";
-import FloatingBurgerMenu from "../components/FloatingBurgerMenu";
 import ButtonVariable from "../components/ButtonVariable";
 import { format, isSameDay, isTomorrow } from "date-fns";
 import { useEffect } from "react";
@@ -91,10 +90,6 @@ const EventScreen = ( {navigation} ) => {
 
   return (
     <View style={[stylesGlobal.screenContainer, styles.container]}>
-      <FloatingBurgerMenu
-        onPress={() => navigation.openDrawer()}
-        icon={'navicon'}
-      />
       <View style={stylesGlobal.contentContainerMainScreens}>
         <Text style={[stylesGlobal.ueberschriftText, {textAlign: 'center'}]}>Events</Text>
       

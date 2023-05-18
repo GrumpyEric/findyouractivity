@@ -14,7 +14,6 @@ import HomeScreen from './screens/HomeScreen';
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen'
 import FilterScreen from './screens/FilterScreen';
 import CreateMarkersScreen from './screens/modals/CreateMarkersScreen';
-import BurgerMenuContent from './components/Drawer/BurgerMenuContent';
 import ProfileScreen from './screens/ProfileScreen';
 import { isIOS, isTablet, stylesGlobal, width } from './constants/StylesGlobal';
 import EditMarkerLocationScreen from './screens/EditMarkerLocationScreen';
@@ -27,7 +26,6 @@ import { StyleSheet } from 'react-native';
 import { handleSignOut } from './constants/MainFunctions';
 import { editMarkerMode, isLoggedInContext, saveProfileChangesFunctionContext } from './components/AppContext';
 import RegisterScreen from './screens/RegisterScreen';
-import HilfeScreen from './screens/modals/HilfeScreen';
 
 const options = (navigation, route, props) => {
   return (
@@ -140,9 +138,9 @@ function TabBarScreen({ navigation }) {
           
           return <Icon name={iconName} size={size} color={route.name === 'Logout' ? '#FF0000' : color} />;
         },
-        tabBarActiveTintColor: Colors.findmyactivityYellow,
+        tabBarActiveTintColor: Colors.findmyactivityText,
         tabBarInactiveTintColor: Colors.findmyactivityText,
-        tabBarActiveBackgroundColor: Colors.findmyactivityWhite,
+        tabBarActiveBackgroundColor: Colors.findmyactivityYellow,
         tabBarInactiveBackgroundColor: Colors.findmyactivityWhite,
         
       })}
@@ -163,28 +161,6 @@ function TabBarScreen({ navigation }) {
   )
 }
 
-const DrawerBurgerMenu = createDrawerNavigator();
-function BurgerMenuScreen() {
-  return (
-    // return left drawer navigator
-    <DrawerBurgerMenu.Navigator
-      id="BurgerMenu"
-      initialRouteName="HomeScreen"
-      backBehavior='history'
-      // Customize drawer
-      screenOptions={() => ({
-        drawerType: 'front',
-        headerShown: false, 
-      })}
-      // Define drawer content; custom content in BurgerMenuContent.js
-      drawerContent={(props) => <BurgerMenuContent {...props}/>}
-    >
-      <DrawerBurgerMenu.Screen name="Home" component={TabBarScreen}/>
-      
-    </DrawerBurgerMenu.Navigator>
-  )
-}
-
 const HomeStack = createStackNavigator()
 function HomeStackScreen() {
   return (
@@ -192,7 +168,7 @@ function HomeStackScreen() {
       {isLoggedInContext._currentValue ?
       (
       <>
-      <HomeStack.Screen options={optionsNoHeader} name='MainScreen' component={BurgerMenuScreen}/>
+      <HomeStack.Screen options={optionsNoHeader} name='MainScreen' component={TabBarScreen}/>
       <HomeStack.Group screenOptions={ () => ({
         animationEnabled: false,
         presentation: 'transparentModal',
@@ -219,7 +195,6 @@ function HomeStackScreen() {
 
         })}>
         <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name='CreateMarkersScreen' component={CreateMarkersScreen}/>
-        <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name='HilfeScreen' component={HilfeScreen}/>
         <HomeStack.Screen options={optionsNoHeader} name='EditMarkerLocationScreen' component={EditMarkerLocationScreen}/>
         <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name="FilterScreen" component={FilterScreen}/>          
         <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name="ViewMarkerScreen" component={ViewMarkerScreen}/>

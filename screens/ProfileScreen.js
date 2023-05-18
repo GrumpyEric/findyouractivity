@@ -12,7 +12,6 @@ import {
 } from "react-native";
 import { height, stylesGlobal } from '../constants/StylesGlobal';
 import TextInputField from '../components/TextInputField';
-import FloatingBurgerMenu from '../components/FloatingBurgerMenu';
 import Colors from '../constants/Colors';
 import { format, isSameDay, isTomorrow } from 'date-fns';
 import ButtonVariable from '../components/ButtonVariable';
@@ -99,11 +98,6 @@ const Profile = ( {navigation} ) => {
 
   return (
   <View style={[stylesGlobal.screenContainer, styles.container]}>
-    <FloatingBurgerMenu
-      onPress={() => navigation.openDrawer()}
-      icon={'navicon'}
-      
-    />
     <View style={stylesGlobal.contentContainerMainScreens}>
       <Text 
         style={[stylesGlobal.ueberschriftText, {textAlign: 'center'}]}
