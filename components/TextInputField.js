@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 
 import PropTypes from 'prop-types'
 import Colors from "../constants/Colors";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRef } from "react";
 
 // component props: placeholder, value, onChangeText, secureTextEntry, keyboardType, backgroundColor, borderColor, multiline
@@ -16,10 +16,16 @@ const TextInputField = (props) => {
   const editable = props.editable
   const [borderColor, setBorderColor] = useState(props.borderColor)
 
+  useEffect(() => {
+    props.borderColor 
+      ? setBorderColor(props.borderColor)
+      : null
+  }, [props.borderColor])
+  
   const ref = useRef()
 
   return(
-    <Pressable onPress={() => ref.current.focus()} style={[styles.buttonStyle, {backgroundColor: 'white', borderColor: props.borderColor}]}>
+    <Pressable onPress={() => ref.current.focus()} style={[styles.buttonStyle, {backgroundColor: 'white', borderColor: borderColor}]}>
       {hasLeftIcon ?
       <View style={{justifyContent: 'center', paddingRight: 10, width: 30}}>
         <Icon

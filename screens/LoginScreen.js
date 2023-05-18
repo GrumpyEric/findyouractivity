@@ -76,7 +76,7 @@ const LoginScreen = () => {
             onFocus={() => setEmailErrorState(false)}
             keyboardType={'email-address'}
             backgroundColor={Colors.findmyactivityWhite}
-            borderColor={emailErrorState ? Colors.findmyactivityError : Colors.findmyactivityText}
+            borderColor={emailErrorState ? Colors.findmyactivityError : null}
             accessibilityLabel={EmailPlaceholderText}
             label={EmailPlaceholderText}
             accessibilityHint={AccessibilityHintEmailText}
@@ -111,7 +111,7 @@ const LoginScreen = () => {
             secureTextEntry={true}
             keyboardType={'default'}
             backgroundColor={Colors.findmyactivityWhite}
-            borderColor={passwordErrorState ? Colors.findmyactivityError : Colors.findmyactivityText}
+            borderColor={passwordErrorState ? Colors.findmyactivityError : null}
             accessibilityLabel={PasswortPlaceholderText}
             accessibilityHint={AccessibilityHintPasswortText}
           />
@@ -183,7 +183,7 @@ export default LoginScreen
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.findmyactivityBackground,
+    backgroundColor: Colors.findmyactivityWhite,
     justifyContent: 'center'
   },
 
