@@ -19,7 +19,7 @@ import { TextInput } from 'react-native-gesture-handler'
 
 const HilfeScreen = ( {navigation} ) => {  
   return (
-    <View style={[stylesGlobal.screenContainer, {backgroundColor: Colors.findmyactivityBackground}]}>
+    <View accessibilityViewIsModal={true} style={[stylesGlobal.screenContainer, {backgroundColor: Colors.findmyactivityBackground}]}>
       <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems}]}>Hilfe</Text>
 
       <ScrollView style={styles.scrollViewStyle} contentContainerStyle={styles.contentContainerStyle} persistentScrollbar>

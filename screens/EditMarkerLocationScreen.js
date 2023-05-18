@@ -21,7 +21,7 @@ const EditMarkerLocationScreen = ( {navigation} ) => {
   }
 
   return (
-    <View style={[stylesGlobal.screenContainer]}>
+    <View accessibilityViewIsModal={true} style={[stylesGlobal.screenContainer]}>
       <MapViewGoogle
         style={styles.map_container}
         initialRegion={markerToEdit}

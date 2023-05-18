@@ -141,9 +141,9 @@ function TabBarScreen({ navigation }) {
           return <Icon name={iconName} size={size} color={route.name === 'Logout' ? '#FF0000' : color} />;
         },
         tabBarActiveTintColor: Colors.findmyactivityYellow,
-        tabBarInactiveTintColor: Colors.findmyactivityWhite,
-        tabBarActiveBackgroundColor: Colors.findmyactivityText,
-        tabBarInactiveBackgroundColor: Colors.findmyactivityText,
+        tabBarInactiveTintColor: Colors.findmyactivityText,
+        tabBarActiveBackgroundColor: Colors.findmyactivityWhite,
+        tabBarInactiveBackgroundColor: Colors.findmyactivityWhite,
         
       })}
     >

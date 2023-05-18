@@ -190,7 +190,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
   DropDownPicker.setLanguage("DE");
   
   return (
-    <View style={[stylesGlobal.screenContainer, {backgroundColor: Colors.findmyactivityBackground}]}>
+    <View accessibilityViewIsModal={true} style={[stylesGlobal.screenContainer, {backgroundColor: Colors.findmyactivityBackground}]}>
       <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems}]}>{editMarkerMode._currentValue ? 'Marker bearbeiten' : 'Marker erstellen'}</Text>
       <ScrollView style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContainer} persistentScrollbar>
       <Text style={[stylesGlobal.standardText, {alignSelf: 'flex-start', marginBottom: 5}]}>Felder mit einem * sind Pfilchtfelder!</Text>

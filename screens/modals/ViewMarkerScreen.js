@@ -62,7 +62,7 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
   }
 
   return (
-    <View style={[stylesGlobal.screenContainer, styles.container]}>
+    <View accessibilityViewIsModal={true} style={[stylesGlobal.screenContainer, styles.container]}>
       <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems}]}>Event</Text>
       <ScrollView style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContainer}>
         <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Eventname:{'\n'}

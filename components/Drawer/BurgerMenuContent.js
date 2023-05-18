@@ -10,7 +10,7 @@ import { DrawerActions, useNavigation } from '@react-navigation/native'
 function BurgerMenuContent ( props )  {
   const navigation = useNavigation()
   return ( 
-    <DrawerContentScrollView {...props}>
+    <DrawerContentScrollView {...props} accessibilityViewIsModal={true} accessible>
       
       <DrawerItem
         label="Profil"

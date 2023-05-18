@@ -9,7 +9,7 @@ function ButtonBack(props) {
     <FloatingActionButton
       // bottomPos={height * 0.5}
       // rightPos={width * 0.05}
-      topPos={height * 0.025}
+      topPos={height * 0.05}
       leftPos={width * 0.05}
       icon="menu"
       text={'Menü'}
