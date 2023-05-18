@@ -191,10 +191,6 @@ const CreateMarkersScreen = ( {navigation} ) => {
   
   return (
     <View style={[stylesGlobal.screenContainer, {backgroundColor: Colors.findmyactivityBackground}]}>
-      <ButtonBack
-        onPress={() => { navigation.goBack(); editMarkerMode._currentValue === true ? editMarkerMode._currentValue = false : null }}
-        text={'Zurück'}
-      />
       <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems}]}>{editMarkerMode._currentValue ? 'Marker bearbeiten' : 'Marker erstellen'}</Text>
       <ScrollView style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContainer} persistentScrollbar>
       <Text style={[stylesGlobal.standardText, {alignSelf: 'flex-start', marginBottom: 5}]}>Felder mit einem * sind Pfilchtfelder!</Text>
@@ -398,6 +394,11 @@ const CreateMarkersScreen = ( {navigation} ) => {
           width={200}
         />
         }
+
+      <ButtonBack
+        onPress={() => { navigation.goBack(); editMarkerMode._currentValue === true ? editMarkerMode._currentValue = false : null }}
+        text={'Zurück'}
+      />
     </View>
   )
 }

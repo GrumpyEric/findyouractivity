@@ -33,13 +33,6 @@ const ForgotPasswordScreen = () => {
   return (
     // <TouchableWithoutFeedback accessible={false} onPress={() => Keyboard.dismiss()}>
     <View style={[stylesGlobal.screenContainer, styles.container]}>
-      
-      <ButtonBack
-        onPress={() => handleGoBack()}
-        text={'Zurück'}
-        accessibilityHint={LoginBackHint}
-      />
-
       <Text 
         style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenViews, textAlign: 'center'}]}
         accessibilityLabel={ForgotTitleText}
@@ -98,6 +91,12 @@ const ForgotPasswordScreen = () => {
         </View>
 
       </View>
+
+      <ButtonBack
+        onPress={() => handleGoBack()}
+        text={'Zurück'}
+        accessibilityHint={LoginBackHint}
+      />
     </View>
     // </TouchableWithoutFeedback>
   )

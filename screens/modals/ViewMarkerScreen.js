@@ -63,10 +63,6 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
 
   return (
     <View style={[stylesGlobal.screenContainer, styles.container]}>
-      <ButtonBack
-        onPress={() => navigation.goBack()}
-        text={'Zurück'}
-      />
       <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems}]}>Event</Text>
       <ScrollView style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContainer}>
         <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Eventname:{'\n'}
@@ -104,6 +100,11 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
         backgroundColor={Colors.findmyactivityYellow}
         borderColor={Colors.findmyactivityYellow}
         width={200}
+      />
+
+      <ButtonBack
+        onPress={() => navigation.goBack()}
+        text={'Zurück'}
       />
     </View>
   )

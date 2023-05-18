@@ -90,10 +90,6 @@ const FilterScreen = ( {navigation} ) => {
 return(
   <View style={[stylesGlobal.screenContainer, styles.screenContainer]}>
     <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems}]}>Filter</Text>
-    <ButtonBack
-      onPress={() => navigation.goBack()}
-      text={'Zurück'}
-    />
     <View style={styles.contentContainerStyle}>
       <Text style={stylesGlobal.ueberschriftText2}>Umkreis anzuzeigender Marker</Text>
       <Text>{radiusMarkersVisual === 'alle Marker anzeigen' || radiusMarkersVisual === 21 ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>
@@ -141,6 +137,11 @@ return(
         width={150}
       />
     </View>
+
+    <ButtonBack
+      onPress={() => navigation.goBack()}
+      text={'Zurück'}
+    />
   </View>
 )
 

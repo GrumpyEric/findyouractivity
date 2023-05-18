@@ -25,7 +25,7 @@ import { TouchableOpacity } from 'react-native';
 import { Text } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { handleSignOut } from './constants/MainFunctions';
-import { editMarkerMode, saveProfileChangesFunctionContext } from './components/AppContext';
+import { editMarkerMode, isLoggedInContext, saveProfileChangesFunctionContext } from './components/AppContext';
 import RegisterScreen from './screens/RegisterScreen';
 import HilfeScreen from './screens/modals/HilfeScreen';
 
@@ -147,12 +147,18 @@ function TabBarScreen({ navigation }) {
         
       })}
     >
-      <Tab.Screen options={({ navigation, route }) => options(navigation, route)} name="Profil" component={ProfileScreen}/>
-      <Tab.Screen options={optionsNoHeader} name="Karte" component={HomeScreen}/>
-      <Tab.Screen options={optionsNoHeader} name="Events" component={EventScreen}/>
-      <Tab.Screen name="Logout" component={LogoutTabNullComponent} options={{tabBarButton: (props) => (
-        <TouchableOpacity {...props} onPress={() => handleSignOut(auth, navigation)}/>
-        )}}/>
+      {isLoggedInContext._currentValue ? (
+      <>
+        <Tab.Screen options={({ navigation, route }) => options(navigation, route)} name="Profil" component={ProfileScreen}/>
+        <Tab.Screen options={optionsNoHeader} name="Karte" component={HomeScreen}/>
+        <Tab.Screen options={optionsNoHeader} name="Events" component={EventScreen}/>
+        <Tab.Screen name="Logout" component={LogoutTabNullComponent} options={{tabBarButton: (props) => (
+          <TouchableOpacity {...props} onPress={() => handleSignOut(auth, navigation)}/>
+          )}}
+        />
+      </>
+      ) : null
+      }
     </Tab.Navigator>
   )
 }
@@ -183,6 +189,9 @@ const HomeStack = createStackNavigator()
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator>
+      {isLoggedInContext._currentValue ?
+      (
+      <>
       <HomeStack.Screen options={optionsNoHeader} name='MainScreen' component={BurgerMenuScreen}/>
       <HomeStack.Group screenOptions={ () => ({
         animationEnabled: false,
@@ -215,6 +224,9 @@ function HomeStackScreen() {
         <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name="FilterScreen" component={FilterScreen}/>          
         <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name="ViewMarkerScreen" component={ViewMarkerScreen}/>
       </HomeStack.Group>
+      </>
+      ) : null
+      }
     </HomeStack.Navigator>
   )
 }

@@ -65,6 +65,7 @@ export const handleLogin = (auth, email, password, navigation) => {
     const user = userCredential.user;
     if (user.emailVerified) {
       loggedInUser._current_value = user
+      isLoggedInContext._currentValue = true
       // user zur DB hinzufügen falls noch nicht vorhanden ist
       readUserFromDB(user.uid);
       navigation.replace("Home")
@@ -113,7 +114,7 @@ export const handleSignOut = (auth, navigation) => {
 import { collection, query, onSnapshot, updateDoc, deleteDoc, FieldValue } from "firebase/firestore";
 import { db } from '../firebase/firebase-config';
 
-import { filterContext, selectedUserContext, loggedInUser, selectedAuthor, participantContext, editMarkerValues, latitudeContext, longitudeContext, errorPasswordCheckContext, errorEmailCheckContext, markersContext } from '../components/AppContext';
+import { filterContext, selectedUserContext, loggedInUser, selectedAuthor, participantContext, editMarkerValues, latitudeContext, longitudeContext, errorPasswordCheckContext, errorEmailCheckContext, markersContext, isLoggedInContext } from '../components/AppContext';
 
 // wendet die vom nutzer eingestellten filter ein
 export const applyFilters = (db_markers, setMarkers) => {

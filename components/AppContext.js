@@ -1,4 +1,6 @@
-import { createContext, createRef, useState } from "react";
+import { createContext, createRef } from "react";
+
+export const isLoggedInContext = createContext(false)
 
 export const latitudeContext = createContext(0)
 export const longitudeContext = createContext(0)
