@@ -3,11 +3,10 @@ import { StyleSheet, View, Text, Alert, ScrollView } from 'react-native'
 import { auth } from '../../firebase/firebase-config'
 import { optOutOfEvent,optInToEvent } from '../../constants/MainFunctions'
 import ButtonVariable from '../../components/ButtonVariable'
-import TextButton from '../../components/TextButton'
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
-import { height, stylesGlobal } from '../../constants/StylesGlobal'
+import { stylesGlobal } from '../../constants/StylesGlobal'
 import ButtonBack from '../../components/ButtonBack'
 import Colors from '../../constants/Colors'
 
@@ -62,7 +61,7 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
   }
 
   return (
-    <View accessibilityViewIsModal={true} style={[stylesGlobal.screenContainer, styles.container]}>
+    <ScrollView accessibilityViewIsModal={true} style={[stylesGlobal.screenContainer, styles.container]} contentContainerStyle={stylesGlobal.contentContainer}>
       <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems}]}>Event</Text>
       <ScrollView style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContainer}>
         <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Eventname:{'\n'}
@@ -106,7 +105,7 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
         onPress={() => navigation.goBack()}
         text={'Zurück'}
       />
-    </View>
+    </ScrollView>
   )
 }
 

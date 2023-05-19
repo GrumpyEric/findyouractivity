@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from 'react-native';
-import { height, stylesGlobal } from '../constants/StylesGlobal'
+import { View, StyleSheet, ScrollView } from 'react-native';
+import { height, stylesGlobal, width } from '../constants/StylesGlobal'
 import MapViewGoogle from '../components/MapView';
 import ButtonVariable from '../components/ButtonVariable';
 import Colors from '../constants/Colors';
 import { editMarkerValues, mapRefEdit } from "../components/AppContext";
 
 const EditMarkerLocationScreen = ( {navigation} ) => {
-  const [eventNameInput, onChangeEventInput] = useState("");
-  const [eventDescInput, onChangeDescInput] = useState("");
-
   const markerToEdit = {
     name: editMarkerValues._currentValue.name,
     description: editMarkerValues._currentValue.description,
@@ -21,7 +18,7 @@ const EditMarkerLocationScreen = ( {navigation} ) => {
   }
 
   return (
-    <View accessibilityViewIsModal={true} style={[stylesGlobal.screenContainer]}>
+    <ScrollView accessibilityViewIsModal={true} style={[stylesGlobal.screenContainer]} contentContainerStyle={stylesGlobal.contentContainer}>
       <MapViewGoogle
         style={styles.map_container}
         initialRegion={markerToEdit}
@@ -33,12 +30,12 @@ const EditMarkerLocationScreen = ( {navigation} ) => {
           text={'Abbrechen'}
           onPress={() => navigation.goBack()}
           backgroundColor={Colors.findmyactivityError}
-          borderColor={Colors.findmyactivityError}
+          borderColor={Colors.findmyactivityText}
           textColor={Colors.findmyactivityWhite}
           width={200}
         /> 
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
@@ -47,9 +44,11 @@ export default EditMarkerLocationScreen
 const styles = StyleSheet.create({
    button: {
     alignItems: 'center',
+    justifyContent: "flex-end",
     position: 'absolute',
     bottom: 0,
-    marginBottom: height * 0.025
+    marginBottom: height * 0.025,
+    left: width * 0.25
   },
   buttonText: {
     color: 'white',

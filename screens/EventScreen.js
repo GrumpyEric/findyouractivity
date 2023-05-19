@@ -89,7 +89,7 @@ const EventScreen = ( {navigation} ) => {
   })
 
   return (
-    <View style={[stylesGlobal.screenContainer, styles.container]}>
+    <ScrollView style={[stylesGlobal.screenContainer, styles.container]} contentContainerStyle={stylesGlobal.contentContainer}>
       <View style={stylesGlobal.contentContainerMainScreens}>
         <Text style={[stylesGlobal.ueberschriftText, {textAlign: 'center'}]}>Events</Text>
       
@@ -367,7 +367,7 @@ const EventScreen = ( {navigation} ) => {
         </ScrollView>
         </View>
       </View>      
-    </View>
+    </ScrollView>
   );
 }
 

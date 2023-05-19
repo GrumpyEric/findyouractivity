@@ -1,5 +1,4 @@
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
-import Colors from "../constants/Colors";
 import { stylesGlobal } from "../constants/StylesGlobal";
 
 import PropTypes from 'prop-types'

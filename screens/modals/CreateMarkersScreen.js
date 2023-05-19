@@ -32,6 +32,8 @@ const CreateMarkersScreen = ( {navigation} ) => {
 
   const [eventNameError, setEventNameError] = useState(editMarkerMode._currentValue === true ? false : undefined)
   const [participantsError, setParticipantsError] = useState(editMarkerMode._currentValue === true ? false : undefined)
+  const [startTimeError, setStartTimeError] = useState(editMarkerMode._currentValue === true ? false : undefined)
+  const [endTimeError, setEndTimeError] = useState(editMarkerMode._currentValue === true ? false : undefined)
 
   function printErrors() {
     console.log("name error: ", eventNameError);
@@ -54,6 +56,23 @@ const CreateMarkersScreen = ( {navigation} ) => {
   
     } else {
       setEventNameError(false)
+    }
+
+  }
+
+  function errorHandlerTime() {
+    if (pickedStartTime.current) {
+      setStartTimeError(false)
+  
+    } else {
+      setStartTimeError(true)
+    }
+
+    if (pickedEndTime.current) {
+      setEndTimeError(false)
+    
+    } else {
+      setEndTimeError(true)
     }
 
   }
@@ -190,8 +209,9 @@ const CreateMarkersScreen = ( {navigation} ) => {
   DropDownPicker.setLanguage("DE");
   
   return (
-    <View accessibilityViewIsModal={true} style={[stylesGlobal.screenContainer, {backgroundColor: Colors.findmyactivityBackground}]}>
-      <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems}]}>{editMarkerMode._currentValue ? 'Marker bearbeiten' : 'Marker erstellen'}</Text>
+    <View style={{flex: 1}}>
+    <ScrollView accessibilityViewIsModal={true} style={[stylesGlobal.screenContainer, {backgroundColor: Colors.findmyactivityBackground,}]} contentContainerStyle={stylesGlobal.contentContainer}>
+      <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems, textAlign: 'center'}]}>{editMarkerMode._currentValue ? 'Marker bearbeiten' : 'Marker erstellen'}</Text>
       <ScrollView style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContainer} persistentScrollbar>
       <Text style={[stylesGlobal.standardText, {alignSelf: 'flex-start', marginBottom: 5}]}>Felder mit einem * sind Pfilchtfelder!</Text>
       
@@ -214,7 +234,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
         />
 
         {eventNameError ?
-          <Text>Textfeld 'Eventname' darf nicht leer sein! Bitte Eventnamen eingeben</Text>
+          <Text style={[stylesGlobal.standardText, {textAlign: 'center', color: Colors.findmyactivityError}]}>Textfeld 'Eventname' darf nicht leer sein! Bitte Eventnamen eingeben</Text>
         : null}
       </View>
 
@@ -273,7 +293,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
         />
 
         {participantsError ?
-        <Text>Textfeld 'Anzahl Teilnehmer' darf nicht leer sein! Bitte Teilnehmeranzahl angeben</Text>
+        <Text style={[stylesGlobal.standardText, {textAlign: 'center', color: Colors.findmyactivityError}]}>Textfeld 'Anzahl Teilnehmer' darf nicht leer sein! Bitte Teilnehmeranzahl angeben</Text>
         : null}
       </View>
 
@@ -307,8 +327,9 @@ const CreateMarkersScreen = ( {navigation} ) => {
         <View style={{marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems, alignItems: 'center'}}>
         {pickedStartTime.current !== undefined
         ?
-          <Text style={{alignSelf: 'center'}}>
-            Start: {intlFormat(pickedStartTime.current, {
+          <Text style={[stylesGlobal.standardText, {alignSelf: 'center'}]}>
+            <Text style={stylesGlobal.ueberschriftText2}>Start: </Text> 
+            {intlFormat(pickedStartTime.current, {
             weekday: 'long',
             year: 'numeric',
             month: 'long',
@@ -319,11 +340,16 @@ const CreateMarkersScreen = ( {navigation} ) => {
               {locale: 'de-DE',}
             )} Uhr
           </Text>
-          :
-          null
+          : null
           }
+          {startTimeError ?
+            <Text style={[stylesGlobal.standardText, {textAlign: 'center', color: Colors.findmyactivityError}]}>
+              Startzeit wurde nicht ausgewählt! Bitte Startzeit auswählen
+            </Text>
+          : null}
           <TextButton
             text={pickedStartTime.current ? 'Startzeit ändern*' : 'Startzeit auswählen*'}
+            textColor={startTimeError ? Colors.findmyactivityError : null}
             onPress={() => {kindOfTimePicker.current = 'start'; showTimePicker()}}
           />
         </View>
@@ -331,8 +357,9 @@ const CreateMarkersScreen = ( {navigation} ) => {
         <View style={{marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems, alignItems: 'center'}}>
         {pickedEndTime.current !== undefined
         ?
-          <Text style={{alignSelf: 'center'}}>
-            Ende: {intlFormat(pickedEndTime.current, {
+          <Text style={[stylesGlobal.standardText, {alignSelf: 'center'}]}>
+            <Text style={stylesGlobal.ueberschriftText2}>Ende: </Text>  
+            {intlFormat(pickedEndTime.current, {
             weekday: 'long',
             year: 'numeric',
             month: 'long',
@@ -343,11 +370,16 @@ const CreateMarkersScreen = ( {navigation} ) => {
               {locale: 'de-DE',}
             )} Uhr
           </Text>
-          :
-          null
+          : null
           }
+          {endTimeError ?
+            <Text style={[stylesGlobal.standardText, {textAlign: 'center', color: Colors.findmyactivityError}]}>
+              Endzeit wurde nicht ausgewählt! Bitte Endzeit auswählen
+            </Text>
+          : null}
           <TextButton
             text={pickedEndTime.current ? 'Endzeit ändern*' : 'Endzeit auswählen*'}
+            textColor={endTimeError ? Colors.findmyactivityError : null}
             onPress={() => {kindOfTimePicker.current = 'end'; showTimePicker()}}
           />
         </View>
@@ -363,7 +395,6 @@ const CreateMarkersScreen = ( {navigation} ) => {
         {editMarkerMode._currentValue 
         ?
         <View style={{flexDirection: 'row', width: '100%', justifyContent: 'space-evenly'}}>
-
           <ButtonVariable
             text={'Aktualisieren'}         
             onPress={() => {
@@ -372,6 +403,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
               eventNameError === true || participantsError === true || eventNameError === undefined || participantsError === undefined || pickedStartTime.current === undefined || pickedEndTime.current === undefined
                 ? Alert.alert('Achtung!', errorMessageHandler())
                 : updateMarker()
+              errorHandlerTime()
             }}
             backgroundColor={Colors.findmyactivityYellow}
             borderColor={Colors.findmyactivityYellow}
@@ -380,21 +412,24 @@ const CreateMarkersScreen = ( {navigation} ) => {
         </View>
         
         :
-        <ButtonVariable
-          text={'Erstellen'}         
-          onPress={() => {
-            errorHandlerName()
-            errorHandlerParticipants()
-            eventNameError === true || participantsError === true || eventNameError === undefined || participantsError === undefined || pickedStartTime.current === undefined || pickedEndTime.current === undefined
-              ? Alert.alert('Achtung!', errorMessageHandler())
-              : createMarker()
-          }}
-          backgroundColor={Colors.findmyactivityYellow}
-          borderColor={Colors.findmyactivityYellow}
-          width={200}
-        />
+        <View style={{flexDirection: 'row', width: '100%', justifyContent: 'space-evenly'}}>
+          <ButtonVariable
+            text={'Erstellen'}         
+            onPress={() => {
+              errorHandlerName()
+              errorHandlerParticipants()
+              eventNameError === true || participantsError === true || eventNameError === undefined || participantsError === undefined || pickedStartTime.current === undefined || pickedEndTime.current === undefined
+                ? Alert.alert('Achtung!', errorMessageHandler())
+                : createMarker()
+              errorHandlerTime()
+            }}
+            backgroundColor={Colors.findmyactivityYellow}
+            borderColor={Colors.findmyactivityYellow}
+            width={200}
+          />
+        </View>
         }
-
+    </ScrollView>
       <ButtonBack
         onPress={() => { navigation.goBack(); editMarkerMode._currentValue === true ? editMarkerMode._currentValue = false : null }}
         text={'Zurück'}

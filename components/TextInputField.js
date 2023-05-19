@@ -81,7 +81,7 @@ const TextInputField = (props) => {
   )
 }
 
-TextInputField.propTypes = { placeholder: PropTypes.string, value: PropTypes.string.isRequired, onChangeText: PropTypes.func.isRequired, secureTextEntry: PropTypes.bool, 
+TextInputField.propTypes = { placeholder: PropTypes.string, value: PropTypes.string.isRequired, onChangeText: PropTypes.func, secureTextEntry: PropTypes.bool, 
   keyboardType: PropTypes.string, maxLength: PropTypes.number, borderColor: PropTypes.string, multiline: PropTypes.bool, 
   onBlur: PropTypes.func, onChange: PropTypes.func, editable: PropTypes.bool, onFocus: PropTypes.func, dataDetectorTypes: PropTypes.any,
 

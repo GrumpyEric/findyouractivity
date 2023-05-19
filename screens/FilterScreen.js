@@ -1,13 +1,13 @@
 
-import React, { useEffect, useState } from 'react'
-import { Alert,View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react'
+import { Alert,View, Text, StyleSheet, ScrollView } from 'react-native';
 import { filterContext,tagData, rangeContext } from '../components/AppContext';
 import Slider from '@react-native-community/slider';
 
 import { applyFilters, db_markers } from '../constants/MainFunctions';
 
 import Colors from '../constants/Colors'
-import { height, paddingBetweenItems, stylesGlobal } from '../constants/StylesGlobal';
+import { stylesGlobal } from '../constants/StylesGlobal';
 
 import DropDownPicker from 'react-native-dropdown-picker';
 import { arrayIsEmpty } from '../constants/HelperFunctionsAndVariables';
@@ -88,7 +88,7 @@ const FilterScreen = ( {navigation} ) => {
   }
   
 return(
-  <View style={[stylesGlobal.screenContainer, styles.screenContainer]}>
+  <ScrollView style={[stylesGlobal.screenContainer, styles.screenContainer]} contentContainerStyle={stylesGlobal.contentContainer}>
     <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems}]}>Filter</Text>
     <View style={styles.contentContainerStyle}>
       <Text style={stylesGlobal.ueberschriftText2}>Umkreis anzuzeigender Marker</Text>
@@ -142,7 +142,7 @@ return(
       onPress={() => navigation.goBack()}
       text={'Zurück'}
     />
-  </View>
+  </ScrollView>
 )
 
 }

@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useState } from 'react'
-import { Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
+import { StyleSheet, Text, ScrollView, View } from 'react-native'
 
 import { auth } from '../firebase/firebase-config'
 
@@ -20,7 +20,7 @@ const ForgotPasswordScreen = () => {
   const navigation = useNavigation()
 
   const handleGoBack = () => {
-    navigation.replace("Login")
+    navigation.goBack()
   }
 
   function forgotHandler() {
@@ -31,8 +31,7 @@ const ForgotPasswordScreen = () => {
   }
 
   return (
-    // <TouchableWithoutFeedback accessible={false} onPress={() => Keyboard.dismiss()}>
-    <View style={[stylesGlobal.screenContainer, styles.container]}>
+    <ScrollView style={[stylesGlobal.screenContainer, styles.container]} contentContainerStyle={stylesGlobal.contentContainer}>
       <Text 
         style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenViews, textAlign: 'center'}]}
         accessibilityLabel={ForgotTitleText}
@@ -97,8 +96,7 @@ const ForgotPasswordScreen = () => {
         text={'Zurück'}
         accessibilityHint={LoginBackHint}
       />
-    </View>
-    // </TouchableWithoutFeedback>
+    </ScrollView>
   )
 }
 
@@ -107,7 +105,6 @@ export default ForgotPasswordScreen
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.findmyactivityBackground,
-    justifyContent: 'center'
   },
   
   buttonContainer: {

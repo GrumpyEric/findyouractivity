@@ -1,18 +1,14 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, ScrollView } from 'react-native'
 
 import { auth } from '../firebase/firebase-config'
 
 import TextInputField from '../components/TextInputField'
 import { stylesGlobal } from '../constants/StylesGlobal'
-import TextButton from '../components/TextButton'
-import { handleSignUp, handleLogin } from '../constants/MainFunctions'
+import { handleSignUp } from '../constants/MainFunctions'
 import Colors from '../constants/Colors'
-import { TouchableWithoutFeedback } from 'react-native'
-import { Keyboard } from 'react-native'
 import ButtonVariable from '../components/ButtonVariable'
-import { errorEmailCheckContext, errorPasswordCheckContext } from '../components/AppContext'
 import { emailRegexTest } from '../constants/HelperFunctionsAndVariables'
 import { useEffect } from 'react'
 import ButtonBack from '../components/ButtonBack'
@@ -56,8 +52,7 @@ const RegisterScreen = () => {
   }, [passwordErrorState])
 
   return (
-    // <TouchableWithoutFeedback accessible={false} importantForAccessibility='no' aria-hidden onPress={() => Keyboard.dismiss()}>
-    <View style={[stylesGlobal.screenContainer, styles.container]}>
+    <ScrollView style={[stylesGlobal.screenContainer, styles.container]} contentContainerStyle={stylesGlobal.contentContainer}>
       <Text 
         style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenViews, textAlign: 'center'}]}
         accessibilityLabel={RegisterTitleText}
@@ -160,8 +155,7 @@ const RegisterScreen = () => {
         text={'Zurück'}
         accessibilityHint={LoginBackHint}
       />
-    </View>
-    // </TouchableWithoutFeedback>
+    </ScrollView>
   )
 }
 
@@ -170,7 +164,6 @@ export default RegisterScreen
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.findmyactivityBackground,
-    justifyContent: 'center'
   },
 
   inputContainer: {

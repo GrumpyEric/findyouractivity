@@ -53,14 +53,18 @@ const stylesGlobal = StyleSheet.create({
   //----- Screenviews -----//
   screenContainer: {
     flex: 1,
-    alignItems: 'center',
+  },
+
+  contentContainer: {
+    justifyContent: 'center',
+    flexGrow: 1,
     paddingHorizontal: '10%',
     paddingVertical: '5%',
   },
 
   contentContainerMainScreens: {
     marginTop: '20%',
-    width: '100%'
+    width: '100%',
   },
 
   spacingBetweenText: {
