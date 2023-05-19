@@ -145,7 +145,7 @@ const MapViewGoogle = (props) => {
     <View style={{...StyleSheet.absoluteFillObject}}>
       <FloatingActionButton
         onPress={() => getCurrentPosition()}
-        bottomPos={height * 0.15}
+        bottomPos={height * 0.25}
         rightPos={width * 0.025}
         icon={'crosshairs-gps'}
         text={'Position'}
@@ -154,12 +154,23 @@ const MapViewGoogle = (props) => {
       {editMarkerMode._currentValue === false ?
       <FloatingActionButton
         onPress={() => navigation.navigate("FilterScreen")}
-        bottomPos={height * 0.25}
+        bottomPos={height * 0.35}
         rightPos={width * 0.025}
         icon={'filter'}
         text={'Filter'}
       />
       : null}
+
+      <FloatingActionButton
+        onPress={() => Alert.alert('Hilfe', 
+        'Zum Erstellen von Markern auf die Karte drücken und gedrückt halten, um einen Marker zu setzen.'
+        
+        )}
+        bottomPos={height * 0.15}
+        rightPos={width * 0.025}
+        icon={'help'}
+        text={'Hilfe'}
+      />
 
       {markerButtonVisible && editMarkerMode._currentValue === false ?
       <View style={{
