@@ -219,7 +219,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
         <Text style={stylesGlobal.ueberschriftText2}>Eventname*</Text>
         <TextInputField
           editable
-          placeholder={'Eventname'}
+          placeholder={'Mein tolles Event'}
           value={eventName}
           onChangeText={(text) => { setEventName(text); text.length < 1 ? setEventNameError(true) : setEventNameError(false) }}
           keyboardType={'default'}
@@ -242,7 +242,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
       <Text style={stylesGlobal.ueberschriftText2}>Eventbeschreibung</Text>
         <TextInputField
           editable
-          placeholder={'Eventbeschreibung (optional)'}
+          placeholder={'In meinem Event werden...'}
           value={eventDescription}
           onChangeText={text => setEventDescription(text)}
           keyboardType={'default'}
@@ -261,7 +261,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
       <Text style={stylesGlobal.ueberschriftText2}>Ortbeschreibung</Text>
         <TextInputField
           editable
-          placeholder={'Ortbeschreibung (optional)'}
+          placeholder={'im Restaurant neben...'}
           value={placeDesciption}
           onChangeText={text => setPlaceDescription(text)}
           keyboardType={'default'}
@@ -279,7 +279,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
       <Text style={stylesGlobal.ueberschriftText2}>Teilnehmeranzahl*</Text>
         <TextInputField
           editable
-          placeholder={'Anzahl Teilnehmer (max. 999)'}
+          placeholder={'999'}
           value={numberParticipants}
           onChangeText={(text) => { setNumberParticipants(text); text.length < 1 ? setParticipantsError(true) : setParticipantsError(false) }}
           keyboardType={'number-pad'}
@@ -312,6 +312,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
           setValue={(val) =>setEventTags(val)}
           setItems={setItems}
           listMode='MODAL'
+          placeholder='Klicke hier, um Tags auszuwählen'
         />
       </View>
 

@@ -118,6 +118,7 @@ return(
         setValue={setValue}
         setItems={setItems}
         listMode='MODAL'
+        placeholder='Klicke hier, um Tags auszuwählen'
       />
     </View>
 
