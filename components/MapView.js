@@ -344,7 +344,7 @@ const MapViewGoogle = (props) => {
         userMarker.map((val, index) => 
           {
             return (
-              <Marker key={index} coordinate={val} pinColor={Colors.findmyactivityYellow} draggable={false} tracksViewChanges={true} onPress={() => setMarkerButtonVisible(true)}></Marker>
+              <Marker key={index} coordinate={val} pinColor={Colors.findmyactivityOwnPin} draggable={false} tracksViewChanges={true} onPress={() => setMarkerButtonVisible(true)}></Marker>
             ); 
 
           }

@@ -111,7 +111,7 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.findmyactivityBackground,
+    backgroundColor: Colors.findmyactivityBackground
   },
 
   scrollViewStyle: {

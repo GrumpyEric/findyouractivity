@@ -376,7 +376,7 @@ const Profile = ( {navigation} ) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.findmyactivityBackground,
+    backgroundColor: Colors.findmyactivityBackground
   },
   
   textLabels: {

@@ -163,7 +163,7 @@ export default RegisterScreen
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.findmyactivityBackground,
+    backgroundColor: Colors.findmyactivityBackground
   },
 
   inputContainer: {

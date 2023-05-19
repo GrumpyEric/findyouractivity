@@ -179,7 +179,7 @@ export default LoginScreen
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.findmyactivityWhite,
+    backgroundColor: Colors.findmyactivityBackground,
     // justifyContent: 'center'
   },
 

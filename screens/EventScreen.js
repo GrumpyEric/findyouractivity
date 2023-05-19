@@ -115,8 +115,9 @@ const EventScreen = ( {navigation} ) => {
             onSlidingComplete={(value) => value < 21 ? setRadiusMarkers(value) : setRadiusMarkers('alle')}
             step={1}
             onValueChange={(value) => value < 21 ? setRadiusMarkersVisual(value) : setRadiusMarkersVisual('alle Marker anzeigen')}
-            minimumTrackTintColor={Colors.findmyactivityYellow}
-            thumbTintColor={Colors.findmyactivityYellow}
+            minimumTrackTintColor={Colors.findmyactivityAccept}
+            maximumTrackTintColor={Colors.findmyactivityError}
+            thumbTintColor={Colors.findmyactivityText}
           />
         </View>
 

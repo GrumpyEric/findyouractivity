@@ -104,7 +104,7 @@ export default ForgotPasswordScreen
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.findmyactivityBackground,
+    backgroundColor: Colors.findmyactivityBackground
   },
   
   buttonContainer: {

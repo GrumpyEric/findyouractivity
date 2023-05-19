@@ -53,7 +53,7 @@ const TextInputField = (props) => {
         multiline={props.multiline}
         onBlur={() => { props.onBlur ? props.onBlur() : null; setBorderColor(props.borderColor) }}
         onChange={props.onChange}
-        onFocus={() => { props.onFocus ? props.onFocus() : null; setBorderColor(Colors.findmyactivityYellow) }}
+        onFocus={() => { props.onFocus ? props.onFocus() : null; setBorderColor(Colors.findmyactivityAccept) }}
 
         accessibilityLabel={props.accessibilityLabel}
         aria-label={props.accessibilityLabel}

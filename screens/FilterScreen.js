@@ -89,7 +89,7 @@ const FilterScreen = ( {navigation} ) => {
   
 return(
   <ScrollView style={[stylesGlobal.screenContainer, styles.screenContainer]} contentContainerStyle={stylesGlobal.contentContainer}>
-    <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems}]}>Filter</Text>
+    <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems, textAlign: 'center'}]}>Filter</Text>
     <View style={styles.contentContainerStyle}>
       <Text style={stylesGlobal.ueberschriftText2}>Umkreis anzuzeigender Marker</Text>
       <Text>{radiusMarkersVisual === 'alle Marker anzeigen' || radiusMarkersVisual === 21 ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>
@@ -100,7 +100,8 @@ return(
         step={1}
         value={radiusMarkers}
         onValueChange={(value) => value < 21 ? setRadiusMarkersVisual(value) : setRadiusMarkersVisual('alle Marker anzeigen')}
-        minimumTrackTintColor={Colors.findmyactivityYellow}
+        minimumTrackTintColor={Colors.findmyactivityAccept}
+        maximumTrackTintColor={Colors.findmyactivityError}
         thumbTintColor={Colors.findmyactivityText}
       />
 
