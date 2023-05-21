@@ -205,9 +205,7 @@ const MapViewGoogle = (props) => {
       : null}
 
       <FloatingActionButton
-        onPress={() => Alert.alert('Hilfe', 
-        'Zum Erstellen von Markern auf die Karte drücken und gedrückt halten, um einen Marker zu setzen.'
-        )}
+        onPress={() => navigation.navigate("HilfeScreen")}
         bottomPos={height * 0.15}
         rightPos={width * 0.025}
         icon={'help'}

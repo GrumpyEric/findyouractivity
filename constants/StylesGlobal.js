@@ -56,7 +56,6 @@ const stylesGlobal = StyleSheet.create({
   },
 
   contentContainer: {
-    justifyContent: 'center',
     flexGrow: 1,
     paddingHorizontal: '10%',
     paddingVertical: '5%',

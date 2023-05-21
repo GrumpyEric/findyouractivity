@@ -26,6 +26,7 @@ import { StyleSheet } from 'react-native';
 import { handleSignOut } from './constants/MainFunctions';
 import { editMarkerMode, isLoggedInContext, saveProfileChangesFunctionContext } from './components/AppContext';
 import RegisterScreen from './screens/RegisterScreen';
+import HilfeScreen from './screens/HilfeScreen';
 
 const options = (navigation, route, props) => {
   return (
@@ -41,7 +42,8 @@ const options = (navigation, route, props) => {
         route.name === 'FilterScreen' ||
         route.name === 'ViewMarkerScreen' ||
         route.name === 'Passwort zurücksetzen' ||
-        route.name === 'RegisterScreen'
+        route.name === 'RegisterScreen' ||
+        route.name === 'HilfeScreen'
         ? null
         : headerRight(), 
       headerStyle: {
@@ -198,6 +200,7 @@ function HomeStackScreen() {
         <HomeStack.Screen options={optionsNoHeader} name='EditMarkerLocationScreen' component={EditMarkerLocationScreen}/>
         <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name="FilterScreen" component={FilterScreen}/>          
         <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name="ViewMarkerScreen" component={ViewMarkerScreen}/>
+        <HomeStack.Screen options={({ navigation, route }) => options(navigation, route)} name="HilfeScreen" component={HilfeScreen}/>
       </HomeStack.Group>
       </>
       ) : null

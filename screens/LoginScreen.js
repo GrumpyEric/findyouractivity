@@ -43,7 +43,7 @@ const LoginScreen = () => {
   }
 
   return (
-  <ScrollView style={[stylesGlobal.screenContainer, styles.container]} contentContainerStyle={stylesGlobal.contentContainer}>
+  <ScrollView style={[stylesGlobal.screenContainer, styles.container]} contentContainerStyle={[stylesGlobal.contentContainer, {justifyContent: 'center'}]}>
     <Text 
       style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenViews, textAlign: 'center'}]}
       accessibilityLabel={LoginTitleText}
