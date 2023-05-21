@@ -15,6 +15,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import 'intl'
 import 'intl/locale-data/jsonp/de'
 import { intlFormat } from 'date-fns'
+import { useEffect } from 'react'
 
 const CreateMarkersScreen = ( {navigation} ) => {  
   const [eventName, setEventName] = useState(editMarkerMode._currentValue ? editMarkerValues._currentValue.name : '')
@@ -34,13 +35,6 @@ const CreateMarkersScreen = ( {navigation} ) => {
   const [participantsError, setParticipantsError] = useState(editMarkerMode._currentValue === true ? false : undefined)
   const [startTimeError, setStartTimeError] = useState(editMarkerMode._currentValue === true ? false : undefined)
   const [endTimeError, setEndTimeError] = useState(editMarkerMode._currentValue === true ? false : undefined)
-
-  function printErrors() {
-    console.log("name error: ", eventNameError);
-    console.log("participants error: ", participantsError);
-    console.log('start error: ', pickedStartTime.current);
-    console.log('end error: ', pickedEndTime.current);
-  }
 
   const showTimePicker = () => {
     setTimePickerVisibility(true);
@@ -78,11 +72,11 @@ const CreateMarkersScreen = ( {navigation} ) => {
   }
 
   function errorHandlerParticipants() {
-    if (numberParticipants.length < 1) {
-      setParticipantsError(true)
+    if (numberParticipants.length > 0 && Number.isInteger(parseInt(numberParticipants))) {
+      setParticipantsError(false)
     
     } else {
-      setParticipantsError(false)
+      setParticipantsError(true)
     }
 
   }
@@ -207,6 +201,16 @@ const CreateMarkersScreen = ( {navigation} ) => {
     NOTHING_TO_SHOW: "Keine Tags zur Auswahl"
   });
   DropDownPicker.setLanguage("DE");
+
+  useEffect(() => {
+    console.log('Participants:', typeof numberParticipants, Number.isInteger(parseInt(numberParticipants)), numberParticipants);
+  }, [numberParticipants])
+
+  useEffect(() => {
+    console.log(participantsError);
+
+  }, [participantsError])
+  
   
   return (
     <View style={{flex: 1}}>
@@ -281,7 +285,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
           editable
           placeholder={'999'}
           value={numberParticipants}
-          onChangeText={(text) => { setNumberParticipants(text); text.length < 1 ? setParticipantsError(true) : setParticipantsError(false) }}
+          onChangeText={(text) => { setNumberParticipants(text); text.length < 1 && Number.isInteger(parseInt(text)) ? setParticipantsError(true) : setParticipantsError(false) }}
           keyboardType={'number-pad'}
           backgroundColor={Colors.findmyactivityWhite}
           borderColor={participantsError ? Colors.findmyactivityError : Colors.findmyactivityText}
@@ -293,7 +297,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
         />
 
         {participantsError ?
-        <Text style={[stylesGlobal.standardText, {textAlign: 'center', color: Colors.findmyactivityError}]}>Textfeld 'Anzahl Teilnehmer' darf nicht leer sein! Bitte Teilnehmeranzahl angeben</Text>
+        <Text style={[stylesGlobal.standardText, {textAlign: 'center', color: Colors.findmyactivityError}]}>{numberParticipants.length < 1 ? ' "Anzahl Teilnehmer" darf nicht leer sein! Bitte Teilnehmeranzahl angeben' : ' Feld "Anzahl Teilnehmer" muss eine Zahl enthalten!'}</Text>
         : null}
       </View>
 
@@ -401,7 +405,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
             onPress={() => {
               errorHandlerName()
               errorHandlerParticipants()
-              eventNameError === true || participantsError === true || eventNameError === undefined || participantsError === undefined || pickedStartTime.current === undefined || pickedEndTime.current === undefined
+              eventNameError || participantsError || eventNameError === undefined || participantsError === undefined || pickedStartTime.current === undefined || pickedEndTime.current === undefined
                 ? Alert.alert('Achtung!', errorMessageHandler())
                 : updateMarker()
               errorHandlerTime()
@@ -419,7 +423,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
             onPress={() => {
               errorHandlerName()
               errorHandlerParticipants()
-              eventNameError === true || participantsError === true || eventNameError === undefined || participantsError === undefined || pickedStartTime.current === undefined || pickedEndTime.current === undefined
+              eventNameError || participantsError || eventNameError === undefined || participantsError === undefined || pickedStartTime.current === undefined || pickedEndTime.current === undefined
                 ? Alert.alert('Achtung!', errorMessageHandler())
                 : createMarker()
               errorHandlerTime()

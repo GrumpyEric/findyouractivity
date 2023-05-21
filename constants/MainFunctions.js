@@ -253,10 +253,8 @@ export const addMarkerToDB = async(auth, eventNameInput, eventDescInput, eventLo
       participantList: [userID]
     }
   });
-  const alerta_title = "Marker has been Set"
-  const alerta_msg = "Latitude: " + userMarkerLatitude.toString() + "\nLongitude" + userMarkerLongitude.toString()
-  Alert.alert(alerta_title,alerta_msg);
-  // setRegion(userMarker);
+  const alerta_title = "Event wurde erstellt"
+  Alert.alert(alerta_title);
 }
 
 export const getEventsFromUser = async(uid) =>
@@ -377,9 +375,8 @@ export const deleteMarkerToDB = async(auth, markerCreationDate) => {
   let userID = auth.currentUser.uid.toString()
 
   await deleteDoc(doc(db, "markers", userID+"_"+( markerCreationDate ) ))
-  const alerta_title = "Marker has been deleted"
-  const alerta_msg = ':('
-  Alert.alert(alerta_title,alerta_msg);
+  const alerta_title = "Marker wurde erfolgreich gelöscht"
+  Alert.alert(alerta_title);
 }
 
 // export function refreshMap() {
