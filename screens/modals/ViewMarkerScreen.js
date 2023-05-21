@@ -62,7 +62,7 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
 
   return (
     <ScrollView accessibilityViewIsModal={true} style={[stylesGlobal.screenContainer, styles.container]} contentContainerStyle={stylesGlobal.contentContainer}>
-      <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems}]}>Event</Text>
+      <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems, textAlign: 'center'}]}>Event</Text>
       <ScrollView style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContainer}>
         <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Eventname:{'\n'}
           <Text style={stylesGlobal.standardText}>{nameDisplay}</Text>
@@ -93,13 +93,16 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
         </Text>
 
       </ScrollView>
-      <ButtonVariable
-        text={'Teilnehmen'}
-        onPress={() => onParticipateButton() }
-        backgroundColor={Colors.findmyactivityYellow}
-        borderColor={Colors.findmyactivityYellow}
-        width={200}
-      />
+      
+      <View style={{alignSelf: 'center'}}>
+        <ButtonVariable
+          text={'Teilnehmen'}
+          onPress={() => onParticipateButton() }
+          backgroundColor={Colors.findmyactivityYellow}
+          borderColor={Colors.findmyactivityYellow}
+          width={200}
+        />
+      </View>
 
       <ButtonBack
         onPress={() => navigation.goBack()}

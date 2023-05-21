@@ -38,7 +38,7 @@ const ButtonVariable = (props) => {
         size={20}
       />
       : null}
-      <Text style={[stylesGlobal.buttonTextBlack, {color: props.textColor || Colors.findmyactivityText}]}>{props.text}</Text>
+      <Text style={[stylesGlobal.buttonTextBlack, {color: props.textColor || Colors.findmyactivityText, textAlign: "center"}]}>{props.text}</Text>
     </TouchableOpacity>
   )
 }
