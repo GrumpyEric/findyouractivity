@@ -17,19 +17,6 @@ const ButtonVariable = (props) => {
       aria-label={props.text}
       accessibilityHint={props.accessibilityHint}
       accessibilityRole={"button"}
-      accessibilityState={{
-        disabled: props.isAccessibilityStateDisabled,
-        selected: props.isAccessibilityStateSelected,
-        checked: props.isAccessibilityStateChecked,
-        busy: props.isAccessibilityStateBusy,
-        expanded: props.isAccessibilityStateExpanded
-      }}
-      accessibilityValue={{
-        min: props.isAccessibilityValueMin,
-        max: props.isAccessibilityValueMax,
-        now: props.isAccessibilityValueNow,
-        text: props.isAccessibilityValueText
-      }}
     >
       {props.icon ?
       <Icon
@@ -47,16 +34,6 @@ ButtonVariable.propTypes = { onPress: PropTypes.func.isRequired, text: PropTypes
   borderColor: PropTypes.string, textColor: PropTypes.string, icon: PropTypes.string, width: PropTypes.any,
 
   accessibilityHint: PropTypes.string,
-  isAccessibilityStateDisabled: PropTypes.bool,
-  isAccessibilityStateSelected: PropTypes.bool,
-  isAccessibilityStateChecked: PropTypes.bool,
-  isAccessibilityStateBusy: PropTypes.bool,
-  isAccessibilityStateExpanded: PropTypes.bool,
-
-  isAccessibilityValueMin: PropTypes.number,
-  isAccessibilityValueMax: PropTypes.number,
-  isAccessibilityValueNow: PropTypes.number,
-  isAccessibilityValueText: PropTypes.string
 }
 
 export default ButtonVariable

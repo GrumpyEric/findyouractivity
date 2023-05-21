@@ -34,19 +34,6 @@ const FloatingActionButton = (props) => {
       aria-label={props.text}
       accessibilityHint={props.accessibilityHint}
       accessibilityRole={"button"}
-      accessibilityState={{
-        disabled: props.isAccessibilityStateDisabled,
-        selected: props.isAccessibilityStateSelected,
-        checked: props.isAccessibilityStateChecked,
-        busy: props.isAccessibilityStateBusy,
-        expanded: props.isAccessibilityStateExpanded
-      }}
-      accessibilityValue={{
-        min: props.isAccessibilityValueMin,
-        max: props.isAccessibilityValueMax,
-        now: props.isAccessibilityValueNow,
-        text: props.isAccessibilityValueText
-      }}
     >
       <Icon
         name={props.icon}
@@ -65,16 +52,6 @@ FloatingActionButton.propTypes = { onPress: PropTypes.func.isRequired, bottomPos
   leftPos: PropTypes.number, topPos: PropTypes.number,
 
   accessibilityHint: PropTypes.string,
-  isAccessibilityStateDisabled: PropTypes.bool,
-  isAccessibilityStateSelected: PropTypes.bool,
-  isAccessibilityStateChecked: PropTypes.bool,
-  isAccessibilityStateBusy: PropTypes.bool,
-  isAccessibilityStateExpanded: PropTypes.bool,
-
-  isAccessibilityValueMin: PropTypes.number,
-  isAccessibilityValueMax: PropTypes.number,
-  isAccessibilityValueNow: PropTypes.number,
-  isAccessibilityValueText: PropTypes.string
 }
 
 export default FloatingActionButton

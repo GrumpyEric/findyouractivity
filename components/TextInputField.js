@@ -59,19 +59,6 @@ const TextInputField = (props) => {
         aria-label={props.accessibilityLabel}
         accessibilityHint={props.accessibilityHint}
         accessibilityRole={"none"}
-        // accessibilityState={{
-        //   disabled: props.isAccessibilityStateDisabled,
-        //   selected: props.isAccessibilityStateSelected,
-        //   checked: props.isAccessibilityStateChecked,
-        //   busy: props.isAccessibilityStateBusy,
-        //   expanded: props.isAccessibilityStateExpanded
-        // }}
-        // accessibilityValue={{
-        //   min: props.isAccessibilityValueMin,
-        //   max: props.isAccessibilityValueMax,
-        //   now: props.isAccessibilityValueNow,
-        //   text: props.isAccessibilityValueText
-        // }}
         
       />
       {hasMaxLength && showCharCounter ?
@@ -86,16 +73,6 @@ TextInputField.propTypes = { placeholder: PropTypes.string, value: PropTypes.str
   onBlur: PropTypes.func, onChange: PropTypes.func, editable: PropTypes.bool, onFocus: PropTypes.func, dataDetectorTypes: PropTypes.any,
 
   accessibilityLabel: PropTypes.string, accessibilityHint: PropTypes.string,
-  isAccessibilityStateDisabled: PropTypes.bool,
-  isAccessibilityStateSelected: PropTypes.bool,
-  isAccessibilityStateChecked: PropTypes.bool,
-  isAccessibilityStateBusy: PropTypes.bool,
-  isAccessibilityStateExpanded: PropTypes.bool,
-
-  isAccessibilityValueMin: PropTypes.number,
-  isAccessibilityValueMax: PropTypes.number,
-  isAccessibilityValueNow: PropTypes.number,
-  isAccessibilityValueText: PropTypes.string
 }
 
 export default TextInputField

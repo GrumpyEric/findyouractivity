@@ -134,7 +134,6 @@ const LoginScreen = () => {
           text={LoginButtonText}
           backgroundColor={Colors.findmyactivityYellow}
           borderColor={Colors.findmyactivityYellow}
-          accessibilityLabel={LoginButtonText}
           accessibilityHint={LoginButtonHint}
           icon={'login'}
           width={200}

@@ -29,19 +29,6 @@ const ButtonMapNavigation = (props) => {
         aria-label={middleText}
         accessibilityHint={middleHintText}
         accessibilityRole={"button"}
-        accessibilityState={{
-          disabled: props.isAccessibilityStateDisabled,
-          selected: props.isAccessibilityStateSelected,
-          checked: props.isAccessibilityStateChecked,
-          busy: props.isAccessibilityStateBusy,
-          expanded: props.isAccessibilityStateExpanded
-        }}
-        accessibilityValue={{
-          min: props.isAccessibilityValueMin,
-          max: props.isAccessibilityValueMax,
-          now: props.isAccessibilityValueNow,
-          text: props.isAccessibilityValueText
-        }}
       >
         <Icon
           name={'map-marker'}
@@ -59,19 +46,7 @@ const ButtonMapNavigation = (props) => {
         aria-label={upText}
         accessibilityHint={upHintText}
         accessibilityRole={"button"}
-        accessibilityState={{
-          disabled: props.isAccessibilityStateDisabled,
-          selected: props.isAccessibilityStateSelected,
-          checked: props.isAccessibilityStateChecked,
-          busy: props.isAccessibilityStateBusy,
-          expanded: props.isAccessibilityStateExpanded
-        }}
-        accessibilityValue={{
-          min: props.isAccessibilityValueMin,
-          max: props.isAccessibilityValueMax,
-          now: props.isAccessibilityValueNow,
-          text: props.isAccessibilityValueText
-        }}
+        
       >
         <Icon
           name={'arrow-up'}
@@ -89,19 +64,6 @@ const ButtonMapNavigation = (props) => {
         aria-label={downText}
         accessibilityHint={downHintText}
         accessibilityRole={"button"}
-        accessibilityState={{
-          disabled: props.isAccessibilityStateDisabled,
-          selected: props.isAccessibilityStateSelected,
-          checked: props.isAccessibilityStateChecked,
-          busy: props.isAccessibilityStateBusy,
-          expanded: props.isAccessibilityStateExpanded
-        }}
-        accessibilityValue={{
-          min: props.isAccessibilityValueMin,
-          max: props.isAccessibilityValueMax,
-          now: props.isAccessibilityValueNow,
-          text: props.isAccessibilityValueText
-        }}
       >
         <Icon
           name={'arrow-down'}
@@ -119,19 +81,6 @@ const ButtonMapNavigation = (props) => {
         aria-label={leftText}
         accessibilityHint={leftHintText}
         accessibilityRole={"button"}
-        accessibilityState={{
-          disabled: props.isAccessibilityStateDisabled,
-          selected: props.isAccessibilityStateSelected,
-          checked: props.isAccessibilityStateChecked,
-          busy: props.isAccessibilityStateBusy,
-          expanded: props.isAccessibilityStateExpanded
-        }}
-        accessibilityValue={{
-          min: props.isAccessibilityValueMin,
-          max: props.isAccessibilityValueMax,
-          now: props.isAccessibilityValueNow,
-          text: props.isAccessibilityValueText
-        }}
       >
         <Icon
           name={'arrow-left'}
@@ -150,19 +99,6 @@ const ButtonMapNavigation = (props) => {
         aria-label={rightText}
         accessibilityHint={rightHintText}
         accessibilityRole={"button"}
-        accessibilityState={{
-          disabled: props.isAccessibilityStateDisabled,
-          selected: props.isAccessibilityStateSelected,
-          checked: props.isAccessibilityStateChecked,
-          busy: props.isAccessibilityStateBusy,
-          expanded: props.isAccessibilityStateExpanded
-        }}
-        accessibilityValue={{
-          min: props.isAccessibilityValueMin,
-          max: props.isAccessibilityValueMax,
-          now: props.isAccessibilityValueNow,
-          text: props.isAccessibilityValueText
-        }}
       >
         <Icon
           name={'arrow-right'}
@@ -178,16 +114,6 @@ ButtonMapNavigation.propTypes = { onPressUp: PropTypes.func.isRequired, onPressD
   onPressLeft: PropTypes.func.isRequired, onPressRight: PropTypes.func.isRequired, onPressMiddle: PropTypes.func.isRequired,
 
   accessibilityHint: PropTypes.string,
-  isAccessibilityStateDisabled: PropTypes.bool,
-  isAccessibilityStateSelected: PropTypes.bool,
-  isAccessibilityStateChecked: PropTypes.bool,
-  isAccessibilityStateBusy: PropTypes.bool,
-  isAccessibilityStateExpanded: PropTypes.bool,
-
-  isAccessibilityValueMin: PropTypes.number,
-  isAccessibilityValueMax: PropTypes.number,
-  isAccessibilityValueNow: PropTypes.number,
-  isAccessibilityValueText: PropTypes.string
 }
 
 export default ButtonMapNavigation
