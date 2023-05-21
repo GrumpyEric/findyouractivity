@@ -62,34 +62,106 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
 
   return (
     <ScrollView accessibilityViewIsModal={true} style={[stylesGlobal.screenContainer, styles.container]} contentContainerStyle={stylesGlobal.contentContainer}>
-      <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems, textAlign: 'center'}]}>Event</Text>
+      <Text 
+        style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems, textAlign: 'center'}]}
+        accessibilityRole="header"
+        accessibilityLabel='Event'
+        aria-label='Event'
+      >
+        Event
+      </Text>
       <ScrollView style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContainer}>
-        <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Eventname:{'\n'}
-          <Text style={stylesGlobal.standardText}>{nameDisplay}</Text>
+        <Text 
+          style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}
+          accessibilityRole="text"
+          accessibilityLabel='Eventname'
+          aria-label='Eventname'
+        >
+          Eventname:{'\n'}
+          <Text 
+            style={stylesGlobal.standardText}
+            accessibilityRole="text"
+            accessibilityLabel={nameDisplay}
+            aria-label={nameDisplay}
+          >
+            {nameDisplay}
+          </Text>
         </Text>
 
         {descriptionDisplay ?
-        <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Beschreibung:{'\n'}
-          <Text style={stylesGlobal.standardText}>{descriptionDisplay}</Text>
+        <Text 
+          style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}
+          accessibilityRole="text"
+          accessibilityLabel='Beschreibung'
+          aria-label='Beschreibung'
+        >
+          Beschreibung:{'\n'}
+          <Text 
+            style={stylesGlobal.standardText}
+            accessibilityRole="text"
+            accessibilityLabel={descriptionDisplay}
+            aria-label={descriptionDisplay}
+          >
+            {descriptionDisplay}
+          </Text>
         </Text>  
         : null}
 
         {locationDescriptionDisplay ?
-        <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Wo?:{'\n'}
-          <Text style={stylesGlobal.standardText}>{locationDescriptionDisplay}</Text>
+        <Text 
+          style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}
+          accessibilityRole="text"
+          accessibilityLabel='Wo'
+          aria-label='Wo'
+        >
+          Wo?:{'\n'}
+          <Text 
+            style={stylesGlobal.standardText}
+            accessibilityRole="text"
+            accessibilityLabel={locationDescriptionDisplay}
+            aria-label={locationDescriptionDisplay}
+          >
+            {locationDescriptionDisplay}
+            </Text>
         </Text>
         : null}
 
-        <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Anzahl der Teilnehmer:{'\n'}
-          <Text style={stylesGlobal.standardText}>{participantList.length} / {maxParticipantDisplay}</Text>
+        <Text 
+          style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}
+          accessibilityRole="text"
+          accessibilityLabel='Anzahl der Teilnehmer'
+          aria-label='Anzahl der Teilnehmer'
+        >
+          Anzahl der Teilnehmer:{'\n'}
+          <Text 
+            style={stylesGlobal.standardText}
+            accessibilityRole="text"
+            accessibilityLabel={participantList.length + 'von' + maxParticipantDisplay}
+            aria-label={participantList.length + 'von' + maxParticipantDisplay}
+          >
+            {participantList.length} von {maxParticipantDisplay}
+          </Text>
         </Text>
 
         {startTimeDisplay}
         {endTimeDisplay}
         {tagDisplay}
 
-        <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.textCenterStyle]}>Erstellt von:{'\n'}
-          <Text style={stylesGlobal.standardText}>{authorUsernameDisplay}</Text>
+        <Text 
+          style={[stylesGlobal.ueberschriftText2, stylesGlobal.textCenterStyle]}
+          accessibilityRole="text"
+          accessibilityLabel='Erstellt von'
+          aria-label='Erstellt von'
+        >
+          Erstellt von:{'\n'}
+          <Text 
+            style={stylesGlobal.standardText}
+            accessibilityRole="text"
+            accessibilityLabel={authorUsernameDisplay}
+            aria-label={authorUsernameDisplay}
+          >
+            {authorUsernameDisplay}
+            </Text>
         </Text>
 
       </ScrollView>
@@ -101,12 +173,14 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
           backgroundColor={Colors.findmyactivityYellow}
           borderColor={Colors.findmyactivityYellow}
           width={200}
+          accessibilityHint={'Drücken, um am Event teilzunehmen'}
         />
       </View>
 
       <ButtonBack
         onPress={() => navigation.goBack()}
         text={'Zurück'}
+        accessibilityHint={'Gehen Sie zum vorherigen Bildschirm zurück'}
       />
     </ScrollView>
   )

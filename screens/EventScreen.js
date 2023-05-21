@@ -18,7 +18,7 @@ import {
 import { height, stylesGlobal } from "../constants/StylesGlobal";
 import ButtonVariable from "../components/ButtonVariable";
 import { format, isSameDay, isTomorrow } from "date-fns";
-import { useEffect } from "react";
+import { ProfileDeleteMarkerText, ProfileEditMarkerText, ProfileEventsClickText, ProfileEventsDescriptionText, ProfileEventsDistanceText, ProfileEventsNameText } from "../constants/Fixtures";
 
 const EventScreen = ( {navigation} ) => {
   const moveToMarker = (inputMarker) => {
@@ -91,38 +91,77 @@ const EventScreen = ( {navigation} ) => {
   return (
     <ScrollView style={[stylesGlobal.screenContainer, styles.container]} contentContainerStyle={stylesGlobal.contentContainer}>
       <View style={stylesGlobal.contentContainerMainScreens}>
-        <Text style={[stylesGlobal.ueberschriftText, {textAlign: 'center'}]}>Events</Text>
+        <Text 
+          style={[stylesGlobal.ueberschriftText, {textAlign: 'center'}]}
+          accessibilityRole="header"
+          accessibilityLabel="Events"
+          aria-label="Events"
+        >Events
+        </Text>
       
         <View style={{flexDirection: 'row', justifyContent: "center", alignItems: "center"}}> 
-          <Text style={[stylesGlobal.ueberschriftText2]}>{showAllMyMarkers ? 'Ansicht auf nur meine Marker umstellen' : 'Ansicht auf alle Marker umstellen'}</Text>
+          <Text 
+            style={[stylesGlobal.ueberschriftText2]}
+            accessibilityRole="text"
+            accessibilityLabel={showAllMyMarkers ? 'Ansicht auf nur meine Marker umstellen' : 'Ansicht auf alle Marker umstellen'}
+            aria-label={showAllMyMarkers ? 'Ansicht auf nur meine Marker umstellen' : 'Ansicht auf alle Marker umstellen'}
+          >
+            {showAllMyMarkers ? 'Ansicht auf nur meine Marker umstellen' : 'Ansicht auf alle Marker umstellen'}
+          </Text>
           <Switch
             value={showAllMyMarkers}
             disabled={false}
             onValueChange={() => setShowAllMarkers(!showAllMyMarkers)}
             trackColor={{ false: Colors.findmyactivityError, true: Colors.findmyactivityAccept }}
             thumbColor={Colors.findmyactivityWhite}
+            accessibilityRole="switch"
+            accessibilityLabel={showAllMyMarkers ? 'Ansicht auf nur meine Marker umstellen' : 'Ansicht auf alle Marker umstellen'}
+            aria-label={showAllMyMarkers ? 'Ansicht auf nur meine Marker umstellen' : 'Ansicht auf alle Marker umstellen'}
           ></Switch>
-          {/* <Text style={[stylesGlobal.standardText, {color: Colors.findmyactivityText, alignSelf: 'center'}]}>{showAllMyMarkers ? 'Alle Marker' : 'Meine Marker'}</Text> */}
         </View>
 
-        <Text style={[stylesGlobal.ueberschriftText2, {marginBottom: 2}]}>Umkreis anzuzeigender Marker:</Text>
+        <Text 
+          style={[stylesGlobal.ueberschriftText2, {marginBottom: 2}]}
+          accessibilityRole="text"
+          accessibilityLabel='Umkreis anzuzeigender Marker'
+          aria-label='Umkreis anzuzeigender Marker'
+        >
+          Umkreis anzuzeigender Marker:
+        </Text>
         <View style={[styles.contentSeparatorStyle, {backgroundColor: Colors.findmyactivityWhite, padding: 5, borderWidth: 2, borderRadius: 10, marginTop: 0}]}>
-          <Text style={stylesGlobal.standardText}>{radiusMarkersVisual === 'alle Marker anzeigen' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>
-          <Slider 
-            value={radiusMarkers}
+          <Text 
+            style={stylesGlobal.standardText}
+            accessibilityRole="text"
+            accessibilityLabel={radiusMarkersVisual === 'alle Marker anzeigen' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}
+            aria-label={radiusMarkersVisual === 'alle Marker anzeigen' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}
+          >
+            {radiusMarkersVisual === 'alle Marker anzeigen' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}
+          </Text>
+          <Slider
             minimumValue={0}
             maximumValue={21}
-            onSlidingComplete={(value) => value < 21 ? setRadiusMarkers(value) : setRadiusMarkers('alle')}
+            onSlidingComplete={(value) => { value < 21 ? setRadiusMarkers(value) : setRadiusMarkers('alle') } }
             step={1}
+            value={radiusMarkers}
             onValueChange={(value) => value < 21 ? setRadiusMarkersVisual(value) : setRadiusMarkersVisual('alle Marker anzeigen')}
             minimumTrackTintColor={Colors.findmyactivityAccept}
             maximumTrackTintColor={Colors.findmyactivityError}
             thumbTintColor={Colors.findmyactivityText}
+            accessibilityRole='adjustable'
+            accessibilityLabel={radiusMarkers.toString()}
+            aria-label={radiusMarkers.toString()}
           />
         </View>
 
         <View style={styles.eventsStyle}>
-        <Text style={[stylesGlobal.ueberschriftText2, {marginBottom: 2}]}>{showAllMyMarkers ? 'Alle Events' : 'Meine Events'}</Text>
+        <Text 
+          style={[stylesGlobal.ueberschriftText2, {marginBottom: 2}]}
+          accessibilityRole="header"
+          accessibilityLabel={showAllMyMarkers ? 'Alle Events' : 'Meine Events'}
+          aria-label={showAllMyMarkers ? 'Alle Events' : 'Meine Events'}
+        >
+          {showAllMyMarkers ? 'Alle Events' : 'Meine Events'}
+        </Text>
 
           <ScrollView style={styles.scrollAreaStyle} contentContainerStyle={styles.scrollAreaContentContainerStyle}>
           <View>
@@ -131,7 +170,7 @@ const EventScreen = ( {navigation} ) => {
           myMarkersRef.length ?
           myMarkersRef.map((val, index) => 
           {
-            let distanceToUserPos = "?"
+            let distanceToUserPos = "?"//getDistance(val,props.userPosContext._currentValue.coords) / 1000
             if (userPosContext._currentValue.coords != undefined)
             {
               distanceToUserPos = getDistance(val, userPosContext._currentValue.coords) / 1000
@@ -155,8 +194,19 @@ const EventScreen = ( {navigation} ) => {
                 }
               }
               return (
-                <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Start:{'\n'}
-                  <Text style={stylesGlobal.standardText}>{startTimeRes}</Text>
+                <Text 
+                  style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                  accessibilityLabel="Start"
+                  aria-label="Start"
+                >
+                  Start:{'\n'}
+                  <Text 
+                    style={stylesGlobal.standardText}
+                    accessibilityLabel={startTimeRes}
+                    aria-label={startTimeRes}
+                  >
+                    {startTimeRes}
+                    </Text>
                 </Text>
               )
           }
@@ -180,8 +230,19 @@ const EventScreen = ( {navigation} ) => {
               }
 
               return (
-                <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Ende:{'\n'}
-                  <Text style={stylesGlobal.standardText}>{endTimeRes}</Text>
+                <Text 
+                  style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                  accessibilityLabel="Ende"
+                  aria-label="Ende"
+                >
+                  Ende:{'\n'}
+                  <Text 
+                    style={stylesGlobal.standardText}
+                    accessibilityLabel={endTimeRes}
+                    aria-label={endTimeRes}
+                  >
+                    {endTimeRes}
+                  </Text>
                 </Text>
               )
           }
@@ -189,8 +250,19 @@ const EventScreen = ( {navigation} ) => {
           const displayTags = (val) => {
             console.log(val.tags);
               return (
-              <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Tags:{'\n'}
-                <Text style={stylesGlobal.standardText}>{val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}</Text>
+              <Text 
+                style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                accessibilityLabel="Tags"
+                aria-label="Tags"
+              >
+                Tags:{'\n'}
+                <Text 
+                  style={stylesGlobal.standardText}
+                  accessibilityLabel={val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                  aria-label={val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                >
+                  {val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                  </Text>
               </Text>
             )
           }
@@ -198,23 +270,75 @@ const EventScreen = ( {navigation} ) => {
             if (distanceToUserPos < radiusMarkers || radiusMarkers === 'alle') {
               return (
                 <View key={index} style={{ marginBottom: 15, borderTopWidth: index === 0 ? 0 : 1 }}>
-                  <TouchableOpacity onPress={() => moveToMarker(val)} style={{marginTop: 10}}>
-                    <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Eventname:{'\n'}
-                      <Text style={stylesGlobal.standardText}>{val.name}</Text>
+                  <TouchableOpacity 
+                    onPress={() => moveToMarker(val)} 
+                    style={{marginTop: 10}}
+                    accessibilityRole="button"
+                    accessibilityLabel='Auf das Feld klicken, um zum Event zu springen'
+                    aria-label='Auf das Feld klicken, um zum Event zu springen'
+                  >
+                    <Text 
+                      style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                      accessibilityRole="text"
+                      accessibilityLabel='Eventname'
+                      aria-label='Eventname'
+                    >
+                      Eventname:{'\n'}
+                      <Text 
+                        style={stylesGlobal.standardText}
+                        accessibilityRole="text"
+                        accessibilityLabel={val.name}
+                        aria-label={val.name}
+                      >
+                        {val.name}
+                      </Text>
                     </Text>
                     {val.description 
                     ? 
-                    <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Beschreibung:{'\n'}
-                      <Text style={stylesGlobal.standardText}>{val.description}</Text>
+                    <Text 
+                      style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}
+                      accessibilityRole="text"
+                      accessibilityLabel='Beschreibung'
+                      aria-label='Beschreibung'
+                    >
+                      Beschreibung:{'\n'}
+                      <Text 
+                        style={stylesGlobal.standardText}
+                        accessibilityRole="text"
+                        accessibilityLabel={val.description}
+                        aria-label={val.description}
+                      >
+                        {val.description}
+                      </Text>
                     </Text>  
                     : null}
                     { displayStartTime(val) }
                     { displayEndTime(val) }
-                    <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Distanz:{'\n'}
-                      <Text style={stylesGlobal.standardText}>{distanceToUserPos} km</Text>
+                    <Text 
+                      style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                      accessibilityRole="text"
+                      accessibilityLabel='Distanz'
+                      aria-label='Distanz'
+                    >
+                      Distanz:{'\n'}
+                      <Text 
+                        style={stylesGlobal.standardText}
+                        accessibilityRole="text"
+                        accessibilityLabel={distanceToUserPos + 'km'}
+                        aria-label={distanceToUserPos + 'km'}
+                      >
+                        {distanceToUserPos} km
+                      </Text>
                     </Text>
                     { displayTags(val) }
-                    <Text style={stylesGlobal.ueberschriftText2}>Auf das Feld klicken, um zum Event zu springen</Text>
+                    <Text 
+                      style={stylesGlobal.ueberschriftText2}
+                      accessibilityRole="text"
+                      accessibilityLabel='Auf das Feld klicken, um zum Event zu springen'
+                      aria-label='Auf das Feld klicken, um zum Event zu springen'
+                    >
+                      Auf das Feld klicken, um zum Event zu springen
+                    </Text>
                   </TouchableOpacity>
 
                   <View style={{flexDirection: 'row', justifyContent: "space-around", marginTop: stylesGlobal.marginsAndPadding.paddingBetweenItems}}>
@@ -223,6 +347,7 @@ const EventScreen = ( {navigation} ) => {
                       borderColor={Colors.findmyactivityYellow}
                       onPress={() => editMarkerHandler(val)}
                       text={'Marker bearbeiten'}
+                      accessibilityHint={'In ein neues Menü gehen, um den Marker anzupassen'}
                     />
                     <ButtonVariable
                       backgroundColor={Colors.findmyactivityError}
@@ -230,6 +355,7 @@ const EventScreen = ( {navigation} ) => {
                       textColor={Colors.findmyactivityWhite}
                       onPress={() => deleteMarkerHandler(val)}
                       text={'Marker löschen'}
+                      accessibilityHint={'Marker löschen'}
                     />
                   </View>
 
@@ -240,13 +366,20 @@ const EventScreen = ( {navigation} ) => {
         )
         :
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={stylesGlobal.ueberschriftText2}>Sie haben noch keine eigenen Marker gesetzt. Setzen Sie erstmal Marker auf der Karte, um hier dann die eigenen Marker sehen zu können.</Text>
+            <Text 
+              style={stylesGlobal.ueberschriftText2}
+              accessibilityRole="text"
+              accessibilityLabel='Sie haben noch keine eigenen Marker gesetzt. Setzen Sie erstmal Marker auf der Karte, um hier dann die eigenen Marker sehen zu können.'
+              aria-label='Sie haben noch keine eigenen Marker gesetzt. Setzen Sie erstmal Marker auf der Karte, um hier dann die eigenen Marker sehen zu können.'
+            >
+              Sie haben noch keine eigenen Marker gesetzt. Setzen Sie erstmal Marker auf der Karte, um hier dann die eigenen Marker sehen zu können.
+            </Text>
           </View>
         :
         markersContext._currentValue.length ?
         markersContext._currentValue.map((val, index) => 
           {
-            let distanceToUserPos = "?"//getDistance(val,props.userPosContext.coords) / 1000
+            let distanceToUserPos = "?"//getDistance(val,props.userPosContext._currentValue.coords) / 1000
             if (userPosContext._currentValue.coords != undefined)
             {
               distanceToUserPos = getDistance(val, userPosContext._currentValue.coords) / 1000
@@ -270,8 +403,19 @@ const EventScreen = ( {navigation} ) => {
                 }
               }
               return (
-                <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Start:{'\n'}
-                  <Text style={stylesGlobal.standardText}>{startTimeRes}</Text>
+                <Text 
+                  style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                  accessibilityLabel="Start"
+                  aria-label="Start"
+                >
+                  Start:{'\n'}
+                  <Text 
+                    style={stylesGlobal.standardText}
+                    accessibilityLabel={startTimeRes}
+                    aria-label={startTimeRes}
+                  >
+                    {startTimeRes}
+                    </Text>
                 </Text>
               )
           }
@@ -295,8 +439,19 @@ const EventScreen = ( {navigation} ) => {
               }
 
               return (
-                <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Ende:{'\n'}
-                  <Text style={stylesGlobal.standardText}>{endTimeRes}</Text>
+                <Text 
+                  style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                  accessibilityLabel="Ende"
+                  aria-label="Ende"
+                >
+                  Ende:{'\n'}
+                  <Text 
+                    style={stylesGlobal.standardText}
+                    accessibilityLabel={endTimeRes}
+                    aria-label={endTimeRes}
+                  >
+                    {endTimeRes}
+                  </Text>
                 </Text>
               )
           }
@@ -304,34 +459,83 @@ const EventScreen = ( {navigation} ) => {
           const displayTags = (val) => {
             console.log(val.tags);
               return (
-              <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Tags:{'\n'}
-                <Text style={stylesGlobal.standardText}>{val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}</Text>
+              <Text 
+                style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                accessibilityLabel="Tags"
+                aria-label="Tags"
+              >
+                Tags:{'\n'}
+                <Text 
+                  style={stylesGlobal.standardText}
+                  accessibilityLabel={val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                  aria-label={val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                >
+                  {val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                  </Text>
               </Text>
             )
           }
 
             if (distanceToUserPos < radiusMarkers || radiusMarkers === 'alle') {
               return (
-
                 <View key={index} style={{ marginBottom: 15, borderTopWidth: index === 0 ? 0 : 1 }}>
-                  <TouchableOpacity onPress={() => moveToMarker(val)} style={{marginTop: 10}}>
-                    <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Eventname:{'\n'}
-                      <Text style={stylesGlobal.standardText}>{val.name}</Text>
+                <TouchableOpacity onPress={() => moveToMarker(val)} style={{marginTop: 10}}>
+                  <Text 
+                    style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                    accessibilityLabel={ProfileEventsNameText}
+                    aria-label={ProfileEventsNameText}
+                  >
+                    {ProfileEventsNameText + '\n'}
+                    <Text 
+                      style={stylesGlobal.standardText}
+                      accessibilityLabel={val.name}
+                      aria-label={val.name}
+                    >
+                      {val.name}
                     </Text>
-                    {val.description 
-                    ? 
-                    <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}>Beschreibung:{'\n'}
-                      <Text style={stylesGlobal.standardText}>{val.description}</Text>
-                    </Text>  
-                    : null}
-                    { displayStartTime(val) }
-                    { displayEndTime(val) }
-                    <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Distanz:{'\n'}
-                      <Text style={stylesGlobal.standardText}>{distanceToUserPos} km</Text>
+                  </Text>
+                  {val.description 
+                  ? 
+                  <Text 
+                    style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                    accessibilityLabel={ProfileEventsDescriptionText}
+                    aria-label={ProfileEventsDescriptionText}
+                  >
+                    {ProfileEventsDescriptionText + '\n'}
+                    <Text
+                      style={stylesGlobal.standardText}
+                      accessibilityLabel={val.description}
+                      aria-label={val.description}
+                    >
+                      {val.description}
                     </Text>
-                    { displayTags(val) }
-                    <Text style={stylesGlobal.ueberschriftText2}>Auf das Feld klicken, um zum Event zu springen</Text>
-                  </TouchableOpacity>
+                  </Text>  
+                  : null}
+                  { displayStartTime(val) }
+                  { displayEndTime(val) }
+                  <Text 
+                    style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                    accessibilityLabel={ProfileEventsDistanceText}
+                    aria-label={ProfileEventsDistanceText}
+                  >
+                    {ProfileEventsDistanceText + '\n'}
+                    <Text 
+                      style={stylesGlobal.standardText}
+                      accessibilityLabel={distanceToUserPos + ' km'}
+                      aria-label={distanceToUserPos + ' km'}
+                    >
+                      {distanceToUserPos} km
+                    </Text>
+                  </Text>
+                  { displayTags(val) }
+                  <Text 
+                    style={stylesGlobal.ueberschriftText2}
+                    accessibilityLabel={ProfileEventsClickText}
+                    aria-label={ProfileEventsClickText}
+                  >
+                    {ProfileEventsClickText}
+                  </Text>
+                </TouchableOpacity>
 
                 {val.user === myUserID 
                 ?
@@ -340,14 +544,14 @@ const EventScreen = ( {navigation} ) => {
                     backgroundColor={Colors.findmyactivityYellow}
                     borderColor={Colors.findmyactivityYellow}
                     onPress={() => editMarkerHandler(val)}
-                    text={'Marker bearbeiten'}
+                    text={ProfileEditMarkerText}
                   />
                   <ButtonVariable
                     backgroundColor={Colors.findmyactivityError}
                     borderColor={Colors.findmyactivityError}
                     textColor={Colors.findmyactivityWhite}
                     onPress={() => deleteMarkerHandler(val)}
-                    text={'Marker löschen'}
+                    text={ProfileDeleteMarkerText}
                   />
                 </View>
                 :
@@ -361,7 +565,14 @@ const EventScreen = ( {navigation} ) => {
         )
         :
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={stylesGlobal.ueberschriftText2}>Es hat noch niemand Marker gesetzt. Setzen Sie den ersten Marker auf der Karte!</Text>
+            <Text 
+              style={stylesGlobal.ueberschriftText2}
+              accessibilityRole="text"
+              accessibilityLabel='Es hat noch niemand Marker gesetzt. Setzen Sie den ersten Marker auf der Karte!'
+              aria-label='Es hat noch niemand Marker gesetzt. Setzen Sie den ersten Marker auf der Karte!'
+            >
+              Es hat noch niemand Marker gesetzt. Setzen Sie den ersten Marker auf der Karte!
+            </Text>
           </View>
       }
           </View>

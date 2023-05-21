@@ -64,7 +64,7 @@ FloatingActionButton.propTypes = { onPress: PropTypes.func.isRequired, bottomPos
   rightPos: PropTypes.number, icon: PropTypes.string, text: PropTypes.string,
   leftPos: PropTypes.number, topPos: PropTypes.number,
 
-  accessibilityLabel: PropTypes.string, accessibilityHint: PropTypes.string,
+  accessibilityHint: PropTypes.string,
   isAccessibilityStateDisabled: PropTypes.bool,
   isAccessibilityStateSelected: PropTypes.bool,
   isAccessibilityStateChecked: PropTypes.bool,

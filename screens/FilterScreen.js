@@ -89,10 +89,34 @@ const FilterScreen = ( {navigation} ) => {
   
 return(
   <ScrollView style={[stylesGlobal.screenContainer, styles.screenContainer]} contentContainerStyle={stylesGlobal.contentContainer}>
-    <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems, textAlign: 'center'}]}>Filter</Text>
+    <Text 
+      style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems, textAlign: 'center'}]}
+      accessibilityRole="header"
+      accessibilityLabel="Filter"
+      aria-label="Filter"
+      accessibilityHint='Titel des momentanen Bildschirmes'
+    >
+      Filter
+    </Text>
+
     <View style={styles.contentContainerStyle}>
-      <Text style={stylesGlobal.ueberschriftText2}>Umkreis anzuzeigender Marker</Text>
-      <Text>{radiusMarkersVisual === 'alle Marker anzeigen' || radiusMarkersVisual === 21 ? radiusMarkersVisual : radiusMarkersVisual + ' km'}</Text>
+      <Text 
+        style={stylesGlobal.ueberschriftText2}
+        accessibilityRole="text"
+        accessibilityLabel="Umkreis anzuzeigender Marker"
+        aria-label="Umkreis anzuzeigender Marker"
+      >
+        Umkreis anzuzeigender Marker
+      </Text>
+      <Text
+        style={stylesGlobal.standardText}
+        accessibilityRole="text"
+        accessibilityLabel={radiusMarkersVisual === 'alle Marker anzeigen' || radiusMarkersVisual === 21 ? radiusMarkersVisual : radiusMarkersVisual + ' km'}
+        aria-label={radiusMarkersVisual === 'alle Marker anzeigen' || radiusMarkersVisual === 21 ? radiusMarkersVisual : radiusMarkersVisual + ' km'}
+      >
+        {radiusMarkersVisual === 'alle Marker anzeigen' || radiusMarkersVisual === 21 ? radiusMarkersVisual : radiusMarkersVisual + ' km'}
+      </Text>
+
       <Slider
         minimumValue={0}
         maximumValue={21}
@@ -103,9 +127,19 @@ return(
         minimumTrackTintColor={Colors.findmyactivityAccept}
         maximumTrackTintColor={Colors.findmyactivityError}
         thumbTintColor={Colors.findmyactivityText}
+        accessibilityRole='adjustable'
+        accessibilityLabel={radiusMarkers.toString()}
+        aria-label={radiusMarkers.toString()}
       />
 
-      <Text style={[stylesGlobal.ueberschriftText2, {alignSelf: 'flex-start', marginBottom: 2}]}>Tags</Text>
+      <Text 
+        style={[stylesGlobal.ueberschriftText2, {alignSelf: 'flex-start', marginBottom: 2}]}
+        accessibilityRole='text'
+        accessibilityLabel='Tags'
+        aria-label='Tags'
+      >
+        Tags
+      </Text>
       <DropDownPicker
         style={{borderWidth: 2}}
         searchable={true}
@@ -129,6 +163,7 @@ return(
         backgroundColor={Colors.findmyactivityYellow}
         borderColor={Colors.findmyactivityYellow}
         width={150}
+        accessibilityHint={'Wendet die ausgewählten Filter an'}
       />
       <ButtonVariable
         text={'Zurücksetzen'}
@@ -137,6 +172,7 @@ return(
         borderColor={Colors.findmyactivityError}
         textColor={Colors.findmyactivityWhite}
         width={150}
+        accessibilityHint={'Setzt die ausgewählten Filter zurück'}
       />
     </View>
 

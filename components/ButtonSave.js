@@ -1,10 +1,23 @@
 import React, { Component } from "react";
 import { StyleSheet, TouchableOpacity, Text } from "react-native";
+import { stylesGlobal } from "../constants/StylesGlobal";
 
 function ButtonSave(props) {
   return (
-    <TouchableOpacity style={[styles.container, props.style]}>
-      <Text style={styles.speichern}>Speichern</Text>
+    <TouchableOpacity 
+      style={[styles.container, props.style]}
+      accessibilityLabel="Speichern"
+      aria-label="Speichern"
+      accessibilityHint="Speichert Ihre Änderungen"
+    >
+      <Text 
+        style={stylesGlobal.standardText}
+        accessibilityRole="text"
+        accessibilityLabel='Speichern'
+        aria-label='Speichern'
+      >
+        Speichern
+      </Text>
     </TouchableOpacity>
   );
 }

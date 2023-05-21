@@ -33,6 +33,7 @@ const EditMarkerLocationScreen = ( {navigation} ) => {
           borderColor={Colors.findmyactivityText}
           textColor={Colors.findmyactivityWhite}
           width={150}
+          accessibilityHint={'Bearbeiten der Markerposition abbrechen'}
         /> 
       </View>
     </ScrollView>

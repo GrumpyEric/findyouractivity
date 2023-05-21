@@ -180,102 +180,102 @@ const Profile = ( {navigation} ) => {
           {
           eventArray.length ?
           eventArray.map((val, index) => {
-            let distanceToUserPos = "?"//getDistance(val,props.userPosContext.coords) / 1000
+            let distanceToUserPos = "?"//getDistance(val,props.userPosContext._currentValue.coords) / 1000
             if (userPosContext._currentValue.coords != undefined)
             {
-                distanceToUserPos = getDistance(val, userPosContext._currentValue.coords) / 1000
+              distanceToUserPos = getDistance(val, userPosContext._currentValue.coords) / 1000
             }
 
             const displayStartTime = (val) => {
 
-                let startTimeRes = "unbekannt"
-                const startDate = val.startTime.toDate()
-                const today = new Date()
+              let startTimeRes = "unbekannt"
+              const startDate = val.startTime.toDate()
+              const today = new Date()
 
-                if (val.startTime) {
-                  if (isSameDay(startDate, today)) {
-                    startTimeRes = "Heute um " + format(startDate, 'HH:mm') + ' Uhr'
-                  
-                  } else if (isTomorrow(startDate)) {
-                    startTimeRes = "Morgen um " + format(startDate, 'HH:mm') + ' Uhr'
+              if (val.startTime) {
+                if (isSameDay(startDate, today)) {
+                  startTimeRes = "Heute um " + format(startDate, 'HH:mm') + ' Uhr'
+                
+                } else if (isTomorrow(startDate)) {
+                  startTimeRes = "Morgen um " + format(startDate, 'HH:mm') + ' Uhr'
 
-                  } else {
-                    startTimeRes = format(startDate, 'dd.MM.yyyy, HH:mm') + ' Uhr'
-                  }
+                } else {
+                  startTimeRes = format(startDate, 'dd.MM.yyyy, HH:mm') + ' Uhr'
                 }
-                return (
-                  <Text 
-                    style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
-                    accessibilityLabel={ProfileEventsStartText}
-                    aria-label={ProfileEventsStartText}
-                  >
-                    {ProfileEventsStartText + '\n'}
-                    <Text 
-                      style={stylesGlobal.standardText}
-                      accessibilityLabel={startTimeRes}
-                      aria-label={startTimeRes}
-                    >
-                      {startTimeRes}
-                    </Text>
-                  </Text>
-                )
-            }
-
-            const displayEndTime = (val) => {
-
-                let endTimeRes = "unbekannt"
-                const endDate = val.endTime.toDate()
-                const today = new Date()
-
-                if (val.endTime) {
-                  if (isSameDay(endDate, today)) {
-                    endTimeRes = "Heute um " + format(endDate, 'HH:mm') + ' Uhr'
-                  
-                  } else if (isTomorrow(endDate)) {
-                    endTimeRes = "Morgen um " + format(endDate, 'HH:mm') + ' Uhr'
-
-                  } else {
-                    endTimeRes = format(endDate, 'dd.MM.yyyy, HH:mm') + ' Uhr'
-                  }
-                }
-
-                return (
-                  <Text 
-                    style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
-                    accessibilityLabel={ProfileEventsEndeText}
-                    aria-label={ProfileEventsEndeText}
-                  >
-                    {ProfileEventsEndeText + '\n'}
-                    <Text 
-                      style={stylesGlobal.standardText}
-                      accessibilityLabel={endTimeRes}
-                      aria-label={endTimeRes}
-                    >
-                      {endTimeRes}
-                    </Text>
-                  </Text>
-                )
-            }
-
-            const displayTags = (val) => {
-              console.log(val.tags);
-                return (
+              }
+              return (
                 <Text 
                   style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
-                  accessibilityLabel={ProfileEventsTagsText}
-                  aria-label={ProfileEventsTagsText}
+                  accessibilityLabel="Start"
+                  aria-label="Start"
                 >
-                  {ProfileEventsTagsText + '\n'}
+                  Start:{'\n'}
                   <Text 
                     style={stylesGlobal.standardText}
-                    accessibilityLabel={val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
-                    aria-label={val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                    accessibilityLabel={startTimeRes}
+                    aria-label={startTimeRes}
                   >
-                    {val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                    {startTimeRes}
+                    </Text>
+                </Text>
+              )
+          }
+
+          const displayEndTime = (val) => {
+
+              let endTimeRes = "unbekannt"
+              const endDate = val.endTime.toDate()
+              const today = new Date()
+
+              if (val.endTime) {
+                if (isSameDay(endDate, today)) {
+                  endTimeRes = "Heute um " + format(endDate, 'HH:mm') + ' Uhr'
+                
+                } else if (isTomorrow(endDate)) {
+                  endTimeRes = "Morgen um " + format(endDate, 'HH:mm') + ' Uhr'
+
+                } else {
+                  endTimeRes = format(endDate, 'dd.MM.yyyy, HH:mm') + ' Uhr'
+                }
+              }
+
+              return (
+                <Text 
+                  style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                  accessibilityLabel="Ende"
+                  aria-label="Ende"
+                >
+                  Ende:{'\n'}
+                  <Text 
+                    style={stylesGlobal.standardText}
+                    accessibilityLabel={endTimeRes}
+                    aria-label={endTimeRes}
+                  >
+                    {endTimeRes}
                   </Text>
                 </Text>
               )
-            }
+          }
+
+          const displayTags = (val) => {
+            console.log(val.tags);
+              return (
+              <Text 
+                style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                accessibilityLabel="Tags"
+                aria-label="Tags"
+              >
+                Tags:{'\n'}
+                <Text 
+                  style={stylesGlobal.standardText}
+                  accessibilityLabel={val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                  aria-label={val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                >
+                  {val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                  </Text>
+              </Text>
+            )
+          }
 
             return (
               <View style={{marginBottom: 15, borderTopWidth: index === 0 ? 0 : 1}} key={index}>

@@ -190,6 +190,7 @@ const MapViewGoogle = (props) => {
         rightPos={width * 0.025}
         icon={'crosshairs-gps'}
         text={'Position'}
+        accessibilityHint={'Zeigt Ihre momentane Position an'}
       />
 
       {editMarkerMode._currentValue === false ?
@@ -199,6 +200,7 @@ const MapViewGoogle = (props) => {
         rightPos={width * 0.025}
         icon={'filter'}
         text={'Filter'}
+        accessibilityHint={'Öffnet das Filtermenü'}
       />
       : null}
 
@@ -210,6 +212,7 @@ const MapViewGoogle = (props) => {
         rightPos={width * 0.025}
         icon={'help'}
         text={'Hilfe'}
+        accessibilityHint={'Öffnet das Hilfemenü'}
       />
 
       <View style={{
@@ -249,6 +252,7 @@ const MapViewGoogle = (props) => {
           backgroundColor={Colors.findmyactivityYellow}
           borderColor={Colors.findmyactivityText}
           width={150}
+          accessibilityHint={'Öffnet das Menü zur Markererstellung'}
         /> 
       </View>
 
@@ -274,6 +278,7 @@ const MapViewGoogle = (props) => {
           backgroundColor={Colors.findmyactivityYellow}
           borderColor={Colors.findmyactivityText}
           width={150}
+          accessibilityHint={'Aktualisiert die Position des Markers'}
         /> 
       </View>
     
@@ -293,6 +298,10 @@ const MapViewGoogle = (props) => {
         zoomControlEnabled={true}
         onLongPress = {(e) => updateUserMarker(e.nativeEvent.coordinate)}
         onPanDrag={() => setMarkerButtonVisible(false)}
+        accessibilityLabel="Karte"
+        aria-label="Karte"
+        accessibilityRole="none"
+        accessibilityHint="Die Karte, auf der Events angezeigt und erstellt werden können"
       >
       {/* DB Markers */}
       {
@@ -323,8 +332,19 @@ const MapViewGoogle = (props) => {
                 }
               }
               return (
-                <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Start:{'\n'}
-                  <Text style={stylesGlobal.standardText}>{startTimeRes}</Text>
+                <Text 
+                  style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                  accessibilityLabel="Start"
+                  aria-label="Start"
+                >
+                  Start:{'\n'}
+                  <Text 
+                    style={stylesGlobal.standardText}
+                    accessibilityLabel={startTimeRes}
+                    aria-label={startTimeRes}
+                  >
+                    {startTimeRes}
+                    </Text>
                 </Text>
               )
           }
@@ -348,8 +368,19 @@ const MapViewGoogle = (props) => {
               }
 
               return (
-                <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Ende:{'\n'}
-                  <Text style={stylesGlobal.standardText}>{endTimeRes}</Text>
+                <Text 
+                  style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                  accessibilityLabel="Ende"
+                  aria-label="Ende"
+                >
+                  Ende:{'\n'}
+                  <Text 
+                    style={stylesGlobal.standardText}
+                    accessibilityLabel={endTimeRes}
+                    aria-label={endTimeRes}
+                  >
+                    {endTimeRes}
+                  </Text>
                 </Text>
               )
           }
@@ -357,8 +388,19 @@ const MapViewGoogle = (props) => {
           const displayTags = (val) => {
             console.log(val.tags);
               return (
-              <Text style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}>Tags:{'\n'}
-                <Text style={stylesGlobal.standardText}>{val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}</Text>
+              <Text 
+                style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                accessibilityLabel="Tags"
+                aria-label="Tags"
+              >
+                Tags:{'\n'}
+                <Text 
+                  style={stylesGlobal.standardText}
+                  accessibilityLabel={val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                  aria-label={val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                >
+                  {val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                  </Text>
               </Text>
             )
           }
@@ -366,23 +408,84 @@ const MapViewGoogle = (props) => {
             return (
               <View key={index}>
                 {rangeContext._currentValue != null && distanceToUserPos != '?' && rangeContext._currentValue >= distanceToUserPos || rangeContext._currentValue === 21 || rangeContext._currentValue === 'alle' ?
-                <Marker key={index} coordinate={val} pinColor={Colors.findmyactivityError} tracksViewChanges={true} onPress={() => { getUserInfoFromDB(val.user) }}>
-                  <Callout style={{flex: 1}} onPress={ () => navigation.navigate('ViewMarkerScreen', { creationDate: val.creation_date, eventName: val.name, eventDescription: val.description, eventAuthorUsername: selectedAuthor._current_value.markers.username, eventAuthorDescription: selectedAuthor._current_value.markers.description, eventAuthorID: val.user, eventStartTime: displayStartTime(val), eventEndTime: displayEndTime(val), eventTags: displayTags(val), eventMaxParticipants: val.numberParticipants, eventLocationDescription: val.locationDescription, eventParticipantList: val.participantList } ) }>
-                    <Text style={stylesGlobal.ueberschriftText2}>Eventname: 
-                      <Text style={stylesGlobal.standardText}> {val.name}</Text>
+                <Marker
+                   key={index} 
+                   coordinate={val} 
+                   pinColor={Colors.findmyactivityError} 
+                   tracksViewChanges={true} 
+                   onPress={() => { getUserInfoFromDB(val.user) }}
+                   accessibilityRole="none"
+                   accessibilityLabel="Marker"
+                   aria-label="Marker"
+                >
+                  <Callout 
+                    style={{flex: 1}} 
+                    accessibilityRole="text"
+                    accessibilityLabel="Eventbeschreibung"
+                    aria-label="Eventbeschreibung"
+                    onPress={ () => navigation.navigate('ViewMarkerScreen', { creationDate: val.creation_date, eventName: val.name, eventDescription: val.description, eventAuthorUsername: selectedAuthor._current_value.markers.username, eventAuthorDescription: selectedAuthor._current_value.markers.description, eventAuthorID: val.user, eventStartTime: displayStartTime(val), eventEndTime: displayEndTime(val), eventTags: displayTags(val), eventMaxParticipants: val.numberParticipants, eventLocationDescription: val.locationDescription, eventParticipantList: val.participantList } ) }
+                  >
+                    <Text 
+                      style={stylesGlobal.ueberschriftText2}
+                      accessibilityRole="text"
+                      accessibilityLabel="Eventname"
+                      aria-label="Eventname"
+                    >
+                      {'Eventname: '} 
+                      <Text 
+                        style={stylesGlobal.standardText}
+                        accessibilityRole="text"
+                        accessibilityLabel={val.name}
+                        aria-label={val.name}
+                      > 
+                        {val.name}
+                      </Text>
                     </Text>
 
                     {val.description ?
-                    <Text style={stylesGlobal.ueberschriftText2}>Beschreibung: 
-                      <Text style={stylesGlobal.standardText}> {val.description}</Text>
+                    <Text 
+                      style={stylesGlobal.ueberschriftText2}
+                      accessibilityRole="text"
+                      accessibilityLabel="Beschreibung"
+                      aria-label="Beschreibung"
+                    >
+                      {'Beschreibung: '} 
+                      <Text 
+                        style={stylesGlobal.standardText}
+                        accessibilityRole="text"
+                        accessibilityLabel={val.description}
+                        aria-label={val.description}
+                      > 
+                        {val.description}
+                      </Text>
                     </Text>
                     : null}
 
-                    <Text style={stylesGlobal.ueberschriftText2}>Distanz: 
-                      <Text style={stylesGlobal.standardText}> {distanceToUserPos} km</Text>
+                    <Text 
+                      style={stylesGlobal.ueberschriftText2}
+                      accessibilityRole="text"
+                      accessibilityLabel="Distanz"
+                      aria-label="Distanz"
+                    >
+                      {'Distanz: '} 
+                      <Text 
+                        style={stylesGlobal.standardText}
+                        accessibilityRole="text"
+                        accessibilityLabel={distanceToUserPos + 'km'}
+                        aria-label={distanceToUserPos + 'km'}
+                      >
+                        {distanceToUserPos} km
+                      </Text>
                     </Text>
 
-                    <Text style={stylesGlobal.ueberschriftText2}>Klicken für mehr Infos!</Text>
+                    <Text 
+                      style={stylesGlobal.ueberschriftText2}
+                      accessibilityRole="text"
+                      accessibilityLabel="Klicken für mehr Infos!"
+                      aria-label="Klicken für mehr Infos!"
+                    >
+                      Klicken für mehr Infos!
+                    </Text>
                   </Callout>
                 </Marker>
                 : null}
@@ -398,7 +501,18 @@ const MapViewGoogle = (props) => {
         userMarker.map((val, index) => 
           {
             return (
-              <Marker key={index} coordinate={val} pinColor={Colors.findmyactivityOwnPin} draggable={false} tracksViewChanges={true} onPress={() => setMarkerButtonVisible(true)}></Marker>
+              <Marker 
+                key={index} 
+                coordinate={val} 
+                pinColor={Colors.findmyactivityOwnPin} 
+                draggable={false} 
+                tracksViewChanges={true} 
+                onPress={() => setMarkerButtonVisible(true)}
+                accessibilityRole="none"
+                accessibilityLabel="Marker"
+                aria-label="Marker"
+              > 
+              </Marker>
             ); 
 
           }

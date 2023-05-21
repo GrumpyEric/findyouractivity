@@ -7,7 +7,7 @@ import { stylesGlobal } from '../constants/StylesGlobal'
 import MapViewGoogle from '../components/MapView';
 import { mapRef } from '../components/AppContext';
 
-const HomeScreen = ( {navigation} ) => {
+const HomeScreen = () => {
   return (
     <View style={[stylesGlobal.screenContainer]}>
       <MapViewGoogle
@@ -23,7 +23,6 @@ export default HomeScreen
 
 const styles = StyleSheet.create({
   map_container: {
-    // flex: 1
     ...StyleSheet.absoluteFillObject
   },
 

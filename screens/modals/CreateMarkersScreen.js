@@ -201,29 +201,42 @@ const CreateMarkersScreen = ( {navigation} ) => {
     NOTHING_TO_SHOW: "Keine Tags zur Auswahl"
   });
   DropDownPicker.setLanguage("DE");
-
-  useEffect(() => {
-    console.log('Participants:', typeof numberParticipants, Number.isInteger(parseInt(numberParticipants)), numberParticipants);
-  }, [numberParticipants])
-
-  useEffect(() => {
-    console.log(participantsError);
-
-  }, [participantsError])
-  
   
   return (
     <View style={{flex: 1}}>
     <ScrollView accessibilityViewIsModal={true} style={[stylesGlobal.screenContainer, {backgroundColor: Colors.findmyactivityBackground}]} contentContainerStyle={stylesGlobal.contentContainer}>
-      <Text style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems, textAlign: 'center'}]}>{editMarkerMode._currentValue ? 'Marker bearbeiten' : 'Marker erstellen'}</Text>
+      <Text 
+        style={[stylesGlobal.ueberschriftText, {marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems, textAlign: 'center'}]}
+        accessibilityRole="header"
+        accessibilityLabel={editMarkerMode._currentValue ? 'Marker bearbeiten' : 'Marker erstellen'}
+        aria-label={editMarkerMode._currentValue ? 'Marker bearbeiten' : 'Marker erstellen'}
+      >
+        {editMarkerMode._currentValue ? 'Marker bearbeiten' : 'Marker erstellen'}
+      </Text>
       <ScrollView style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContainer} persistentScrollbar>
-      <Text style={[stylesGlobal.standardText, {alignSelf: 'flex-start', marginBottom: 5}]}>Felder mit einem * sind Pfilchtfelder!</Text>
+      <Text 
+        style={[stylesGlobal.standardText, {alignSelf: 'flex-start', marginBottom: 5}]}
+        accessibilityRole="text"
+        accessibilityLabel='Felder mit einem * sind Pfilchtfelder!'
+        aria-label='Felder mit einem * sind Pfilchtfelder!'
+      >
+        Felder mit einem * sind Pfilchtfelder!
+      </Text>
       
       <View style={styles.itemSpacerStyle}>
-        <Text style={stylesGlobal.ueberschriftText2}>Eventname*</Text>
+        <Text 
+          style={stylesGlobal.ueberschriftText2}
+          accessibilityRole="text"
+          accessibilityLabel='Eventname*'
+          aria-label='Eventname*'
+        >
+          Eventname*
+        </Text>
         <TextInputField
           editable
           placeholder={'Mein tolles Event'}
+          accessibilityLabel={'Mein tolles Event'}
+          accessibilityHint={'Hier in das Eingabefeld Ihren gewünschten Eventnamen eingeben'}
           value={eventName}
           onChangeText={(text) => { setEventName(text); text.length < 1 ? setEventNameError(true) : setEventNameError(false) }}
           keyboardType={'default'}
@@ -238,15 +251,31 @@ const CreateMarkersScreen = ( {navigation} ) => {
         />
 
         {eventNameError ?
-          <Text style={[stylesGlobal.standardText, {textAlign: 'center', color: Colors.findmyactivityError}]}>Textfeld 'Eventname' darf nicht leer sein! Bitte Eventnamen eingeben</Text>
+          <Text 
+            style={[stylesGlobal.standardText, {textAlign: 'center', color: Colors.findmyactivityError}]}
+            accessibilityRole="text"
+            accessibilityLabel='Textfeld "Eventname" darf nicht leer sein! Bitte Eventnamen eingeben'
+            aria-label='Textfeld "Eventname" darf nicht leer sein! Bitte Eventnamen eingeben'
+          >
+            Textfeld 'Eventname' darf nicht leer sein! Bitte Eventnamen eingeben
+          </Text>
         : null}
       </View>
 
       <View style={styles.itemSpacerStyle}>
-      <Text style={stylesGlobal.ueberschriftText2}>Eventbeschreibung</Text>
+      <Text 
+        style={stylesGlobal.ueberschriftText2}
+        accessibilityRole="text"
+        accessibilityLabel='Eventbeschreibung'
+        aria-label='Eventbeschreibung'
+      >
+        Eventbeschreibung
+      </Text>
         <TextInputField
           editable
           placeholder={'In meinem Event werden...'}
+          accessibilityLabel={'In meinem Event werden...'}
+          accessibilityHint={'Hier in das Eingabefeld Ihre gewünschte Eventbeschreibung eingeben'}
           value={eventDescription}
           onChangeText={text => setEventDescription(text)}
           keyboardType={'default'}
@@ -262,10 +291,19 @@ const CreateMarkersScreen = ( {navigation} ) => {
       </View>
 
       <View style={styles.itemSpacerStyle}>
-      <Text style={stylesGlobal.ueberschriftText2}>Ortbeschreibung</Text>
+      <Text 
+        style={stylesGlobal.ueberschriftText2}
+        accessibilityRole="text"
+        accessibilityLabel='Ortbeschreibung'
+        aria-label='Ortbeschreibung'
+      >
+        Ortbeschreibung
+        </Text>
         <TextInputField
           editable
           placeholder={'im Restaurant neben...'}
+          accessibilityLabel={'im Restaurant neben...'}
+          accessibilityHint={'Hier in das Eingabefeld Ihre gewünschte Ortbeschreibung eingeben'}
           value={placeDesciption}
           onChangeText={text => setPlaceDescription(text)}
           keyboardType={'default'}
@@ -280,10 +318,19 @@ const CreateMarkersScreen = ( {navigation} ) => {
       </View>
 
       <View style={styles.itemSpacerStyle}>
-      <Text style={stylesGlobal.ueberschriftText2}>Teilnehmeranzahl*</Text>
+      <Text 
+        style={stylesGlobal.ueberschriftText2}
+        accessibilityRole="text"
+        accessibilityLabel='Teilnehmeranzahl*'
+        aria-label='Teilnehmeranzahl*'
+      >
+        Teilnehmeranzahl*
+      </Text>
         <TextInputField
           editable
           placeholder={'999'}
+          accessibilityLabel={'999'}
+          accessibilityHint={'Hier in das Eingabefeld Ihre gewünschte Teilnehmeranzahl eingeben'}
           value={numberParticipants}
           onChangeText={(text) => { setNumberParticipants(text); text.length < 1 && Number.isInteger(parseInt(text)) ? setParticipantsError(true) : setParticipantsError(false) }}
           keyboardType={'number-pad'}
@@ -297,13 +344,26 @@ const CreateMarkersScreen = ( {navigation} ) => {
         />
 
         {participantsError ?
-        <Text style={[stylesGlobal.standardText, {textAlign: 'center', color: Colors.findmyactivityError}]}>{numberParticipants.length < 1 ? ' "Anzahl Teilnehmer" darf nicht leer sein! Bitte Teilnehmeranzahl angeben' : ' Feld "Anzahl Teilnehmer" muss eine Zahl enthalten!'}</Text>
+        <Text 
+          style={[stylesGlobal.standardText, {textAlign: 'center', color: Colors.findmyactivityError}]}
+          accessibilityRole="text"
+          accessibilityLabel={numberParticipants.length < 1 ? ' "Anzahl Teilnehmer" darf nicht leer sein! Bitte Teilnehmeranzahl angeben' : ' Feld "Anzahl Teilnehmer" muss eine Zahl enthalten!'}
+          aria-label={numberParticipants.length < 1 ? ' "Anzahl Teilnehmer" darf nicht leer sein! Bitte Teilnehmeranzahl angeben' : ' Feld "Anzahl Teilnehmer" muss eine Zahl enthalten!'}
+        >
+          {numberParticipants.length < 1 ? ' "Anzahl Teilnehmer" darf nicht leer sein! Bitte Teilnehmeranzahl angeben' : ' Feld "Anzahl Teilnehmer" muss eine Zahl enthalten!'}
+        </Text>
         : null}
       </View>
 
       <View style={styles.itemSpacerStyle}>
-        {/* Tags */}
-        <Text style={stylesGlobal.ueberschriftText2}>Tags</Text>
+        <Text 
+          style={stylesGlobal.ueberschriftText2}
+          accessibilityRole="text"
+          accessibilityLabel='Tags'
+          aria-label='Tags'
+        >
+          Tags
+        </Text>
         <DropDownPicker
           style={{borderWidth: 2}}
           searchable={true}
@@ -325,6 +385,8 @@ const CreateMarkersScreen = ( {navigation} ) => {
         <TextButton
           text='Hier drücken, um die Lage des Events zu ändern'
           onPress={() => navigation.navigate('EditMarkerLocationScreen')}
+          accessibilityLabel='Hier drücken, um die Lage des Events zu ändern'
+          accessibilityHint='Hier drücken, um die Lage des Events zu ändern'
         />
       </View>
       : null}
@@ -332,8 +394,35 @@ const CreateMarkersScreen = ( {navigation} ) => {
         <View style={{marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems, alignItems: 'center'}}>
         {pickedStartTime.current !== undefined
         ?
-          <Text style={[stylesGlobal.standardText, {alignSelf: 'center'}]}>
-            <Text style={stylesGlobal.ueberschriftText2}>Start: </Text> 
+          <Text 
+            style={[stylesGlobal.standardText, {alignSelf: 'center'}]}
+            accessibilityRole="text"
+            accessibilityLabel={'Start:' + intlFormat(pickedStartTime.current, {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit'
+              }, 
+                {locale: 'de-DE',}
+              ) + 'Uhr'}
+            aria-label={'Start: ' + intlFormat(pickedStartTime.current, {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit'
+              }, 
+                {locale: 'de-DE',}
+              ) + ' Uhr'}
+          >
+            <Text 
+              style={stylesGlobal.ueberschriftText2}
+            >
+              {'Start: '}
+            </Text> 
             {intlFormat(pickedStartTime.current, {
             weekday: 'long',
             year: 'numeric',
@@ -348,7 +437,12 @@ const CreateMarkersScreen = ( {navigation} ) => {
           : null
           }
           {startTimeError ?
-            <Text style={[stylesGlobal.standardText, {textAlign: 'center', color: Colors.findmyactivityError}]}>
+            <Text 
+              style={[stylesGlobal.standardText, {textAlign: 'center', color: Colors.findmyactivityError}]}
+              accessibilityRole="text"
+              accessibilityLabel='Startzeit wurde nicht ausgewählt! Bitte Startzeit auswählen'
+              aria-label='Startzeit wurde nicht ausgewählt! Bitte Startzeit auswählen'
+            >
               Startzeit wurde nicht ausgewählt! Bitte Startzeit auswählen
             </Text>
           : null}
@@ -356,6 +450,8 @@ const CreateMarkersScreen = ( {navigation} ) => {
             text={pickedStartTime.current ? 'Startzeit ändern*' : 'Startzeit auswählen*'}
             textColor={startTimeError ? Colors.findmyactivityError : null}
             onPress={() => {kindOfTimePicker.current = 'start'; showTimePicker()}}
+            accessibilityLabel={pickedStartTime.current ? 'Startzeit ändern*' : 'Startzeit auswählen*'}
+            accessibilityHint={'Ändern der Startzeit'}
           />
         </View>
 
@@ -363,7 +459,23 @@ const CreateMarkersScreen = ( {navigation} ) => {
         {pickedEndTime.current !== undefined
         ?
           <Text style={[stylesGlobal.standardText, {alignSelf: 'center'}]}>
-            <Text style={stylesGlobal.ueberschriftText2}>Ende: </Text>  
+            <Text 
+              style={stylesGlobal.ueberschriftText2}
+              accessibilityRole="text"
+              accessibilityLabel={'Ende: ' + intlFormat(pickedEndTime.current, {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+                }, 
+                  {locale: 'de-DE',}
+                ) + ' Uhr'}
+              aria-label='Teilnehmeranzahl*'
+            >
+              {'Ende: '}
+            </Text>  
             {intlFormat(pickedEndTime.current, {
             weekday: 'long',
             year: 'numeric',
@@ -413,6 +525,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
             backgroundColor={Colors.findmyactivityYellow}
             borderColor={Colors.findmyactivityYellow}
             width={200}
+            accessibilityHint={'Aktualisiert das Events'}
           />
         </View>
         
@@ -431,6 +544,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
             backgroundColor={Colors.findmyactivityYellow}
             borderColor={Colors.findmyactivityYellow}
             width={200}
+            accessibilityHint={'Erstellt das Events'}
           />
         </View>
         }

@@ -12,7 +12,7 @@ function ButtonBack(props) {
       icon="arrow-left"
       text={'Zurück'}
       onPress={props.onPress}
-      accessibilityHint={props.accessibilityHint}
+      accessibilityHint={'Gehen Sie zum vorherigen Bildschirm zurück'}
     />
   );
 }
