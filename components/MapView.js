@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Alert } from "react-native";
+import { Text, View, StyleSheet, Alert, PanResponder } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from "react-native-maps";
 import { getDistance } from 'geolib';
 import { hawRegion } from "../constants/TestCoords";
@@ -20,6 +20,7 @@ import Colors from "../constants/Colors";
 import { width, height, stylesGlobal } from "../constants/StylesGlobal";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import { db } from "../firebase/firebase-config";
+import ButtonMapNavigation from "./ButtonMapNavigation";
 
 const MapViewGoogle = (props) => {
   const [markers, setMarkers] = useState([])
@@ -140,9 +141,49 @@ const MapViewGoogle = (props) => {
       tryTurnOnGPS()
     })
   }, []);
+
+  function setMarkerInMiddleOfMap() {
+    updateUserMarker({latitude: region.latitude, longitude: region.longitude})
+  }
+
+  function moveMapUp() {
+    props.mapRef.current.animateToRegion({
+      latitude: region.latitude + 0.0035,
+      longitude: region.longitude,
+      latitudeDelta: region.latitudeDelta,
+      longitudeDelta: region.longitudeDelta
+    })
+  }
+
+  function moveMapDown() {
+    props.mapRef.current.animateToRegion({
+      latitude: region.latitude - 0.0035,
+      longitude: region.longitude,
+      latitudeDelta: region.latitudeDelta,
+      longitudeDelta: region.longitudeDelta
+    })
+  }
+
+  function moveMapLeft() {
+    props.mapRef.current.animateToRegion({
+      latitude: region.latitude,
+      longitude: region.longitude - 0.0035,
+      latitudeDelta: region.latitudeDelta,
+      longitudeDelta: region.longitudeDelta
+    })
+  }
+
+  function moveMapRight() {
+    props.mapRef.current.animateToRegion({
+      latitude: region.latitude,
+      longitude: region.longitude + 0.0035,
+      latitudeDelta: region.latitudeDelta,
+      longitudeDelta: region.longitudeDelta
+    })
+  }
   
   return (
-    <View style={{...StyleSheet.absoluteFillObject}}>
+    <>
       <FloatingActionButton
         onPress={() => getCurrentPosition()}
         bottomPos={height * 0.25}
@@ -164,7 +205,6 @@ const MapViewGoogle = (props) => {
       <FloatingActionButton
         onPress={() => Alert.alert('Hilfe', 
         'Zum Erstellen von Markern auf die Karte drücken und gedrückt halten, um einen Marker zu setzen.'
-        
         )}
         bottomPos={height * 0.15}
         rightPos={width * 0.025}
@@ -172,20 +212,36 @@ const MapViewGoogle = (props) => {
         text={'Hilfe'}
       />
 
+      <View style={{
+        position: 'absolute',
+        bottom: height * 0.1,
+        left: 0,
+        // right: width * 0.25,
+        elevation: 3,
+        alignItems: 'center',
+        alignSelf: 'flex-end',
+        justifyContent: 'center',
+        zIndex: 5,
+        }}>
+        <ButtonMapNavigation
+          onPressMiddle={() => setMarkerInMiddleOfMap()}
+          onPressUp={() => moveMapUp()}
+          onPressDown={() => moveMapDown()}
+          onPressLeft={() => moveMapLeft()}
+          onPressRight={() => moveMapRight()}
+        />
+      </View>
+
       {markerButtonVisible && editMarkerMode._currentValue === false ?
       <View style={{
         position: 'absolute',
         bottom: height * 0.1,
         right: width * 0.25,
-        // borderWidth: StyleSheet.hairlineWidth,
-        // borderColor: 'black',
         elevation: 3,
         alignItems: 'center',
         alignSelf: 'flex-end',
         justifyContent: 'center',
-        // borderRadius: 30,
         zIndex: 5,
-        // width: 60,
         }}> 
         <ButtonVariable
           text={'Marker erstellen'}
@@ -201,7 +257,7 @@ const MapViewGoogle = (props) => {
       <View style={{
         position: 'absolute',
         bottom: height * 0.1,
-        right: width * 0.25,
+        right: width * 0.25 + 25,
         // borderWidth: StyleSheet.hairlineWidth,
         // borderColor: 'black',
         elevation: 3,
@@ -217,15 +273,13 @@ const MapViewGoogle = (props) => {
           onPress={() => { navigation.goBack(); saveNewMarkerLocation() }}
           backgroundColor={Colors.findmyactivityYellow}
           borderColor={Colors.findmyactivityText}
-          width={200}
+          width={150}
         /> 
       </View>
     
       : null}
       
       <MapView
-        focusable={false}
-        accessible={false}
         provider={PROVIDER_GOOGLE}
         region={region}
         onRegionChangeComplete={(region) => { setRegion(region); } }
@@ -238,7 +292,7 @@ const MapViewGoogle = (props) => {
         toolbarEnabled={editMarkerMode._currentValue === true ? false : true}
         zoomControlEnabled={true}
         onLongPress = {(e) => updateUserMarker(e.nativeEvent.coordinate)}
-        onPanDrag={() => setMarkerButtonVisible(false)}      
+        onPanDrag={() => setMarkerButtonVisible(false)}
       >
       {/* DB Markers */}
       {
@@ -312,7 +366,7 @@ const MapViewGoogle = (props) => {
             return (
               <View key={index}>
                 {rangeContext._currentValue != null && distanceToUserPos != '?' && rangeContext._currentValue >= distanceToUserPos || rangeContext._currentValue === 21 || rangeContext._currentValue === 'alle' ?
-                <Marker focusable accessible key={index} coordinate={val} pinColor={Colors.findmyactivityError} tracksViewChanges={true} onPress={() => { getUserInfoFromDB(val.user) }}>
+                <Marker key={index} coordinate={val} pinColor={Colors.findmyactivityError} tracksViewChanges={true} onPress={() => { getUserInfoFromDB(val.user) }}>
                   <Callout style={{flex: 1}} onPress={ () => navigation.navigate('ViewMarkerScreen', { creationDate: val.creation_date, eventName: val.name, eventDescription: val.description, eventAuthorUsername: selectedAuthor._current_value.markers.username, eventAuthorDescription: selectedAuthor._current_value.markers.description, eventAuthorID: val.user, eventStartTime: displayStartTime(val), eventEndTime: displayEndTime(val), eventTags: displayTags(val), eventMaxParticipants: val.numberParticipants, eventLocationDescription: val.locationDescription, eventParticipantList: val.participantList } ) }>
                     <Text style={stylesGlobal.ueberschriftText2}>Eventname: 
                       <Text style={stylesGlobal.standardText}> {val.name}</Text>
@@ -332,7 +386,7 @@ const MapViewGoogle = (props) => {
                   </Callout>
                 </Marker>
                 : null}
-              </View>); 
+              </View>)
           }
         )
         // : null
@@ -351,7 +405,8 @@ const MapViewGoogle = (props) => {
         )
       }
     </MapView>
-  </View>
+    
+  </>
   )
 }
 

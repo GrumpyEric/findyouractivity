@@ -32,7 +32,7 @@ const EditMarkerLocationScreen = ( {navigation} ) => {
           backgroundColor={Colors.findmyactivityError}
           borderColor={Colors.findmyactivityText}
           textColor={Colors.findmyactivityWhite}
-          width={200}
+          width={150}
         /> 
       </View>
     </ScrollView>
@@ -44,11 +44,12 @@ export default EditMarkerLocationScreen
 const styles = StyleSheet.create({
    button: {
     alignItems: 'center',
-    justifyContent: "flex-end",
+    // justifyContent: "flex-end",
+    justifyContent: "center",
     position: 'absolute',
     bottom: 0,
     marginBottom: height * 0.025,
-    left: width * 0.25
+    left: width * 0.25 + 25
   },
   buttonText: {
     color: 'white',

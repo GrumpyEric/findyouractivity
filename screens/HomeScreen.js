@@ -23,7 +23,8 @@ export default HomeScreen
 
 const styles = StyleSheet.create({
   map_container: {
-    flex: 1
+    // flex: 1
+    ...StyleSheet.absoluteFillObject
   },
 
 })
