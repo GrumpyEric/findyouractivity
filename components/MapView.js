@@ -236,7 +236,7 @@ const MapViewGoogle = (props) => {
       <View style={{
         position: 'absolute',
         bottom: height * 0.1,
-        right: width * 0.25,
+        right: width * 0.25 + 25,
         elevation: 3,
         alignItems: 'center',
         alignSelf: 'flex-end',
@@ -248,7 +248,7 @@ const MapViewGoogle = (props) => {
           onPress={() => { editMarkerMode._currentValue = false; navigation.navigate('CreateMarkersScreen') }}
           backgroundColor={Colors.findmyactivityYellow}
           borderColor={Colors.findmyactivityText}
-          width={200}
+          width={150}
         /> 
       </View>
 

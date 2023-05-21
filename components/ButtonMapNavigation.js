@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     borderWidth: 2,
     borderColor: Colors.findmyactivityText,
-    padding: 5,
+    padding: 7.5,
     borderRadius: 10,
     alignItems: 'center',
     flexShrink: 1,
@@ -207,19 +207,19 @@ const styles = StyleSheet.create({
   buttonMiddle: {
     backgroundColor: Colors.findmyactivityWhite,
     top: -5,
-    left: 40,
+    left: 45,
   },
 
   buttonUp: {
     backgroundColor: Colors.findmyactivityWhite,
-    top: -40,
-    left: 40
+    top: -45,
+    left: 45
   },
 
   buttonDown: {
     backgroundColor: Colors.findmyactivityWhite,
-    top: 30,
-    left: 40
+    top: 35,
+    left: 45
   },
 
   buttonLeft: {
@@ -231,6 +231,6 @@ const styles = StyleSheet.create({
   buttonRight: {
     backgroundColor: Colors.findmyactivityWhite,
     top: -5,
-    left: 75
+    left: 85
   },
 })
