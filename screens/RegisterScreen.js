@@ -70,6 +70,7 @@ const RegisterScreen = () => {
             style={stylesGlobal.ueberschriftText2}
             accessibilityLabel={EmailTitleText}
             aria-label={EmailTitleText}
+            accessibilityRole='text'
           >
             {EmailTitleText}
           </Text>
@@ -82,7 +83,7 @@ const RegisterScreen = () => {
             keyboardType={'email-address'}
             backgroundColor={Colors.findmyactivityWhite}
             borderColor={emailErrorState ? Colors.findmyactivityError : Colors.findmyactivityText}
-            accessibilityLabel={EmailPlaceholderText}
+            accessibilityLabel={EmailTitleText}
             accessibilityHint={AccessibilityHintEmailText}
           />
           { emailErrorState && (!email || !emailRegexTest(email))
@@ -90,6 +91,7 @@ const RegisterScreen = () => {
                 style={[stylesGlobal.standardText, {color: Colors.findmyactivityError, textAlign: 'center'}]}
                 accessibilityLabel={EmailErrorText}
                 aria-label={EmailErrorText}
+                accessibilityRole='text'
               >
                 {EmailErrorText}
               </Text>
@@ -102,6 +104,7 @@ const RegisterScreen = () => {
             style={stylesGlobal.ueberschriftText2}
             accessibilityLabel={PasswortTitleText}
             aria-label={PasswortTitleText}
+            accessibilityRole='text'
           >
             {PasswortTitleText}
           </Text>
@@ -115,16 +118,24 @@ const RegisterScreen = () => {
             keyboardType={'default'}
             backgroundColor={Colors.findmyactivityWhite}
             borderColor={passwordErrorState ? Colors.findmyactivityError : Colors.findmyactivityText}
-            accessibilityLabel={PasswortPlaceholderText}
+            accessibilityLabel={PasswortTitleText}
             accessibilityHint={AccessibilityHintPasswortText}
           />
-          <Text style={[stylesGlobal.standardText, {textAlign: 'center'}]}>Hinweis: Das Passwort muss mindestens 8 Zeichen lang sein!</Text>
+          <Text 
+            style={[stylesGlobal.standardText, {textAlign: 'center'}]}
+            accessibilityLabel={'Hinweis: Das Passwort muss mindestens 8 Zeichen lang sein!'}
+            aria-label={'Hinweis: Das Passwort muss mindestens 8 Zeichen lang sein!'}
+            accessibilityRole='text'
+          >
+            Hinweis: Das Passwort muss mindestens 8 Zeichen lang sein!
+          </Text>
           {
           passwordErrorState
             ? <Text 
                 style={[stylesGlobal.standardText, {color: Colors.findmyactivityError, textAlign: 'center'}]}
                 accessibilityLabel={PasswortErrorText}
                 aria-label={PasswortErrorText}
+                accessibilityRole='text'
               >
                 {PasswortErrorText}
               </Text>

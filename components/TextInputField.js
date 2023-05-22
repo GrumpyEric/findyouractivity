@@ -62,7 +62,14 @@ const TextInputField = (props) => {
         
       />
       {hasMaxLength && showCharCounter ?
-      <Text style={[{alignSelf: 'center', paddingLeft: '5%'}]}>{props.value === undefined ? 0 : props.value.length}/{maxTextChars}</Text>
+      <Text 
+        style={[{alignSelf: 'center', paddingLeft: '5%'}]}
+        accessibilityLabel={(props.value === undefined ? 0 : props.value.length/maxTextChars).toString()}
+        aria-label={(props.value === undefined ? 0 : props.value.length/maxTextChars).toString()}
+        accessibilityRole="text"
+      >
+        {props.value === undefined ? 0 : props.value.length}/{maxTextChars}
+      </Text>
       : null}
     </Pressable>
   )

@@ -230,6 +230,7 @@ const MapViewGoogle = (props) => {
           onPressDown={() => moveMapDown()}
           onPressLeft={() => moveMapLeft()}
           onPressRight={() => moveMapRight()}
+          accessibilityHint={'Mit diesem Navigationskreuz ist das Bewegen der Karte und das Setzen von Markern möglich'}
         />
       </View>
 
@@ -251,6 +252,7 @@ const MapViewGoogle = (props) => {
           borderColor={Colors.findmyactivityText}
           width={150}
           accessibilityHint={'Öffnet das Menü zur Markererstellung'}
+
         /> 
       </View>
 
@@ -306,7 +308,7 @@ const MapViewGoogle = (props) => {
         markers.map((val, index) => 
           {
             
-            let distanceToUserPos = "?"//getDistance(val,props.userPos.coords) / 1000
+            let distanceToUserPos = "?"
             if (userPos.coords != undefined)
             {
               distanceToUserPos = getDistance(val, userPos.coords) / 1000
@@ -332,17 +334,13 @@ const MapViewGoogle = (props) => {
               return (
                 <Text 
                   style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
-                  accessibilityLabel="Start"
-                  aria-label="Start"
+                  accessibilityLabel={"Start: " + startTimeRes}
+                  aria-label={"Start: " + startTimeRes}
                 >
                   Start:{'\n'}
-                  <Text 
-                    style={stylesGlobal.standardText}
-                    accessibilityLabel={startTimeRes}
-                    aria-label={startTimeRes}
-                  >
+                  <Text style={stylesGlobal.standardText}>
                     {startTimeRes}
-                    </Text>
+                  </Text>
                 </Text>
               )
           }
@@ -368,15 +366,11 @@ const MapViewGoogle = (props) => {
               return (
                 <Text 
                   style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
-                  accessibilityLabel="Ende"
-                  aria-label="Ende"
+                  accessibilityLabel={"Ende: " + endTimeRes}
+                  aria-label={"Ende: " + endTimeRes}
                 >
                   Ende:{'\n'}
-                  <Text 
-                    style={stylesGlobal.standardText}
-                    accessibilityLabel={endTimeRes}
-                    aria-label={endTimeRes}
-                  >
+                  <Text style={stylesGlobal.standardText}>
                     {endTimeRes}
                   </Text>
                 </Text>
@@ -388,17 +382,13 @@ const MapViewGoogle = (props) => {
               return (
               <Text 
                 style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
-                accessibilityLabel="Tags"
-                aria-label="Tags"
+                accessibilityLabel={"Tags: " + val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                aria-label={"Tags: " + val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
               >
                 Tags:{'\n'}
-                <Text 
-                  style={stylesGlobal.standardText}
-                  accessibilityLabel={val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
-                  aria-label={val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
-                >
+                <Text style={stylesGlobal.standardText}>
                   {val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
-                  </Text>
+                </Text>
               </Text>
             )
           }
@@ -418,7 +408,7 @@ const MapViewGoogle = (props) => {
                 >
                   <Callout 
                     style={{flex: 1}} 
-                    accessibilityRole="text"
+                    accessibilityRole="button"
                     accessibilityLabel="Eventbeschreibung"
                     aria-label="Eventbeschreibung"
                     onPress={ () => navigation.navigate('ViewMarkerScreen', { creationDate: val.creation_date, eventName: val.name, eventDescription: val.description, eventAuthorUsername: selectedAuthor._current_value.markers.username, eventAuthorDescription: selectedAuthor._current_value.markers.description, eventAuthorID: val.user, eventStartTime: displayStartTime(val), eventEndTime: displayEndTime(val), eventTags: displayTags(val), eventMaxParticipants: val.numberParticipants, eventLocationDescription: val.locationDescription, eventParticipantList: val.participantList } ) }
@@ -426,16 +416,11 @@ const MapViewGoogle = (props) => {
                     <Text 
                       style={stylesGlobal.ueberschriftText2}
                       accessibilityRole="text"
-                      accessibilityLabel="Eventname"
-                      aria-label="Eventname"
+                      accessibilityLabel={"Eventname: " + val.name}
+                      aria-label={"Eventname: " + val.name}
                     >
                       {'Eventname: '} 
-                      <Text 
-                        style={stylesGlobal.standardText}
-                        accessibilityRole="text"
-                        accessibilityLabel={val.name}
-                        aria-label={val.name}
-                      > 
+                      <Text style={stylesGlobal.standardText}> 
                         {val.name}
                       </Text>
                     </Text>
@@ -444,16 +429,11 @@ const MapViewGoogle = (props) => {
                     <Text 
                       style={stylesGlobal.ueberschriftText2}
                       accessibilityRole="text"
-                      accessibilityLabel="Beschreibung"
-                      aria-label="Beschreibung"
+                      accessibilityLabel={"Beschreibung: " + val.description}
+                      aria-label={"Beschreibung: " + val.description}
                     >
                       {'Beschreibung: '} 
-                      <Text 
-                        style={stylesGlobal.standardText}
-                        accessibilityRole="text"
-                        accessibilityLabel={val.description}
-                        aria-label={val.description}
-                      > 
+                      <Text style={stylesGlobal.standardText}> 
                         {val.description}
                       </Text>
                     </Text>
@@ -462,16 +442,11 @@ const MapViewGoogle = (props) => {
                     <Text 
                       style={stylesGlobal.ueberschriftText2}
                       accessibilityRole="text"
-                      accessibilityLabel="Distanz"
-                      aria-label="Distanz"
+                      accessibilityLabel={"Distanz: " + distanceToUserPos + ' km'}
+                      aria-label={"Distanz: " + distanceToUserPos + ' km'}
                     >
                       {'Distanz: '} 
-                      <Text 
-                        style={stylesGlobal.standardText}
-                        accessibilityRole="text"
-                        accessibilityLabel={distanceToUserPos + 'km'}
-                        aria-label={distanceToUserPos + 'km'}
-                      >
+                      <Text style={stylesGlobal.standardText}>
                         {distanceToUserPos} km
                       </Text>
                     </Text>
@@ -490,7 +465,6 @@ const MapViewGoogle = (props) => {
               </View>)
           }
         )
-        // : null
       }
 
         

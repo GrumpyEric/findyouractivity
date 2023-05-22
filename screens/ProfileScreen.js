@@ -180,10 +180,10 @@ const Profile = ( {navigation} ) => {
           {
           eventArray.length ?
           eventArray.map((val, index) => {
-            let distanceToUserPos = "?"//getDistance(val,props.userPosContext._currentValue.coords) / 1000
-            if (userPosContext._currentValue.coords != undefined)
+            let distanceToUserPos = "?"
+            if (userPos.coords != undefined)
             {
-              distanceToUserPos = getDistance(val, userPosContext._currentValue.coords) / 1000
+              distanceToUserPos = getDistance(val, userPos.coords) / 1000
             }
 
             const displayStartTime = (val) => {
@@ -206,17 +206,13 @@ const Profile = ( {navigation} ) => {
               return (
                 <Text 
                   style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
-                  accessibilityLabel="Start"
-                  aria-label="Start"
+                  accessibilityLabel={"Start: " + startTimeRes}
+                  aria-label={"Start: " + startTimeRes}
                 >
                   Start:{'\n'}
-                  <Text 
-                    style={stylesGlobal.standardText}
-                    accessibilityLabel={startTimeRes}
-                    aria-label={startTimeRes}
-                  >
+                  <Text style={stylesGlobal.standardText}>
                     {startTimeRes}
-                    </Text>
+                  </Text>
                 </Text>
               )
           }
@@ -242,15 +238,11 @@ const Profile = ( {navigation} ) => {
               return (
                 <Text 
                   style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
-                  accessibilityLabel="Ende"
-                  aria-label="Ende"
+                  accessibilityLabel={"Ende: " + endTimeRes}
+                  aria-label={"Ende: " + endTimeRes}
                 >
                   Ende:{'\n'}
-                  <Text 
-                    style={stylesGlobal.standardText}
-                    accessibilityLabel={endTimeRes}
-                    aria-label={endTimeRes}
-                  >
+                  <Text style={stylesGlobal.standardText}>
                     {endTimeRes}
                   </Text>
                 </Text>
@@ -262,17 +254,13 @@ const Profile = ( {navigation} ) => {
               return (
               <Text 
                 style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
-                accessibilityLabel="Tags"
-                aria-label="Tags"
+                accessibilityLabel={"Tags: " + val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                aria-label={"Tags: " + val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
               >
                 Tags:{'\n'}
-                <Text 
-                  style={stylesGlobal.standardText}
-                  accessibilityLabel={val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
-                  aria-label={val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
-                >
+                <Text style={stylesGlobal.standardText}>
                   {val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
-                  </Text>
+                </Text>
               </Text>
             )
           }

@@ -74,8 +74,7 @@ const LoginScreen = () => {
           keyboardType={'email-address'}
           backgroundColor={Colors.findmyactivityWhite}
           borderColor={emailErrorState ? Colors.findmyactivityError : null}
-          accessibilityLabel={EmailPlaceholderText}
-          label={EmailPlaceholderText}
+          accessibilityLabel={EmailTitleText + '-Eingabefeld'}
           accessibilityHint={AccessibilityHintEmailText}
         />
         {
@@ -84,6 +83,7 @@ const LoginScreen = () => {
               style={[stylesGlobal.standardText, {color: Colors.findmyactivityError, textAlign: 'center'}]}
               accessibilityLabel={EmailErrorText}
               aria-label={EmailErrorText}
+              accessibilityRole='text'
             >
               {EmailErrorText}
             </Text>
@@ -96,6 +96,7 @@ const LoginScreen = () => {
           style={stylesGlobal.ueberschriftText2}
           accessibilityLabel={PasswortTitleText}
           aria-label={PasswortTitleText}
+          accessibilityRole='text'
         >
           {PasswortTitleText}
         </Text>
@@ -109,7 +110,7 @@ const LoginScreen = () => {
           keyboardType={'default'}
           backgroundColor={Colors.findmyactivityWhite}
           borderColor={passwordErrorState ? Colors.findmyactivityError : null}
-          accessibilityLabel={PasswortPlaceholderText}
+          accessibilityLabel={PasswortTitleText + '-Eingabefeld'}
           accessibilityHint={AccessibilityHintPasswortText}
         />
         {
@@ -118,6 +119,7 @@ const LoginScreen = () => {
               style={[stylesGlobal.standardText, {color: Colors.findmyactivityError, textAlign: 'center'}]}
               accessibilityLabel={PasswortErrorText}
               aria-label={PasswortErrorText}
+              accessibilityRole='text'
             >
               {PasswortErrorText}
             </Text>
@@ -158,13 +160,13 @@ const LoginScreen = () => {
         style={stylesGlobal.standardText}
         accessibilityLabel={ForgotButtonTitle}
         aria-label={ForgotButtonTitle}
+        accessibilityRole='text'
       >
         {ForgotButtonTitle}
       </Text>
       <TextButton
         onPress={handleForgotPassword}
         text={ForgotButtonText}
-
         accessibilityLabel={ForgotButtonText}
         accessibilityHint={ForgotButtonHint}
       />

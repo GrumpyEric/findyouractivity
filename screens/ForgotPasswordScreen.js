@@ -47,6 +47,7 @@ const ForgotPasswordScreen = () => {
           style={[stylesGlobal.ueberschriftText2, {alignSelf: 'flex-start'}]}
           accessibilityLabel={EmailTitleText}
           aria-label={EmailTitleText}
+          accessibilityRole='text'
         >
           {EmailTitleText}
         </Text>
@@ -59,7 +60,7 @@ const ForgotPasswordScreen = () => {
           keyboardType={'email-address'}
           backgroundColor={Colors.findmyactivityWhite}
           borderColor={emailErrorState ? Colors.findmyactivityError : Colors.findmyactivityText}
-          accessibilityLabel={EmailPlaceholderText}
+          accessibilityLabel={EmailTitleText}
           accessibilityHint={AccessibilityHintEmailText}
         />
           { emailErrorState && (!email || !emailRegexTest(email))
@@ -67,6 +68,7 @@ const ForgotPasswordScreen = () => {
                 style={[stylesGlobal.standardText, {color: Colors.findmyactivityError, textAlign: 'center'}]}
                 accessibilityLabel={EmailErrorText}
                 aria-label={EmailErrorText}
+                accessibilityRole='text'
               >
                 {EmailErrorText}
               </Text>

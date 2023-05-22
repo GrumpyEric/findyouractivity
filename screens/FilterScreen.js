@@ -13,6 +13,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { arrayIsEmpty } from '../constants/HelperFunctionsAndVariables';
 import ButtonVariable from '../components/ButtonVariable';
 import ButtonBack from '../components/ButtonBack';
+import { LoginBackHint } from '../constants/Fixtures';
 
 const FilterScreen = ( {navigation} ) => {
   const [open, setOpen] = useState(false);
@@ -179,6 +180,7 @@ return(
     <ButtonBack
       onPress={() => navigation.goBack()}
       text={'Zurück'}
+      accessibilityHint={'Zur Karte zurückgehen'}
     />
   </ScrollView>
 )

@@ -7,6 +7,7 @@ import Colors from '../constants/Colors'
 import { stylesGlobal } from '../constants/StylesGlobal';
 
 import ButtonBack from '../components/ButtonBack';
+import { LoginBackHint } from '../constants/Fixtures';
 
 const HilfeScreen = ( {navigation} ) => {
 return(
@@ -108,6 +109,7 @@ return(
     <ButtonBack
       onPress={() => navigation.goBack()}
       text={'Zurück'}
+      accessibilityHint={'Zur Karte zurückgehen'}
     />
   </View>
 )

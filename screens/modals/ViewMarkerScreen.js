@@ -9,6 +9,7 @@ import 'intl/locale-data/jsonp/de'
 import { stylesGlobal } from '../../constants/StylesGlobal'
 import ButtonBack from '../../components/ButtonBack'
 import Colors from '../../constants/Colors'
+import { LoginBackHint } from '../../constants/Fixtures'
 
 const ViewMarkerScreen = ( {route, navigation} ) => {  
   const nameDisplay = route.params.eventName
@@ -180,7 +181,7 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
       <ButtonBack
         onPress={() => navigation.goBack()}
         text={'Zurück'}
-        accessibilityHint={'Gehen Sie zum vorherigen Bildschirm zurück'}
+        accessibilityHint={'Zur Karte zurückgehen'}
       />
     </ScrollView>
   )

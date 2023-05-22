@@ -16,6 +16,7 @@ import 'intl'
 import 'intl/locale-data/jsonp/de'
 import { intlFormat } from 'date-fns'
 import { useEffect } from 'react'
+import { LoginBackHint } from '../../constants/Fixtures'
 
 const CreateMarkersScreen = ( {navigation} ) => {  
   const [eventName, setEventName] = useState(editMarkerMode._currentValue ? editMarkerValues._currentValue.name : '')
@@ -552,6 +553,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
       <ButtonBack
         onPress={() => { navigation.goBack(); editMarkerMode._currentValue === true ? editMarkerMode._currentValue = false : null }}
         text={'Zurück'}
+        accessibilityHint={'Markererstellung abbrechen und zur Karte zurückgehen'}
       />
     </View>
   )
