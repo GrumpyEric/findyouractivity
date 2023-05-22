@@ -1,6 +1,6 @@
 import { auth } from "../firebase/firebase-config";
 import { deleteMarkerToDB } from '../constants/MainFunctions';
-import { editMarkerMode, editMarkerObject, editMarkerValues, mapRef, markersContext } from '../components/AppContext';
+import { editMarkerMode, editMarkerObject, editMarkerValues, mapRef, markersContext, userPosContext } from '../components/AppContext';
 import { getDistance } from 'geolib';
 import Colors from '../constants/Colors';
 import Slider from '@react-native-community/slider';
@@ -170,9 +170,9 @@ const EventScreen = ( {navigation} ) => {
           myMarkersRef.map((val, index) => 
           {
             let distanceToUserPos = "?"
-            if (userPos.coords != undefined)
+            if (userPosContext._currentValueeric.coords != undefined)
             {
-              distanceToUserPos = getDistance(val, userPos.coords) / 1000
+              distanceToUserPos = getDistance(val, userPosContext._currentValueeric.coords) / 1000
             }
 
             const displayStartTime = (val) => {
@@ -344,9 +344,9 @@ const EventScreen = ( {navigation} ) => {
         markersContext._currentValue.map((val, index) => 
           {
             let distanceToUserPos = "?"
-            if (userPos.coords != undefined)
+            if (userPosContext._currentValueeric.coords != undefined)
             {
-              distanceToUserPos = getDistance(val, userPos.coords) / 1000
+              distanceToUserPos = getDistance(val, userPosContext._currentValueeric.coords) / 1000
             }
 
             const displayStartTime = (val) => {
