@@ -18,7 +18,6 @@ return(
       accessibilityRole="header"
       accessibilityLabel="Hilfe"
       aria-label="Hilfe"
-      accessibilityHint='Titel des Hilfe-Bildschirmes'
     >
       Hilfe
     </Text>

@@ -236,7 +236,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
         <TextInputField
           editable
           placeholder={'Mein tolles Event'}
-          accessibilityLabel={'Mein tolles Event'}
+          accessibilityLabel={'Eventname-Eingabefeld'}
           accessibilityHint={'Hier in das Eingabefeld Ihren gewünschten Eventnamen eingeben'}
           value={eventName}
           onChangeText={(text) => { setEventName(text); text.length < 1 ? setEventNameError(true) : setEventNameError(false) }}
@@ -275,7 +275,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
         <TextInputField
           editable
           placeholder={'In meinem Event werden...'}
-          accessibilityLabel={'In meinem Event werden...'}
+          accessibilityLabel={'Eventbeschreibung-Eingabefeld'}
           accessibilityHint={'Hier in das Eingabefeld Ihre gewünschte Eventbeschreibung eingeben'}
           value={eventDescription}
           onChangeText={text => setEventDescription(text)}
@@ -303,7 +303,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
         <TextInputField
           editable
           placeholder={'im Restaurant neben...'}
-          accessibilityLabel={'im Restaurant neben...'}
+          accessibilityLabel={'Ortbeschreibung-Eingabefeld'}
           accessibilityHint={'Hier in das Eingabefeld Ihre gewünschte Ortbeschreibung eingeben'}
           value={placeDesciption}
           onChangeText={text => setPlaceDescription(text)}
@@ -330,7 +330,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
         <TextInputField
           editable
           placeholder={'999'}
-          accessibilityLabel={'999'}
+          accessibilityLabel={'Teilnehmeranzahl-Eingabefeld'}
           accessibilityHint={'Hier in das Eingabefeld Ihre gewünschte Teilnehmeranzahl eingeben'}
           value={numberParticipants}
           onChangeText={(text) => { setNumberParticipants(text); text.length < 1 && Number.isInteger(parseInt(text)) ? setParticipantsError(true) : setParticipantsError(false) }}
@@ -386,7 +386,6 @@ const CreateMarkersScreen = ( {navigation} ) => {
         <TextButton
           text='Hier drücken, um die Lage des Events zu ändern'
           onPress={() => navigation.navigate('EditMarkerLocationScreen')}
-          accessibilityLabel='Hier drücken, um die Lage des Events zu ändern'
           accessibilityHint='Hier drücken, um die Lage des Events zu ändern'
         />
       </View>
@@ -451,8 +450,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
             text={pickedStartTime.current ? 'Startzeit ändern*' : 'Startzeit auswählen*'}
             textColor={startTimeError ? Colors.findmyactivityError : null}
             onPress={() => {kindOfTimePicker.current = 'start'; showTimePicker()}}
-            accessibilityLabel={pickedStartTime.current ? 'Startzeit ändern*' : 'Startzeit auswählen*'}
-            accessibilityHint={'Ändern der Startzeit'}
+            accessibilityHint={'Ändern der Startzeit, öffnet neues Fenster zur Auswahl der Zeit'}
           />
         </View>
 
@@ -491,7 +489,12 @@ const CreateMarkersScreen = ( {navigation} ) => {
           : null
           }
           {endTimeError ?
-            <Text style={[stylesGlobal.standardText, {textAlign: 'center', color: Colors.findmyactivityError}]}>
+            <Text 
+              style={[stylesGlobal.standardText, {textAlign: 'center', color: Colors.findmyactivityError}]}
+              accessibilityRole="text"
+              accessibilityLabel='Endzeit wurde nicht ausgewählt! Bitte Endzeit auswählen'
+              aria-label='Endzeit wurde nicht ausgewählt! Bitte Endzeit auswählen'
+            >
               Endzeit wurde nicht ausgewählt! Bitte Endzeit auswählen
             </Text>
           : null}
@@ -499,6 +502,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
             text={pickedEndTime.current ? 'Endzeit ändern*' : 'Endzeit auswählen*'}
             textColor={endTimeError ? Colors.findmyactivityError : null}
             onPress={() => {kindOfTimePicker.current = 'end'; showTimePicker()}}
+            accessibilityHint={'Ändern der Endzeit, öffnet neues Fenster zur Auswahl der Zeit'}
           />
         </View>
 
@@ -526,7 +530,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
             backgroundColor={Colors.findmyactivityYellow}
             borderColor={Colors.findmyactivityYellow}
             width={200}
-            accessibilityHint={'Aktualisiert das Events'}
+            accessibilityHint={'Event aktualisieren'}
           />
         </View>
         
@@ -545,7 +549,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
             backgroundColor={Colors.findmyactivityYellow}
             borderColor={Colors.findmyactivityYellow}
             width={200}
-            accessibilityHint={'Erstellt das Events'}
+            accessibilityHint={'Event erstellen'}
           />
         </View>
         }

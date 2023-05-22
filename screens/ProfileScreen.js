@@ -168,14 +168,14 @@ const Profile = ( {navigation} ) => {
       </View>
 
       <View style={styles.contentSeparatorStyle}>
-      <Text 
-        style={[styles.textLabels, stylesGlobal.ueberschriftText2]}
-        accessibilityLabel={ProfileEventsText}
-        aria-label={ProfileEventsText}
-        accessibilityRole='header'
-      >
-        {ProfileEventsText}
-      </Text>
+        <Text 
+          style={[styles.textLabels, stylesGlobal.ueberschriftText2]}
+          accessibilityLabel={ProfileEventsText}
+          aria-label={ProfileEventsText}
+          accessibilityRole='header'
+        >
+          {ProfileEventsText}
+        </Text>
         <ScrollView style={styles.scrollAreaStyle} contentContainerStyle={styles.scrollAreaContentContainerStyle}>
           {
           eventArray.length ?
@@ -270,15 +270,12 @@ const Profile = ( {navigation} ) => {
                 <TouchableOpacity onPress={() => moveToMarker(val)} style={{marginTop: 10}}>
                   <Text 
                     style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
-                    accessibilityLabel={ProfileEventsNameText}
-                    aria-label={ProfileEventsNameText}
+                    accessibilityLabel={ProfileEventsNameText + ': ' + val.name}
+                    aria-label={ProfileEventsNameText + ': ' + val.name}
+                    accessibilityRole='text'
                   >
                     {ProfileEventsNameText + '\n'}
-                    <Text 
-                      style={stylesGlobal.standardText}
-                      accessibilityLabel={val.name}
-                      aria-label={val.name}
-                    >
+                    <Text style={stylesGlobal.standardText}>
                       {val.name}
                     </Text>
                   </Text>
@@ -286,15 +283,12 @@ const Profile = ( {navigation} ) => {
                   ? 
                   <Text 
                     style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
-                    accessibilityLabel={ProfileEventsDescriptionText}
-                    aria-label={ProfileEventsDescriptionText}
+                    accessibilityLabel={ProfileEventsDescriptionText + ': ' + val.description}
+                    aria-label={ProfileEventsDescriptionText + ': ' + val.description}
+                    accessibilityRole='text'
                   >
                     {ProfileEventsDescriptionText + '\n'}
-                    <Text
-                      style={stylesGlobal.standardText}
-                      accessibilityLabel={val.description}
-                      aria-label={val.description}
-                    >
+                    <Text style={stylesGlobal.standardText}>
                       {val.description}
                     </Text>
                   </Text>  
@@ -303,15 +297,12 @@ const Profile = ( {navigation} ) => {
                   { displayEndTime(val) }
                   <Text 
                     style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
-                    accessibilityLabel={ProfileEventsDistanceText}
-                    aria-label={ProfileEventsDistanceText}
+                    accessibilityLabel={ProfileEventsDistanceText + ': ' + distanceToUserPos + ' km'}
+                    aria-label={ProfileEventsDistanceText + ': ' + distanceToUserPos + ' km'}
+                    accessibilityRole='role'
                   >
                     {ProfileEventsDistanceText + '\n'}
-                    <Text 
-                      style={stylesGlobal.standardText}
-                      accessibilityLabel={distanceToUserPos + ' km'}
-                      aria-label={distanceToUserPos + ' km'}
-                    >
+                    <Text style={stylesGlobal.standardText}>
                       {distanceToUserPos} km
                     </Text>
                   </Text>
@@ -331,6 +322,7 @@ const Profile = ( {navigation} ) => {
                     borderColor={Colors.findmyactivityYellow}
                     onPress={() => editMarkerHandler(val)}
                     text={ProfileEditMarkerText}
+                    accessibilityHint={'Führt auf eine neue Seite für das Bearbeiten des Markers'}
                   />
                   <ButtonVariable
                     backgroundColor={Colors.findmyactivityError}
@@ -338,6 +330,7 @@ const Profile = ( {navigation} ) => {
                     textColor={Colors.findmyactivityWhite}
                     onPress={() => deleteMarkerHandler(val)}
                     text={ProfileDeleteMarkerText}
+                    accessibilityHint={'Sie werden gefragt, ob die den Marker wirklich löschen wollen'}
                   />
                 </View>
               </View>
@@ -349,6 +342,7 @@ const Profile = ( {navigation} ) => {
                 style={stylesGlobal.ueberschriftText2}
                 accessibilityLabel={ProfileNoMarkersText}
                 aria-label={ProfileNoMarkersText}
+                accessibilityRole='text'
               >
                 {ProfileNoMarkersText}
               </Text>

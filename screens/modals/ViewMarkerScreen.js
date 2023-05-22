@@ -75,16 +75,11 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
         <Text 
           style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}
           accessibilityRole="text"
-          accessibilityLabel='Eventname'
-          aria-label='Eventname'
+          accessibilityLabel={'Eventname: ' + nameDisplay}
+          aria-label={'Eventname: ' + nameDisplay}
         >
           Eventname:{'\n'}
-          <Text 
-            style={stylesGlobal.standardText}
-            accessibilityRole="text"
-            accessibilityLabel={nameDisplay}
-            aria-label={nameDisplay}
-          >
+          <Text style={stylesGlobal.standardText}>
             {nameDisplay}
           </Text>
         </Text>
@@ -93,16 +88,11 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
         <Text 
           style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}
           accessibilityRole="text"
-          accessibilityLabel='Beschreibung'
-          aria-label='Beschreibung'
+          accessibilityLabel={'Beschreibung: ' + descriptionDisplay}
+          aria-label={'Beschreibung: ' + descriptionDisplay}
         >
           Beschreibung:{'\n'}
-          <Text 
-            style={stylesGlobal.standardText}
-            accessibilityRole="text"
-            accessibilityLabel={descriptionDisplay}
-            aria-label={descriptionDisplay}
-          >
+          <Text style={stylesGlobal.standardText}>
             {descriptionDisplay}
           </Text>
         </Text>  
@@ -112,34 +102,24 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
         <Text 
           style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}
           accessibilityRole="text"
-          accessibilityLabel='Wo'
-          aria-label='Wo'
+          accessibilityLabel={'Wo: ' + locationDescriptionDisplay}
+          aria-label={'Wo: ' + locationDescriptionDisplay}
         >
           Wo?:{'\n'}
-          <Text 
-            style={stylesGlobal.standardText}
-            accessibilityRole="text"
-            accessibilityLabel={locationDescriptionDisplay}
-            aria-label={locationDescriptionDisplay}
-          >
+          <Text style={stylesGlobal.standardText}>
             {locationDescriptionDisplay}
-            </Text>
+          </Text>
         </Text>
         : null}
 
         <Text 
           style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}
           accessibilityRole="text"
-          accessibilityLabel='Anzahl der Teilnehmer'
-          aria-label='Anzahl der Teilnehmer'
+          accessibilityLabel={'Anzahl der Teilnehmer: ' + participantList.length + ' von ' + maxParticipantDisplay}
+          aria-label={'Anzahl der Teilnehmer: ' + participantList.length + ' von ' + maxParticipantDisplay}
         >
           Anzahl der Teilnehmer:{'\n'}
-          <Text 
-            style={stylesGlobal.standardText}
-            accessibilityRole="text"
-            accessibilityLabel={participantList.length + 'von' + maxParticipantDisplay}
-            aria-label={participantList.length + 'von' + maxParticipantDisplay}
-          >
+          <Text style={stylesGlobal.standardText}>
             {participantList.length} von {maxParticipantDisplay}
           </Text>
         </Text>
@@ -151,18 +131,13 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
         <Text 
           style={[stylesGlobal.ueberschriftText2, stylesGlobal.textCenterStyle]}
           accessibilityRole="text"
-          accessibilityLabel='Erstellt von'
-          aria-label='Erstellt von'
+          accessibilityLabel={'Erstellt von: ' + authorUsernameDisplay}
+          aria-label={'Erstellt von: ' + authorUsernameDisplay}
         >
           Erstellt von:{'\n'}
-          <Text 
-            style={stylesGlobal.standardText}
-            accessibilityRole="text"
-            accessibilityLabel={authorUsernameDisplay}
-            aria-label={authorUsernameDisplay}
-          >
+          <Text style={stylesGlobal.standardText}>
             {authorUsernameDisplay}
-            </Text>
+          </Text>
         </Text>
 
       </ScrollView>
@@ -174,7 +149,7 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
           backgroundColor={Colors.findmyactivityYellow}
           borderColor={Colors.findmyactivityYellow}
           width={200}
-          accessibilityHint={'Drücken, um am Event teilzunehmen'}
+          accessibilityHint={'Drücken, um am Event teilzunehmen, es öffnet sich eine Bestätigungsfenster'}
         />
       </View>
 

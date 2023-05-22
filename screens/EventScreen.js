@@ -2,7 +2,6 @@ import { auth } from "../firebase/firebase-config";
 import { deleteMarkerToDB } from '../constants/MainFunctions';
 import { editMarkerMode, editMarkerObject, editMarkerValues, mapRef, markersContext } from '../components/AppContext';
 import { getDistance } from 'geolib';
-import { userPosContext } from '../components/AppContext';
 import Colors from '../constants/Colors';
 import Slider from '@react-native-community/slider';
 
@@ -122,7 +121,7 @@ const EventScreen = ( {navigation} ) => {
 
         <Text 
           style={[stylesGlobal.ueberschriftText2, {marginBottom: 2}]}
-          accessibilityRole="text"
+          accessibilityRole="header"
           accessibilityLabel='Umkreis anzuzeigender Marker'
           aria-label='Umkreis anzuzeigender Marker'
         >
@@ -257,97 +256,74 @@ const EventScreen = ( {navigation} ) => {
 
             if (distanceToUserPos < radiusMarkers || radiusMarkers === 'alle') {
               return (
-                <View key={index} style={{ marginBottom: 15, borderTopWidth: index === 0 ? 0 : 1 }}>
-                  <TouchableOpacity 
-                    onPress={() => moveToMarker(val)} 
-                    style={{marginTop: 10}}
-                    accessibilityRole="button"
-                    accessibilityLabel='Auf das Feld klicken, um zum Event zu springen'
-                    aria-label='Auf das Feld klicken, um zum Event zu springen'
+                <View style={{marginBottom: 15, borderTopWidth: index === 0 ? 0 : 1}} key={index}>
+                <TouchableOpacity onPress={() => moveToMarker(val)} style={{marginTop: 10}}>
+                  <Text 
+                    style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                    accessibilityLabel={ProfileEventsNameText + ': ' + val.name}
+                    aria-label={ProfileEventsNameText + ': ' + val.name}
+                    accessibilityRole='text'
                   >
-                    <Text 
-                      style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
-                      accessibilityRole="text"
-                      accessibilityLabel='Eventname'
-                      aria-label='Eventname'
-                    >
-                      Eventname:{'\n'}
-                      <Text 
-                        style={stylesGlobal.standardText}
-                        accessibilityRole="text"
-                        accessibilityLabel={val.name}
-                        aria-label={val.name}
-                      >
-                        {val.name}
-                      </Text>
+                    {ProfileEventsNameText + '\n'}
+                    <Text style={stylesGlobal.standardText}>
+                      {val.name}
                     </Text>
-                    {val.description 
-                    ? 
-                    <Text 
-                      style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle ]}
-                      accessibilityRole="text"
-                      accessibilityLabel='Beschreibung'
-                      aria-label='Beschreibung'
-                    >
-                      Beschreibung:{'\n'}
-                      <Text 
-                        style={stylesGlobal.standardText}
-                        accessibilityRole="text"
-                        accessibilityLabel={val.description}
-                        aria-label={val.description}
-                      >
-                        {val.description}
-                      </Text>
-                    </Text>  
-                    : null}
-                    { displayStartTime(val) }
-                    { displayEndTime(val) }
-                    <Text 
-                      style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
-                      accessibilityRole="text"
-                      accessibilityLabel='Distanz'
-                      aria-label='Distanz'
-                    >
-                      Distanz:{'\n'}
-                      <Text 
-                        style={stylesGlobal.standardText}
-                        accessibilityRole="text"
-                        accessibilityLabel={distanceToUserPos + 'km'}
-                        aria-label={distanceToUserPos + 'km'}
-                      >
-                        {distanceToUserPos} km
-                      </Text>
+                  </Text>
+                  {val.description 
+                  ? 
+                  <Text 
+                    style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                    accessibilityLabel={ProfileEventsDescriptionText + ': ' + val.description}
+                    aria-label={ProfileEventsDescriptionText + ': ' + val.description}
+                    accessibilityRole='text'
+                  >
+                    {ProfileEventsDescriptionText + '\n'}
+                    <Text style={stylesGlobal.standardText}>
+                      {val.description}
                     </Text>
-                    { displayTags(val) }
-                    <Text 
-                      style={stylesGlobal.ueberschriftText2}
-                      accessibilityRole="text"
-                      accessibilityLabel='Auf das Feld klicken, um zum Event zu springen'
-                      aria-label='Auf das Feld klicken, um zum Event zu springen'
-                    >
-                      Auf das Feld klicken, um zum Event zu springen
+                  </Text>  
+                  : null}
+                  { displayStartTime(val) }
+                  { displayEndTime(val) }
+                  <Text 
+                    style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
+                    accessibilityLabel={ProfileEventsDistanceText + ': ' + distanceToUserPos + ' km'}
+                    aria-label={ProfileEventsDistanceText + ': ' + distanceToUserPos + ' km'}
+                    accessibilityRole='role'
+                  >
+                    {ProfileEventsDistanceText + '\n'}
+                    <Text style={stylesGlobal.standardText}>
+                      {distanceToUserPos} km
                     </Text>
-                  </TouchableOpacity>
+                  </Text>
+                  { displayTags(val) }
+                  <Text 
+                    style={stylesGlobal.ueberschriftText2}
+                    accessibilityLabel={ProfileEventsClickText}
+                    aria-label={ProfileEventsClickText}
+                  >
+                    {ProfileEventsClickText}
+                  </Text>
+                </TouchableOpacity>
 
-                  <View style={{flexDirection: 'row', justifyContent: "space-around", marginTop: stylesGlobal.marginsAndPadding.paddingBetweenItems}}>
-                    <ButtonVariable
-                      backgroundColor={Colors.findmyactivityYellow}
-                      borderColor={Colors.findmyactivityYellow}
-                      onPress={() => editMarkerHandler(val)}
-                      text={'Marker bearbeiten'}
-                      accessibilityHint={'In ein neues Menü gehen, um den Marker anzupassen'}
-                    />
-                    <ButtonVariable
-                      backgroundColor={Colors.findmyactivityError}
-                      borderColor={Colors.findmyactivityError}
-                      textColor={Colors.findmyactivityWhite}
-                      onPress={() => deleteMarkerHandler(val)}
-                      text={'Marker löschen'}
-                      accessibilityHint={'Marker löschen'}
-                    />
-                  </View>
-
+                <View style={{flexDirection: 'row', justifyContent: "space-around", marginTop: stylesGlobal.marginsAndPadding.paddingBetweenItems}}>
+                  <ButtonVariable
+                    backgroundColor={Colors.findmyactivityYellow}
+                    borderColor={Colors.findmyactivityYellow}
+                    onPress={() => editMarkerHandler(val)}
+                    text={ProfileEditMarkerText}
+                    accessibilityHint={'Führt auf eine neue Seite für das Bearbeiten des Markers'}
+                  />
+                  <ButtonVariable
+                    backgroundColor={Colors.findmyactivityError}
+                    borderColor={Colors.findmyactivityError}
+                    textColor={Colors.findmyactivityWhite}
+                    onPress={() => deleteMarkerHandler(val)}
+                    text={ProfileDeleteMarkerText}
+                    accessibilityHint={'Sie werden gefragt, ob die den Marker wirklich löschen wollen'}
+                  />
                 </View>
+              </View>
               )
             }
           }

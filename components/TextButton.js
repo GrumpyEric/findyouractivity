@@ -29,7 +29,7 @@ const TextButton = (props) => {
 TextButton.propTypes = { onPress: PropTypes.func.isRequired, text: PropTypes.string.isRequired, textColor: PropTypes.string,
   icon: PropTypes.string,
   
-  accessibilityLabel: PropTypes.string, accessibilityHint: PropTypes.string, 
+  accessibilityHint: PropTypes.string, 
 }
 
 export default TextButton
