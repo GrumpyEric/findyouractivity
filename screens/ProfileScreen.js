@@ -181,9 +181,9 @@ const Profile = ( {navigation} ) => {
           eventArray.length ?
           eventArray.map((val, index) => {
             let distanceToUserPos = "?"
-            if (userPos.coords != undefined)
+            if (userPosContext._currentValue.coords != undefined)
             {
-              distanceToUserPos = getDistance(val, userPos.coords) / 1000
+              distanceToUserPos = getDistance(val, userPosContext._currentValue.coords) / 1000
             }
 
             const displayStartTime = (val) => {
@@ -299,7 +299,7 @@ const Profile = ( {navigation} ) => {
                     style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
                     accessibilityLabel={ProfileEventsDistanceText + ': ' + distanceToUserPos + ' km'}
                     aria-label={ProfileEventsDistanceText + ': ' + distanceToUserPos + ' km'}
-                    accessibilityRole='role'
+                    accessibilityRole='text'
                   >
                     {ProfileEventsDistanceText + '\n'}
                     <Text style={stylesGlobal.standardText}>

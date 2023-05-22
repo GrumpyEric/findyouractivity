@@ -134,11 +134,11 @@ function TabBarScreen({ navigation }) {
             iconName = focused ? 'map' : 'map-outline';
           } else if (route.name === 'Events') {
             iconName = focused ? 'calendar' : 'calendar-outline';
-          } else if (route.name === 'Logout') {
+          } else if (route.name === 'Ausloggen') {
             iconName = 'logout';
           }
           
-          return <Icon name={iconName} size={size} color={route.name === 'Logout' ? '#FF0000' : color} />;
+          return <Icon name={iconName} size={size} color={route.name === 'Ausloggen' ? '#FF0000' : color} />;
         },
         tabBarActiveTintColor: Colors.findmyactivityText,
         tabBarInactiveTintColor: Colors.findmyactivityText,
@@ -152,7 +152,7 @@ function TabBarScreen({ navigation }) {
         <Tab.Screen options={({ navigation, route }) => options(navigation, route)} name="Profil" component={ProfileScreen}/>
         <Tab.Screen options={optionsNoHeader} name="Karte" component={HomeScreen}/>
         <Tab.Screen options={optionsNoHeader} name="Events" component={EventScreen}/>
-        <Tab.Screen name="Logout" component={LogoutTabNullComponent} options={{tabBarButton: (props) => (
+        <Tab.Screen name="Ausloggen" component={LogoutTabNullComponent} options={{tabBarButton: (props) => (
           <TouchableOpacity {...props} onPress={() => handleSignOut(auth, navigation)}/>
           )}}
         />
