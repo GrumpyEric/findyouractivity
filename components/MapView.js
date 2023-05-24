@@ -21,6 +21,7 @@ import { width, height, stylesGlobal } from "../constants/StylesGlobal";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import { db } from "../firebase/firebase-config";
 import ButtonMapNavigation from "./ButtonMapNavigation";
+import { useRef } from "react";
 
 const MapViewGoogle = (props) => {
   const [markers, setMarkers] = useState([])

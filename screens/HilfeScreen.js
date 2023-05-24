@@ -1,13 +1,10 @@
 
 import React from 'react'
 import { Text, StyleSheet, ScrollView, View, Image } from 'react-native';
-
-
 import Colors from '../constants/Colors'
 import { stylesGlobal } from '../constants/StylesGlobal';
 
 import ButtonBack from '../components/ButtonBack';
-import { LoginBackHint } from '../constants/Fixtures';
 
 const HilfeScreen = ( {navigation} ) => {
 return(

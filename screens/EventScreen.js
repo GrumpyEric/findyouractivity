@@ -18,6 +18,7 @@ import { height, stylesGlobal } from "../constants/StylesGlobal";
 import ButtonVariable from "../components/ButtonVariable";
 import { format, isSameDay, isTomorrow } from "date-fns";
 import { ProfileDeleteMarkerText, ProfileEditMarkerText, ProfileEventsClickText, ProfileEventsDescriptionText, ProfileEventsDistanceText, ProfileEventsNameText } from "../constants/Fixtures";
+import TextButton from "../components/TextButton";
 
 const EventScreen = ( {navigation} ) => {
   const moveToMarker = (inputMarker) => {
@@ -176,9 +177,9 @@ const EventScreen = ( {navigation} ) => {
           myMarkersRef.map((val, index) => 
           {
             let distanceToUserPos = "?"
-            if (userPosContext._currentValueeric.coords != undefined)
+            if (userPosContext._currentValue.coords != undefined)
             {
-              distanceToUserPos = getDistance(val, userPosContext._currentValueeric.coords) / 1000
+              distanceToUserPos = getDistance(val, userPosContext._currentValue.coords) / 1000
             }
 
             const displayStartTime = (val) => {
@@ -355,9 +356,9 @@ const EventScreen = ( {navigation} ) => {
         markersContext._currentValue.map((val, index) => 
           {
             let distanceToUserPos = "?"
-            if (userPosContext._currentValueeric.coords != undefined)
+            if (userPosContext._currentValue.coords != undefined)
             {
-              distanceToUserPos = getDistance(val, userPosContext._currentValueeric.coords) / 1000
+              distanceToUserPos = getDistance(val, userPosContext._currentValue.coords) / 1000
             }
 
             const displayStartTime = (val) => {

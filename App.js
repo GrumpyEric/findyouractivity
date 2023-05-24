@@ -164,6 +164,7 @@ function TabBarScreen({ navigation }) {
 }
 
 const HomeStack = createStackNavigator()
+
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator>
@@ -174,7 +175,8 @@ function HomeStackScreen() {
       <HomeStack.Group screenOptions={ () => ({
         animationEnabled: false,
         presentation: 'transparentModal',
-        gestureEnabled: false, 
+        gestureEnabled: false,
+        detachPreviousScreen: true,
         cardStyle: {
           top: isTablet ? '20%' : '10%',
           left: isTablet ? '20%' : null,

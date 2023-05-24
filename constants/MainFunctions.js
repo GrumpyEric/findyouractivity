@@ -270,8 +270,6 @@ export const getEventsFromUser = async(uid) =>
   });
   return resArray
 }
-
-// TODO: creation, start and end date not formatted right; DONE
 export const updateMarkerToDB = async(auth, eventNameInput, eventDescInput, eventLocationDesc, startDate, endDate, numberParticipants, tags, userMarkerLatitude, userMarkerLongitude, markerCreationDate) => {
   let userID = auth.currentUser.uid.toString()
   // let creationDate = formatISO(markerCreationDate)
@@ -291,8 +289,8 @@ export const updateMarkerToDB = async(auth, eventNameInput, eventDescInput, even
       user: userID
     }
   });
-  const alerta_title = "Marker has been updated"
-  const alerta_msg = "Latitude: " + userMarkerLatitude.toString() + "\nLongitude" + userMarkerLongitude.toString()
+  const alerta_title = "Erfolg"
+  const alerta_msg = "Marker erfolgreich aktualisiert"
   Alert.alert(alerta_title,alerta_msg);
   // setRegion(userMarker);
 }
