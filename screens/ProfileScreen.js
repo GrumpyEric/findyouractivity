@@ -114,7 +114,7 @@ const Profile = ( {navigation} ) => {
           style={[styles.textLabels, stylesGlobal.ueberschriftText2]}
           accessibilityLabel={ProfileUsernameText}
           aria-label={ProfileUsernameText}
-          accessibilityRole='header'
+          accessibilityRole='text'
           selectable={true}
         >
           {ProfileUsernameText}
@@ -134,7 +134,7 @@ const Profile = ( {navigation} ) => {
           style={[styles.textLabels, stylesGlobal.ueberschriftText2]}
           accessibilityLabel={ProfileDescriptionText}
           aria-label={ProfileDescriptionText}
-          accessibilityRole='header'
+          accessibilityRole='text'
           selectable={true}
         >
           {ProfileDescriptionText}
@@ -156,7 +156,7 @@ const Profile = ( {navigation} ) => {
           style={[styles.textLabels, stylesGlobal.ueberschriftText2]}
           accessibilityLabel={ProfileEmailText}
           aria-label={ProfileEmailText}
-          accessibilityRole='header'
+          accessibilityRole='text'
           selectable={true}
         >
           {ProfileEmailText}
@@ -176,7 +176,7 @@ const Profile = ( {navigation} ) => {
           style={[styles.textLabels, stylesGlobal.ueberschriftText2]}
           accessibilityLabel={ProfileEventsText}
           aria-label={ProfileEventsText}
-          accessibilityRole='header'
+          accessibilityRole='text'
           selectable={true}
         >
           {ProfileEventsText}

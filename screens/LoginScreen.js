@@ -99,7 +99,7 @@ const LoginScreen = () => {
           style={stylesGlobal.ueberschriftText2}
           accessibilityLabel={PasswortTitleText}
           aria-label={PasswortTitleText}
-          accessibilityRole='header'
+          accessibilityRole='text'
           selectable={true}
         >
           {PasswortTitleText}

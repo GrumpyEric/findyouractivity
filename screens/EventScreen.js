@@ -123,7 +123,7 @@ const EventScreen = ( {navigation} ) => {
 
         <Text 
           style={[stylesGlobal.ueberschriftText2, {marginBottom: 2}]}
-          accessibilityRole="header"
+          accessibilityRole="text"
           accessibilityLabel='Umkreis anzuzeigender Marker'
           aria-label='Umkreis anzuzeigender Marker'
           selectable={true}
@@ -159,7 +159,7 @@ const EventScreen = ( {navigation} ) => {
         <View style={styles.eventsStyle}>
         <Text 
           style={[stylesGlobal.ueberschriftText2, {marginBottom: 2}]}
-          accessibilityRole="header"
+          accessibilityRole="text"
           accessibilityLabel={showAllMyMarkers ? 'Alle Events' : 'Meine Events'}
           aria-label={showAllMyMarkers ? 'Alle Events' : 'Meine Events'}
           selectable={true}

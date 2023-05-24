@@ -104,7 +104,7 @@ return(
     <View style={styles.contentContainerStyle}>
       <Text 
         style={stylesGlobal.ueberschriftText2}
-        accessibilityRole="header"
+        accessibilityRole="text"
         accessibilityLabel="Umkreis anzuzeigender Marker"
         aria-label="Umkreis anzuzeigender Marker"
         selectable={true}
@@ -138,7 +138,7 @@ return(
 
       <Text 
         style={[stylesGlobal.ueberschriftText2, {alignSelf: 'flex-start', marginBottom: 2}]}
-        accessibilityRole='header'
+        accessibilityRole='text'
         accessibilityLabel='Tags'
         aria-label='Tags'
         selectable={true}
