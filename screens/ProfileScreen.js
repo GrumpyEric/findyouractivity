@@ -1,5 +1,5 @@
 import { updateUserFromDB, readUserFromDB, deleteMarkerToDB } from '../constants/MainFunctions';
-import { selectedUserContext, loggedInUser, userPosContext, mapRef, saveProfileChangesFunctionContext, editMarkerMode, editMarkerValues, editMarkerObject, markersContext } from '../components/AppContext';
+import { selectedUserContext, loggedInUser, userPosContext, mapRef, saveProfileChangesFunctionContext, editMarkerMode, editMarkerValues, editMarkerObject, markersContext, markersRefContext } from '../components/AppContext';
 import { getDistance } from 'geolib';
 import React, { useState } from "react";
 import {
@@ -41,11 +41,9 @@ const Profile = ( {navigation} ) => {
 
   saveProfileChangesFunctionContext._currentValue = onSaveButton
 
-  useEffect(() => {
-    console.log(markersContext._currentValue);
-  }, [markersContext._currentValue])
-
   const moveToMarker = (inputMarker) => {
+    const markerRef = markersRefContext._currentValue.find((val) => val.props.coordinate.latitude === inputMarker.latitude)
+
     navigation.goBack()
     mapRef.current.animateToRegion({
     latitude: inputMarker.latitude,
@@ -53,6 +51,7 @@ const Profile = ( {navigation} ) => {
     latitudeDelta: 0.01,
     longitudeDelta: 0.01
     })
+    markerRef.showCallout()
   }
 
   function editMarkerHandler(val) {

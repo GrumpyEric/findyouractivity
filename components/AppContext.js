@@ -49,5 +49,6 @@ export const errorEmailCheckContext = createContext(false)
 export const errorPasswordCheckContext = createContext(false)
 
 export const markersContext = createContext([])
+export const markersRefContext = createContext([])
 
 // export {latitudeContext}

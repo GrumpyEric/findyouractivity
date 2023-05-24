@@ -9,7 +9,7 @@ import { mapRef } from '../components/AppContext';
 
 const HomeScreen = () => {
   return (
-    <View style={[stylesGlobal.screenContainer]}>
+    <View focusable={false} accessible={false} style={[stylesGlobal.screenContainer]}>
       <MapViewGoogle
         style={styles.map_container}
         initialRegion={hawRegion}

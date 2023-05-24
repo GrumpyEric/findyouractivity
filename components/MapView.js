@@ -7,7 +7,7 @@ import * as Location from 'expo-location';
 
 import { saveNewMarkerLocation, getUserInfoFromDB, applyFilters } from "../constants/MainFunctions";
 import FloatingActionButton from "./FloatingActionButton";
-import { latitudeContext, longitudeContext, mapRef, userPosContext, rangeContext, selectedAuthor, editMarkerMode, mapRefEdit, markersContext } from "./AppContext";
+import { latitudeContext, longitudeContext, mapRef, userPosContext, rangeContext, selectedAuthor, editMarkerMode, mapRefEdit, markersContext, markersRefContext } from "./AppContext";
 
 import 'intl'
 import 'intl/locale-data/jsonp/de'
@@ -38,7 +38,6 @@ const MapViewGoogle = (props) => {
     })
   }, [])
   
-
   const navigation = useNavigation()
   const [isUserPosLoaded, setIsUserPosLoaded] = useState(false)
   const [userPos, setUserPos] = useState([]);
@@ -214,7 +213,7 @@ const MapViewGoogle = (props) => {
         accessibilityHint={'Öffnet das Hilfemenü'}
       />
 
-      <View style={{
+      <View focusable={false} accessible={false} style={{
         position: 'absolute',
         bottom: height * 0.1,
         left: 0,
@@ -236,7 +235,7 @@ const MapViewGoogle = (props) => {
       </View>
 
       {markerButtonVisible && editMarkerMode._currentValue === false ?
-      <View style={{
+      <View focusable={false} accessible={false} style={{
         position: 'absolute',
         bottom: height * 0.1,
         right: width * 0.25 + 25,
@@ -259,7 +258,7 @@ const MapViewGoogle = (props) => {
 
       : markerButtonVisible && editMarkerMode._currentValue === true ?
 
-      <View style={{
+      <View focusable={false} accessible={false} style={{
         position: 'absolute',
         bottom: height * 0.1,
         right: width * 0.25 + 25,
@@ -301,7 +300,6 @@ const MapViewGoogle = (props) => {
         onPanDrag={() => setMarkerButtonVisible(false)}
         accessibilityLabel="Karte"
         aria-label="Karte"
-        accessibilityRole="none"
         accessibilityHint="Die Karte, auf der Events angezeigt und erstellt werden können"
       >
       {/* DB Markers */}
@@ -398,18 +396,19 @@ const MapViewGoogle = (props) => {
           }
 
             return (
-              <View key={index}>
+              <View focusable={false} accessible={false} key={index}>
                 {rangeContext._currentValue != null && distanceToUserPos != '?' && rangeContext._currentValue >= distanceToUserPos || rangeContext._currentValue === 21 || rangeContext._currentValue === 'alle' ?
                 <Marker
-                   key={index} 
-                   coordinate={val} 
-                   pinColor={Colors.findmyactivityError} 
-                   tracksViewChanges={true} 
-                   onPress={() => { getUserInfoFromDB(val.user) }}
-                   accessibilityRole="none"
-                   accessibilityLabel="Marker"
-                   aria-label="Marker"
-                  //  focusable={true}
+                  ref={(ref) => markersRefContext._currentValue.push(ref)}
+                  key={index} 
+                  coordinate={val} 
+                  pinColor={Colors.findmyactivityError} 
+                  tracksViewChanges={true} 
+                  onPress={() => { getUserInfoFromDB(val.user) }}
+                  accessibilityRole="none"
+                  accessibilityLabel="Marker"
+                  aria-label="Marker"
+                //  focusable={true}
                 >
                   <Callout 
                     style={{flex: 1}} 
