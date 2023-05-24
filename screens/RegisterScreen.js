@@ -102,7 +102,7 @@ const RegisterScreen = () => {
           }
         </View>
 
-        <View>
+        <View style={styles.singleInputContainer}>
           <Text 
             style={stylesGlobal.ueberschriftText2}
             accessibilityLabel={PasswortTitleText}
@@ -148,6 +148,7 @@ const RegisterScreen = () => {
             : <Text accessible={false}></Text>
           }
         </View>
+        
       </View>
 
       <View style={styles.buttonContainer}>

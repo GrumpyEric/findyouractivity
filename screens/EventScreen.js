@@ -28,6 +28,7 @@ const EventScreen = ( {navigation} ) => {
     latitudeDelta: 0.01,
     longitudeDelta: 0.01
     })
+    
   }
 
   function editMarkerHandler(val) {
@@ -265,7 +266,7 @@ const EventScreen = ( {navigation} ) => {
             if (distanceToUserPos < radiusMarkers || radiusMarkers === 'alle') {
               return (
                 <View style={{marginBottom: 15, borderTopWidth: index === 0 ? 0 : 1}} key={index}>
-                <TouchableOpacity onPress={() => moveToMarker(val)} style={{marginTop: 10}}>
+                <View style={{marginTop: 10}}>
                   <Text 
                     style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
                     accessibilityLabel={ProfileEventsNameText + ': ' + val.name}
@@ -308,15 +309,12 @@ const EventScreen = ( {navigation} ) => {
                     </Text>
                   </Text>
                   { displayTags(val) }
-                  <Text 
-                    style={stylesGlobal.ueberschriftText2}
-                    accessibilityLabel={ProfileEventsClickText}
-                    aria-label={ProfileEventsClickText}
-                    selectable={true}
-                  >
-                    {ProfileEventsClickText}
-                  </Text>
-                </TouchableOpacity>
+                  <TextButton 
+                    onPress={() => moveToMarker(val)}
+                    text={ProfileEventsClickText}
+                    accessibilityHint={'Springt zum Event auf der Karte'}
+                  />
+                </View>
 
                 <View style={{flexDirection: 'row', justifyContent: "space-around", marginTop: stylesGlobal.marginsAndPadding.paddingBetweenItems}}>
                   <ButtonVariable
@@ -447,7 +445,7 @@ const EventScreen = ( {navigation} ) => {
             if (distanceToUserPos < radiusMarkers || radiusMarkers === 'alle') {
               return (
                 <View key={index} style={{ marginBottom: 15, borderTopWidth: index === 0 ? 0 : 1 }}>
-                <TouchableOpacity onPress={() => moveToMarker(val)} style={{marginTop: 10}}>
+                <View style={{marginTop: 10}}>
                   <Text 
                     style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
                     accessibilityLabel={ProfileEventsNameText + ' ' + val.name}
@@ -493,15 +491,12 @@ const EventScreen = ( {navigation} ) => {
                     </Text>
                   </Text>
                   { displayTags(val) }
-                  <Text 
-                    style={stylesGlobal.ueberschriftText2}
-                    accessibilityLabel={ProfileEventsClickText}
-                    aria-label={ProfileEventsClickText}
-                    selectable={true}
-                  >
-                    {ProfileEventsClickText}
-                  </Text>
-                </TouchableOpacity>
+                  <TextButton 
+                    onPress={() => moveToMarker(val)}
+                    text={ProfileEventsClickText}
+                    accessibilityHint={'Springt zum Event auf der Karte'}
+                  />
+                </View>
 
                 {val.user === myUserID 
                 ?

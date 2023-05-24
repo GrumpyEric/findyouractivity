@@ -17,6 +17,8 @@ import { format, isSameDay, isTomorrow } from 'date-fns';
 import ButtonVariable from '../components/ButtonVariable';
 import { auth } from '../firebase/firebase-config';
 import { DeleteMarkerText1, DeleteMarkerText2, ProfileDeleteMarkerText, ProfileDescriptionHint, ProfileDescriptionText, ProfileEditMarkerText, ProfileEmailHint, ProfileEmailText, ProfileEventsClickText, ProfileEventsDescriptionText, ProfileEventsDistanceText, ProfileEventsEndeText, ProfileEventsNameText, ProfileEventsStartText, ProfileEventsTagsText, ProfileEventsText, ProfileNoMarkersText, ProfileTitleText, ProfileUsernameHint, ProfileUsernameText } from '../constants/Fixtures';
+import { useEffect } from 'react';
+import TextButton from '../components/TextButton';
 
 const Profile = ( {navigation} ) => {
   navigation.setOptions({
@@ -38,6 +40,10 @@ const Profile = ( {navigation} ) => {
   }
 
   saveProfileChangesFunctionContext._currentValue = onSaveButton
+
+  useEffect(() => {
+    console.log(markersContext._currentValue);
+  }, [markersContext._currentValue])
 
   const moveToMarker = (inputMarker) => {
     navigation.goBack()
@@ -275,7 +281,7 @@ const Profile = ( {navigation} ) => {
 
             return (
               <View style={{marginBottom: 15, borderTopWidth: index === 0 ? 0 : 1}} key={index}>
-                <TouchableOpacity onPress={() => moveToMarker(val)} style={{marginTop: 10}}>
+                <View style={{marginTop: 10}}>
                   <Text 
                     style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
                     accessibilityLabel={ProfileEventsNameText + ': ' + val.name}
@@ -318,15 +324,12 @@ const Profile = ( {navigation} ) => {
                     </Text>
                   </Text>
                   { displayTags(val) }
-                  <Text 
-                    style={stylesGlobal.ueberschriftText2}
-                    accessibilityLabel={ProfileEventsClickText}
-                    aria-label={ProfileEventsClickText}
-                    selectable={true}
-                  >
-                    {ProfileEventsClickText}
-                  </Text>
-                </TouchableOpacity>
+                  <TextButton 
+                    onPress={() => moveToMarker(val)}
+                    text={ProfileEventsClickText}
+                    accessibilityHint={'Springt zum Event auf der Karte'}
+                  />
+                </View>
 
                 <View style={{flexDirection: 'row', justifyContent: "space-around", marginTop: stylesGlobal.marginsAndPadding.paddingBetweenItems}}>
                   <ButtonVariable

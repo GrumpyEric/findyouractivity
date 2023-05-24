@@ -408,6 +408,7 @@ const MapViewGoogle = (props) => {
                    accessibilityRole="none"
                    accessibilityLabel="Marker"
                    aria-label="Marker"
+                  //  focusable={true}
                 >
                   <Callout 
                     style={{flex: 1}} 

@@ -131,6 +131,7 @@ const LoginScreen = () => {
           : <Text></Text>
         }
       </View>
+      
     </View>
 
     <View style={styles.buttonContainer}>
