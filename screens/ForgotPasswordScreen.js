@@ -38,6 +38,7 @@ const ForgotPasswordScreen = () => {
         aria-label={ForgotTitleText}
         accessibilityHint={ForgotTitleHint}
         accessibilityRole={'header'}
+        selectable={true}
       >
         {ForgotTitleText}
       </Text>
@@ -48,6 +49,7 @@ const ForgotPasswordScreen = () => {
           accessibilityLabel={EmailTitleText}
           aria-label={EmailTitleText}
           accessibilityRole='text'
+          selectable={true}
         >
           {EmailTitleText}
         </Text>
@@ -68,7 +70,8 @@ const ForgotPasswordScreen = () => {
                 style={[stylesGlobal.standardText, {color: Colors.findmyactivityError, textAlign: 'center'}]}
                 accessibilityLabel={EmailErrorText}
                 aria-label={EmailErrorText}
-                accessibilityRole='text'
+                accessibilityRole='alert'
+                selectable={true}
               >
                 {EmailErrorText}
               </Text>

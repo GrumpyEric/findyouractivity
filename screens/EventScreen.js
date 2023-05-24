@@ -95,6 +95,7 @@ const EventScreen = ( {navigation} ) => {
           accessibilityRole="header"
           accessibilityLabel="Events"
           aria-label="Events"
+          selectable={true}
         >Events
         </Text>
       
@@ -104,6 +105,7 @@ const EventScreen = ( {navigation} ) => {
             accessibilityRole="text"
             accessibilityLabel={showAllMyMarkers ? 'Ansicht auf nur meine Marker umstellen' : 'Ansicht auf alle Marker umstellen'}
             aria-label={showAllMyMarkers ? 'Ansicht auf nur meine Marker umstellen' : 'Ansicht auf alle Marker umstellen'}
+            selectable={true}
           >
             {showAllMyMarkers ? 'Ansicht auf nur meine Marker umstellen' : 'Ansicht auf alle Marker umstellen'}
           </Text>
@@ -124,6 +126,7 @@ const EventScreen = ( {navigation} ) => {
           accessibilityRole="header"
           accessibilityLabel='Umkreis anzuzeigender Marker'
           aria-label='Umkreis anzuzeigender Marker'
+          selectable={true}
         >
           Umkreis anzuzeigender Marker:
         </Text>
@@ -133,6 +136,7 @@ const EventScreen = ( {navigation} ) => {
             accessibilityRole="text"
             accessibilityLabel={radiusMarkersVisual === 'alle Marker anzeigen' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}
             aria-label={radiusMarkersVisual === 'alle Marker anzeigen' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}
+            selectable={true}
           >
             {radiusMarkersVisual === 'alle Marker anzeigen' ? radiusMarkersVisual : radiusMarkersVisual + ' km'}
           </Text>
@@ -158,6 +162,7 @@ const EventScreen = ( {navigation} ) => {
           accessibilityRole="header"
           accessibilityLabel={showAllMyMarkers ? 'Alle Events' : 'Meine Events'}
           aria-label={showAllMyMarkers ? 'Alle Events' : 'Meine Events'}
+          selectable={true}
         >
           {showAllMyMarkers ? 'Alle Events' : 'Meine Events'}
         </Text>
@@ -197,6 +202,7 @@ const EventScreen = ( {navigation} ) => {
                   style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
                   accessibilityLabel={"Start: " + startTimeRes}
                   aria-label={"Start: " + startTimeRes}
+                  selectable={true}
                 >
                   Start:{'\n'}
                   <Text style={stylesGlobal.standardText}>
@@ -229,6 +235,7 @@ const EventScreen = ( {navigation} ) => {
                   style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
                   accessibilityLabel={"Ende: " + endTimeRes}
                   aria-label={"Ende: " + endTimeRes}
+                  selectable={true}
                 >
                   Ende:{'\n'}
                   <Text style={stylesGlobal.standardText}>
@@ -245,6 +252,7 @@ const EventScreen = ( {navigation} ) => {
                 style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
                 accessibilityLabel={"Tags: " + val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
                 aria-label={"Tags: " + val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                selectable={true}
               >
                 Tags:{'\n'}
                 <Text style={stylesGlobal.standardText}>
@@ -263,6 +271,7 @@ const EventScreen = ( {navigation} ) => {
                     accessibilityLabel={ProfileEventsNameText + ': ' + val.name}
                     aria-label={ProfileEventsNameText + ': ' + val.name}
                     accessibilityRole='text'
+                    selectable={true}
                   >
                     {ProfileEventsNameText + '\n'}
                     <Text style={stylesGlobal.standardText}>
@@ -276,6 +285,7 @@ const EventScreen = ( {navigation} ) => {
                     accessibilityLabel={ProfileEventsDescriptionText + ': ' + val.description}
                     aria-label={ProfileEventsDescriptionText + ': ' + val.description}
                     accessibilityRole='text'
+                    selectable={true}
                   >
                     {ProfileEventsDescriptionText + '\n'}
                     <Text style={stylesGlobal.standardText}>
@@ -289,7 +299,8 @@ const EventScreen = ( {navigation} ) => {
                     style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
                     accessibilityLabel={ProfileEventsDistanceText + ': ' + distanceToUserPos + ' km'}
                     aria-label={ProfileEventsDistanceText + ': ' + distanceToUserPos + ' km'}
-                    accessibilityRole='role'
+                    accessibilityRole='text'
+                    selectable={true}
                   >
                     {ProfileEventsDistanceText + '\n'}
                     <Text style={stylesGlobal.standardText}>
@@ -301,6 +312,7 @@ const EventScreen = ( {navigation} ) => {
                     style={stylesGlobal.ueberschriftText2}
                     accessibilityLabel={ProfileEventsClickText}
                     aria-label={ProfileEventsClickText}
+                    selectable={true}
                   >
                     {ProfileEventsClickText}
                   </Text>
@@ -335,6 +347,7 @@ const EventScreen = ( {navigation} ) => {
               accessibilityRole="text"
               accessibilityLabel='Sie haben noch keine eigenen Marker gesetzt. Setzen Sie erstmal Marker auf der Karte, um hier dann die eigenen Marker sehen zu können.'
               aria-label='Sie haben noch keine eigenen Marker gesetzt. Setzen Sie erstmal Marker auf der Karte, um hier dann die eigenen Marker sehen zu können.'
+              selectable={true}
             >
               Sie haben noch keine eigenen Marker gesetzt. Setzen Sie erstmal Marker auf der Karte, um hier dann die eigenen Marker sehen zu können.
             </Text>
@@ -371,6 +384,7 @@ const EventScreen = ( {navigation} ) => {
                   style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
                   accessibilityLabel={"Start: " + startTimeRes}
                   aria-label={"Start: " + startTimeRes}
+                  selectable={true}
                 >
                   Start:{'\n'}
                   <Text style={stylesGlobal.standardText}>
@@ -403,6 +417,7 @@ const EventScreen = ( {navigation} ) => {
                   style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
                   accessibilityLabel={"Ende: " + endTimeRes}
                   aria-label={"Ende: " + endTimeRes}
+                  selectable={true}
                 >
                   Ende:{'\n'}
                   <Text style={stylesGlobal.standardText}>
@@ -419,6 +434,7 @@ const EventScreen = ( {navigation} ) => {
                 style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
                 accessibilityLabel={"Tags: " + val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
                 aria-label={"Tags: " + val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                selectable={true}
               >
                 Tags:{'\n'}
                 <Text style={stylesGlobal.standardText}>
@@ -434,14 +450,13 @@ const EventScreen = ( {navigation} ) => {
                 <TouchableOpacity onPress={() => moveToMarker(val)} style={{marginTop: 10}}>
                   <Text 
                     style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
-                    accessibilityLabel={ProfileEventsNameText}
-                    aria-label={ProfileEventsNameText}
+                    accessibilityLabel={ProfileEventsNameText + ' ' + val.name}
+                    aria-label={ProfileEventsNameText + ' ' + val.name}
+                    selectable={true}
                   >
                     {ProfileEventsNameText + '\n'}
                     <Text 
                       style={stylesGlobal.standardText}
-                      accessibilityLabel={val.name}
-                      aria-label={val.name}
                     >
                       {val.name}
                     </Text>
@@ -450,14 +465,13 @@ const EventScreen = ( {navigation} ) => {
                   ? 
                   <Text 
                     style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
-                    accessibilityLabel={ProfileEventsDescriptionText}
-                    aria-label={ProfileEventsDescriptionText}
+                    accessibilityLabel={ProfileEventsDescriptionText + ' ' + val.description}
+                    aria-label={ProfileEventsDescriptionText + ' ' + val.description}
+                    selectable={true}
                   >
                     {ProfileEventsDescriptionText + '\n'}
                     <Text
                       style={stylesGlobal.standardText}
-                      accessibilityLabel={val.description}
-                      aria-label={val.description}
                     >
                       {val.description}
                     </Text>
@@ -467,14 +481,13 @@ const EventScreen = ( {navigation} ) => {
                   { displayEndTime(val) }
                   <Text 
                     style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
-                    accessibilityLabel={ProfileEventsDistanceText}
-                    aria-label={ProfileEventsDistanceText}
+                    accessibilityLabel={ProfileEventsDistanceText + ' ' + distanceToUserPos + ' km'}
+                    aria-label={ProfileEventsDistanceText + ' ' + distanceToUserPos + ' km'}
+                    selectable={true}
                   >
                     {ProfileEventsDistanceText + '\n'}
                     <Text 
                       style={stylesGlobal.standardText}
-                      accessibilityLabel={distanceToUserPos + ' km'}
-                      aria-label={distanceToUserPos + ' km'}
                     >
                       {distanceToUserPos} km
                     </Text>
@@ -484,6 +497,7 @@ const EventScreen = ( {navigation} ) => {
                     style={stylesGlobal.ueberschriftText2}
                     accessibilityLabel={ProfileEventsClickText}
                     aria-label={ProfileEventsClickText}
+                    selectable={true}
                   >
                     {ProfileEventsClickText}
                   </Text>
@@ -522,6 +536,7 @@ const EventScreen = ( {navigation} ) => {
               accessibilityRole="text"
               accessibilityLabel='Es hat noch niemand Marker gesetzt. Setzen Sie den ersten Marker auf der Karte!'
               aria-label='Es hat noch niemand Marker gesetzt. Setzen Sie den ersten Marker auf der Karte!'
+              selectable={true}
             >
               Es hat noch niemand Marker gesetzt. Setzen Sie den ersten Marker auf der Karte!
             </Text>

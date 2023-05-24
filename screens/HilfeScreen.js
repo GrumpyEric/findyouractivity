@@ -18,6 +18,7 @@ return(
       accessibilityRole="header"
       accessibilityLabel="Hilfe"
       aria-label="Hilfe"
+      selectable={true}
     >
       Hilfe
     </Text>
@@ -27,6 +28,7 @@ return(
       accessibilityRole="text"
       accessibilityLabel="Zum Erstellen von Markern auf die Karte drücken und gedrückt halten, um einen Marker zu setzen."
       aria-label="Zum Erstellen von Markern auf die Karte drücken und gedrückt halten, um einen Marker zu setzen."
+      selectable={true}
     >
       Zum Erstellen von Markern auf die Karte drücken und gedrückt halten, um einen Marker zu setzen.
     </Text>
@@ -37,6 +39,7 @@ return(
         accessibilityRole="text"
         accessibilityLabel="Das Navigations-Steuerkreuz hilft bei der Bedienung der Karte, ohne dass bestimmte Gesten benutzt werden müssen."
         aria-label="Das Navigations-Steuerkreuz hilft bei der Bedienung der Karte, ohne dass bestimmte Gesten benutzt werden müssen."
+        selectable={true}
       >
         Das Navigations-Steuerkreuz hilft bei der Bedienung der Karte, ohne dass bestimmte Gesten benutzt werden müssen.
       </Text>
@@ -53,6 +56,7 @@ return(
         accessibilityRole="text"
         accessibilityLabel="Das Navigations-Steuerkreuz"
         aria-label="Das Navigations-Steuerkreuz"
+        selectable={true}
       >
         Das Navigations-Steuerkreuz
       </Text>
@@ -68,6 +72,7 @@ return(
         aria-label={'Der Filter-Button leitet Sie in ein Menü weiter, wo sie einstellen können, welche Marker Sie sehen möchten\n' 
         + 'Der Positions-Button zeigt Ihnen Ihre genaue Position auf der Karte'
         }
+        selectable={true}
       >
         {'Der Filter-Button leitet Sie in ein Menü weiter, wo sie einstellen können, welche Marker Sie sehen möchten\n' 
         + 'Der Positions-Button zeigt Ihnen Ihre genaue Position auf der Karte'
@@ -98,6 +103,7 @@ return(
         accessibilityRole="text"
         accessibilityLabel="Der Filter- und der Positions-Button"
         aria-label="Der Filter- und der Positions-Button"
+        selectable={true}
       >
         Der Filter- und der Positions-Button
       </Text>

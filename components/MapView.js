@@ -336,6 +336,7 @@ const MapViewGoogle = (props) => {
                   style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
                   accessibilityLabel={"Start: " + startTimeRes}
                   aria-label={"Start: " + startTimeRes}
+                  selectable={true}
                 >
                   Start:{'\n'}
                   <Text style={stylesGlobal.standardText}>
@@ -368,6 +369,7 @@ const MapViewGoogle = (props) => {
                   style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
                   accessibilityLabel={"Ende: " + endTimeRes}
                   aria-label={"Ende: " + endTimeRes}
+                  selectable={true}
                 >
                   Ende:{'\n'}
                   <Text style={stylesGlobal.standardText}>
@@ -384,6 +386,7 @@ const MapViewGoogle = (props) => {
                 style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
                 accessibilityLabel={"Tags: " + val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
                 aria-label={"Tags: " + val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                selectable={true}
               >
                 Tags:{'\n'}
                 <Text style={stylesGlobal.standardText}>
@@ -418,6 +421,7 @@ const MapViewGoogle = (props) => {
                       accessibilityRole="text"
                       accessibilityLabel={"Eventname: " + val.name}
                       aria-label={"Eventname: " + val.name}
+                      selectable={true}
                     >
                       {'Eventname: '} 
                       <Text style={stylesGlobal.standardText}> 
@@ -431,6 +435,7 @@ const MapViewGoogle = (props) => {
                       accessibilityRole="text"
                       accessibilityLabel={"Beschreibung: " + val.description}
                       aria-label={"Beschreibung: " + val.description}
+                      selectable={true}
                     >
                       {'Beschreibung: '} 
                       <Text style={stylesGlobal.standardText}> 
@@ -444,6 +449,7 @@ const MapViewGoogle = (props) => {
                       accessibilityRole="text"
                       accessibilityLabel={"Distanz: " + distanceToUserPos + ' km'}
                       aria-label={"Distanz: " + distanceToUserPos + ' km'}
+                      selectable={true}
                     >
                       {'Distanz: '} 
                       <Text style={stylesGlobal.standardText}>
@@ -456,6 +462,7 @@ const MapViewGoogle = (props) => {
                       accessibilityRole="text"
                       accessibilityLabel="Klicken für mehr Infos!"
                       aria-label="Klicken für mehr Infos!"
+                      selectable={true}
                     >
                       Klicken für mehr Infos!
                     </Text>

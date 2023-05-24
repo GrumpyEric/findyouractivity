@@ -15,8 +15,6 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import 'intl'
 import 'intl/locale-data/jsonp/de'
 import { intlFormat } from 'date-fns'
-import { useEffect } from 'react'
-import { LoginBackHint } from '../../constants/Fixtures'
 
 const CreateMarkersScreen = ( {navigation} ) => {  
   const [eventName, setEventName] = useState(editMarkerMode._currentValue ? editMarkerValues._currentValue.name : '')
@@ -211,6 +209,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
         accessibilityRole="header"
         accessibilityLabel={editMarkerMode._currentValue ? 'Marker bearbeiten' : 'Marker erstellen'}
         aria-label={editMarkerMode._currentValue ? 'Marker bearbeiten' : 'Marker erstellen'}
+        selectable={true}
       >
         {editMarkerMode._currentValue ? 'Marker bearbeiten' : 'Marker erstellen'}
       </Text>
@@ -220,6 +219,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
         accessibilityRole="text"
         accessibilityLabel='Felder mit einem * sind Pfilchtfelder!'
         aria-label='Felder mit einem * sind Pfilchtfelder!'
+        selectable={true}
       >
         Felder mit einem * sind Pfilchtfelder!
       </Text>
@@ -230,6 +230,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
           accessibilityRole="text"
           accessibilityLabel='Eventname*'
           aria-label='Eventname*'
+          selectable={true}
         >
           Eventname*
         </Text>
@@ -257,6 +258,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
             accessibilityRole="text"
             accessibilityLabel='Textfeld "Eventname" darf nicht leer sein! Bitte Eventnamen eingeben'
             aria-label='Textfeld "Eventname" darf nicht leer sein! Bitte Eventnamen eingeben'
+            selectable={true}
           >
             Textfeld 'Eventname' darf nicht leer sein! Bitte Eventnamen eingeben
           </Text>
@@ -269,6 +271,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
         accessibilityRole="text"
         accessibilityLabel='Eventbeschreibung'
         aria-label='Eventbeschreibung'
+        selectable={true}
       >
         Eventbeschreibung
       </Text>
@@ -297,6 +300,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
         accessibilityRole="text"
         accessibilityLabel='Ortbeschreibung'
         aria-label='Ortbeschreibung'
+        selectable={true}
       >
         Ortbeschreibung
         </Text>
@@ -324,6 +328,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
         accessibilityRole="text"
         accessibilityLabel='Teilnehmeranzahl*'
         aria-label='Teilnehmeranzahl*'
+        selectable={true}
       >
         Teilnehmeranzahl*
       </Text>
@@ -350,6 +355,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
           accessibilityRole="text"
           accessibilityLabel={numberParticipants.length < 1 ? ' "Anzahl Teilnehmer" darf nicht leer sein! Bitte Teilnehmeranzahl angeben' : ' Feld "Anzahl Teilnehmer" muss eine Zahl enthalten!'}
           aria-label={numberParticipants.length < 1 ? ' "Anzahl Teilnehmer" darf nicht leer sein! Bitte Teilnehmeranzahl angeben' : ' Feld "Anzahl Teilnehmer" muss eine Zahl enthalten!'}
+          selectable={true}
         >
           {numberParticipants.length < 1 ? ' "Anzahl Teilnehmer" darf nicht leer sein! Bitte Teilnehmeranzahl angeben' : ' Feld "Anzahl Teilnehmer" muss eine Zahl enthalten!'}
         </Text>
@@ -362,6 +368,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
           accessibilityRole="text"
           accessibilityLabel='Tags'
           aria-label='Tags'
+          selectable={true}
         >
           Tags
         </Text>
@@ -397,7 +404,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
           <Text 
             style={[stylesGlobal.standardText, {alignSelf: 'center'}]}
             accessibilityRole="text"
-            accessibilityLabel={'Start:' + intlFormat(pickedStartTime.current, {
+            accessibilityLabel={'Start: ' + intlFormat(pickedStartTime.current, {
               weekday: 'long',
               year: 'numeric',
               month: 'long',
@@ -417,6 +424,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
               }, 
                 {locale: 'de-DE',}
               ) + ' Uhr'}
+            selectable={true}
           >
             <Text 
               style={stylesGlobal.ueberschriftText2}
@@ -442,6 +450,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
               accessibilityRole="text"
               accessibilityLabel='Startzeit wurde nicht ausgewählt! Bitte Startzeit auswählen'
               aria-label='Startzeit wurde nicht ausgewählt! Bitte Startzeit auswählen'
+              selectable={true}
             >
               Startzeit wurde nicht ausgewählt! Bitte Startzeit auswählen
             </Text>
@@ -457,10 +466,9 @@ const CreateMarkersScreen = ( {navigation} ) => {
         <View style={{marginBottom: stylesGlobal.marginsAndPadding.paddingBetweenItems, alignItems: 'center'}}>
         {pickedEndTime.current !== undefined
         ?
-          <Text style={[stylesGlobal.standardText, {alignSelf: 'center'}]}>
-            <Text 
-              style={stylesGlobal.ueberschriftText2}
-              accessibilityRole="text"
+          <Text 
+            style={[stylesGlobal.standardText, {alignSelf: 'center'}]}
+            accessibilityRole="text"
               accessibilityLabel={'Ende: ' + intlFormat(pickedEndTime.current, {
                 weekday: 'long',
                 year: 'numeric',
@@ -471,8 +479,19 @@ const CreateMarkersScreen = ( {navigation} ) => {
                 }, 
                   {locale: 'de-DE',}
                 ) + ' Uhr'}
-              aria-label='Teilnehmeranzahl*'
-            >
+              aria-label={'Ende: ' + intlFormat(pickedEndTime.current, {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+                }, 
+                  {locale: 'de-DE',}
+                ) + ' Uhr'}
+              selectable={true}
+          >
+            <Text style={stylesGlobal.ueberschriftText2}>
               {'Ende: '}
             </Text>  
             {intlFormat(pickedEndTime.current, {
@@ -494,6 +513,7 @@ const CreateMarkersScreen = ( {navigation} ) => {
               accessibilityRole="text"
               accessibilityLabel='Endzeit wurde nicht ausgewählt! Bitte Endzeit auswählen'
               aria-label='Endzeit wurde nicht ausgewählt! Bitte Endzeit auswählen'
+              selectable={true}
             >
               Endzeit wurde nicht ausgewählt! Bitte Endzeit auswählen
             </Text>

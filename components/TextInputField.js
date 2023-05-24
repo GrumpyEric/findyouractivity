@@ -25,7 +25,7 @@ const TextInputField = (props) => {
   const ref = useRef()
 
   return(
-    <Pressable onPress={() => ref.current.focus()} style={[styles.buttonStyle, {backgroundColor: 'white', borderColor: borderColor}]}>
+    <Pressable focusable onPress={() => ref.current.focus()} style={[styles.buttonStyle, {backgroundColor: 'white', borderColor: borderColor}]}>
       {hasLeftIcon ?
       <View style={{justifyContent: 'center', paddingRight: 10, width: 30}}>
         <Icon

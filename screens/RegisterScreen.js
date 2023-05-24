@@ -59,6 +59,7 @@ const RegisterScreen = () => {
         aria-label={RegisterTitleText}
         accessibilityHint={RegisterHintText}
         accessibilityRole={'header'}
+        selectable={true}
       >
         {RegisterTitleText}
       </Text>
@@ -71,6 +72,7 @@ const RegisterScreen = () => {
             accessibilityLabel={EmailTitleText}
             aria-label={EmailTitleText}
             accessibilityRole='text'
+            selectable={true}
           >
             {EmailTitleText}
           </Text>
@@ -91,7 +93,8 @@ const RegisterScreen = () => {
                 style={[stylesGlobal.standardText, {color: Colors.findmyactivityError, textAlign: 'center'}]}
                 accessibilityLabel={EmailErrorText}
                 aria-label={EmailErrorText}
-                accessibilityRole='text'
+                accessibilityRole='alert'
+                selectable={true}
               >
                 {EmailErrorText}
               </Text>
@@ -105,6 +108,7 @@ const RegisterScreen = () => {
             accessibilityLabel={PasswortTitleText}
             aria-label={PasswortTitleText}
             accessibilityRole='text'
+            selectable={true}
           >
             {PasswortTitleText}
           </Text>
@@ -125,7 +129,8 @@ const RegisterScreen = () => {
             style={[stylesGlobal.standardText, {textAlign: 'center'}]}
             accessibilityLabel={'Hinweis: Das Passwort muss mindestens 8 Zeichen lang sein!'}
             aria-label={'Hinweis: Das Passwort muss mindestens 8 Zeichen lang sein!'}
-            accessibilityRole='text'
+            accessibilityRole='alert'
+            selectable={true}
           >
             Hinweis: Das Passwort muss mindestens 8 Zeichen lang sein!
           </Text>
@@ -135,7 +140,8 @@ const RegisterScreen = () => {
                 style={[stylesGlobal.standardText, {color: Colors.findmyactivityError, textAlign: 'center'}]}
                 accessibilityLabel={PasswortErrorText}
                 aria-label={PasswortErrorText}
-                accessibilityRole='text'
+                accessibilityRole='alert'
+                selectable={true}
               >
                 {PasswortErrorText}
               </Text>

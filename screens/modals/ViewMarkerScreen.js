@@ -68,6 +68,7 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
         accessibilityRole="header"
         accessibilityLabel='Event'
         aria-label='Event'
+        selectable={true}
       >
         Event
       </Text>
@@ -77,6 +78,7 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
           accessibilityRole="text"
           accessibilityLabel={'Eventname: ' + nameDisplay}
           aria-label={'Eventname: ' + nameDisplay}
+          selectable={true}
         >
           Eventname:{'\n'}
           <Text style={stylesGlobal.standardText}>
@@ -90,6 +92,7 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
           accessibilityRole="text"
           accessibilityLabel={'Beschreibung: ' + descriptionDisplay}
           aria-label={'Beschreibung: ' + descriptionDisplay}
+          selectable={true}
         >
           Beschreibung:{'\n'}
           <Text style={stylesGlobal.standardText}>
@@ -104,6 +107,7 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
           accessibilityRole="text"
           accessibilityLabel={'Wo: ' + locationDescriptionDisplay}
           aria-label={'Wo: ' + locationDescriptionDisplay}
+          selectable={true}
         >
           Wo?:{'\n'}
           <Text style={stylesGlobal.standardText}>
@@ -117,6 +121,7 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
           accessibilityRole="text"
           accessibilityLabel={'Anzahl der Teilnehmer: ' + participantList.length + ' von ' + maxParticipantDisplay}
           aria-label={'Anzahl der Teilnehmer: ' + participantList.length + ' von ' + maxParticipantDisplay}
+          selectable={true}
         >
           Anzahl der Teilnehmer:{'\n'}
           <Text style={stylesGlobal.standardText}>
@@ -133,6 +138,7 @@ const ViewMarkerScreen = ( {route, navigation} ) => {
           accessibilityRole="text"
           accessibilityLabel={'Erstellt von: ' + authorUsernameDisplay}
           aria-label={'Erstellt von: ' + authorUsernameDisplay}
+          selectable={true}
         >
           Erstellt von:{'\n'}
           <Text style={stylesGlobal.standardText}>

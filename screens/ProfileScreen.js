@@ -104,6 +104,7 @@ const Profile = ( {navigation} ) => {
         accessibilityLabel={ProfileTitleText}
         aria-label={ProfileTitleText}
         accessibilityRole='header'
+        selectable={true}
       >
         {ProfileTitleText}
       </Text>
@@ -114,6 +115,7 @@ const Profile = ( {navigation} ) => {
           accessibilityLabel={ProfileUsernameText}
           aria-label={ProfileUsernameText}
           accessibilityRole='header'
+          selectable={true}
         >
           {ProfileUsernameText}
         </Text>
@@ -133,6 +135,7 @@ const Profile = ( {navigation} ) => {
           accessibilityLabel={ProfileDescriptionText}
           aria-label={ProfileDescriptionText}
           accessibilityRole='header'
+          selectable={true}
         >
           {ProfileDescriptionText}
         </Text>
@@ -154,6 +157,7 @@ const Profile = ( {navigation} ) => {
           accessibilityLabel={ProfileEmailText}
           aria-label={ProfileEmailText}
           accessibilityRole='header'
+          selectable={true}
         >
           {ProfileEmailText}
         </Text>
@@ -173,6 +177,7 @@ const Profile = ( {navigation} ) => {
           accessibilityLabel={ProfileEventsText}
           aria-label={ProfileEventsText}
           accessibilityRole='header'
+          selectable={true}
         >
           {ProfileEventsText}
         </Text>
@@ -208,6 +213,7 @@ const Profile = ( {navigation} ) => {
                   style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
                   accessibilityLabel={"Start: " + startTimeRes}
                   aria-label={"Start: " + startTimeRes}
+                  selectable={true}
                 >
                   Start:{'\n'}
                   <Text style={stylesGlobal.standardText}>
@@ -240,6 +246,7 @@ const Profile = ( {navigation} ) => {
                   style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
                   accessibilityLabel={"Ende: " + endTimeRes}
                   aria-label={"Ende: " + endTimeRes}
+                  selectable={true}
                 >
                   Ende:{'\n'}
                   <Text style={stylesGlobal.standardText}>
@@ -256,6 +263,7 @@ const Profile = ( {navigation} ) => {
                 style={[stylesGlobal.ueberschriftText2, stylesGlobal.spacingBetweenText, stylesGlobal.textCenterStyle]}
                 accessibilityLabel={"Tags: " + val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
                 aria-label={"Tags: " + val.tags.length ? val.tags.toString() : 'keine Tags vergeben'}
+                selectable={true}
               >
                 Tags:{'\n'}
                 <Text style={stylesGlobal.standardText}>
@@ -273,6 +281,7 @@ const Profile = ( {navigation} ) => {
                     accessibilityLabel={ProfileEventsNameText + ': ' + val.name}
                     aria-label={ProfileEventsNameText + ': ' + val.name}
                     accessibilityRole='text'
+                    selectable={true}
                   >
                     {ProfileEventsNameText + '\n'}
                     <Text style={stylesGlobal.standardText}>
@@ -286,6 +295,7 @@ const Profile = ( {navigation} ) => {
                     accessibilityLabel={ProfileEventsDescriptionText + ': ' + val.description}
                     aria-label={ProfileEventsDescriptionText + ': ' + val.description}
                     accessibilityRole='text'
+                    selectable={true}
                   >
                     {ProfileEventsDescriptionText + '\n'}
                     <Text style={stylesGlobal.standardText}>
@@ -300,6 +310,7 @@ const Profile = ( {navigation} ) => {
                     accessibilityLabel={ProfileEventsDistanceText + ': ' + distanceToUserPos + ' km'}
                     aria-label={ProfileEventsDistanceText + ': ' + distanceToUserPos + ' km'}
                     accessibilityRole='text'
+                    selectable={true}
                   >
                     {ProfileEventsDistanceText + '\n'}
                     <Text style={stylesGlobal.standardText}>
@@ -311,6 +322,7 @@ const Profile = ( {navigation} ) => {
                     style={stylesGlobal.ueberschriftText2}
                     accessibilityLabel={ProfileEventsClickText}
                     aria-label={ProfileEventsClickText}
+                    selectable={true}
                   >
                     {ProfileEventsClickText}
                   </Text>
@@ -343,6 +355,7 @@ const Profile = ( {navigation} ) => {
                 accessibilityLabel={ProfileNoMarkersText}
                 aria-label={ProfileNoMarkersText}
                 accessibilityRole='text'
+                selectable={true}
               >
                 {ProfileNoMarkersText}
               </Text>

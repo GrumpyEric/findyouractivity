@@ -50,6 +50,7 @@ const LoginScreen = () => {
       aria-label={LoginTitleText}
       accessibilityHint={AccessibilityHintTitleText}
       accessibilityRole={'header'}
+      selectable={true}
     >
       {LoginTitleText}
     </Text>
@@ -62,6 +63,7 @@ const LoginScreen = () => {
           accessibilityLabel={EmailTitleText}
           aria-label={EmailTitleText}
           accessibilityRole='text'
+          selectable={true}
         >
           {EmailTitleText}
         </Text>
@@ -83,20 +85,22 @@ const LoginScreen = () => {
               style={[stylesGlobal.standardText, {color: Colors.findmyactivityError, textAlign: 'center'}]}
               accessibilityLabel={EmailErrorText}
               aria-label={EmailErrorText}
-              accessibilityRole='text'
+              accessibilityRole='alert'
+              selectable={true}
             >
               {EmailErrorText}
             </Text>
-          : <Text accessible={false}></Text>
+          : <Text></Text>
         }
       </View>
 
-      <View>
+      <View style={styles.singleInputContainer}>
         <Text 
           style={stylesGlobal.ueberschriftText2}
           accessibilityLabel={PasswortTitleText}
           aria-label={PasswortTitleText}
-          accessibilityRole='text'
+          accessibilityRole='header'
+          selectable={true}
         >
           {PasswortTitleText}
         </Text>
@@ -119,11 +123,12 @@ const LoginScreen = () => {
               style={[stylesGlobal.standardText, {color: Colors.findmyactivityError, textAlign: 'center'}]}
               accessibilityLabel={PasswortErrorText}
               aria-label={PasswortErrorText}
-              accessibilityRole='text'
+              accessibilityRole='alert'
+              selectable={true}
             >
               {PasswortErrorText}
             </Text>
-          : <Text accessible={false}></Text>
+          : <Text></Text>
         }
       </View>
     </View>
@@ -161,6 +166,7 @@ const LoginScreen = () => {
         accessibilityLabel={ForgotButtonTitle}
         aria-label={ForgotButtonTitle}
         accessibilityRole='text'
+        selectable={true}
       >
         {ForgotButtonTitle}
       </Text>
@@ -171,7 +177,6 @@ const LoginScreen = () => {
         accessibilityHint={ForgotButtonHint}
       />
     </View>
-    
   </ScrollView>
   )
 }

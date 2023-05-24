@@ -96,6 +96,7 @@ return(
       accessibilityLabel="Filter"
       aria-label="Filter"
       accessibilityHint='Titel des momentanen Bildschirmes'
+      selectable={true}
     >
       Filter
     </Text>
@@ -106,6 +107,7 @@ return(
         accessibilityRole="header"
         accessibilityLabel="Umkreis anzuzeigender Marker"
         aria-label="Umkreis anzuzeigender Marker"
+        selectable={true}
       >
         Umkreis anzuzeigender Marker
       </Text>
@@ -114,6 +116,7 @@ return(
         accessibilityRole="text"
         accessibilityLabel={radiusMarkersVisual === 'alle Marker anzeigen' || radiusMarkersVisual === 21 ? radiusMarkersVisual : radiusMarkersVisual + ' km'}
         aria-label={radiusMarkersVisual === 'alle Marker anzeigen' || radiusMarkersVisual === 21 ? radiusMarkersVisual : radiusMarkersVisual + ' km'}
+        selectable={true}
       >
         {radiusMarkersVisual === 'alle Marker anzeigen' || radiusMarkersVisual === 21 ? radiusMarkersVisual : radiusMarkersVisual + ' km'}
       </Text>
@@ -138,6 +141,7 @@ return(
         accessibilityRole='header'
         accessibilityLabel='Tags'
         aria-label='Tags'
+        selectable={true}
       >
         Tags
       </Text>
